@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9A69F5E7-6B6B-4BD0-81CB-7F4D59C8290E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Pinpad.Sdk</RootNamespace>
+    <AssemblyName>Pinpad.Sdk</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile328</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEBUG_PROD|AnyCPU'">
+    <OutputPath>bin\DEBUG_PROD\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEBUG_DEV|AnyCPU'">
+    <OutputPath>bin\DEBUG_DEV\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'HardDebug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\HardDebug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>PinpadSdk_key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <ProjectReference Include="..\..\..\..\BackupPostSergio\PinPadSDK-Development\Pinpad.Core.csproj">
+      <Project>{f8f06ff8-6a83-4fdb-880b-d54304c10c92}</Project>
+      <Name>Pinpad.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CrossPlatformWrappers\Base\Stable\CrossPlatformBase.csproj">
+      <Project>{0f8b65ca-9ece-4cb2-88ec-f04c4d41a7d6}</Project>
+      <Name>CrossPlatformBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\StonePortableUtils\StonePortableUtils.csproj">
+      <Project>{27f62482-ab00-41ee-b8cf-93b88d5c7ce2}</Project>
+      <Name>StonePortableUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pinpad.Sdk.Model\Pinpad.Sdk.Model.csproj">
+      <Project>{8deb5a99-825b-4631-b84c-c2c06bf28c2e}</Project>
+      <Name>Pinpad.Sdk.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Display\Mapper\DisplayPaddingMapper.cs" />
+    <Compile Include="EmvTable\Mapper\AidMapper.cs" />
+    <Compile Include="EmvTable\Mapper\CapkMapper.cs" />
+    <Compile Include="EmvTable\PinpadTable.cs" />
+    <Compile Include="Connection\BasePinpadConnection.cs" />
+    <Compile Include="Display\IPinpadDisplay.cs" />
+    <Compile Include="EmvTable\IPinpadTable.cs" />
+    <Compile Include="Mapper\CardMapper.cs" />
+    <Compile Include="Mapper\EmvTrackMapper.cs" />
+    <Compile Include="Mapper\MagneticStripeTrackMapper.cs" />
+    <Compile Include="Connection\PinpadConnection.cs" />
+    <Compile Include="Mapper\ResponseStatusMapper.cs" />
+    <Compile Include="PinpadController.cs" />
+    <Compile Include="Display\PinpadDisplay.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transaction\EmvPinReader.cs" />
+    <Compile Include="Transaction\MagneticStripePinReader.cs" />
+    <Compile Include="Transaction\PinReader.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PinpadSdk_key.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
