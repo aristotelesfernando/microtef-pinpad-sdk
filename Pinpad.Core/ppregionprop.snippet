@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>ppregionprop</Title>
+			<Shortcut>ppregionprop</Shortcut>
+			<Description>Code snippet for an automatically implemented Pin Pad Region Property</Description>
+			<Author>Sérgio Fonseca</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>commentary</ID>
+					<ToolTip>Region commentary</ToolTip>
+					<Default>Length of the first region of the command</Default>
+				</Literal>
+				<Literal>
+					<ID>name</ID>
+					<ToolTip>Region name</ToolTip>
+					<Default>CMD_LEN1</Default>
+				</Literal>
+			</Declarations>
+			<Code Language="csharp"><![CDATA[/// <summary>
+        /// $commentary$
+        /// </summary>
+		public PinPadRegionPropertyController $name$ { get; private set; }$end$]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
