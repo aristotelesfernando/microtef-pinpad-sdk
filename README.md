@@ -1,0 +1,1 @@
+Pinpad SDK for pinpad communication through ABECS.
