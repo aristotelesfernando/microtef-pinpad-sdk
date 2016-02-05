@@ -13,7 +13,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile328</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile336</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -36,6 +36,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Pinpad.Sdk.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEBUG_PROD|AnyCPU'">
     <OutputPath>bin\DEBUG_PROD\</OutputPath>
@@ -59,25 +60,6 @@
     <AssemblyOriginatorKeyFile>PinpadSdk_key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\..\..\..\BackupPostSergio\PinPadSDK-Development\Pinpad.Core.csproj">
-      <Project>{f8f06ff8-6a83-4fdb-880b-d54304c10c92}</Project>
-      <Name>Pinpad.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\CrossPlatformWrappers\Base\Stable\CrossPlatformBase.csproj">
-      <Project>{0f8b65ca-9ece-4cb2-88ec-f04c4d41a7d6}</Project>
-      <Name>CrossPlatformBase</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\StonePortableUtils\StonePortableUtils.csproj">
-      <Project>{27f62482-ab00-41ee-b8cf-93b88d5c7ce2}</Project>
-      <Name>StonePortableUtils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pinpad.Sdk.Model\Pinpad.Sdk.Model.csproj">
-      <Project>{8deb5a99-825b-4631-b84c-c2c06bf28c2e}</Project>
-      <Name>Pinpad.Sdk.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Display\Mapper\DisplayPaddingMapper.cs" />
     <Compile Include="EmvTable\Mapper\AidMapper.cs" />
     <Compile Include="EmvTable\Mapper\CapkMapper.cs" />
@@ -98,7 +80,28 @@
     <Compile Include="Transaction\PinReader.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="PinpadSdk_key.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CrossPlatformBase, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b64391aecf921c4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrossPlatformBase.1.0.0\lib\portable-net403+sl50+win+wpa81+wp80\CrossPlatformBase.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Pinpad.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c823e813c65cd0aa, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pinpad.Core.1.1.0\lib\portable-net403+sl50+win+wpa81+wp80\Pinpad.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StonePortableUtils, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f2416eed10ceccde, processorArchitecture=MSIL">
+      <HintPath>..\packages\StonePortableUtils.1.0.0\lib\portable-net403+sl50+win+wpa81+wp80\StonePortableUtils.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pinpad.Sdk.Model\Pinpad.Sdk.Model.csproj">
+      <Project>{8deb5a99-825b-4631-b84c-c2c06bf28c2e}</Project>
+      <Name>Pinpad.Sdk.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -13,7 +13,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile328</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile336</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -36,6 +36,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Pinpad.Sdk.Model.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'HardDebug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -52,13 +53,6 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>PinpadSdkModel_key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\..\..\..\BackupPostSergio\PinPadSDK-Development\Pinpad.Core.csproj">
-      <Project>{f8f06ff8-6a83-4fdb-880b-d54304c10c92}</Project>
-      <Name>Pinpad.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="AidEntry.cs" />
     <Compile Include="BaseTableEntry.cs" />
@@ -77,7 +71,14 @@
     <Compile Include="TypeCode\TransactionTypeCode.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="PinpadSdkModel_key.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Pinpad.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c823e813c65cd0aa, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pinpad.Core.1.1.0\lib\portable-net403+sl50+win+wpa81+wp80\Pinpad.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

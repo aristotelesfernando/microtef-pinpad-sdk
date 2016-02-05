@@ -11,7 +11,7 @@
     <RootNamespace>PinPadSDK</RootNamespace>
     <AssemblyName>Pinpad.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile328</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile336</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SccProjectName>SAK</SccProjectName>
@@ -60,17 +60,6 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\..\CrossPlatformWrappers\Base\Stable\CrossPlatformBase.csproj">
-      <Project>{0f8b65ca-9ece-4cb2-88ec-f04c4d41a7d6}</Project>
-      <Name>CrossPlatformBase</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\StonePortableUtils\StonePortableUtils.csproj">
-      <Project>{27f62482-ab00-41ee-b8cf-93b88d5c7ce2}</Project>
-      <Name>StonePortableUtils</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CkeEventsData\BaseCkeResponseData.cs" />
     <Compile Include="Commands\CkeEventsData\CkeContactlessResponseData.cs" />
@@ -231,7 +220,18 @@
     <Compile Include="PinPad\PinPadPrinter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="PinPadSDK_Key.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CrossPlatformBase, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b64391aecf921c4f, processorArchitecture=MSIL">
+      <HintPath>packages\CrossPlatformBase.1.0.0\lib\portable-net403+sl50+win+wpa81+wp80\CrossPlatformBase.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StonePortableUtils, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f2416eed10ceccde, processorArchitecture=MSIL">
+      <HintPath>packages\StonePortableUtils.1.0.0\lib\portable-net403+sl50+win+wpa81+wp80\StonePortableUtils.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
