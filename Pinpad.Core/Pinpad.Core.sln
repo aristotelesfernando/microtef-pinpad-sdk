@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinpad.Core", "Pinpad.Core.csproj", "{F8F06FF8-6A83-4FDB-880B-D54304C10C92}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		DEBUG_DEV|Any CPU = DEBUG_DEV|Any CPU
+		DEBUG_PROD|Any CPU = DEBUG_PROD|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		HardDebug|Any CPU = HardDebug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8F06FF8-6A83-4FDB-880B-D54304C10C92}.DEBUG_DEV|Any CPU.ActiveCfg = DEBUG_DEV|Any CPU
+		{F8F06FF8-6A83-4FDB-880B-D54304C10C92}.DEBUG_DEV|Any CPU.Build.0 = DEBUG_DEV|Any CPU
+		{F8F06FF8-6A83-4FDB-880B-D54304C10C92}.DEBUG_PROD|Any CPU.ActiveCfg = DEBUG_PROD|Any CPU
+		{F8F06FF8-6A83-4FDB-880B-D54304C10C92}.DEBUG_PROD|Any CPU.Build.0 = DEBUG_PROD|Any CPU
+		{F8F06FF8-6A83-4FDB-880B-D54304C10C92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8F06FF8-6A83-4FDB-880B-D54304C10C92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8F06FF8-6A83-4FDB-880B-D54304C10C92}.HardDebug|Any CPU.ActiveCfg = HardDebug|Any CPU
+		{F8F06FF8-6A83-4FDB-880B-D54304C10C92}.HardDebug|Any CPU.Build.0 = HardDebug|Any CPU
+		{F8F06FF8-6A83-4FDB-880B-D54304C10C92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8F06FF8-6A83-4FDB-880B-D54304C10C92}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
