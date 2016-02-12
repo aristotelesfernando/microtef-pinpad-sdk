@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System;
-using CrossPlatformBase;
 using Pinpad.Core.TypeCode;
 using System.IO;
 using Pinpad.Core.Events;
 using Pinpad.Core.Commands;
 using Pinpad.Core.Utilities;
+using MicroPos.CrossPlatform;
 
 namespace Pinpad.Core.Pinpad
 {

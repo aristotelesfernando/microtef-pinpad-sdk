@@ -1,4 +1,5 @@
-﻿using Pinpad.Core.Pinpad;
+﻿using MicroPos.CrossPlatform;
+using Pinpad.Core.Pinpad;
 using Pinpad.Sdk.Connection;
 
 namespace Pinpad.Sdk.EmvTable
@@ -46,7 +47,7 @@ namespace Pinpad.Sdk.EmvTable
 		/// Creates all pinpad adapters.
 		/// </summary>
 		/// <param name="pinpadConnection">Pinpad connection.</param>
-		public PinpadFacade(CrossPlatformBase.IPinPadConnection pinpadConnection)
+		public PinpadFacade(IPinpadConnection pinpadConnection)
 		{
 			this.PinpadConnection = new PinpadConnection();
 			this.PinpadConnection.PlatformPinpadConnection = pinpadConnection;

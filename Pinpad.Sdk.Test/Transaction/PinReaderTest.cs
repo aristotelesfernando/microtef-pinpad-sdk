@@ -2,11 +2,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Pinpad.Sdk.Transaction;
-using CrossPlatformBase;
 using Pinpad.Sdk.Model.TypeCode;
 using Pinpad.Sdk.EmvTable;
 using Pinpad.Core.Pinpad;
 using Pinpad.Core.Commands;
+using MicroPos.CrossPlatform;
 
 namespace Pinpad.Sdk.Test.Transaction
 {
@@ -18,7 +18,7 @@ namespace Pinpad.Sdk.Test.Transaction
         [TestInitialize]
         public void Setup()
         {
-            Mock<IPinPadConnection> mockedConn = new Mock<IPinPadConnection>();
+            Mock<IPinpadConnection> mockedConn = new Mock<IPinpadConnection>();
             //this.pinpadFacade = new PinpadFacade(mockedConn.Object);
         }
 

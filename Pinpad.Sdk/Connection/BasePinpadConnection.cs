@@ -1,5 +1,5 @@
-﻿using System;
-using CrossPlatformBase;
+﻿using MicroPos.CrossPlatform;
+using System;
 
 namespace Pinpad.Sdk.Connection
 {
@@ -14,7 +14,7 @@ namespace Pinpad.Sdk.Connection
         /// <summary>
         /// Legacy Pinpad.Core pinpad connection.
         /// </summary>
-        internal IPinPadConnection PlatformPinpadConnection { get; set; }
+        internal IPinpadConnection PlatformPinpadConnection { get; set; }
         /// <summary>
         /// Try connect to pinpad in the specified serial port.
         /// </summary>

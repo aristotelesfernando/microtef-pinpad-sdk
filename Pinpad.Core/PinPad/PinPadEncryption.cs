@@ -1,4 +1,5 @@
-﻿using CrossPlatformBase;
+﻿using MicroPos.CrossPlatform;
+using MicroPos.CrossPlatform.TypeCode;
 using Pinpad.Core.Commands;
 using Pinpad.Core.Utilities;
 
@@ -43,7 +44,7 @@ namespace Pinpad.Core.Pinpad
 			SecRequest secureRequest = new SecRequest( );
 			secureRequest.SEC_ACQIDX.Value = 16;
 
-			byte[] requestBytes = CrossPlatformController.TextEncodingController.GetBytes(TextEncoding.ASCII, request);
+			byte[] requestBytes = CrossPlatformController.TextEncodingController.GetBytes(TextEncodingType.Ascii, request);
 			byte[] encryptedRequestBytes = EncryptTDES(new HexadecimalData(requestBytes));
 
 			secureRequest.SEC_CMDBLK.Value = new HexadecimalData(encryptedRequestBytes);
@@ -58,7 +59,7 @@ namespace Pinpad.Core.Pinpad
 		/// <returns>command string</returns>
 		public string UnwrapResponse(SecResponse response) {
 			byte[] DecryptedData = DecryptTDES(response.SEC_CMDBLK.Value);
-			string DecryptedResponse = CrossPlatformController.TextEncodingController.GetString(TextEncoding.ASCII, DecryptedData);
+			string DecryptedResponse = CrossPlatformController.TextEncodingController.GetString(TextEncodingType.Ascii, DecryptedData);
 			string UnpaddedDecryptedResponse = DecryptedResponse.TrimEnd('\0'); //Trim null bytes
 			return UnpaddedDecryptedResponse;
 		}

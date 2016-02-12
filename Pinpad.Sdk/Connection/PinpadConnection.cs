@@ -1,4 +1,4 @@
-﻿using CrossPlatformBase;
+﻿using MicroPos.CrossPlatform;
 using Pinpad.Core.Pinpad;
 using Pinpad.Sdk.EmvTable;
 using System;
@@ -38,7 +38,7 @@ namespace Pinpad.Sdk.Connection
         /// <returns>The serial port name of pinpad if found, or null otherwise</returns>
         public static string SearchPinpadPort()
         {
-            IPinPadConnection connection = CrossPlatformBase.CrossPlatformController.PinPadFinder.Find();
+            IPinpadConnection connection = CrossPlatformController.PinpadFinder.Find();
 
             if (connection == null) { return null; }
             connection.Close();
@@ -52,7 +52,7 @@ namespace Pinpad.Sdk.Connection
         /// <exception cref="System.IO.IOException">The port is in an invalid state. - or - An attempt to set the state of the underlying port failed. For example, the parameters passed from this System.IO.Ports.SerialPort object were invalid.</exception>
         public override void Open(string portName)
         {
-            this.PlatformPinpadConnection = PinPadConnectionManager.GetPinPadConnection(portName);
+            this.PlatformPinpadConnection = PinpadConnectionManager.GetPinpadConnection(portName);
             
             if (this.PlatformPinpadConnection.IsOpen == false) 
             { 

@@ -1,4 +1,5 @@
-﻿using CrossPlatformBase;
+﻿using MicroPos.CrossPlatform;
+using MicroPos.CrossPlatform.TypeCode;
 using Pinpad.Core.Commands;
 using Pinpad.Core.Events;
 using Pinpad.Core.TypeCode;
@@ -39,7 +40,7 @@ namespace Pinpad.Core.Pinpad
 		/// <summary>
 		/// Connection with Pinpad device
 		/// </summary>
-		public IPinPadConnection PinpadConnection { get; private set; }
+		public IPinpadConnection PinpadConnection { get; private set; }
 		/// <summary>
 		/// Last request string sent to the Pinpad
 		/// </summary>
@@ -80,7 +81,7 @@ namespace Pinpad.Core.Pinpad
 		/// </summary>
 		/// <param name="pinPad">Owner Pinpad Facade</param>
 		/// <param name="pinPadConnection">Connection with Pinpad device</param>
-		public PinpadCommunication(IPinPadConnection pinPadConnection) 
+		public PinpadCommunication(IPinpadConnection pinPadConnection) 
 		{
 			this.PinpadConnection = pinPadConnection;
 
@@ -535,7 +536,7 @@ namespace Pinpad.Core.Pinpad
 		}
 		private bool InternalSendRequest(string request)
 		{
-			List<byte> requestByteCollection = new List<byte>(CrossPlatformController.TextEncodingController.GetBytes(TextEncoding.ASCII, request));
+			List<byte> requestByteCollection = new List<byte>(CrossPlatformController.TextEncodingController.GetBytes(TextEncodingType.Ascii, request));
 
 			//Add ETB
 			requestByteCollection.Add(0x17);
@@ -583,7 +584,7 @@ namespace Pinpad.Core.Pinpad
 				b = this.PinpadConnection.ReadByte();
 				if (b == 0x17)
 				{
-					command = CrossPlatformController.TextEncodingController.GetString(TextEncoding.ASCII, responseByteCollection.ToArray());
+					command = CrossPlatformController.TextEncodingController.GetString(TextEncodingType.Ascii, responseByteCollection.ToArray());
 				}
 				responseByteCollection.Add(b);
 			} while (b != 0x17); //Read response bytes until ETB is found
@@ -607,7 +608,7 @@ namespace Pinpad.Core.Pinpad
 			}
 
 			responseByteCollection.Remove(0x17);
-			this.LastReceivedResponse = CrossPlatformController.TextEncodingController.GetString(TextEncoding.ASCII, responseByteCollection.ToArray());
+			this.LastReceivedResponse = CrossPlatformController.TextEncodingController.GetString(TextEncodingType.Ascii, responseByteCollection.ToArray());
 			return this.LastReceivedResponse;
 		}
 	}

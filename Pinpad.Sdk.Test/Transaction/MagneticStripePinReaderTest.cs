@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using CrossPlatformBase;
 using Pinpad.Sdk.Transaction;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.EmvTable;

@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.Connection;
 using Pinpad.Core.Pinpad;
 using Moq;
-using CrossPlatformBase;
+using MicroPos.CrossPlatform;
 
 namespace Pinpad.Sdk.Test.Display
 {
@@ -14,7 +14,7 @@ namespace Pinpad.Sdk.Test.Display
 		public void PinpadDisplay_should_not_return_null()
 		{
 			PinpadConnection conn = new PinpadConnection();
-			conn.PlatformPinpadConnection = Mock.Of<IPinPadConnection>();
+			conn.PlatformPinpadConnection = Mock.Of<IPinpadConnection>();
 			PinpadCommunication comm = new PinpadCommunication(conn.PlatformPinpadConnection);
 			PinpadDisplay display = new PinpadDisplay(comm);
 			Assert.IsNotNull(display);

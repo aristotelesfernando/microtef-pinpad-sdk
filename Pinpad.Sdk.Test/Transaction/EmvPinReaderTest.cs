@@ -1,25 +1,25 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.Transaction;
-using CrossPlatformBase;
 using Moq;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.EmvTable;
 using Pinpad.Core.Commands;
 using Pinpad.Core.Pinpad;
+using MicroPos.CrossPlatform;
 
 namespace Pinpad.Sdk.Test.Transaction
 {
-    [TestClass]
-    public class EmvPinReaderTest
-    {
+	[TestClass]
+	public class EmvPinReaderTest
+	{
 		Mock<PinpadFacade> mockedFacade;
-        Pin pin;
+		Pin pin;
 
-        [TestInitialize]
-        public void Setup()
-        {
-            Mock<IPinPadConnection> mockedConn = new Mock<IPinPadConnection>();
+		[TestInitialize]
+		public void Setup()
+		{
+			Mock<IPinpadConnection> mockedConn = new Mock<IPinpadConnection>();
 			mockedFacade = new Mock<PinpadFacade>();
 
 			// Examples of GIN command:
@@ -30,7 +30,7 @@ namespace Pinpad.Sdk.Test.Transaction
 			// Setup response
 			GinResponse response = new GinResponse();
 			response.CommandString = "GIN000100GERTEC              MOBI PIN 10         0040_0022_0026_0110@1.08001.03 150113       8000021509010882";
-        }
+		}
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
@@ -38,5 +38,5 @@ namespace Pinpad.Sdk.Test.Transaction
 		{
 			EmvPinReader.Read(null, -1, out this.pin);
 		}
-    }
+	}
 }

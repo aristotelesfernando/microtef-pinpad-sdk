@@ -3,8 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.EmvTable;
 using Pinpad.Sdk.Connection;
 using Moq;
-using CrossPlatformBase;
 using Pinpad.Sdk.Model;
+using MicroPos.CrossPlatform;
 
 namespace Pinpad.Sdk.Test.EmvTable
 {
@@ -26,7 +26,7 @@ namespace Pinpad.Sdk.Test.EmvTable
         {
             Mock<BasePinpadConnection> conn = new Mock<BasePinpadConnection>();
             
-            conn.Object.PlatformPinpadConnection = new Mock<IPinPadConnection>().Object;
+            conn.Object.PlatformPinpadConnection = new Mock<IPinpadConnection>().Object;
             
             return conn;
         }
