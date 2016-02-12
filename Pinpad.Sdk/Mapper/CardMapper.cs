@@ -1,12 +1,12 @@
 ﻿using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.TypeCode;
-using PinPadSDK.Commands;
-using PinPadSDK.Enums;
+using Pinpad.Core.Commands;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using Pinpad.Core.TypeCode;
 
 namespace Pinpad.Sdk.Mapper
 {
@@ -61,7 +61,8 @@ namespace Pinpad.Sdk.Mapper
                 case ApplicationType.ContactlessMagneticStripe:
                     return CardType.MagneticStripe;
 
-                default: return CardType.Undefined;
+                default:
+					throw new NotImplementedException("Invalid Card ApplicationType or ApplicationType not implemented yet.");
             }
         }
     }

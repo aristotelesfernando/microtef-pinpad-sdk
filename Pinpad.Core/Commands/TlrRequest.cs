@@ -1,12 +1,10 @@
-﻿using PinPadSDK.Property;
-using PinPadSDK.Controllers.Tables;
-using PinPadSDK.Enums;
+﻿using Pinpad.Core.Properties;
+using Pinpad.Core.Tables;
+using Pinpad.Core.TypeCode;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace PinPadSDK.Commands {
+namespace Pinpad.Core.Commands
+{
     /// <summary>
     /// Controller for TLR command
     /// Table Load Record is used to load one or more table records

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\MSBuild.ILMerge.Task.1.0.2\build\MSBuild.ILMerge.Task.props" Condition="Exists('..\packages\MSBuild.ILMerge.Task.1.0.2\build\MSBuild.ILMerge.Task.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
@@ -19,6 +20,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>230afd09</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -60,12 +62,12 @@
     <AssemblyOriginatorKeyFile>PinpadSdk_key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Display\Mapper\DisplayPaddingMapper.cs" />
+    <Compile Include="EmvTable\IPinpadFacade.cs" />
     <Compile Include="EmvTable\Mapper\AidMapper.cs" />
     <Compile Include="EmvTable\Mapper\CapkMapper.cs" />
+    <Compile Include="EmvTable\PinpadFacade.cs" />
     <Compile Include="EmvTable\PinpadTable.cs" />
     <Compile Include="Connection\BasePinpadConnection.cs" />
-    <Compile Include="Display\IPinpadDisplay.cs" />
     <Compile Include="EmvTable\IPinpadTable.cs" />
     <Compile Include="Mapper\CardMapper.cs" />
     <Compile Include="Mapper\EmvTrackMapper.cs" />
@@ -73,37 +75,44 @@
     <Compile Include="Connection\PinpadConnection.cs" />
     <Compile Include="Mapper\ResponseStatusMapper.cs" />
     <Compile Include="PinpadController.cs" />
-    <Compile Include="Display\PinpadDisplay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transaction\EmvPinReader.cs" />
     <Compile Include="Transaction\MagneticStripePinReader.cs" />
     <Compile Include="Transaction\PinReader.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ILMerge.props" />
     <None Include="packages.config" />
     <None Include="PinpadSdk_key.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CrossPlatformBase, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b64391aecf921c4f, processorArchitecture=MSIL">
-      <HintPath>..\packages\CrossPlatformBase.1.0.0\lib\portable-net403+sl50+win+wpa81+wp80\CrossPlatformBase.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Pinpad.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c823e813c65cd0aa, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pinpad.Core.1.1.0\lib\portable-net403+sl50+win+wpa81+wp80\Pinpad.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="StonePortableUtils, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f2416eed10ceccde, processorArchitecture=MSIL">
-      <HintPath>..\packages\StonePortableUtils.1.0.0\lib\portable-net403+sl50+win+wpa81+wp80\StonePortableUtils.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\Pinpad.Core\Pinpad.Core.csproj">
+      <Project>{479287c0-69a0-4e9f-b90f-a8690781ff40}</Project>
+      <Name>Pinpad.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pinpad.Sdk.Model\Pinpad.Sdk.Model.csproj">
       <Project>{8deb5a99-825b-4631-b84c-c2c06bf28c2e}</Project>
       <Name>Pinpad.Sdk.Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CrossPlatformBase, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b64391aecf921c4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrossPlatformBase.1.0.0\lib\portable-net403+sl50+win+wpa81+wp80\CrossPlatformBase.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ILMergeOrder.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MSBuild.ILMerge.Task.1.0.2\build\MSBuild.ILMerge.Task.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuild.ILMerge.Task.1.0.2\build\MSBuild.ILMerge.Task.props'))" />
+    <Error Condition="!Exists('..\packages\MSBuild.ILMerge.Task.1.0.2\build\MSBuild.ILMerge.Task.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuild.ILMerge.Task.1.0.2\build\MSBuild.ILMerge.Task.targets'))" />
+  </Target>
+  <Import Project="..\packages\MSBuild.ILMerge.Task.1.0.2\build\MSBuild.ILMerge.Task.targets" Condition="Exists('..\packages\MSBuild.ILMerge.Task.1.0.2\build\MSBuild.ILMerge.Task.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

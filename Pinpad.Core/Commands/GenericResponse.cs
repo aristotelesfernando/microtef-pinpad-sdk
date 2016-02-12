@@ -1,53 +1,32 @@
-﻿using PinPadSDK.Property;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Pinpad.Core.Properties;
 
-namespace PinPadSDK.Commands {
+/* WARNING!
+ * 
+ * DEPRECATED.
+ * MUST BE REFACTORED.
+ * 
+ */
+
+namespace Pinpad.Core.Commands 
+{
     /// <summary>
     /// generic response
     /// </summary>
-    public class GenericResponse : BaseResponse {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public GenericResponse( ){
-        }
-
-        /// <summary>
-        /// StringFormatter to remove limitation of the response expecting a specific command
-        /// </summary>
-        /// <param name="obj">object to convert</param>
-        /// <param name="length">length for the value as string, ignored</param>
-        /// <returns>Value of the property as string</returns>
-        protected override string CommandNameStringFormatter(string obj, int length) {
-            string value = DefaultStringFormatter.StringStringFormatter(obj, length);
-            return value;
-        }
-
-        /// <summary>
-        /// StringParser to remove limitation of the response expecting a specific command
-        /// </summary>
-        /// <param name="reader">string reader</param>
-        /// <param name="length">string length</param>
-        /// <returns>string</returns>
-        protected override string CommandNameStringParser(StringReader reader, int length) {
-            string value = DefaultStringParser.StringStringParser(reader, length);
-            return value;
-        }
-
+    public class GenericResponse : BaseResponse 
+	{
+		// Members
         /// <summary>
         /// Is this a blocking command?
         /// </summary>
-        public override bool IsBlockingCommand {
+        public override bool IsBlockingCommand 
+		{
             get { return false; }
         }
-
         /// <summary>
         /// Name of the command
         /// </summary>
-        public override string CommandName {
+        public override string CommandName 
+		{
             get {
                 if (this.CMD_ID == null) {
                     return null;
@@ -58,11 +37,40 @@ namespace PinPadSDK.Commands {
             }
         }
 
+		// Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public GenericResponse() {  }
+
+		// Methods
+        /// <summary>
+        /// StringFormatter to remove limitation of the response expecting a specific command
+        /// </summary>
+        /// <param name="obj">object to convert</param>
+        /// <param name="length">length for the value as string, ignored</param>
+        /// <returns>Value of the property as string</returns>
+        protected override string CommandNameStringFormatter(string obj, int length) {
+            string value = DefaultStringFormatter.StringStringFormatter(obj, length);
+            return value;
+        }
+        /// <summary>
+        /// StringParser to remove limitation of the response expecting a specific command
+        /// </summary>
+        /// <param name="reader">string reader</param>
+        /// <param name="length">string length</param>
+        /// <returns>string</returns>
+        protected override string CommandNameStringParser(StringReader reader, int length) 
+		{
+            string value = DefaultStringParser.StringStringParser(reader, length);
+            return value;
+        }
         /// <summary>
         /// Sets the CommandName
         /// </summary>
         /// <param name="value">New CommandName</param>
-        public void SetCommandName(string value) {
+        public void SetCommandName(string value) 
+		{
             this.CMD_ID.Value = value;
         }
     }

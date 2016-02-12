@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace PinPadSDK.Commands {
+﻿namespace Pinpad.Core.Commands 
+{
     /// <summary>
     /// OPN request
     /// </summary>
-    public class OpnRequest : BaseCommand {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public OpnRequest() {
-        }
-
+    public class OpnRequest : BaseCommand 
+	{
         /// <summary>
         /// Name of the command
         /// </summary>
         public override string CommandName { get { return "OPN"; } }
+        
+		/// <summary>
+        /// Constructor
+        /// </summary>
+        public OpnRequest() {  }
     }
 }

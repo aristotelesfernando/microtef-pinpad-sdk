@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PinPadSDK.Commands;
 using Pinpad.Sdk.Mapper;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.TypeCode;
+using Pinpad.Core.Commands;
 
 namespace Pinpad.Sdk.Test.Mapper
 {

@@ -1,23 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F8F06FF8-6A83-4FDB-880B-D54304C10C92}</ProjectGuid>
+    <ProjectGuid>{479287C0-69A0-4E9F-B90F-A8690781FF40}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PinPadSDK</RootNamespace>
+    <RootNamespace>Pinpad.Core</RootNamespace>
     <AssemblyName>Pinpad.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile336</TargetFrameworkProfile>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile>Profile336</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,7 +24,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Pinpad.Core.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,133 +32,98 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Pinpad.Core.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>PinPadSDK_Key.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEBUG_PROD|AnyCPU'">
-    <OutputPath>bin\DEBUG_PROD\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEBUG_DEV|AnyCPU'">
-    <OutputPath>bin\DEBUG_DEV\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'HardDebug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\HardDebug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DocumentationFile>bin\Debug\Pinpad.Core.xml</DocumentationFile>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <AssemblyOriginatorKeyFile>PinpadCore_key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Commands\CkeEventsData\BaseCkeResponseData.cs" />
-    <Compile Include="Commands\CkeEventsData\CkeContactlessResponseData.cs" />
-    <Compile Include="Commands\DwkModesData\BaseDwkRequestData.cs" />
-    <Compile Include="Commands\DwkModesData\DwkMode1RequestData.cs" />
-    <Compile Include="Commands\DwkModesData\DwkMode2RequestData.cs" />
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <ProjectReference Include="..\Pinpad.Sdk.Model\Pinpad.Sdk.Model.csproj">
+      <Project>{8deb5a99-825b-4631-b84c-c2c06bf28c2e}</Project>
+      <Name>Pinpad.Sdk.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Commands\BaseCommand.cs" />
-    <Compile Include="Commands\CkeEventsData\CkeIccResponseData.cs" />
     <Compile Include="Commands\BaseKeyResponse.cs" />
-    <Compile Include="Commands\Stone\BaseStoneRequest.cs" />
-    <Compile Include="Commands\DexRequest.cs" />
-    <Compile Include="Commands\DspRequest.cs" />
-    <Compile Include="Commands\DwkRequest.cs" />
-    <Compile Include="Commands\DwkMode2Response.cs" />
-    <Compile Include="Commands\GkyRequest.cs" />
-    <Compile Include="Commands\GkyResponse.cs" />
-    <Compile Include="Commands\GpnRequest.cs" />
-    <Compile Include="Commands\GpnResponse.cs" />
-    <Compile Include="Commands\NtmResponse.cs" />
-    <Compile Include="Commands\RmcRequest.cs" />
-    <Compile Include="Commands\Stone\DsiRequest.cs" />
-    <Compile Include="Commands\Stone\DssRequest.cs" />
-    <Compile Include="Commands\Stone\GbsRequest.cs" />
-    <Compile Include="Commands\Stone\GbsResponse.cs" />
-    <Compile Include="Commands\Stone\GkeRequest.cs" />
-    <Compile Include="Commands\Stone\GkeResponse.cs" />
-    <Compile Include="Commands\Stone\LfcRequest.cs" />
-    <Compile Include="Commands\Stone\LfcResponse.cs" />
-    <Compile Include="Commands\Stone\LfeRequest.cs" />
-    <Compile Include="Commands\Stone\LfiRequest.cs" />
-    <Compile Include="Commands\Stone\LfrRequest.cs" />
-    <Compile Include="Commands\Stone\OpnResponse.cs" />
-    <Compile Include="Commands\Stone\PrtRequest.cs" />
-    <Compile Include="Commands\Stone\PrtResponse.cs" />
-    <Compile Include="Commands\Stone\PsmRequest.cs" />
-    <Compile Include="Commands\Stone\SecRequest.cs" />
-    <Compile Include="Commands\Stone\SecResponse.cs" />
-    <Compile Include="Commands\Stone\StmRequest.cs" />
-    <Compile Include="Commands\Stone\PrtActionData\PrtAppendImageRequestData.cs" />
-    <Compile Include="Commands\Stone\PrtActionData\PrtAppendImageResponseData.cs" />
-    <Compile Include="Commands\Stone\PrtActionData\PrtAppendStringRequestData.cs" />
-    <Compile Include="Commands\Stone\PrtActionData\PrtAppendStringResponseData.cs" />
-    <Compile Include="Commands\Stone\PrtActionData\BasePrtRequestData.cs" />
-    <Compile Include="Commands\Stone\PrtActionData\BasePrtResponseData.cs" />
-    <Compile Include="Commands\Stone\PrtActionData\PrtBeginRequestData.cs" />
-    <Compile Include="Commands\Stone\PrtActionData\PrtBeginResponseData.cs" />
-    <Compile Include="Commands\Stone\PrtActionData\PrtEndRequestData.cs" />
-    <Compile Include="Commands\Stone\PrtActionData\PrtEndResponseData.cs" />
-    <Compile Include="Commands\Stone\PrtActionData\PrtStepRequestData.cs" />
-    <Compile Include="Commands\Stone\PrtActionData\PrtStepResponseData.cs" />
-    <Compile Include="Commands\WriteWrapper.cs" />
-    <Compile Include="Enums\FallbackStatus.cs" />
-    <Compile Include="Events\AccessRequestedEventArgs.cs" />
-    <Compile Include="Events\ConnectionStateChangedEventArgs.cs" />
-    <Compile Include="Exceptions\LenghtMismatchException.cs" />
-    <Compile Include="Exceptions\UnknownPinPadKeyException.cs" />
-    <Compile Include="PinPad\PinPadCommunication.cs" />
-    <Compile Include="PinPad\PinPadEncryption.cs" />
-    <Compile Include="PinPad\PinPadFacade.cs" />
-    <Compile Include="PinPad\PinPadInfos.cs" />
-    <Compile Include="PinPad\PinPadNotificationEventArgs.cs" />
-    <Compile Include="PinPad\PinPadTable.cs" />
-    <Compile Include="Property\BaseProperty.cs" />
     <Compile Include="Commands\BaseResponse.cs" />
-    <Compile Include="Commands\CkeResponse.cs" />
-    <Compile Include="Commands\CkeEventsData\CkeKeyPressResponseData.cs" />
-    <Compile Include="Commands\CkeEventsData\CkeMagneticStripeResponseData.cs" />
-    <Compile Include="Commands\CkeRequest.cs" />
-    <Compile Include="Commands\CloRequest.cs" />
-    <Compile Include="Commands\CngRequest.cs" />
-    <Compile Include="Commands\FncRequest.cs" />
-    <Compile Include="Commands\FncResponse.cs" />
-    <Compile Include="Commands\GenericResponse.cs" />
-    <Compile Include="Commands\Gcr\GcrIdApp.cs" />
+    <Compile Include="Commands\BaseStoneRequest.cs" />
+    <Compile Include="Commands\DexRequest.cs" />
+    <Compile Include="Commands\DsiRequest.cs" />
+    <Compile Include="Commands\DspRequest.cs" />
+    <Compile Include="Commands\GcrIdApp.cs" />
     <Compile Include="Commands\GcrRequest.cs" />
     <Compile Include="Commands\GcrResponse.cs" />
-    <Compile Include="Commands\Gin00Response.cs" />
-    <Compile Include="Commands\GinDefaultResponse.cs" />
+    <Compile Include="Commands\GenericResponse.cs" />
     <Compile Include="Commands\GinRequest.cs" />
+    <Compile Include="Commands\GinResponse.cs" />
+    <Compile Include="Commands\GkeRequest.cs" />
+    <Compile Include="Commands\GkeResponse.cs" />
+    <Compile Include="Commands\GkyRequest.cs" />
+    <Compile Include="Commands\GkyResponse.cs" />
+    <Compile Include="Commands\GocRequest.cs" />
+    <Compile Include="Commands\GocResponse.cs" />
+    <Compile Include="Commands\GpnPinEntryRequest.cs" />
+    <Compile Include="Commands\GpnRequest.cs" />
+    <Compile Include="Commands\GpnResponse.cs" />
+    <Compile Include="Commands\GtsRequest.cs" />
     <Compile Include="Commands\GtsResponse.cs" />
+    <Compile Include="Commands\LfcRequest.cs" />
+    <Compile Include="Commands\LfcResponse.cs" />
+    <Compile Include="Commands\LfeRequest.cs" />
+    <Compile Include="Commands\LfiRequest.cs" />
+    <Compile Include="Commands\LfrRequest.cs" />
+    <Compile Include="Commands\NtmResponse.cs" />
+    <Compile Include="Commands\OpnRequest.cs" />
+    <Compile Include="Commands\OpnResponse.cs" />
+    <Compile Include="Commands\PrtCommand\BasePrtRequestData.cs" />
+    <Compile Include="Commands\PrtCommand\BasePrtResponseData.cs" />
+    <Compile Include="Commands\PrtCommand\PrtAppendImageRequestData.cs" />
+    <Compile Include="Commands\PrtCommand\PrtAppendImageResponseData.cs" />
+    <Compile Include="Commands\PrtCommand\PrtAppendStringRequestData.cs" />
+    <Compile Include="Commands\PrtCommand\PrtAppendStringResponseData.cs" />
+    <Compile Include="Commands\PrtCommand\PrtBeginRequestData.cs" />
+    <Compile Include="Commands\PrtCommand\PrtBeginResponseData.cs" />
+    <Compile Include="Commands\PrtCommand\PrtEndRequestData.cs" />
+    <Compile Include="Commands\PrtCommand\PrtEndResponseData.cs" />
+    <Compile Include="Commands\PrtCommand\PrtRequest.cs" />
+    <Compile Include="Commands\PrtCommand\PrtResponse.cs" />
+    <Compile Include="Commands\PrtCommand\PrtStepRequestData.cs" />
+    <Compile Include="Commands\PrtCommand\PrtStepResponseData.cs" />
+    <Compile Include="Commands\RmcRequest.cs" />
+    <Compile Include="Commands\SecRequest.cs" />
+    <Compile Include="Commands\SecResponse.cs" />
     <Compile Include="Commands\TleRequest.cs" />
     <Compile Include="Commands\TliRequest.cs" />
     <Compile Include="Commands\TlrRequest.cs" />
-    <Compile Include="Property\CryptographyMethod.cs" />
-    <Compile Include="Commands\GocRequest.cs" />
-    <Compile Include="Commands\GocResponse.cs" />
-    <Compile Include="Commands\GtsRequest.cs" />
-    <Compile Include="Commands\OpnRequest.cs" />
-    <Compile Include="Commands\Gpn\GpnPinEntryRequest.cs" />
-    <Compile Include="Property\MultilineMessage.cs" />
-    <Compile Include="Property\SimpleMessage.cs" />
-    <Compile Include="Property\SimpleProperty.cs" />
-    <Compile Include="Property\CollectionProperty.cs" />
-    <Compile Include="Tracks\Track1.cs" />
-    <Compile Include="Tracks\Track2.cs" />
-    <Compile Include="Property\VariableLengthCollectionProperty.cs" />
-    <Compile Include="Property\VariableLengthProperty.cs" />
-    <Compile Include="Property\FixedLengthProperty.cs" />
-    <Compile Include="Property\RegionProperty.cs" />
-    <Compile Include="Property\ServiceCode.cs" />
-    <Compile Include="Property\DefaultStringFormatter.cs" />
-    <Compile Include="Property\DefaultStringParser.cs" />
-    <Compile Include="Property\StringReader.cs" />
+    <Compile Include="Events\PinpadFileLoadedEventArgs.cs" />
+    <Compile Include="Events\PinpadNotificationEventArgs.cs" />
+    <Compile Include="PinpadProperties\BaseProperty.cs" />
+    <Compile Include="PinpadProperties\PinpadCollectionProperty.cs" />
+    <Compile Include="PinpadProperties\CryptographyMethod.cs" />
+    <Compile Include="PinpadProperties\DefaultStringFormatter.cs" />
+    <Compile Include="PinpadProperties\DefaultStringParser.cs" />
+    <Compile Include="PinpadProperties\PinpadFixedLengthProperty.cs" />
+    <Compile Include="PinpadProperties\IProperty.cs" />
+    <Compile Include="PinpadProperties\MultilineMessage.cs" />
+    <Compile Include="PinpadProperties\RegionProperty.cs" />
+    <Compile Include="PinpadProperties\ServiceCode.cs" />
+    <Compile Include="PinpadProperties\SimpleMessage.cs" />
+    <Compile Include="PinpadProperties\SimpleProperty.cs" />
+    <Compile Include="PinpadProperties\StringReader.cs" />
+    <Compile Include="PinpadProperties\VariableLengthCollectionProperty.cs" />
+    <Compile Include="PinpadProperties\VariableLengthProperty.cs" />
+    <Compile Include="Pinpad\PinpadCommunication.cs" />
+    <Compile Include="Pinpad\PinpadDisplay.cs" />
+    <Compile Include="Pinpad\PinpadEncryption.cs" />
+    <Compile Include="Pinpad\PinpadInfos.cs" />
+    <Compile Include="Pinpad\PinpadKeyboard.cs" />
+    <Compile Include="Pinpad\PinpadPrinter.cs" />
+    <Compile Include="Pinpad\PinpadStorage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tables\BaseAidTable.cs" />
     <Compile Include="Tables\BaseTable.cs" />
     <Compile Include="Tables\CapkTable.cs" />
@@ -170,69 +131,37 @@
     <Compile Include="Tables\RevCerTable.cs" />
     <Compile Include="Tables\UnknownAidTable.cs" />
     <Compile Include="Tracks\BaseTrack.cs" />
-    <Compile Include="Enums\AcquirerCommunicationStatus.cs" />
-    <Compile Include="Enums\ApplicationType.cs" />
-    <Compile Include="Enums\BacklightStatus.cs" />
-    <Compile Include="Enums\CkeEvent.cs" />
-    <Compile Include="Enums\ContactlessMode.cs" />
-    <Compile Include="Enums\CryptographyMode.cs" />
-    <Compile Include="Enums\DwkMode.cs" />
-    <Compile Include="Enums\EmvTableType.cs" />
-    <Compile Include="Enums\GkeAction.cs" />
-    <Compile Include="Enums\InterchangeType.cs" />
-    <Compile Include="Enums\KeyManagementMode.cs" />
-    <Compile Include="Enums\OfflineTransactionStatus.cs" />
-    <Compile Include="Enums\PaddingType.cs" />
-    <Compile Include="Enums\ResponseStatus.cs" />
-    <Compile Include="Enums\PinPadKey.cs" />
-    <Compile Include="Enums\OnlineTransactionStatus.cs" />
-    <Compile Include="Enums\PinPadPrinterStatus.cs" />
-    <Compile Include="Enums\PrtAction.cs" />
-    <Compile Include="Enums\PrtAlignment.cs" />
-    <Compile Include="Enums\PrtStringSize.cs" />
-    <Compile Include="Enums\StatusWatcherMode.cs" />
-    <Compile Include="PinPad\PinPadFileLoadedEventArgs.cs" />
-    <Compile Include="Exceptions\CommandNameMismatchException.cs" />
-    <Compile Include="Exceptions\InvalidChecksumException.cs" />
-    <Compile Include="Exceptions\PinPadException.cs" />
-    <Compile Include="Exceptions\InvalidValueException.cs" />
-    <Compile Include="Exceptions\PropertyParseException.cs" />
-    <Compile Include="Exceptions\StoneVersionMismatchException.cs" />
-    <Compile Include="Exceptions\PrinterException.cs" />
-    <Compile Include="Exceptions\PrinterInUseException.cs" />
-    <Compile Include="Exceptions\PrinterOutOfPaperException.cs" />
-    <Compile Include="Exceptions\PrinterOverheatingException.cs" />
-    <Compile Include="Exceptions\UnsetPropertyException.cs" />
-    <Compile Include="Factories\PrinterExceptionFactory.cs" />
-    <Compile Include="Commands\IGinAcquirerResponse.cs" />
-    <Compile Include="Property\IProperty.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PinPad\PinPadDisplay.cs" />
-    <Compile Include="PinPad\PinPadStorage.cs" />
-    <Compile Include="PinPad\PinPadKeyboard.cs" />
-    <Compile Include="Menus\BooleanInput.cs" />
-    <Compile Include="Menus\FunctionInput.cs" />
-    <Compile Include="Menus\DynamicMenu.cs" />
-    <Compile Include="Menus\MenuHandler.cs" />
-    <Compile Include="Menus\NumericMenu.cs" />
-    <Compile Include="Menus\NumericInput.cs" />
-    <Compile Include="Menus\PinPadKeyExtensionMethods.cs" />
-    <Compile Include="PinPad\PinPadPrinter.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="PinPadSDK_Key.snk" />
+    <Compile Include="Tracks\Track1.cs" />
+    <Compile Include="Tracks\Track2.cs" />
+    <Compile Include="TypeCode\ApplicationType.cs" />
+    <Compile Include="TypeCode\ContactlessMode.cs" />
+    <Compile Include="TypeCode\CryptographyMode.cs" />
+    <Compile Include="TypeCode\EmvTableType.cs" />
+    <Compile Include="TypeCode\FallbackStatus.cs" />
+    <Compile Include="TypeCode\GkeActionCode.cs" />
+    <Compile Include="TypeCode\InterchangeType.cs" />
+    <Compile Include="TypeCode\KeyManagementMode.cs" />
+    <Compile Include="TypeCode\OfflineTransactionStatus.cs" />
+    <Compile Include="TypeCode\PinpadKeyCode.cs" />
+    <Compile Include="TypeCode\PrinterActionCode.cs" />
+    <Compile Include="TypeCode\PrinterAlignmentCode.cs" />
+    <Compile Include="TypeCode\PrinterStringSize.cs" />
+    <Compile Include="TypeCode\AbecsResponseStatus.cs" />
+    <Compile Include="Utilities\HexadecimalController.cs" />
+    <Compile Include="Utilities\HexadecimalData.cs" />
+    <Compile Include="Utilities\PrinterExceptionFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CrossPlatformBase, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b64391aecf921c4f, processorArchitecture=MSIL">
-      <HintPath>packages\CrossPlatformBase.1.0.0\lib\portable-net403+sl50+win+wpa81+wp80\CrossPlatformBase.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="StonePortableUtils, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f2416eed10ceccde, processorArchitecture=MSIL">
-      <HintPath>packages\StonePortableUtils.1.0.0\lib\portable-net403+sl50+win+wpa81+wp80\StonePortableUtils.dll</HintPath>
+      <HintPath>..\packages\CrossPlatformBase.1.0.0\lib\portable-net403+sl50+win+wpa81+wp80\CrossPlatformBase.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="PinpadCore_key.snk" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

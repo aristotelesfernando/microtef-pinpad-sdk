@@ -1,13 +1,10 @@
 ﻿using Pinpad.Sdk.Connection;
 using Pinpad.Sdk.Display.Mapper;
 using Pinpad.Sdk.Model.TypeCode;
-using PinPadSDK.Enums;
-using PinPadSDK.PinPad;
-using PinPadSDK.Property;
+using Pinpad.Core.Pinpad;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Pinpad.Sdk.EmvTable;
+using Pinpad.Core.Properties;
 
 namespace Pinpad.Sdk.Display
 {
@@ -16,7 +13,7 @@ namespace Pinpad.Sdk.Display
     /// </summary>
     public class PinpadDisplay : IPinpadDisplay
     {
-        public const int DISPLAY_LINE_WIDTH = 16;
+        
 
         /// <summary>
         /// Pinpad connection referencing the current pinpad, which will receive all information send by this class.
@@ -51,7 +48,7 @@ namespace Pinpad.Sdk.Display
 
             try
             {
-                PinPadFacade pinpadFacade = new PinPadFacade(this.pinpadConnection.LegacyPinpadConnection);
+                PinpadFacade pinpadFacade = new PinpadFacade(this.pinpadConnection.LegacyPinpadConnection);
                 
                 SimpleMessage message = new SimpleMessage(firstLine, secondLine, DisplayPaddingMapper.MapPaddingType(paddingType));
 

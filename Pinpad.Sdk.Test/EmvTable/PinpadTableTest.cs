@@ -5,8 +5,6 @@ using Pinpad.Sdk.Connection;
 using Moq;
 using CrossPlatformBase;
 using Pinpad.Sdk.Model;
-using PinPadSDK.PinPad;
-using PinPadSDK.Controllers.Tables;
 
 namespace Pinpad.Sdk.Test.EmvTable
 {
@@ -28,7 +26,7 @@ namespace Pinpad.Sdk.Test.EmvTable
         {
             Mock<BasePinpadConnection> conn = new Mock<BasePinpadConnection>();
             
-            conn.Object.LegacyPinpadConnection = new Mock<IPinPadConnection>().Object;
+            conn.Object.PlatformPinpadConnection = new Mock<IPinPadConnection>().Object;
             
             return conn;
         }
@@ -69,14 +67,20 @@ namespace Pinpad.Sdk.Test.EmvTable
             table.AddEntry(mockedEntry.Object);
         }
 
-        [TestMethod]
-        public void PinpadTable_UpdatePinpad_should_return_true()
-        {
-            PinpadTable table = PinpadTable.GetInstance(this.MockedConnection.Object);
+		[TestMethod]
+		public void PinpadTable_loading_tables_should_succeed()
+		{
+			PinpadTable table = PinpadTable.GetInstance(this.MockedConnection.Object);
 
-            for (int i = 0; i < 10; i++) { table.AddEntry(this.BasicCapk); }
+			Assert.AreEqual(table.CapkTable.Count, 0);
 
-            Assert.IsTrue(table.UpdatePinpad());
-        }
+			for (int i = 0; i < 10; i++) { table.AddEntry(this.BasicCapk); }
+
+			Assert.AreEqual(table.CapkTable.Count, 10);
+
+			for (int i = 0; i < 5; i++) { table.AddEntry(this.BasicCapk); }
+
+			Assert.AreEqual(table.CapkTable.Count, 15);
+		}
     }
 }

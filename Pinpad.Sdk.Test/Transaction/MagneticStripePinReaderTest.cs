@@ -1,17 +1,17 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PinPadSDK.PinPad;
 using Moq;
 using CrossPlatformBase;
 using Pinpad.Sdk.Transaction;
 using Pinpad.Sdk.Model;
+using Pinpad.Sdk.EmvTable;
 
 namespace Pinpad.Sdk.Test.Transaction
 {
     [TestClass]
     public class MagneticStripePinReaderTest
     {
-        PinPadFacade pinpadFacade;
+        PinpadFacade pinpadFacade;
         string pan;
         long amount;
         string passwordLabel;
@@ -20,8 +20,8 @@ namespace Pinpad.Sdk.Test.Transaction
         [TestInitialize]
         public void Setup()
         {
-            Mock<IPinPadConnection> mockedConn = new Mock<IPinPadConnection>();
-            this.pinpadFacade = new PinPadFacade(mockedConn.Object);
+			//Mock<IPinPadConnection> mockedConn = new Mock<IPinPadConnection>();
+			//this.pinpadFacade = new PinpadFacade(mockedConn.Object);
 
             this.pan = "1234567890123456";
             this.amount = 10000;
@@ -33,7 +33,7 @@ namespace Pinpad.Sdk.Test.Transaction
         public void MagneticStripePinReader_should_throw_exception_if_negative_amount()
         {
             this.amount = -10;
-            MagneticStripePinReader.Read(this.pinpadFacade, this.pan, this.amount, out this.pin);
+            MagneticStripePinReader.Read(null, this.pan, this.amount, out this.pin);
         }
 
         [TestMethod]
@@ -41,7 +41,7 @@ namespace Pinpad.Sdk.Test.Transaction
         public void MagneticStripePinReader_should_throw_exception_if_zero_amount()
         {
             this.amount = 0;
-            MagneticStripePinReader.Read(this.pinpadFacade, this.pan, this.amount, out this.pin);
+            MagneticStripePinReader.Read(null, this.pan, this.amount, out this.pin);
         }
 
         [TestMethod]
@@ -49,7 +49,7 @@ namespace Pinpad.Sdk.Test.Transaction
         public void MagneticStripePinReader_should_throw_exception_if_null_pan()
         {
             this.pan = null;
-            MagneticStripePinReader.Read(this.pinpadFacade, this.pan, this.amount, out this.pin);
+            MagneticStripePinReader.Read(null, this.pan, this.amount, out this.pin);
         }
 
         [TestMethod]
@@ -57,7 +57,7 @@ namespace Pinpad.Sdk.Test.Transaction
         public void MagneticStripePinReader_should_throw_exception_if_empty_pan()
         {
             this.pan = string.Empty;
-            MagneticStripePinReader.Read(this.pinpadFacade, this.pan, this.amount, out this.pin);
+            MagneticStripePinReader.Read(null, this.pan, this.amount, out this.pin);
         }
     }
 }

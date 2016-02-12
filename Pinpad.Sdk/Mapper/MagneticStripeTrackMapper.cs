@@ -1,6 +1,6 @@
 ﻿using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.TypeCode;
-using PinPadSDK.Commands;
+using Pinpad.Core.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;

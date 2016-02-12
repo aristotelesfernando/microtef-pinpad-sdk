@@ -1,10 +1,5 @@
-﻿using PinPadSDK.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace PinPadSDK.Commands {
+﻿namespace Pinpad.Core.Commands
+{
     /// <summary>
     /// GKY response
     /// </summary>

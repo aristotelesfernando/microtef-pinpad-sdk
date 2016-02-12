@@ -1,5 +1,6 @@
 ﻿using CrossPlatformBase;
-using PinPadSDK.PinPad;
+using Pinpad.Core.Pinpad;
+using Pinpad.Sdk.EmvTable;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Pinpad.Sdk.Connection
     /// </summary>
     public class PinpadConnection : BasePinpadConnection
     {
-        /* MEMBERS */
+        // Members
         /// <summary>
         /// Whether the connection is opened or not.
         /// This property determines wheter something can be sent to the device or not. Should be verified after every attempting to send data to the pinpad.
@@ -21,16 +22,16 @@ namespace Pinpad.Sdk.Connection
         {
             get
             {
-                if (this.LegacyPinpadConnection == null)
+                if (this.PlatformPinpadConnection == null)
                 {
                     return false;
                 }
 
-                return this.LegacyPinpadConnection.IsOpen;
+                return this.PlatformPinpadConnection.IsOpen;
             }
         }
 
-        /* METHODS */
+        // Methods
         /// <summary>
         /// Search in all available serial ports for a pinpad connection.
         /// </summary>
@@ -51,11 +52,11 @@ namespace Pinpad.Sdk.Connection
         /// <exception cref="System.IO.IOException">The port is in an invalid state. - or - An attempt to set the state of the underlying port failed. For example, the parameters passed from this System.IO.Ports.SerialPort object were invalid.</exception>
         public override void Open(string portName)
         {
-            this.LegacyPinpadConnection = PinPadConnectionManager.GetPinPadConnection(portName);
+            this.PlatformPinpadConnection = PinPadConnectionManager.GetPinPadConnection(portName);
             
-            if (this.LegacyPinpadConnection.IsOpen == false) 
+            if (this.PlatformPinpadConnection.IsOpen == false) 
             { 
-                this.LegacyPinpadConnection.Open(); 
+                this.PlatformPinpadConnection.Open(); 
             }
         }
         /// <summary>
@@ -70,7 +71,7 @@ namespace Pinpad.Sdk.Connection
                 return;
             }
 
-            this.LegacyPinpadConnection.Close();
+            this.PlatformPinpadConnection.Close();
         }
         /// <summary>
         /// Sends a symbolic stream of bytes, to verify if the connection is OK.
@@ -82,7 +83,7 @@ namespace Pinpad.Sdk.Connection
 
             try
             {
-                PinPadFacade pinpadFacade = new PinPadFacade(this.LegacyPinpadConnection);
+                PinpadFacade pinpadFacade = new PinpadFacade(this.PlatformPinpadConnection);
 
                 return pinpadFacade.Communication.IsConnectionAlive();
             }

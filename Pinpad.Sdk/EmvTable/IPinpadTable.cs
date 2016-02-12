@@ -1,10 +1,5 @@
-﻿using System;
+﻿using Pinpad.Sdk.Model;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using PinPadSDK.Controllers.Tables;
-using Pinpad.Sdk.Model;
 
 namespace Pinpad.Sdk.EmvTable
 {

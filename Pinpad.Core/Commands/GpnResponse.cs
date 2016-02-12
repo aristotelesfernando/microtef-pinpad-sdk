@@ -1,11 +1,7 @@
-﻿using PinPadSDK.Property;
-using StonePortableUtils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Pinpad.Core.Properties;
+using Pinpad.Core.Utilities;
 
-namespace PinPadSDK.Commands {
+namespace Pinpad.Core.Commands {
     /// <summary>
     /// GPN response
     /// </summary>
@@ -15,8 +11,8 @@ namespace PinPadSDK.Commands {
         /// </summary>
         public GpnResponse() {
             this.RSP_LEN1 = new RegionProperty("RSP_LEN1", 3);
-            this.GPN_PINBLK = new PinPadFixedLengthPropertyController<HexadecimalData>("GPN_PINBLK", 16, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
-            this.GPN_KSN = new PinPadFixedLengthPropertyController<HexadecimalData>("GPN_KSN", 20, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
+            this.GPN_PINBLK = new PinpadFixedLengthProperty<HexadecimalData>("GPN_PINBLK", 16, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
+            this.GPN_KSN = new PinpadFixedLengthProperty<HexadecimalData>("GPN_KSN", 20, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
 
             this.StartRegion(this.RSP_LEN1);
             {
@@ -46,11 +42,11 @@ namespace PinPadSDK.Commands {
         /// <summary>
         /// Encrypted Pin Block containing the data from the GPN request concatenated
         /// </summary>
-        public PinPadFixedLengthPropertyController<HexadecimalData> GPN_PINBLK { get; private set; }
+        public PinpadFixedLengthProperty<HexadecimalData> GPN_PINBLK { get; private set; }
 
         /// <summary>
         /// Key Serial Number is DUKPT was used, for MK/WK this field is filled with zeros
         /// </summary>
-        public PinPadFixedLengthPropertyController<HexadecimalData> GPN_KSN { get; private set; }
+        public PinpadFixedLengthProperty<HexadecimalData> GPN_KSN { get; private set; }
     }
 }

@@ -1,44 +1,53 @@
-﻿using PinPadSDK.Property;
-using PinPadSDK.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Pinpad.Core.Properties;
+using Pinpad.Core.TypeCode;
 
-namespace PinPadSDK.Commands {
+/* WARNING!
+ * 
+ * DEPRECATED.
+ * MUST BE REFACTORED.
+ * 
+ */
+
+namespace Pinpad.Core.Commands 
+{
     /// <summary>
     /// PinPad response command
     /// </summary>
-    public abstract class BaseResponse : BaseCommand {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public BaseResponse( ) {
-            this.RSP_STAT = new PinPadFixedLengthPropertyController<ResponseStatus>("RSP_STAT", 3, false, DefaultStringFormatter.EnumStringFormatter<ResponseStatus>, DefaultStringParser.EnumStringParser<ResponseStatus>);
-
-            this.AddProperty(this.RSP_STAT);
-        }
-
+    public abstract class BaseResponse : BaseCommand 
+	{
+		// Members
         /// <summary>
         /// Is this a blocking command?
         /// Blocking commands depend on external factors and therefore are not garanteed to respond within 10 seconds.
         /// </summary>
         public abstract bool IsBlockingCommand { get; }
-
         /// <summary>
         /// Command response code
         /// </summary>
-        public PinPadFixedLengthPropertyController<ResponseStatus> RSP_STAT { get; private set; }
+        public PinpadFixedLengthProperty<AbecsResponseStatus> RSP_STAT { get; private set; }
+		
+		// Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public BaseResponse () 
+		{
+            this.RSP_STAT = new PinpadFixedLengthProperty<AbecsResponseStatus>("RSP_STAT", 3, false, DefaultStringFormatter.EnumStringFormatter<AbecsResponseStatus>, DefaultStringParser.EnumStringParser<AbecsResponseStatus>);
 
+            this.AddProperty(this.RSP_STAT);
+        }
+
+		// Methods
         /// <summary>
         /// Does the property makes the other properties be ignored?
         /// </summary>
         /// <param name="property">Property</param>
         /// <returns>boolean</returns>
-        protected override bool IsPropertyFinal(IProperty property) {
+        protected override bool IsPropertyFinal(IProperty property) 
+		{
             //If the RSP_STAT is not ST_OK, there is no response data
             if (property == this.RSP_STAT) {
-                if (this.RSP_STAT.Value != ResponseStatus.ST_OK) {
+                if (this.RSP_STAT.Value != AbecsResponseStatus.ST_OK) {
                     return true;
                 }
                 else {
@@ -47,6 +56,5 @@ namespace PinPadSDK.Commands {
             }
             return base.IsPropertyFinal(property);
         }
-
     }
 }

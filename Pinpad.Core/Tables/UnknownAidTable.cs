@@ -1,10 +1,8 @@
-﻿using PinPadSDK.Property;
+﻿using Pinpad.Core.Properties;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace PinPadSDK.Controllers.Tables {
+namespace Pinpad.Core.Tables
+{
     /// <summary>
     /// unknown pattern aid table
     /// </summary>

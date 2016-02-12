@@ -1,50 +1,56 @@
-﻿using PinPadSDK.Property;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Pinpad.Core.Properties;
 
-namespace PinPadSDK.Commands {
-    /// <summary>
-    /// GTS response
-    /// </summary>
-    public class GtsResponse : BaseResponse {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public GtsResponse() {
-            this.RSP_LEN1 = new RegionProperty("RSP_LEN1", 3);
-            this.GTS_TABVER = new PinPadFixedLengthPropertyController<string>("GTS_TABVER", 10, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
+/* WARNING!
+ * 
+ * DEPRECATED.
+ * MUST BE REFACTORED.
+ * 
+ */
 
-            this.StartRegion(this.RSP_LEN1);
-            {
-                this.AddProperty(this.GTS_TABVER);
-            }
-            this.EndLastRegion();
-        }
+namespace Pinpad.Core.Commands 
+{
+	/// <summary>
+	/// GTS response
+	/// </summary>
+	public class GtsResponse : BaseResponse 
+	{
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		public GtsResponse() 
+		{
+			this.RSP_LEN1 = new RegionProperty("RSP_LEN1", 3);
+			this.GTS_TABVER = new PinpadFixedLengthProperty<string>("GTS_TABVER", 10, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
 
-        /// <summary>
-        /// Is this a blocking command?
-        /// </summary>
-        public override bool IsBlockingCommand {
-            get { return false; }
-        }
+			this.StartRegion(this.RSP_LEN1);
+			{
+				this.AddProperty(this.GTS_TABVER);
+			}
+			this.EndLastRegion();
+		}
 
-        /// <summary>
-        /// Name of the command
-        /// </summary>
-        public override string CommandName { get { return "GTS"; } }
+		/// <summary>
+		/// Is this a blocking command?
+		/// </summary>
+		public override bool IsBlockingCommand {
+			get { return false; }
+		}
 
-        /// <summary>
-        /// Length of the first region of the command
-        /// </summary>
-        public RegionProperty RSP_LEN1 { get; private set; }
+		/// <summary>
+		/// Name of the command
+		/// </summary>
+		public override string CommandName { get { return "GTS"; } }
 
-        /// <summary>
-        /// Version of the EMV table from the requested Acquirer index
-        /// If there was no table loaded for the requested acquirer index this field will be filled with zeros
-        /// If the table was loaded without the generic index (0) and the requested index was generic this field will be filled with zeros
-        /// </summary>
-        public PinPadFixedLengthPropertyController<string> GTS_TABVER { get; private set; }
-    }
+		/// <summary>
+		/// Length of the first region of the command
+		/// </summary>
+		public RegionProperty RSP_LEN1 { get; private set; }
+
+		/// <summary>
+		/// Version of the EMV table from the requested Acquirer index
+		/// If there was no table loaded for the requested acquirer index this field will be filled with zeros
+		/// If the table was loaded without the generic index (0) and the requested index was generic this field will be filled with zeros
+		/// </summary>
+		public PinpadFixedLengthProperty<string> GTS_TABVER { get; private set; }
+	}
 }

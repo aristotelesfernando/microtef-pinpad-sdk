@@ -1,29 +1,31 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PinPadSDK.PinPad;
 using Moq;
 using Pinpad.Sdk.Transaction;
 using CrossPlatformBase;
 using Pinpad.Sdk.Model.TypeCode;
+using Pinpad.Sdk.EmvTable;
+using Pinpad.Core.Pinpad;
+using Pinpad.Core.Commands;
 
 namespace Pinpad.Sdk.Test.Transaction
 {
     [TestClass]
     public class PinReaderTest
     {
-        PinPadFacade pinpadFacade;
+        //PinpadFacade pinpadFacade;
 
         [TestInitialize]
         public void Setup()
         {
             Mock<IPinPadConnection> mockedConn = new Mock<IPinPadConnection>();
-            this.pinpadFacade = new PinPadFacade(mockedConn.Object);
+            //this.pinpadFacade = new PinpadFacade(mockedConn.Object);
         }
 
         [TestMethod]
         public void PinReader_should_not_return_null()
         {
-            PinReader auth = new PinReader(this.pinpadFacade, CardType.Emv);
+            PinReader auth = new PinReader(new MockedPinpadFacade(), CardType.Emv);
             Assert.IsNotNull(auth);
         }
 
@@ -31,15 +33,114 @@ namespace Pinpad.Sdk.Test.Transaction
         [ExpectedException(typeof(InvalidOperationException))]
         public void PinReader_should_throw_exception_if_invalid_CardType()
         {
-            PinReader auth = new PinReader(this.pinpadFacade, CardType.Undefined);
+			PinReader auth = new PinReader(new MockedPinpadFacade(), CardType.Undefined);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void PinReader_should_throw_exception_if_null_PinpadFacade()
         {
-            this.pinpadFacade = null;
-            PinReader auth = new PinReader(this.pinpadFacade, CardType.MagneticStripe);
+			PinReader auth = new PinReader(null, CardType.MagneticStripe);
         }
+
+		// Mocked class for PinpadFacade.
+		internal class MockedPinpadFacade : IPinpadFacade 
+		{
+			public Core.Pinpad.PinpadCommunication Communication
+			{
+				get
+				{
+					return null;
+				}
+				set
+				{
+					
+				}
+			}
+
+			public Core.Pinpad.PinpadKeyboard Keyboard
+			{
+				get
+				{
+					return null;
+				}
+				set
+				{
+					
+				}
+			}
+
+			public Core.Pinpad.PinpadDisplay Display
+			{
+				get
+				{
+					return null;
+				}
+				set
+				{
+					
+				}
+			}
+
+			public Core.Pinpad.PinpadPrinter Printer
+			{
+				get
+				{
+					return null;
+				}
+				set
+				{
+					
+				}
+			}
+
+			public Core.Pinpad.PinpadStorage Storage
+			{
+				get
+				{
+					return null;
+				}
+				set
+				{
+					
+				}
+			}
+
+			public PinpadTable Table
+			{
+				get
+				{
+					return null;
+				}
+				set
+				{
+					
+				}
+			}
+
+			public Core.Pinpad.PinpadInfos Infos
+			{
+				get
+				{
+					return null;
+				}
+				set
+				{
+					
+				}
+			}
+
+			public Core.Pinpad.PinpadEncryption Encryption
+			{
+				get
+				{
+					return null;
+				}
+				set
+				{
+					
+				}
+			}
+		}
     }
 }

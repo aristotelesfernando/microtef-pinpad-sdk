@@ -1,5 +1,5 @@
 ﻿using Pinpad.Sdk.Model.TypeCode;
-using PinPadSDK.Enums;
+using Pinpad.Core.TypeCode;
 using System;
 using System.Collections.Generic;
 using System.Linq;

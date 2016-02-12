@@ -1,26 +1,20 @@
 ﻿using Pinpad.Sdk.Connection;
-using Pinpad.Sdk.Display;
-using Pinpad.Sdk.Display.Mapper;
 using Pinpad.Sdk.Model.TypeCode;
 using Pinpad.Sdk.EmvTable;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Mapper;
 using Pinpad.Sdk.Transaction;
-using PinPadSDK.Commands;
-using PinPadSDK.Controllers.Tracks;
-using PinPadSDK.Enums;
-using PinPadSDK.PinPad;
-using PinPadSDK.Property;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ResponseStatus = Pinpad.Sdk.Model.TypeCode.ResponseStatus;
-using LegacyResponseStatus = PinPadSDK.Enums.ResponseStatus;
-using PinPadSDK.Controllers.Tables;
-using System.Diagnostics;
-using PinPadSDK.Exceptions;
 using Pinpad.Sdk.Exceptions;
+using Pinpad.Core.Pinpad;
+using Pinpad.Core.TypeCode;
+using Pinpad.Core.Commands;
+using Pinpad.Core.Properties;
+using System.Diagnostics;
 
 namespace Pinpad.Sdk
 {
@@ -36,7 +30,7 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Facade through which pinpad communication is made.
 		/// </summary>
-		private PinPadFacade pinpadFacade;
+		private PinpadFacade pinpadFacade;
 		
 		/// <summary>
 		/// Connection handler, is responsible for specifying the connection through which the pinpad will be looked for.
@@ -57,21 +51,24 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Information about the pinpad device connected.
 		/// </summary>
-		public static PinpadInfo PinpadInfo { get; private set; }
+		public static IPinpadInfos PinpadInfo { get; private set; }
 
 		// Constructors
 		/// <summary>
 		/// Primary constructor.
 		/// </summary>
 		/// <param name="pinpadConnection">Connection through which the pinpad will be looked for.</param>
-		public PinpadController(BasePinpadConnection pinpadConnection) : this(pinpadConnection, new PinpadDisplay(pinpadConnection), PinpadTable.GetInstance(pinpadConnection)) { }
+		public PinpadController(BasePinpadConnection pinpadConnection) 
+			: this(pinpadConnection, PinpadTable.GetInstance(pinpadConnection)) 
+		{
+		}
 		/// <summary>
 		/// Alternative constructor, setter of all mandatory parameters and responsible for data validation.
 		/// </summary>
 		/// <param name="pinpadConnection">Connection through which the pinpad will be looked for.</param>
 		/// <param name="pinpadDisplay">Display handler.</param>
 		/// <param name="pinpadTable">Pinpad emv table handler.</param>
-		internal PinpadController(BasePinpadConnection pinpadConnection, IPinpadDisplay pinpadDisplay, IPinpadTable pinpadTable)
+		internal PinpadController(BasePinpadConnection pinpadConnection, IPinpadTable pinpadTable)
 		{
 			if (pinpadConnection == null)
 			{
@@ -79,15 +76,15 @@ namespace Pinpad.Sdk
 				throw new ArgumentNullException("pinpadConnection");
 			}
 
-			this.PinpadConnection = pinpadConnection;
-			this.Display = pinpadDisplay;
-			this.EmvTable = pinpadTable;
-			this.pinpadFacade = new PinPadFacade(this.PinpadConnection.LegacyPinpadConnection);
 			this.LastCommandStatus = ResponseStatus.Ok;
-			PinpadController.PinpadInfo = new PinpadInfo(new PinPadInfos(this.pinpadFacade));
+			this.PinpadConnection = pinpadConnection;
+			this.EmvTable = pinpadTable;
+			this.Display = new PinpadDisplay(this.pinpadFacade.Communication);
+			this.pinpadFacade = new PinpadFacade(this.PinpadConnection.PlatformPinpadConnection);
+			PinpadController.PinpadInfo = new PinpadInfos(this.pinpadFacade.Communication);
 		}
 
-		// Methods
+		// Transaction Methods
 		/// <summary>
 		/// On Pinpad screen, alternates between "RETIRE O CARTÃO" and parameter 'message' received, until card removal.
 		/// </summary>
@@ -98,21 +95,18 @@ namespace Pinpad.Sdk
 		{
 			RmcRequest request = new RmcRequest();
 			
-			// Align the message according to its alignment.
-			PaddingType mappedPadding = DisplayPaddingMapper.MapPaddingType(padding);
-			
 			// Assemblies RMC command.
-			request.RMC_MSG.Value = new SimpleMessage(message, mappedPadding);
+			request.RMC_MSG.Value = new SimpleMessage(message, padding);
 
 			// Sends command and receive response
 			GenericResponse response = null;
-            while (response == null)
+			while (response == null)
 			{
 				response = this.pinpadFacade.Communication.SendRequestAndReceiveResponse<GenericResponse>(request);
-            }
+			}
 			
 			// Getting legacy response status code:
-			LegacyResponseStatus legacyStatus = LegacyResponseStatus.ST_OK;
+			AbecsResponseStatus legacyStatus = AbecsResponseStatus.ST_OK;
 
 			// Mapping legacy status code into Pinpad.Sdk response status code.
 			this.LastCommandStatus = ResponseStatusMapper.MapLegacyResponseStatus(legacyStatus);
@@ -128,7 +122,7 @@ namespace Pinpad.Sdk
 		/// <returns>Card basic info.</returns>
 		public CardEntry ReadCard(TransactionType transactionType, decimal amount)
 		{
-			LegacyResponseStatus status;
+			AbecsResponseStatus status;
 			CardEntry cardRead;
 
 			do
@@ -137,26 +131,26 @@ namespace Pinpad.Sdk
 				this.LastCommandStatus = ResponseStatusMapper.MapLegacyResponseStatus(status);
 
 				// EMV tables are incompatible. Recharging tables:
-				if (status == LegacyResponseStatus.ST_TABVERDIF || 
-					status == LegacyResponseStatus.ST_CARDAPPNAV)
+				if (status == AbecsResponseStatus.ST_TABVERDIF || 
+					status == AbecsResponseStatus.ST_CARDAPPNAV)
 				{
 					// TODO: FAZER UM TRATAMENTO DESCENTE
 					return null;
 				}
-				else if (status == LegacyResponseStatus.ST_TIMEOUT)
+				else if (status == AbecsResponseStatus.ST_TIMEOUT)
 				{
 					throw new PinpadDisconnectedException();
 				}
-				else if (status == LegacyResponseStatus.ST_TABERR)
+				else if (status == AbecsResponseStatus.ST_TABERR)
 				{
 					throw new InvalidTableException("EMV table version could not be found.");
 				}
 
-			} while (status != LegacyResponseStatus.ST_OK && status != LegacyResponseStatus.ST_CANCEL);
+			} while (status != AbecsResponseStatus.ST_OK && status != AbecsResponseStatus.ST_CANCEL);
 
 			return cardRead;
 		}
-		private LegacyResponseStatus PerformCardReading(TransactionType transactionType, decimal amount, out CardEntry cardRead)
+		private AbecsResponseStatus PerformCardReading(TransactionType transactionType, decimal amount, out CardEntry cardRead)
 		{
 			cardRead = new CardEntry();
 
@@ -184,7 +178,7 @@ namespace Pinpad.Sdk
 			if (emvTableVersion == null)
 			{
 				// There's no table version, therefore tables cannot be reached.
-				return LegacyResponseStatus.ST_TABERR;
+				return AbecsResponseStatus.ST_TABERR;
 			}
 
 			// If it's a valid EMV table version, then adds it to the command:
@@ -195,20 +189,20 @@ namespace Pinpad.Sdk
 			GcrResponse response = this.pinpadFacade.Communication.SendRequestAndReceiveResponse<GcrResponse>(request);
 			if (response == null)
 			{
-				return LegacyResponseStatus.ST_TIMEOUT;
+				return AbecsResponseStatus.ST_TIMEOUT;
 			}
 
 			Debug.WriteLine("GCR response <{0}>.", response.RSP_STAT.Value);
 			Debug.WriteLine("GCR raw response <{0}>.", response.CommandString);
 
-			if (response.RSP_STAT.Value != LegacyResponseStatus.ST_OK)
+			if (response.RSP_STAT.Value != AbecsResponseStatus.ST_OK)
 			{
 				return response.RSP_STAT.Value;
 			}
 
 			// Saving command response status:
 			// Getting legacy response status code:
-			LegacyResponseStatus legacyStatus = response.RSP_STAT.Value;
+			AbecsResponseStatus legacyStatus = response.RSP_STAT.Value;
 			// Mapping legacy status code into Pinpad.Sdk response status code.
 			this.LastCommandStatus = ResponseStatusMapper.MapLegacyResponseStatus(legacyStatus);
 
@@ -219,10 +213,10 @@ namespace Pinpad.Sdk
 			{
 				this.EmvTable.RefreshFromPinpad();
 
-                if (this.EmvTable.AidTable.Count <= 0)
-                {
-                    throw new InvalidTableException("AID table is empty.");
-                }
+				if (this.EmvTable.AidTable.Count <= 0)
+				{
+					throw new InvalidTableException("AID table is empty.");
+				}
 
 				string brandId = cardRead.BrandId.ToString();
 				var aidVar = this.EmvTable.AidTable.First(a => a.AidIndex == brandId);
@@ -231,7 +225,7 @@ namespace Pinpad.Sdk
 				cardRead.BrandName = EmvTrackMapper.GetBrandByAid(cardRead.ApplicationId);
 			}
 
-			return LegacyResponseStatus.ST_OK;
+			return AbecsResponseStatus.ST_OK;
 		}
 		/// <summary>
 		/// If cardholder card needs password, than prompts it. Otherwise, nothing is done. 
@@ -255,6 +249,12 @@ namespace Pinpad.Sdk
 			this.LastCommandStatus = reader.CommandStatus;
 
 			return pin;
+		}
+
+		// Pinpad utils methods
+		public bool OpenConnection()
+		{
+			return this.pinpadFacade.Communication.SendRequestAndVerifyResponseCode(new OpnRequest());
 		}
 
 		// Validations

@@ -1,18 +1,17 @@
-﻿using PinPadSDK.Commands;
-using PinPadSDK.Commands.Gpn;
-using PinPadSDK.Enums;
-using PinPadSDK.PinPad;
-using PinPadSDK.Property;
-using StonePortableUtils;
+﻿using Pinpad.Core.Commands;
+using Pinpad.Core.Commands.Gpn;
+using Pinpad.Core.Pinpad;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ResponseStatus = Pinpad.Sdk.Model.TypeCode.ResponseStatus;
-using LegacyResponseStatus = PinPadSDK.Enums.ResponseStatus;
 using Pinpad.Sdk.Mapper;
-using Pinpad.Sdk.Display;
 using Pinpad.Sdk.Model;
+using Pinpad.Sdk.EmvTable;
+using Pinpad.Core.Utilities;
+using Pinpad.Core.Properties;
+using Pinpad.Core.TypeCode;
+using Pinpad.Sdk.Model.TypeCode;
 
 namespace Pinpad.Sdk.Transaction
 {
@@ -31,7 +30,7 @@ namespace Pinpad.Sdk.Transaction
 		/// <param name="amount">Transaction amount.</param>
 		/// <returns>Wheter is an online transaction or not.</returns>
 		/// <exception cref="System.InvalidOperationException">Thrown when parameter validation fails.</exception>
-		internal static ResponseStatus Read(PinPadFacade pinpadFacade, string pan, decimal amount, out Pin pin)
+		internal static ResponseStatus Read(IPinpadFacade pinpadFacade, string pan, decimal amount, out Pin pin)
 		{
 			pin = new Pin();
 
@@ -46,7 +45,7 @@ namespace Pinpad.Sdk.Transaction
 			GpnResponse response = MagneticStripePinReader.SendGpn(pinpadFacade, pan, amount);
 
 			// Saving command response status:
-			LegacyResponseStatus legacyStatus = response.RSP_STAT.Value;
+			AbecsResponseStatus legacyStatus = response.RSP_STAT.Value;
 			ResponseStatus status = ResponseStatusMapper.MapLegacyResponseStatus(legacyStatus);
 
 			if (status == ResponseStatus.Ok)
@@ -68,7 +67,7 @@ namespace Pinpad.Sdk.Transaction
 		/// <param name="pan">Primary Account Number printed on the card.</param>
 		/// <param name="amount">Transaction amount.</param>
 		/// <returns>ABECS GPN command response.</returns>
-		private static GpnResponse SendGpn(PinPadFacade pinpadFacade, string pan, decimal amount)
+		private static GpnResponse SendGpn(IPinpadFacade pinpadFacade, string pan, decimal amount)
 		{
 			GpnRequest request = new GpnRequest();
 
@@ -83,7 +82,7 @@ namespace Pinpad.Sdk.Transaction
 			
 			pinEntry.GPN_MIN.Value = PinReader.PASSWORD_MINIMUM_LENGTH;
 			pinEntry.GPN_MAX.Value = PinReader.PASSWORD_MAXIMUM_LENGTH;
-			pinEntry.GPN_MSG.Value.Padding = PaddingType.Left;
+			pinEntry.GPN_MSG.Value.Padding = DisplayPaddingType.Left;
 			pinEntry.GPN_MSG.Value.FirstLine = MagneticStripePinReader.GetAmountLabel(amount);
 			pinEntry.GPN_MSG.Value.SecondLine = PASSWORD_LABEL;
 

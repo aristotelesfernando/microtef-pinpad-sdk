@@ -1,33 +1,33 @@
-﻿using PinPadSDK.Property;
-using StonePortableUtils;
+﻿using Pinpad.Core.Properties;
+using Pinpad.Core.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace PinPadSDK.Commands {
+namespace Pinpad.Core.Commands 
+{
     /// <summary>
     /// GOC request
     /// </summary>
-    public class GocRequest : BaseCommand {
+    public class GocRequest : BaseCommand 
+	{
         /// <summary>
         /// Constructor
         /// </summary>
-        public GocRequest() {
+        public GocRequest() 
+		{
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
-            this.GOC_AMOUNT = new PinPadFixedLengthPropertyController<long?>("GOC_AMOUNT", 12, false, DefaultStringFormatter.LongIntegerStringFormatter, DefaultStringParser.LongIntegerStringParser);
-            this.GOC_CASHBACK = new PinPadFixedLengthPropertyController<long?>("GOC_CASHBACK", 12, false, DefaultStringFormatter.LongIntegerStringFormatter, DefaultStringParser.LongIntegerStringParser);
+            this.GOC_AMOUNT = new PinpadFixedLengthProperty<long?>("GOC_AMOUNT", 12, false, DefaultStringFormatter.LongIntegerStringFormatter, DefaultStringParser.LongIntegerStringParser);
+            this.GOC_CASHBACK = new PinpadFixedLengthProperty<long?>("GOC_CASHBACK", 12, false, DefaultStringFormatter.LongIntegerStringFormatter, DefaultStringParser.LongIntegerStringParser);
             this.GOC_EXCLIST = new SimpleProperty<bool?>("GOC_EXCLIST", false, DefaultStringFormatter.BooleanStringFormatter, DefaultStringParser.BooleanStringParser);
             this.GOC_CONNECT = new SimpleProperty<bool?>("GOC_CONNECT", false, DefaultStringFormatter.BooleanStringFormatter, DefaultStringParser.BooleanStringParser);
-            this.GOC_RUF1 = new PinPadFixedLengthPropertyController<int?>("GOC_RUF1", 1, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser, null, 0);
+            this.GOC_RUF1 = new PinpadFixedLengthProperty<int?>("GOC_RUF1", 1, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser, null, 0);
             this.GOC_METHOD = new SimpleProperty<CryptographyMethod>("GOC_METHOD", false, CryptographyMethod.StringFormatter, CryptographyMethod.StringParser);
-            this.GOC_KEYIDX = new PinPadFixedLengthPropertyController<int?>("GOC_KEYIDX", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
-            this.GOC_WKENC = new PinPadFixedLengthPropertyController<HexadecimalData>("GOC_WKENC", 32, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
+            this.GOC_KEYIDX = new PinpadFixedLengthProperty<int?>("GOC_KEYIDX", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
+            this.GOC_WKENC = new PinpadFixedLengthProperty<HexadecimalData>("GOC_WKENC", 32, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
             this.GOC_RISKMAN = new SimpleProperty<bool?>("GOC_RISKMAN", false, DefaultStringFormatter.BooleanStringFormatter, DefaultStringParser.BooleanStringParser);
-            this.GOC_FLRLIMIT = new PinPadFixedLengthPropertyController<HexadecimalData>("GOC_FLRLIMIT", 8, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
-            this.GOC_TPBRS = new PinPadFixedLengthPropertyController<int?>("GOC_TPBRS", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
-            this.GOC_TVBRS = new PinPadFixedLengthPropertyController<HexadecimalData>("GOC_TVBRS", 8, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
-            this.GOC_MTPBRS = new PinPadFixedLengthPropertyController<int?>("GOC_MTPBRS", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
+            this.GOC_FLRLIMIT = new PinpadFixedLengthProperty<HexadecimalData>("GOC_FLRLIMIT", 8, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
+            this.GOC_TPBRS = new PinpadFixedLengthProperty<int?>("GOC_TPBRS", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
+            this.GOC_TVBRS = new PinpadFixedLengthProperty<HexadecimalData>("GOC_TVBRS", 8, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
+            this.GOC_MTPBRS = new PinpadFixedLengthProperty<int?>("GOC_MTPBRS", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
             this.GOC_ACQPR = new VariableLengthProperty<string>("GOC_ACQPR", 3, 32, 1.0f, false, true, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
             this.CMD_LEN2 = new RegionProperty("CMD_LEN2", 3);
             this.GOC_TAGS1 = new VariableLengthProperty<HexadecimalData>("GOC_TAGS1", 3, 256, 1.0f / 2, false, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
@@ -77,12 +77,12 @@ namespace PinPadSDK.Commands {
         /// <summary>
         /// Amount of the transaction
         /// </summary>
-        public PinPadFixedLengthPropertyController<Nullable<long>> GOC_AMOUNT { get; private set; }
+        public PinpadFixedLengthProperty<Nullable<long>> GOC_AMOUNT { get; private set; }
 
         /// <summary>
         /// Amount of cashback of the transaction
         /// </summary>
-        public PinPadFixedLengthPropertyController<Nullable<long>> GOC_CASHBACK { get; private set; }
+        public PinpadFixedLengthProperty<Nullable<long>> GOC_CASHBACK { get; private set; }
 
         /// <summary>
         /// Is the PAN in the Black List?
@@ -97,7 +97,7 @@ namespace PinPadSDK.Commands {
         /// <summary>
         /// Amount of cashback of the transaction
         /// </summary>
-        public PinPadFixedLengthPropertyController<Nullable<int>> GOC_RUF1 { get; private set; }
+        public PinpadFixedLengthProperty<Nullable<int>> GOC_RUF1 { get; private set; }
 
         /// <summary>
         /// Online pin cryptography method
@@ -107,14 +107,14 @@ namespace PinPadSDK.Commands {
         /// <summary>
         /// Online pin cryptography method key index
         /// </summary>
-        public PinPadFixedLengthPropertyController<Nullable<int>> GOC_KEYIDX { get; private set; }
+        public PinpadFixedLengthProperty<Nullable<int>> GOC_KEYIDX { get; private set; }
 
         /// <summary>
         /// Encrypted Working Key with the specified Master Key Index
         /// Hexadecimal
         /// Ignored by the PinPad if using DUKPT as key management method
         /// </summary>
-        public PinPadFixedLengthPropertyController<HexadecimalData> GOC_WKENC { get; private set; }
+        public PinpadFixedLengthProperty<HexadecimalData> GOC_WKENC { get; private set; }
 
         /// <summary>
         /// Should EMV perform risk management?
@@ -125,23 +125,23 @@ namespace PinPadSDK.Commands {
         /// Terminal Floor Limit in cents
         /// Hexadecimal
         /// </summary>
-        public PinPadFixedLengthPropertyController<HexadecimalData> GOC_FLRLIMIT { get; private set; }
+        public PinpadFixedLengthProperty<HexadecimalData> GOC_FLRLIMIT { get; private set; }
 
         /// <summary>
         /// Target Percentage to be used for Biased Random Selection
         /// </summary>
-        public PinPadFixedLengthPropertyController<Nullable<int>> GOC_TPBRS { get; private set; }
+        public PinpadFixedLengthProperty<Nullable<int>> GOC_TPBRS { get; private set; }
 
         /// <summary>
         /// Threshold Value for Biased Random Selection in cents
         /// Hexadecimal
         /// </summary>
-        public PinPadFixedLengthPropertyController<HexadecimalData> GOC_TVBRS { get; private set; }
+        public PinpadFixedLengthProperty<HexadecimalData> GOC_TVBRS { get; private set; }
 
         /// <summary>
         /// Maximum Target Percentage to be used for Biased Random Selection
         /// </summary>
-        public PinPadFixedLengthPropertyController<Nullable<int>> GOC_MTPBRS { get; private set; }
+        public PinpadFixedLengthProperty<Nullable<int>> GOC_MTPBRS { get; private set; }
 
         /// <summary>
         /// Acquirer specific parameters

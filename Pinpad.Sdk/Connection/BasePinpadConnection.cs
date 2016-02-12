@@ -1,5 +1,5 @@
 ﻿using System;
-using ILegacyPinpadConnection = CrossPlatformBase.IPinPadConnection;
+using CrossPlatformBase;
 
 namespace Pinpad.Sdk.Connection
 {
@@ -14,7 +14,7 @@ namespace Pinpad.Sdk.Connection
         /// <summary>
         /// Legacy Pinpad.Core pinpad connection.
         /// </summary>
-        internal ILegacyPinpadConnection LegacyPinpadConnection { get; set; }
+        internal IPinPadConnection PlatformPinpadConnection { get; set; }
         /// <summary>
         /// Try connect to pinpad in the specified serial port.
         /// </summary>

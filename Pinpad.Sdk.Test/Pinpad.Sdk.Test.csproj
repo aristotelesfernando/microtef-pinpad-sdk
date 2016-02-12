@@ -71,14 +71,6 @@
       <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Pinpad.Core">
-      <HintPath>..\packages\Pinpad.Core.1.1.0\lib\portable-net403+sl50+win+wpa81+wp80\Pinpad.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="StonePortableUtils">
-      <HintPath>..\packages\StonePortableUtils.1.0.0\lib\portable-net403+sl50+win+wpa81+wp80\StonePortableUtils.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -97,7 +89,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Display\DisplayPaddingMapperTest.cs" />
     <Compile Include="Display\PinpadDisplayTest.cs" />
     <Compile Include="EmvTable\Entry\AidEntryTest.cs" />
     <Compile Include="EmvTable\Entry\BaseTableEntryTest.cs" />
@@ -115,10 +106,6 @@
     <Compile Include="Transaction\EmvPinReaderTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pinpad.Sdk.Model\Pinpad.Sdk.Model.csproj">
-      <Project>{8deb5a99-825b-4631-b84c-c2c06bf28c2e}</Project>
-      <Name>Pinpad.Sdk.Model</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pinpad.Sdk\Pinpad.Sdk.csproj">
       <Project>{9a69f5e7-6b6b-4bd0-81cb-7f4d59c8290e}</Project>
       <Name>Pinpad.Sdk</Name>

@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using LegacyPinpadCapk = PinPadSDK.Controllers.Tables.CapkTable;
-using StonePortableUtils;
+using LegacyPinpadCapk = Pinpad.Core.Tables.CapkTable;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.EmvTable.Mapper;
+using Pinpad.Core.Utilities;
 
 namespace Pinpad.Sdk.Test.EmvTable.Mapper
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.Mapper;
-using PinPadSDK.Commands;
+using Pinpad.Core.Commands;
 
 namespace Pinpad.Sdk.Test.Mapper
 {

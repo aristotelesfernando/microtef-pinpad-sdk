@@ -54,31 +54,39 @@
     <AssemblyOriginatorKeyFile>PinpadSdkModel_key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AidEntry.cs" />
-    <Compile Include="BaseTableEntry.cs" />
-    <Compile Include="CapkEntry.cs" />
+    <Compile Include="Table\AidEntry.cs" />
+    <Compile Include="Table\BaseTableEntry.cs" />
+    <Compile Include="Table\CapkEntry.cs" />
     <Compile Include="CardEntry.cs" />
+    <Compile Include="Exceptions\CommandNameMismatchException.cs" />
+    <Compile Include="Exceptions\InvalidChecksumException.cs" />
     <Compile Include="Exceptions\InvalidTableException.cs" />
+    <Compile Include="Exceptions\InvalidValueException.cs" />
+    <Compile Include="Exceptions\LenghtMismatchException.cs" />
     <Compile Include="Exceptions\PinpadDisconnectedException.cs" />
+    <Compile Include="Exceptions\PinpadException.cs" />
+    <Compile Include="Exceptions\PrinterBusyException.cs" />
+    <Compile Include="Exceptions\PrinterException.cs" />
+    <Compile Include="Exceptions\PrinterOutOfPaperException.cs" />
+    <Compile Include="Exceptions\PrinterOverheatingException.cs" />
+    <Compile Include="Exceptions\PropertyParseException.cs" />
+    <Compile Include="Exceptions\StoneVersionMismatchException.cs" />
+    <Compile Include="Exceptions\UnsetPropertyException.cs" />
     <Compile Include="Pin.cs" />
-    <Compile Include="PinpadInfo.cs" />
+    <Compile Include="Pinpad\IPinpadInfo.cs" />
+    <Compile Include="Pinpad\IPinpadDisplay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeCode\CardType.cs" />
     <Compile Include="TypeCode\ContactlessMode.cs" />
     <Compile Include="TypeCode\DisplayPaddingType.cs" />
     <Compile Include="TypeCode\EmvTagCode.cs" />
+    <Compile Include="TypeCode\PinpadPrinterStatus.cs" />
     <Compile Include="TypeCode\ResponseStatus.cs" />
     <Compile Include="TypeCode\TransactionTypeCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="PinpadSdkModel_key.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Pinpad.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c823e813c65cd0aa, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pinpad.Core.1.1.0\lib\portable-net403+sl50+win+wpa81+wp80\Pinpad.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

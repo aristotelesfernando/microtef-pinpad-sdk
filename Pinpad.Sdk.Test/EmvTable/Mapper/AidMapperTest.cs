@@ -1,12 +1,12 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using LegacyPinpadAid = PinPadSDK.Controllers.Tables.EmvAidTable;
+using LegacyPinpadAid = Pinpad.Core.Tables.EmvAidTable;
 using PinpadContactlessMode = Pinpad.Sdk.Model.TypeCode.ContactlessMode;
-using LegacyContactlessMode = PinPadSDK.Enums.ContactlessMode;
+using LegacyContactlessMode = Pinpad.Core.TypeCode.ContactlessMode;
 using Pinpad.Sdk.EmvTable.Mapper;
 using Pinpad.Sdk.Model;
-using StonePortableUtils;
-using PinPadSDK.Enums;
+using Pinpad.Core.Utilities;
+using Pinpad.Core.TypeCode;
 
 namespace Pinpad.Sdk.Test.EmvTable.Mapper
 {
@@ -85,7 +85,7 @@ namespace Pinpad.Sdk.Test.EmvTable.Mapper
             aid.ApplicationName = "CREDITO";
 
             aid.TerminalCapabilities = "000EDF";
-            aid.AdditionalTerminalCapabilities = "83684905";
+            aid.AdditionalTerminalCapabilities = "8368490500";
 
             aid.TerminalActionCodeDefault = "12345678";
             aid.TerminalActionCodeDenial = "12345678";
@@ -413,14 +413,6 @@ namespace Pinpad.Sdk.Test.EmvTable.Mapper
         public void AidMapper_ToLegacy_should_throw_exception_if_null_TerminalActionCodeOnline()
         {
             this.Aid.TerminalActionCodeOnline = null;
-            LegacyPinpadAid legacyAid = AidMapper.MapToLegacyAid(this.Aid);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void AidMapper_ToLegacy_should_throw_exception_if_Unsupported_ContactlessMode()
-        {
-            this.Aid.ContactlessMode = PinpadContactlessMode.Unsupported;
             LegacyPinpadAid legacyAid = AidMapper.MapToLegacyAid(this.Aid);
         }
 

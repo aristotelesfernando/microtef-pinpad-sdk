@@ -1,12 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.Mapper;
-using PinPadSDK.Commands;
-using PinPadSDK.Enums;
 using Pinpad.Sdk.Model;
-using PinPadSDK.Property;
-using PinPadSDK.Controllers.Tracks;
 using Pinpad.Sdk.Model.TypeCode;
+using Pinpad.Core.Commands;
+using Pinpad.Core.TypeCode;
 
 namespace Pinpad.Sdk.Test.Mapper
 {
@@ -78,30 +76,6 @@ namespace Pinpad.Sdk.Test.Mapper
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.ContactlessEmv;
             CardType cardType = CardMapper.MapCardType(this.GcrResponse.GCR_CARDTYPE.Value);
             Assert.IsTrue(cardType == CardType.Emv);
-        }
-
-        [TestMethod]
-        public void CardMapper_CardType_should_be_Undefined_AplicationType_is_VisaCashOverTIBCv1()
-        {
-            this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.VisaCashOverTIBCv1;
-            CardType cardType = CardMapper.MapCardType(this.GcrResponse.GCR_CARDTYPE.Value);
-            Assert.IsTrue(cardType == CardType.Undefined);
-        }
-
-        [TestMethod]
-        public void CardMapper_CardType_should_be_Undefined_AplicationType_is_VisaCashOverTIBCv3()
-        {
-            this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.VisaCashOverTIBCv3;
-            CardType cardType = CardMapper.MapCardType(this.GcrResponse.GCR_CARDTYPE.Value);
-            Assert.IsTrue(cardType == CardType.Undefined);
-        }
-
-        [TestMethod]
-        public void CardMapper_CardType_should_be_Undefined_AplicationType_is_EasyEntryOverTIBCv1()
-        {
-            this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.EasyEntryOverTIBCv1;
-            CardType cardType = CardMapper.MapCardType(this.GcrResponse.GCR_CARDTYPE.Value);
-            Assert.IsTrue(cardType == CardType.Undefined);
         }
 
         [TestMethod]

@@ -1,39 +1,34 @@
 ﻿using Pinpad.Sdk.Mapper;
 using Pinpad.Sdk.Model.TypeCode;
-using PinPadSDK.Commands;
-using PinPadSDK.Enums;
-using PinPadSDK.PinPad;
-using PinPadSDK.Property;
-using StonePortableUtils;
+using Pinpad.Core.Commands;
+using Pinpad.Core.TypeCode;
+using Pinpad.Core.Pinpad;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ResponseStatus = Pinpad.Sdk.Model.TypeCode.ResponseStatus;
-using LegacyResponseStatus = PinPadSDK.Enums.ResponseStatus;
+using LegacyResponseStatus = Pinpad.Core.TypeCode.AbecsResponseStatus;
 using Pinpad.Sdk.Model;
 using System.Globalization;
 using System.Diagnostics;
+using Pinpad.Sdk.EmvTable;
+using Pinpad.Core.Utilities;
+using Pinpad.Core.Properties;
 
 namespace Pinpad.Sdk.Transaction
 {
 	internal class EmvPinReader
 	{
-		internal static ResponseStatus Read(PinPadFacade facade, decimal amount, out Pin pin)
+		internal static ResponseStatus Read(IPinpadFacade facade, decimal amount, out Pin pin)
 		{
 			pin = new Pin();
 
 			// Validating data
-			try { EmvPinReader.Validate(amount); }
-			catch (Exception ex)
-			{
-				throw new InvalidOperationException("Error while trying to read security info using EMV. Verify inner exception.", ex);
-			}
+			EmvPinReader.Validate(amount);
 
 			// Using ABECS GOC command to communicate with pinpad.
-			Debug.WriteLine("Sending GOC command to pinpad controller...");
 			GocResponse commandResponse = EmvPinReader.SendGoc(facade, amount);
-			Debug.WriteLine("GOC response <{0}>.", commandResponse.RSP_STAT.Value);
 
 			// Saving command response status:
 			LegacyResponseStatus legacyStatus = commandResponse.RSP_STAT.Value;
@@ -45,7 +40,6 @@ namespace Pinpad.Sdk.Transaction
 			}
 
 			pin.ApplicationCryptogram = MapApplicationCryptogram(commandResponse.GOC_EMVDAT.Value.DataString);
-			Debug.WriteLine("ARQC <{0}>.", pin.ApplicationCryptogram);
 
 			// Whether is a pin online authentication or not.
 			if (commandResponse.GOC_PINONL.Value.HasValue)
@@ -56,14 +50,11 @@ namespace Pinpad.Sdk.Transaction
 			// Savind EMV data:
 			if (commandResponse.GOC_EMVDAT.Value != null)
 			{
-				Debug.WriteLine("Has EMV data.");
 				pin.EmvData = commandResponse.GOC_EMVDAT.Value.DataString;
 			}
 
 			if (pin.IsOnline == true && commandResponse.GOC_DECISION.Value == OfflineTransactionStatus.RequiresAuthorization)
 			{
-				Debug.WriteLine("Has online PIN validation and requires authorization.");
-
 				// If it's an online transaction, that is, needs pin and ksn emv validation:
 				pin.PinBlock = commandResponse.GOC_PINBLK.Value.DataString;
 				pin.KeySerialNumber = commandResponse.GOC_KSN.Value.DataString;
@@ -78,7 +69,7 @@ namespace Pinpad.Sdk.Transaction
 		/// </summary>
 		/// <param name="amount">Transaction amount.</param>
 		/// <returns>ABECS GOC command response.</returns>
-		private static GocResponse SendGoc(PinPadFacade pinpadFacade, decimal amount)
+		private static GocResponse SendGoc(IPinpadFacade pinpadFacade, decimal amount)
 		{
 			GocRequest request = new GocRequest();
 

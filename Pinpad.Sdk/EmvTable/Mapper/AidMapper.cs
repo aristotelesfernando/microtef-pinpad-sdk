@@ -1,15 +1,10 @@
 ﻿using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.TypeCode;
-using PinPadSDK.Enums;
-using StonePortableUtils;
-using StonePortableUtils.Controllers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using LegacyPinpadAid = PinPadSDK.Controllers.Tables.EmvAidTable;
+using LegacyPinpadAid = Pinpad.Core.Tables.EmvAidTable;
 using PinpadContactlessMode = Pinpad.Sdk.Model.TypeCode.ContactlessMode;
-using LegacyContactlessMode = PinPadSDK.Enums.ContactlessMode;
+using LegacyContactlessMode = Pinpad.Core.TypeCode.ContactlessMode;
+using Pinpad.Core.Utilities;
 
 namespace Pinpad.Sdk.EmvTable.Mapper
 {
@@ -130,7 +125,7 @@ namespace Pinpad.Sdk.EmvTable.Mapper
         /// <summary>
         /// Translates PinpadContactlessMode into LegacyContactlessMode (Pinpad.Core ContactlessMode).
         /// </summary>
-        /// <param name="mode">String representing the enum <see cref="PinPadSDK.Enums.ContactlessMode">ContactlessMode</see>.</param>
+        /// <param name="mode">String representing the enum <see cref="Pinpad.Core.Enums.ContactlessMode">ContactlessMode</see>.</param>
         /// <returns>Enumerator value corresponding to the string received as parameter.</returns>
         internal static LegacyContactlessMode MapPinpadContactlessMode(PinpadContactlessMode mode)
         {

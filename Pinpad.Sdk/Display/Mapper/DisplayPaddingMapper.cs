@@ -1,9 +1,5 @@
-﻿using Pinpad.Sdk.Model.TypeCode;
-using PinPadSDK.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Pinpad.Core.TypeCode;
+using Pinpad.Sdk.Model.TypeCode;
 
 namespace Pinpad.Sdk.Display.Mapper
 {
@@ -13,7 +9,7 @@ namespace Pinpad.Sdk.Display.Mapper
         /// Translates enumerator from Pinpad.Core to Pinpad.Sdk enumerator.
         /// </summary>
         /// <param name="paddingType"><see cref="Pinpad.Sdk.Display.DisplayPaddingType">Pinpad.Sdk padding enumerator.</see></param>
-        /// <returns><see cref="PinPadSDK.Enums.PaddingType">Pinpad.Core corresponding enumerator.</see></returns>
+        /// <returns><see cref="Pinpad.Core.Enums.PaddingType">Pinpad.Core corresponding enumerator.</see></returns>
         internal static PaddingType MapPaddingType(DisplayPaddingType paddingType)
         {
             switch (paddingType)
