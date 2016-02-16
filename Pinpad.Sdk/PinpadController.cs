@@ -26,7 +26,6 @@ namespace Pinpad.Sdk
 		// Costants
 		internal const short STONE_ACQUIRER_NUMBER = 8;
 
-		// Members
 		/// <summary>
 		/// Facade through which pinpad communication is made.
 		/// </summary>
@@ -35,23 +34,27 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Connection handler, is responsible for specifying the connection through which the pinpad will be looked for.
 		/// </summary>
-		public BasePinpadConnection PinpadConnection { get; set; }
+		public BasePinpadConnection PinpadConnection { get; private set; }
 		/// <summary>
 		/// Display handler, responsible for presenting messages in a pinpad device.
 		/// </summary>
-		public IPinpadDisplay Display { get; set; }
+		public IPinpadDisplay Display { get; private set; }
+		/// <summary>
+		/// Keyboard handler, responsible for getting inputs from pinpad keyboard.
+		/// </summary>
+		public IPinpadKeyboard Keyboard { get; private set; }
+		/// <summary>
+		/// Information about the pinpad device connected.
+		/// </summary>
+		public IPinpadInfos Infos { get; private set; }
 		/// <summary>
 		/// Pinpad Emv table handler, that is, responsible for all operations related to table (CAPK and AID tables) controlling.
 		/// </summary>
-		public IPinpadTable EmvTable { get; set; }
+		public IPinpadTable EmvTable { get; private set; }
 		/// <summary>
 		/// Last status returned from a pinpad command.
 		/// </summary>
 		public ResponseStatus LastCommandStatus { get; private set; }
-		/// <summary>
-		/// Information about the pinpad device connected.
-		/// </summary>
-		public static IPinpadInfos PinpadInfo { get; private set; }
 
 		// Constructors
 		/// <summary>
@@ -79,9 +82,10 @@ namespace Pinpad.Sdk
 			this.LastCommandStatus = ResponseStatus.Ok;
 			this.PinpadConnection = pinpadConnection;
 			this.EmvTable = pinpadTable;
-			this.Display = new PinpadDisplay(this.pinpadFacade.Communication);
 			this.pinpadFacade = new PinpadFacade(this.PinpadConnection.PlatformPinpadConnection);
-			PinpadController.PinpadInfo = new PinpadInfos(this.pinpadFacade.Communication);
+			this.Display = this.pinpadFacade.Display;
+			this.Keyboard = this.pinpadFacade.Keyboard;
+			this.Infos = this.pinpadFacade.Infos;
 		}
 
 		// Transaction Methods

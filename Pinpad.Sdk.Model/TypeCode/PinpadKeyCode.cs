@@ -1,4 +1,4 @@
-﻿namespace Pinpad.Core.TypeCode
+﻿namespace Pinpad.Sdk.Model.TypeCode
 {
 	/// <summary>
 	/// Since undefined is 0 every value will be the actual code plus 1 

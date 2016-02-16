@@ -89,6 +89,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Connection\PinpadConnectionTest.cs" />
     <Compile Include="Display\PinpadDisplayTest.cs" />
     <Compile Include="EmvTable\Entry\AidEntryTest.cs" />
     <Compile Include="EmvTable\Entry\BaseTableEntryTest.cs" />
@@ -106,6 +107,14 @@
     <Compile Include="Transaction\EmvPinReaderTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Pinpad.Core\Pinpad.Core.csproj">
+      <Project>{479287c0-69a0-4e9f-b90f-a8690781ff40}</Project>
+      <Name>Pinpad.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pinpad.Sdk.Model\Pinpad.Sdk.Model.csproj">
+      <Project>{8deb5a99-825b-4631-b84c-c2c06bf28c2e}</Project>
+      <Name>Pinpad.Sdk.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pinpad.Sdk\Pinpad.Sdk.csproj">
       <Project>{9a69f5e7-6b6b-4bd0-81cb-7f4d59c8290e}</Project>
       <Name>Pinpad.Sdk</Name>

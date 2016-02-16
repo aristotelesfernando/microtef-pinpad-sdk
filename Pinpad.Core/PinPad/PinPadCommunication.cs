@@ -86,8 +86,8 @@ namespace Pinpad.Core.Pinpad
 			this.PinpadConnection = pinPadConnection;
 
 			// To change pinpad comm timeout
-			this.PinpadConnection.ReadTimeout = ACKNOWLEDGE_TIMEOUT;
-			this.PinpadConnection.WriteTimeout = ACKNOWLEDGE_TIMEOUT;
+			this.PinpadConnection.ReadTimeout = NON_BLOCKING_TIMEOUT;
+			this.PinpadConnection.WriteTimeout = NON_BLOCKING_TIMEOUT;
 		}
 
 		/* Methods */

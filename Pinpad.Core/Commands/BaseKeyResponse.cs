@@ -1,5 +1,7 @@
 ﻿using Pinpad.Core.TypeCode;
+using Pinpad.Sdk.Model.TypeCode;
 using System;
+
 namespace Pinpad.Core.Commands 
 {
 	/// <summary>

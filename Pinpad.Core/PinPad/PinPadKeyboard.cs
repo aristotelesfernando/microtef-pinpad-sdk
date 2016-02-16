@@ -4,6 +4,8 @@ using Pinpad.Core.Commands.Stone;
 using Pinpad.Core.Properties;
 using Pinpad.Core.TypeCode;
 using Pinpad.Core.Utilities;
+using Pinpad.Sdk.Model;
+using Pinpad.Sdk.Model.TypeCode;
 using System;
 
 namespace Pinpad.Core.Pinpad
@@ -11,7 +13,7 @@ namespace Pinpad.Core.Pinpad
 	/// <summary>
 	/// Pinpad keyboard tool
 	/// </summary>
-	public class PinpadKeyboard
+	public class PinpadKeyboard : IPinpadKeyboard
 	{
 		/// <summary>
 		/// Pinpad communication adapter

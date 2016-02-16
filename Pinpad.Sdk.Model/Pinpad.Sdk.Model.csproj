@@ -54,6 +54,7 @@
     <AssemblyOriginatorKeyFile>PinpadSdkModel_key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Pinpad\IPinpadKeyboard.cs" />
     <Compile Include="Table\AidEntry.cs" />
     <Compile Include="Table\BaseTableEntry.cs" />
     <Compile Include="Table\CapkEntry.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="TypeCode\ContactlessMode.cs" />
     <Compile Include="TypeCode\DisplayPaddingType.cs" />
     <Compile Include="TypeCode\EmvTagCode.cs" />
+    <Compile Include="TypeCode\PinpadKeyCode.cs" />
     <Compile Include="TypeCode\PinpadPrinterStatus.cs" />
     <Compile Include="TypeCode\ResponseStatus.cs" />
     <Compile Include="TypeCode\TransactionTypeCode.cs" />
