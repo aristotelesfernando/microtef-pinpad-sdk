@@ -81,6 +81,7 @@
     <Compile Include="TypeCode\ContactlessMode.cs" />
     <Compile Include="TypeCode\DisplayPaddingType.cs" />
     <Compile Include="TypeCode\EmvTagCode.cs" />
+    <Compile Include="TypeCode\KeyboardMessageCode.cs" />
     <Compile Include="TypeCode\PinpadKeyCode.cs" />
     <Compile Include="TypeCode\PinpadPrinterStatus.cs" />
     <Compile Include="TypeCode\ResponseStatus.cs" />

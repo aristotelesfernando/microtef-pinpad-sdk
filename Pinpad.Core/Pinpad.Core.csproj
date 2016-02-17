@@ -55,6 +55,8 @@
     <Compile Include="Commands\DexRequest.cs" />
     <Compile Include="Commands\DsiRequest.cs" />
     <Compile Include="Commands\DspRequest.cs" />
+    <Compile Include="Commands\GcdRequest.cs" />
+    <Compile Include="Commands\GcdResponse.cs" />
     <Compile Include="Commands\GcrIdApp.cs" />
     <Compile Include="Commands\GcrRequest.cs" />
     <Compile Include="Commands\GcrResponse.cs" />

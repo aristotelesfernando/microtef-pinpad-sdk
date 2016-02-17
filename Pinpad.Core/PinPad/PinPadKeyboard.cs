@@ -137,5 +137,18 @@ namespace Pinpad.Core.Pinpad
 			   return true;
 		   }
 		}
+
+		/// <summary>
+		/// Gets a numeric input from pinpad keyboard.
+		/// </summary>
+		/// <param name="messageCode">Message to be presented on pinpad display while waiting the input.</param>
+		/// <param name="minimumLength">Minimum input size.</param>
+		/// <param name="maximumLength">Maximum input size.</param>
+		/// <param name="timeOut">Time out. Null if should ignore timeout (not recommended).</param>
+		/// <returns></returns>
+		public int GetNumericInput(KeyboardMessageCode messageCode, short minimumLength, short maximumLength, Nullable<int> timeOut)
+		{
+			return 0;
+		}
 	}
 }
