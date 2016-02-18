@@ -19,7 +19,7 @@ namespace Pinpad.Sdk.EmvTable.Mapper
 		/// </summary>
 		/// <param name="capk"><see cref="Pinpad.Sdk.EmvTable.Entry.CapkEntry">CapkEntry</see> instance.</param>
 		/// <returns>A <see cref="Pinpad.Core.Controllers.Tables.CapkTable">legacy instance of CapkEntry</see>.</returns>
-		internal static LegacyPinpadCapk MapToLegacyCapk(CapkEntry capk)
+		internal static LegacyPinpadCapk MapToLegacyCapk(PinpadCapk capk)
 		{
 			LegacyPinpadCapk mappedCapk = new LegacyPinpadCapk();
 
@@ -64,9 +64,9 @@ namespace Pinpad.Sdk.EmvTable.Mapper
 		/// </summary>
 		/// <param name="capk">A <see cref="Pinpad.Core.Controllers.Tables.CapkTable">legacy instance of CapkEntry</see>.</param>
 		/// <returns>An actual <see cref="Pinpad.Sdk.EmvTable.Entry.CapkEntry">CapkEntry</see> instance.</returns>
-		internal static CapkEntry MapToPinpadCapk(LegacyPinpadCapk capk)
+		internal static PinpadCapk MapToPinpadCapk(LegacyPinpadCapk capk)
 		{
-			CapkEntry mappedCapk = new CapkEntry();
+			PinpadCapk mappedCapk = new PinpadCapk();
 
 			mappedCapk.AcquirerNumber = capk.TAB_ACQ.Value.Value;
 			mappedCapk.CapkIndexInTable = capk.TAB_RECIDX.Value.Value.ToString();

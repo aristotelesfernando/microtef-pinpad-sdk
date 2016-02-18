@@ -13,7 +13,7 @@ namespace Pinpad.Sdk.Test.EmvTable.Mapper
     {
         public LegacyPinpadCapk LegacyCapk;
 
-        public CapkEntry Capk;
+        public PinpadCapk Capk;
 
         #region setting stuff up
         [TestInitialize]
@@ -34,16 +34,16 @@ namespace Pinpad.Sdk.Test.EmvTable.Mapper
             capk.T2_MOD.Value = new HexadecimalData("AB79FCC9520896967E776E64444E5DCDD6E13611874F3985722520425295EEA4BD0C2781DE7F31CD3D041F565F747306EED62954B17EDABA3A6C5B85A1DE1BEB9A34141AF38FCF8279C9DEA0D5A6710D08DB4124F041945587E20359BAB47B7575AD94262D4B25F264AF33DEDCF28E09615E937DE32EDC03C54445FE7E38277700000000000000000000000000000000");
             capk.T2_RID.Value = new HexadecimalData("A000000003");
             capk.TAB_RECIDX.Value = 99;
-            capk.TAB_ACQ.Value = AidEntry.STONE_ACQUIRER_NUMBER;
+            capk.TAB_ACQ.Value = PinpadAid.STONE_ACQUIRER_NUMBER;
 
             return capk;
         }
 
-        public CapkEntry CapkInitializer()
+        public PinpadCapk CapkInitializer()
         {
-            CapkEntry capk = new CapkEntry();
+            PinpadCapk capk = new PinpadCapk();
 
-            capk.AcquirerNumber = AidEntry.STONE_ACQUIRER_NUMBER;
+            capk.AcquirerNumber = PinpadAid.STONE_ACQUIRER_NUMBER;
             capk.CapkIndex = "99";
             capk.CapkIndexInTable = "99";
             capk.CheckSum = "4ABFFD6B1C51212D05552E431C5B17007D2F5E6D";
@@ -60,56 +60,56 @@ namespace Pinpad.Sdk.Test.EmvTable.Mapper
         [TestMethod]
         public void CapkMapper_MapFromLegacyCapk_should_not_return_null()
         {
-            CapkEntry mappedCapk = CapkMapper.MapToPinpadCapk(this.LegacyCapk);
+            PinpadCapk mappedCapk = CapkMapper.MapToPinpadCapk(this.LegacyCapk);
             Assert.IsNotNull(mappedCapk);
         }
 
         [TestMethod]
         public void CapkMapper_MapFromLegacyCapk_AcquirerNumber_should_match()
         {
-            CapkEntry mappedCapk = CapkMapper.MapToPinpadCapk(this.LegacyCapk);
+            PinpadCapk mappedCapk = CapkMapper.MapToPinpadCapk(this.LegacyCapk);
             Assert.AreEqual(mappedCapk.AcquirerNumber, this.LegacyCapk.TAB_ACQ.Value);
         }
 
         [TestMethod]
         public void CapkMapper_MapFromLegacyCapk_CapkIndex_should_match()
         {
-            CapkEntry mappedCapk = CapkMapper.MapToPinpadCapk(this.LegacyCapk);
+            PinpadCapk mappedCapk = CapkMapper.MapToPinpadCapk(this.LegacyCapk);
             Assert.AreEqual(mappedCapk.CapkIndex, this.LegacyCapk.T2_CAPKIDX.Value.DataString);
         }
 
         [TestMethod]
         public void CapkMapper_MapFromLegacyCapk_CapkIndexInTable_should_match()
         {
-            CapkEntry mappedCapk = CapkMapper.MapToPinpadCapk(this.LegacyCapk);
+            PinpadCapk mappedCapk = CapkMapper.MapToPinpadCapk(this.LegacyCapk);
             Assert.AreEqual(Convert.ToInt32(mappedCapk.CapkIndexInTable), this.LegacyCapk.TAB_RECIDX.Value);
         }
 
         [TestMethod]
         public void CapkMapper_MapFromLegacyCapk_RecordedIdentification_should_match()
         {
-            CapkEntry mappedCapk = CapkMapper.MapToPinpadCapk(this.LegacyCapk);
+            PinpadCapk mappedCapk = CapkMapper.MapToPinpadCapk(this.LegacyCapk);
             Assert.AreEqual(mappedCapk.RecordedIdentification, this.LegacyCapk.T2_RID.Value.DataString);
         }
 
         [TestMethod]
         public void CapkMapper_MapFromLegacyCapk_Exponent_should_match()
         {
-            CapkEntry mappedCapk = CapkMapper.MapToPinpadCapk(this.LegacyCapk);
+            PinpadCapk mappedCapk = CapkMapper.MapToPinpadCapk(this.LegacyCapk);
             Assert.AreEqual(mappedCapk.Exponent, this.LegacyCapk.T2_EXP.Value.DataString);
         }
 
         [TestMethod]
         public void CapkMapper_MapFromLegacyCapk_Modulus_should_match()
         {
-            CapkEntry mappedCapk = CapkMapper.MapToPinpadCapk(this.LegacyCapk);
+            PinpadCapk mappedCapk = CapkMapper.MapToPinpadCapk(this.LegacyCapk);
             Assert.AreEqual(mappedCapk.Modulus, this.LegacyCapk.T2_MOD.Value.DataString);
         }
 
         [TestMethod]
         public void CapkMapper_MapFromLegacyCapk_CheckSum_should_match()
         {
-            CapkEntry mappedCapk = CapkMapper.MapToPinpadCapk(this.LegacyCapk);
+            PinpadCapk mappedCapk = CapkMapper.MapToPinpadCapk(this.LegacyCapk);
             Assert.AreEqual(mappedCapk.CheckSum, this.LegacyCapk.T2_CHECKSUM.Value.DataString);
             Assert.IsTrue(mappedCapk.CheckSumStatus);
         }

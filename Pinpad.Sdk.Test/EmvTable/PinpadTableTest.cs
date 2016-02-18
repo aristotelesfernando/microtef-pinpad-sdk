@@ -12,7 +12,7 @@ namespace Pinpad.Sdk.Test.EmvTable
     public class PinpadTableTest
     {
         Mock<BasePinpadConnection> MockedConnection;
-        CapkEntry BasicCapk;
+        PinpadCapk BasicCapk;
 
         #region setting stuff up
         [TestInitialize]
@@ -31,9 +31,9 @@ namespace Pinpad.Sdk.Test.EmvTable
             return conn;
         }
 
-        public CapkEntry BasicCapkInitializer()
+        public PinpadCapk BasicCapkInitializer()
         {
-            CapkEntry capk = new CapkEntry();
+            PinpadCapk capk = new PinpadCapk();
 
             capk.RecordedIdentification = "A000000003";
             capk.CapkIndex = "99";

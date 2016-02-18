@@ -4,18 +4,27 @@ namespace Pinpad.Sdk.Model
     /// <summary>
     /// Application Identifier.
     /// </summary>
-    public class AidEntry : BaseTableEntry
+    public class PinpadAid : BaseTableEntry
     {
-        /* CONSTANTS */
+        // Constants
         /// <summary>
         /// Generic TCC value.
         /// </summary>
         public const string DEFAULT_TCC = "R";
+		/// <summary>
+		/// Terminal capabilities exact size.
+		/// </summary>
         public const int TERMINAL_CAPABILITIES_LENGTH = 6;
+		/// <summary>
+		/// Additional capabilities exact size.
+		/// </summary>
         public const int ADDITIONAL_TERMINAL_CAPABILITIES_LENGTH = 10;
+		/// <summary>
+		/// Stone application number into the pinpad.
+		/// </summary>
         public const int STONE_ACQUIRER_NUMBER = 8;
 
-        /* MEMBERS */
+        // Members
         /// <summary>
         /// Acquirer identifier. Responsible for the AID table (in ABECS, Stone is represented by "8").
         /// </summary>
@@ -137,7 +146,7 @@ namespace Pinpad.Sdk.Model
         /// Contactless mode.
         /// Terminal capability to the referred AID, in case it's located in a CTLS.
         /// </summary>
-        public ContactlessMode ContactlessMode { get; set; }
+        public PinpadContactlessMode ContactlessMode { get; set; }
         /// <summary>
         /// Terminal/Reader Contactless Transaction Limit.
         /// </summary>

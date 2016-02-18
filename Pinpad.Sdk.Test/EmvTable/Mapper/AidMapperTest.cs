@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LegacyPinpadAid = Pinpad.Core.Tables.EmvAidTable;
-using PinpadContactlessMode = Pinpad.Sdk.Model.TypeCode.ContactlessMode;
+using PinpadContactlessMode = Pinpad.Sdk.Model.TypeCode.PinpadContactlessMode;
 using LegacyContactlessMode = Pinpad.Core.TypeCode.ContactlessMode;
 using Pinpad.Sdk.EmvTable.Mapper;
 using Pinpad.Sdk.Model;
@@ -14,7 +14,7 @@ namespace Pinpad.Sdk.Test.EmvTable.Mapper
     public class AidMapperTest
     {
         LegacyPinpadAid LegacyAid;
-        AidEntry Aid;
+        PinpadAid Aid;
 
         [TestInitialize]
         public void Setup()
@@ -73,9 +73,9 @@ namespace Pinpad.Sdk.Test.EmvTable.Mapper
             return aid;
         }
 
-        public AidEntry AidInitializer()
+        public PinpadAid AidInitializer()
         {
-            AidEntry aid = new AidEntry();
+            PinpadAid aid = new PinpadAid();
 
             // Filling AID mandatory data!
             aid.AcquirerNumber = 8;
@@ -107,14 +107,14 @@ namespace Pinpad.Sdk.Test.EmvTable.Mapper
         [TestMethod]
         public void AidMapper_mapping_FromLegacy_should_not_return_null()
         {
-            AidEntry mappedAid = AidMapper.MapToAidEntry(this.LegacyAid);
+            PinpadAid mappedAid = AidMapper.MapToAidEntry(this.LegacyAid);
             Assert.IsNotNull(mappedAid);
         }
 
         [TestMethod]
         public void AidMapper_mapping_FromLegacy_ApplicationData_should_match()
         {
-            AidEntry mappedAid = AidMapper.MapToAidEntry(this.LegacyAid);
+            PinpadAid mappedAid = AidMapper.MapToAidEntry(this.LegacyAid);
             
             Assert.AreEqual(mappedAid.AcquirerNumber, this.LegacyAid.TAB_ACQ.Value);
             Assert.AreEqual(mappedAid.AidIndex, this.LegacyAid.TAB_RECIDX.Value.ToString());
@@ -126,7 +126,7 @@ namespace Pinpad.Sdk.Test.EmvTable.Mapper
         [TestMethod]
         public void AidMapper_mapping_FromLegacy_MerchantData_should_match()
         {
-            AidEntry mappedAid = AidMapper.MapToAidEntry(this.LegacyAid);
+            PinpadAid mappedAid = AidMapper.MapToAidEntry(this.LegacyAid);
 
             Assert.AreEqual(mappedAid.MerchantId.ToString("D15"), this.LegacyAid.T1_MERCHID.Value);
             Assert.AreEqual(mappedAid.MerchantCategoryCode.ToString("D4"), this.LegacyAid.T1_MCC.Value);
@@ -135,7 +135,7 @@ namespace Pinpad.Sdk.Test.EmvTable.Mapper
         [TestMethod]
         public void AidMapper_mapping_FromLegacy_TerminalData_should_match()
         {
-            AidEntry mappedAid = AidMapper.MapToAidEntry(this.LegacyAid);
+            PinpadAid mappedAid = AidMapper.MapToAidEntry(this.LegacyAid);
 
             Assert.AreEqual(mappedAid.TerminalId.ToString("D8"), this.LegacyAid.T1_TRMID.Value);
             Assert.AreEqual(mappedAid.TerminalType, this.LegacyAid.T1_TRMTYP.Value.ToString());
@@ -149,7 +149,7 @@ namespace Pinpad.Sdk.Test.EmvTable.Mapper
         [TestMethod]
         public void AidMapper_mapping_FromLegacy_ActionCodes_should_match()
         {
-            AidEntry mappedAid = AidMapper.MapToAidEntry(this.LegacyAid);
+            PinpadAid mappedAid = AidMapper.MapToAidEntry(this.LegacyAid);
 
             Assert.AreEqual(mappedAid.TerminalActionCodeDefault, this.LegacyAid.T1_TACDEF.Value.DataString);
             Assert.AreEqual(mappedAid.TerminalActionCodeDenial, this.LegacyAid.T1_TACDEN.Value.DataString);
@@ -159,7 +159,7 @@ namespace Pinpad.Sdk.Test.EmvTable.Mapper
         [TestMethod]
         public void AidMapper_mapping_FromLegacy_ContactlessData_should_match()
         {
-            AidEntry mappedAid = AidMapper.MapToAidEntry(this.LegacyAid);
+            PinpadAid mappedAid = AidMapper.MapToAidEntry(this.LegacyAid);
 
             Assert.AreEqual(mappedAid.ContactlessZeroAmount, this.LegacyAid.T1_CTLSZEROAM.Value);
             Assert.AreEqual(mappedAid.ContactlessMode, AidMapper.MapLegacyContactlessMode(this.LegacyAid.T1_CTLSMODE.Value));
@@ -172,10 +172,10 @@ namespace Pinpad.Sdk.Test.EmvTable.Mapper
         [TestMethod]
         public void AidMapper_mapping_FromLegacy_TransactionData_should_match()
         {
-            AidEntry mappedAid = AidMapper.MapToAidEntry(this.LegacyAid);
+            PinpadAid mappedAid = AidMapper.MapToAidEntry(this.LegacyAid);
 
             Assert.AreEqual(mappedAid.FloorLimit, this.LegacyAid.T1_FLRLIMIT.Value.DataString);
-            Assert.AreEqual(mappedAid.TCC, AidEntry.DEFAULT_TCC);
+            Assert.AreEqual(mappedAid.TCC, PinpadAid.DEFAULT_TCC);
             Assert.AreEqual(mappedAid.DefaultTransactionDataObjectList, this.LegacyAid.T1_TDOLDEF.Value.DataString);
             Assert.AreEqual(mappedAid.DefaultDynamicDataObjectList, this.LegacyAid.T1_DDOLDEF.Value.DataString);
         }
@@ -251,7 +251,7 @@ namespace Pinpad.Sdk.Test.EmvTable.Mapper
             LegacyPinpadAid mappedAid = AidMapper.MapToLegacyAid(this.Aid);
 
             Assert.AreEqual(this.Aid.FloorLimit, mappedAid.T1_FLRLIMIT.Value.DataString);
-            Assert.AreEqual(this.Aid.TCC, AidEntry.DEFAULT_TCC);
+            Assert.AreEqual(this.Aid.TCC, PinpadAid.DEFAULT_TCC);
             Assert.AreEqual(this.Aid.DefaultTransactionDataObjectList, mappedAid.T1_TDOLDEF.Value.DataString);
             Assert.AreEqual(this.Aid.DefaultDynamicDataObjectList, mappedAid.T1_DDOLDEF.Value.DataString);
         }

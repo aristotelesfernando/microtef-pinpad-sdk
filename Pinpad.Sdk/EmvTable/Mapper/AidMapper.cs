@@ -2,7 +2,7 @@
 using Pinpad.Sdk.Model.TypeCode;
 using System;
 using LegacyPinpadAid = Pinpad.Core.Tables.EmvAidTable;
-using PinpadContactlessMode = Pinpad.Sdk.Model.TypeCode.ContactlessMode;
+using PinpadContactlessMode = Pinpad.Sdk.Model.TypeCode.PinpadContactlessMode;
 using LegacyContactlessMode = Pinpad.Core.TypeCode.ContactlessMode;
 using Pinpad.Core.Utilities;
 
@@ -18,7 +18,7 @@ namespace Pinpad.Sdk.EmvTable.Mapper
         /// </summary>
         /// <param name="aid">Aid entry.</param>
         /// <returns>Legacy representation of Aid.</returns>
-        internal static LegacyPinpadAid MapToLegacyAid(AidEntry aid)
+        internal static LegacyPinpadAid MapToLegacyAid(PinpadAid aid)
         {
             AidMapper.Validate(aid);
 
@@ -77,9 +77,9 @@ namespace Pinpad.Sdk.EmvTable.Mapper
         /// </summary>
         /// <param name="aid">Legacy representation of Aid.</param>
         /// <returns>Actual Aid.</returns>
-        internal static AidEntry MapToAidEntry(LegacyPinpadAid aid)
+        internal static PinpadAid MapToAidEntry(LegacyPinpadAid aid)
         {
-            AidEntry mappedAid = new AidEntry();
+            PinpadAid mappedAid = new PinpadAid();
 
             // Mapping application stuff
             mappedAid.AcquirerNumber = aid.TAB_ACQ.Value.Value;
@@ -166,7 +166,7 @@ namespace Pinpad.Sdk.EmvTable.Mapper
         /// Validates mandatory AID information.
         /// </summary>
         /// <param name="aid">AID information.</param>
-        private static void Validate(AidEntry aid)
+        private static void Validate(PinpadAid aid)
         {
             if (aid.AcquirerNumber <= 0)
             {
@@ -188,7 +188,7 @@ namespace Pinpad.Sdk.EmvTable.Mapper
             {
                 throw new ArgumentException("Invalid (null or empty) TerminalCapabilities.");
             }
-            if (aid.TerminalCapabilities.Length != AidEntry.TERMINAL_CAPABILITIES_LENGTH)
+            if (aid.TerminalCapabilities.Length != PinpadAid.TERMINAL_CAPABILITIES_LENGTH)
             {
                 throw new ArgumentException("TerminalCapabilities must have 6 characters.");
             }
@@ -196,7 +196,7 @@ namespace Pinpad.Sdk.EmvTable.Mapper
             {
                 throw new ArgumentException("Invalid (null or empty) AdditionalTerminalCapabilities");
             }
-            if (aid.AdditionalTerminalCapabilities.Length != AidEntry.ADDITIONAL_TERMINAL_CAPABILITIES_LENGTH)
+            if (aid.AdditionalTerminalCapabilities.Length != PinpadAid.ADDITIONAL_TERMINAL_CAPABILITIES_LENGTH)
             {
                 throw new ArgumentException("AdditionalTerminalCapabilities must have 8 characters.");
             }

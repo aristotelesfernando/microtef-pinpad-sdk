@@ -10,14 +10,14 @@ namespace Pinpad.Sdk.Test.EmvTable.Entry
         [TestMethod]
         public void AidEntry_should_not_return_null()
         {
-            AidEntry aid = new AidEntry();
+            PinpadAid aid = new PinpadAid();
             Assert.IsNotNull(aid);
         }
 
         [TestMethod]
         public void AidEntry_should_extend_BaseTableEntry()
         {
-            AidEntry aid = new AidEntry();
+            PinpadAid aid = new PinpadAid();
             Type aidBaseType = aid.GetType().BaseType;
             Assert.AreEqual(aidBaseType, typeof(BaseTableEntry));
         }

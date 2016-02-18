@@ -10,14 +10,14 @@ namespace Pinpad.Sdk.Test.EmvTable
         [TestMethod]
         public void CapkEntry_should_not_return_null()
         {
-            CapkEntry capk = new CapkEntry();
+            PinpadCapk capk = new PinpadCapk();
             Assert.IsNotNull(capk);
         }
 
         [TestMethod]
         public void CapkEntry_should_extend_BaseTableEntry()
         {
-            CapkEntry capk = new CapkEntry();
+            PinpadCapk capk = new PinpadCapk();
             Type capkBaseType = capk.GetType().BaseType;
             Assert.AreEqual(capkBaseType, typeof(BaseTableEntry));
         }

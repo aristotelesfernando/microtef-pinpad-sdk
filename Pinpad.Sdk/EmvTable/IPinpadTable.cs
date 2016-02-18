@@ -11,11 +11,11 @@ namespace Pinpad.Sdk.EmvTable
         /// <summary>
         /// Actual Capk collection, containing all capk added to the capk table.
         /// </summary>
-        ICollection<CapkEntry> CapkTable { get; }
+        ICollection<PinpadCapk> CapkTable { get; }
         /// <summary>
         /// Actual Aid collection, containing all aid added to the aid table.
         /// </summary>
-        ICollection<AidEntry> AidTable { get; }
+        ICollection<PinpadAid> AidTable { get; }
         /// <summary>
         /// Adds one entry, CAPK or AID, into it respective collection.
         /// </summary>

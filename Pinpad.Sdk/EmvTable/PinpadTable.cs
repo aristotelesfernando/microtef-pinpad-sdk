@@ -39,7 +39,7 @@ namespace Pinpad.Sdk.EmvTable
 		/// <summary>
 		/// Capk collection, containing all capk added to the capk table.
 		/// </summary>
-		public ICollection<CapkEntry> CapkTable
+		public ICollection<PinpadCapk> CapkTable
 		{
 			get;
 			private set;
@@ -47,7 +47,7 @@ namespace Pinpad.Sdk.EmvTable
 		/// <summary>
 		/// Aid collection, containing all aid added to the aid table.
 		/// </summary>
-		public ICollection<AidEntry> AidTable
+		public ICollection<PinpadAid> AidTable
 		{
 			get;
 			private set;
@@ -133,8 +133,8 @@ namespace Pinpad.Sdk.EmvTable
 
 			this.pinpadConnection = pinpadConnection;
 			this.communication = new PinpadCommunication(pinpadConnection.PlatformPinpadConnection);
-			this.AidTable = new Collection<AidEntry>();
-			this.CapkTable = new Collection<CapkEntry>();
+			this.AidTable = new Collection<PinpadAid>();
+			this.CapkTable = new Collection<PinpadCapk>();
 			this._tableCollection = new List<BaseTable>();
 		}
 
@@ -146,13 +146,13 @@ namespace Pinpad.Sdk.EmvTable
 		/// <exception cref="System.NotImplementedException">Thrown if the parameter is valid, but not recognized.</exception>
 		public void AddEntry(BaseTableEntry entry)
 		{
-			if (entry is AidEntry)
+			if (entry is PinpadAid)
 			{
-				this.AidTable.Add((AidEntry)entry);
+				this.AidTable.Add((PinpadAid)entry);
 			}
-			else if (entry is CapkEntry)
+			else if (entry is PinpadCapk)
 			{
-				this.CapkTable.Add((CapkEntry)entry);
+				this.CapkTable.Add((PinpadCapk)entry);
 			}
 			else
 			{
@@ -242,7 +242,7 @@ namespace Pinpad.Sdk.EmvTable
 				if (currentTableEntry is EmvAidTable)
 				{
 					// Maps legacy aid into AidEntry.
-					AidEntry mappedAid = AidMapper.MapToAidEntry(currentTableEntry as EmvAidTable);
+					PinpadAid mappedAid = AidMapper.MapToAidEntry(currentTableEntry as EmvAidTable);
 					
 					// Adds to collection.
 					this.AidTable.Add(mappedAid);
@@ -250,7 +250,7 @@ namespace Pinpad.Sdk.EmvTable
 				else if (currentTableEntry is CapkTable)
 				{
 					// Maps legacy capk into CapkEntry.
-					CapkEntry mappedCapk = CapkMapper.MapToPinpadCapk(currentTableEntry as CapkTable);
+					PinpadCapk mappedCapk = CapkMapper.MapToPinpadCapk(currentTableEntry as CapkTable);
 
 					// Adds to collection.
 					this.CapkTable.Add(mappedCapk);
@@ -286,7 +286,7 @@ namespace Pinpad.Sdk.EmvTable
 		private bool UpdateLegacyPinpadAidTable()
 		{
 			// Iterating through this class AidTable.
-			foreach (AidEntry aid in this.AidTable)
+			foreach (PinpadAid aid in this.AidTable)
 			{
 				// Translating AidEntry into legacy AidEntry (Pinpad.Core).
 				EmvAidTable mappedAid = AidMapper.MapToLegacyAid(aid);
@@ -304,7 +304,7 @@ namespace Pinpad.Sdk.EmvTable
 		private bool UpdateLegacyPinpadCapkTable()
 		{
 			// Iterating through this class CapkTable.
-			foreach(CapkEntry capk in this.CapkTable)
+			foreach(PinpadCapk capk in this.CapkTable)
 			{
 				// Translating CapkEntry into legacy CapkEntry (Pinpad.Core).
 				CapkTable mappedCapk = CapkMapper.MapToLegacyCapk(capk);

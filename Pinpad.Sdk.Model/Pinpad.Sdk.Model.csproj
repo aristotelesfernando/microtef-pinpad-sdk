@@ -55,9 +55,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Pinpad\IPinpadKeyboard.cs" />
-    <Compile Include="Table\AidEntry.cs" />
+    <Compile Include="Table\PinpadAid.cs" />
     <Compile Include="Table\BaseTableEntry.cs" />
-    <Compile Include="Table\CapkEntry.cs" />
+    <Compile Include="Table\PinpadCapk.cs" />
     <Compile Include="CardEntry.cs" />
     <Compile Include="Exceptions\CommandNameMismatchException.cs" />
     <Compile Include="Exceptions\InvalidChecksumException.cs" />
@@ -85,7 +85,7 @@
     <Compile Include="TypeCode\PinpadKeyCode.cs" />
     <Compile Include="TypeCode\PinpadPrinterStatus.cs" />
     <Compile Include="TypeCode\ResponseStatus.cs" />
-    <Compile Include="TypeCode\TransactionTypeCode.cs" />
+    <Compile Include="TypeCode\TransactionType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

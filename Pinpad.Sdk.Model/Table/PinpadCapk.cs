@@ -9,7 +9,7 @@ namespace Pinpad.Sdk.Model
     /// Certification Authority Public Key. 
     /// Embraces all Certificated Authority public keys, used by EMV cards at an authentication process and PIN encryption during an offline transaction.
     /// </summary>
-    public class CapkEntry : BaseTableEntry
+    public class PinpadCapk : BaseTableEntry
     {
         /// <summary>
         /// Acquirer identifier. Responsible for the AID table (in ABECS, Stone is represented by "8").
