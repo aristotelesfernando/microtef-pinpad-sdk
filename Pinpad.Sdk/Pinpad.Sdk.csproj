@@ -95,8 +95,8 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MicroPos.CrossPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b64391aecf921c4f, processorArchitecture=MSIL">
-      <HintPath>..\packages\MicroPos.CrossPlatform.1.1.0\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.CrossPlatform.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\MicroPos.CrossPlatform.1.1.1\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.CrossPlatform.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
