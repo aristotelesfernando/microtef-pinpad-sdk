@@ -269,7 +269,7 @@ namespace Pinpad.Sdk
 		/// <param name="pinpadDisplay">Display handler.</param>
 		/// <param name="pinpadTable">Pinpad emv table handler.</param>
 		/// <exception cref="System.ArgumentNullException">Thrown when a parameter is null (specifies which is).</exception>
-		public void Validate(BasePinpadConnection pinpadConnection, IPinpadDisplay pinpadDisplay, IPinpadTable pinpadTable)
+		private void Validate(BasePinpadConnection pinpadConnection, IPinpadDisplay pinpadDisplay, IPinpadTable pinpadTable)
 		{
 			if (pinpadConnection == null) { throw new ArgumentNullException("pinpadConnection"); }
 			if (pinpadDisplay == null) { throw new ArgumentNullException("pinpadDisplay"); }
