@@ -10,11 +10,7 @@ namespace Pinpad.Core.Commands
 		/// <summary>
 		/// Response Event
 		/// </summary>
-		public override PrinterActionCode PRT_ACTION {
-			get {
-				return PrinterActionCode.End;
-			}
-		}
+		public override PrinterActionCode PRT_ACTION { get { return PrinterActionCode.End; } }
 
 		/// <summary>
 		/// Constructor

@@ -1,10 +1,6 @@
 ﻿using MicroPos.CrossPlatform;
-using Pinpad.Core.Pinpad;
 using Pinpad.Sdk.EmvTable;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Pinpad.Sdk.Connection
 {

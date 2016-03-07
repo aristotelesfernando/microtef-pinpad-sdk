@@ -1,18 +1,21 @@
 ﻿using Pinpad.Core.Properties;
 using System;
 
-namespace Pinpad.Core.Commands {
+namespace Pinpad.Core.Commands
+{
 	/// <summary>
 	/// LFC response
 	/// </summary>
-	public class LfcResponse : BaseResponse {
+	public class LfcResponse : BaseResponse
+	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public LfcResponse() {
+		public LfcResponse()
+		{
 			this.RSP_LEN1 = new RegionProperty("RSP_LEN1", 3);
-			this.LFC_EXISTS = new SimpleProperty<bool?>("LFC_EXISTS", false, DefaultStringFormatter.BooleanStringFormatter, DefaultStringParser.BooleanStringParser);
-			this.LFC_FILESIZE = new PinpadFixedLengthProperty<long?>("LFC_FILESIZE", 10, false, DefaultStringFormatter.LongIntegerStringFormatter, DefaultStringParser.LongIntegerStringParser);
+			this.LFC_EXISTS = new SimpleProperty<Nullable<bool>>("LFC_EXISTS", false, DefaultStringFormatter.BooleanStringFormatter, DefaultStringParser.BooleanStringParser);
+			this.LFC_FILESIZE = new PinpadFixedLengthProperty<Nullable<long>>("LFC_FILESIZE", 10, false, DefaultStringFormatter.LongIntegerStringFormatter, DefaultStringParser.LongIntegerStringParser);
 
 			this.StartRegion(this.RSP_LEN1);
 			{
@@ -25,9 +28,7 @@ namespace Pinpad.Core.Commands {
 		/// <summary>
 		/// Is this a blocking command?
 		/// </summary>
-		public override bool IsBlockingCommand {
-			get { return false; }
-		}
+		public override bool IsBlockingCommand { get { return false; } }
 
 		/// <summary>
 		/// Name of the command

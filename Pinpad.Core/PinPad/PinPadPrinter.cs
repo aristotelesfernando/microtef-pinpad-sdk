@@ -1,7 +1,7 @@
 ﻿using Pinpad.Core.Commands;
-using Pinpad.Core.Pinpad;
 using Pinpad.Core.TypeCode;
 using Pinpad.Core.Utilities;
+using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.TypeCode;
 using System;
 
@@ -17,17 +17,14 @@ namespace Pinpad.Core.Pinpad
 	/// <summary>
 	/// PinPad Printer tool
 	/// </summary>
-	public class PinpadPrinter 
+	public class PinpadPrinter
 	{
 		// Members
 		/// <summary>
-		/// Pinpad communication.
+		/// Pinpad facade.
 		/// </summary>
 		private PinpadCommunication communication;
-		/// <summary>
-		/// Pinpad model.
-		/// </summary>
-		private string pinpadModel;
+		private PinpadInfos informations;
 		/// <summary>
 		/// If pinpad has printer.
 		/// </summary>
@@ -58,22 +55,26 @@ namespace Pinpad.Core.Pinpad
 		/// Constructor
 		/// </summary>
 		/// <param name="pinPad">PinPad to use</param>
-		public PinpadPrinter(PinpadCommunication communication, string pinpadModel) 
+		public PinpadPrinter(PinpadCommunication communication, PinpadInfos informations) 
 		{
 			this.communication = communication;
-			this.pinpadModel = pinpadModel;
+			this.informations = informations;
 		}
 
 		// Methods
-		private Nullable<bool> IsPrinterSupported() {
-			if (this.communication.StoneVersion == null){
+		private Nullable<bool> IsPrinterSupported()
+		{
+			if (this.communication.StoneVersion == null)
+			{
 				return null;
 			}
-			else if (this.communication.StoneVersion < new PrtRequest().MinimumStoneVersion) {
+			else if (this.communication.StoneVersion < new PrtRequest().MinimumStoneVersion)
+			{
 				return false;
 			}
 
-			switch (this.pinpadModel.Trim()) {
+			switch (this.informations.Model.Trim())
+			{
 				case "D210":
 					return true;
 				default:
@@ -155,6 +156,11 @@ namespace Pinpad.Core.Pinpad
 
 			return this.SendPrt(request);
 		}
+        /// <summary>
+        /// Sends the request to print.
+        /// </summary>
+        /// <param name="request">Content to be printed.</param>
+        /// <returns>If the content was printed or not.</returns>
 		private bool SendPrt(PrtRequest request) 
 		{
 			PrtResponse response = this.communication.SendRequestAndReceiveResponse<PrtResponse>(request);

@@ -1,15 +1,18 @@
 ﻿using Pinpad.Core.Properties;
 using Pinpad.Core.Utilities;
 
-namespace Pinpad.Core.Commands {
+namespace Pinpad.Core.Commands
+{
     /// <summary>
     /// LFR request
     /// </summary>
-    public class LfrRequest : BaseStoneRequest {
+    public class LfrRequest : BaseStoneRequest
+    {
         /// <summary>
         /// Constructor
         /// </summary>
-        public LfrRequest() {
+        public LfrRequest()
+        {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
             this.LFR_DATA = new VariableLengthProperty<HexadecimalData>("LFR_DATA", 3, 999, 1.0f / 2, false, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
 

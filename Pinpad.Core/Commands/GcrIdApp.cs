@@ -26,7 +26,8 @@ namespace Pinpad.Core.Commands
 		/// <param name="acquirer">Aid Table Acquirer Index</param>
 		/// <param name="record">Aid Table Record Index</param>
 		public GcrIdApp(int acquirer, int record)
-			: this() {
+			: this()
+        {
 			this.TAB_ACQ.Value = acquirer;
 			this.TAB_RECIDX.Value = record;
 		}

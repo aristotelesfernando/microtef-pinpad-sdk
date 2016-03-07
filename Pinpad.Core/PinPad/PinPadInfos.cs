@@ -16,8 +16,11 @@ namespace Pinpad.Core.Pinpad
 	/// </summary>
 	public class PinpadInfos : IPinpadInfos
 	{
-        // Constants
-        public const short ACQUIRER_APP_ID = 8;
+		// Constants
+		/// <summary>
+		/// Stone application ID.
+		/// </summary>
+		public const short STONE_ACQUIRER_APP_ID = 8;
 
 		// Members
 		/// <summary>
@@ -27,7 +30,7 @@ namespace Pinpad.Core.Pinpad
 		/// <summary>
 		/// Response from GIN command.
 		/// </summary>
-		private GinResponse _ginResponse { get; set; }
+		private GinResponse _ginResponse;
 		/// <summary>
 		/// Response from GIN command.
 		/// </summary>
@@ -45,16 +48,12 @@ namespace Pinpad.Core.Pinpad
 		/// <summary>
 		/// Manufacturer Name
 		/// </summary>
-		public string ManufacturerName {
-			get {
-				if (ginResponse == null) 
-				{
-					return null;
-				}
-				else 
-				{
-					return ginResponse.GIN_MNAME.Value;
-				}
+		public string ManufacturerName
+		{
+			get
+			{
+				if (ginResponse == null) { return null; }
+				else { return ginResponse.GIN_MNAME.Value; }
 			}
 		}
 		/// <summary>
@@ -64,14 +63,8 @@ namespace Pinpad.Core.Pinpad
 		{
 			get 
 			{
-				if (ginResponse == null) 
-				{
-					return null;
-				}
-				else 
-				{
-					return ginResponse.GIN_MODEL.Value;
-				}
+				if (ginResponse == null) { return null; }
+				else { return ginResponse.GIN_MODEL.Value; }
 			}
 		}
 		/// <summary>
@@ -81,14 +74,8 @@ namespace Pinpad.Core.Pinpad
 		{
 			get 
 			{
-				if (ginResponse == null) 
-				{
-					return false;
-				}
-				else 
-				{
-					return ginResponse.GIN_CTLSUP.Value == "C";
-				}
+				if (ginResponse == null) { return false; }
+				else { return ginResponse.GIN_CTLSUP.Value == "C"; }
 			}
 		}
 		/// <summary>
@@ -98,14 +85,8 @@ namespace Pinpad.Core.Pinpad
 		{
 			get 
 			{
-				if (ginResponse == null) 
-				{
-					return null;
-				}
-				else 
-				{
-					return ginResponse.GIN_SOVER.Value;
-				}
+				if (ginResponse == null) { return null; }
+				else { return ginResponse.GIN_SOVER.Value; }
 			}
 		}
 		/// <summary>
@@ -115,14 +96,8 @@ namespace Pinpad.Core.Pinpad
 		{
 			get 
 			{
-				if (ginResponse == null) 
-				{
-					return null;
-				}
-				else 
-				{
-					return ginResponse.GIN_SPECVER.Value;
-				}
+				if (ginResponse == null) { return null; }
+				else { return ginResponse.GIN_SPECVER.Value; }
 			}
 		}
 		/// <summary>
@@ -131,15 +106,9 @@ namespace Pinpad.Core.Pinpad
 		public string ManufacturerVersion 
 		{
 			get 
-			{
-				if (ginResponse == null) 
-				{
-					return null;
-				}
-				else 
-				{
-					return ginResponse.GIN_MANVER.Value;
-				}
+			{	
+				if (ginResponse == null) { return null; }
+				else { return ginResponse.GIN_MANVER.Value; }
 			}
 		}
 		/// <summary>
@@ -149,20 +118,13 @@ namespace Pinpad.Core.Pinpad
 		{
 			get 
 			{
-				if (ginResponse == null) 
-				{
-					return null;
-				}
-				else 
-				{
-					return ginResponse.GIN_SERNUM.Value;
-				}
+				if (ginResponse == null) { return null; }
+				else { return ginResponse.GIN_SERNUM.Value; }
 			}
 		}
 
 		// Constructor
 		public PinpadInfos(PinpadCommunication communication)
-			: base()
 		{
 			this.communication = communication;
 		}
@@ -174,10 +136,16 @@ namespace Pinpad.Core.Pinpad
 		/// <returns>GIN response.</returns>
 		private GinResponse GetGin () 
 		{
+			// Creates the GIN request:
 			GinRequest request = new GinRequest();
+
+			// Sets it to refer to all acquirers:
 			request.GIN_ACQIDX.Value = 00;
 
+			// Sends the request and gets the response:
 			GinResponse response = this.communication.SendRequestAndReceiveResponse<GinResponse>(request);
+
+			// Returns the response:
 			return response;
 		}
 	}

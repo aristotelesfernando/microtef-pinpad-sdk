@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Pinpad.Core.Commands {
+﻿namespace Pinpad.Core.Commands
+{
     /// <summary>
     /// LFE request
     /// </summary>
-    public class LfeRequest : BaseStoneRequest {
+    public class LfeRequest : BaseStoneRequest
+    {
         /// <summary>
         /// Constructor
         /// </summary>
-        public LfeRequest() {
-        }
+        public LfeRequest() { }
 
         /// <summary>
         /// Minimum stone version required for the request

@@ -1,15 +1,18 @@
 ﻿using Pinpad.Core.Properties;
 using Pinpad.Core.TypeCode;
 
-namespace Pinpad.Core.Commands.Stone {
+namespace Pinpad.Core.Commands.Stone
+{
     /// <summary>
     /// GKE request
     /// </summary>
-    public class GkeRequest : BaseStoneRequest {
+    public class GkeRequest : BaseStoneRequest
+    {
         /// <summary>
         /// Constructor
         /// </summary>
-        public GkeRequest() {
+        public GkeRequest()
+        {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
             this.GKE_ACTION = new PinpadFixedLengthProperty<GkeActionCode>("GKE_ACTION", 1, false, DefaultStringFormatter.EnumStringFormatter<GkeActionCode>, DefaultStringParser.EnumStringParser<GkeActionCode>);
 

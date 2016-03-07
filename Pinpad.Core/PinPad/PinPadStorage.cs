@@ -13,7 +13,7 @@ namespace Pinpad.Core.Pinpad
 	/// <summary>
 	/// PinPad storage adapter
 	/// </summary>
-	public class PinpadStorage 
+	public class PinpadStorage
 	{
 		// Members
 		/// <summary>

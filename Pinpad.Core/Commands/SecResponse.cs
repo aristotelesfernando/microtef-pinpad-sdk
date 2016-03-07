@@ -6,11 +6,13 @@ namespace Pinpad.Core.Commands
     /// <summary>
     /// SEC response
     /// </summary>
-    public class SecResponse : BaseResponse {
+    public class SecResponse : BaseResponse
+    {
         /// <summary>
         /// Constructor
         /// </summary>
-        public SecResponse() {
+        public SecResponse()
+        {
             this.RSP_LEN1 = new RegionProperty("RSP_LEN1", 4);
             this.SEC_CMDBLK = new VariableLengthProperty<HexadecimalData>("SEC_CMDBLK", 3, 999, 1.0f, false, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
 
@@ -23,11 +25,9 @@ namespace Pinpad.Core.Commands
 
         /// <summary>
         /// Is this a blocking command?
+        /// Since this command contain a blocking command it's considered a blocking command
         /// </summary>
-        public override bool IsBlockingCommand {
-            // Since this command contain a blocking command it's considered a blocking command
-            get { return true; }
-        }
+        public override bool IsBlockingCommand { get { return true; } }
 
         /// <summary>
         /// Name of the command

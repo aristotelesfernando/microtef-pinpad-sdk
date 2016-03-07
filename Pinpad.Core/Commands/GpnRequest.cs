@@ -15,7 +15,7 @@ namespace Pinpad.Core.Commands
 		public GpnRequest() {
 			this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
 			this.GPN_METHOD = new SimpleProperty<CryptographyMethod>("GPN_METHOD", false, CryptographyMethod.StringFormatter, CryptographyMethod.StringParser);
-			this.GPN_KEYIDX = new PinpadFixedLengthProperty<int?>("GPN_KEYIDX", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
+			this.GPN_KEYIDX = new PinpadFixedLengthProperty<Nullable<int>>("GPN_KEYIDX", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
 			this.GPN_WKENC = new PinpadFixedLengthProperty<HexadecimalData>("GPN_WKENC", 32, false, DefaultStringFormatter.HexadecimalRightPaddingStringFormatter, DefaultStringParser.HexadecimalRightPaddingStringParser);
 			this.GPN_PAN = new VariableLengthProperty<string>("GPN_PAN", 2, 19, 1.0f, true, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
 			this.GPN_ENTRIES = new PinpadCollectionProperty<GpnPinEntryRequest>("GPN_ENTRIES", 1, 1, 36, DefaultStringFormatter.PropertyControllerStringFormatter, DefaultStringParser.PropertyControllerStringParser<GpnPinEntryRequest>);

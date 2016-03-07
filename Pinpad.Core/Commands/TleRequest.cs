@@ -3,12 +3,12 @@
     /// <summary>
     /// TLE request
     /// </summary>
-    public class TleRequest : BaseCommand{
+    public class TleRequest : BaseCommand
+    {
         /// <summary>
         /// Constructor
         /// </summary>
-        public TleRequest() {
-        }
+        public TleRequest() { }
 
         /// <summary>
         /// Name of the command

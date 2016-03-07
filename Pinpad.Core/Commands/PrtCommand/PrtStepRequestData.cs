@@ -7,11 +7,13 @@ namespace Pinpad.Core.Commands
     /// <summary>
     /// Controller for PRT vertical step request action
     /// </summary>
-    public class PrtStepRequestData : BasePrtRequestData {
+    public class PrtStepRequestData : BasePrtRequestData
+    {
         /// <summary>
         /// Constructor
         /// </summary>
-        public PrtStepRequestData() {
+        public PrtStepRequestData()
+        {
             this.PRT_STEPS = new PinpadFixedLengthProperty<int?>("PRT_STEPS", 4, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
 
             this.AddProperty(this.PRT_STEPS);
@@ -20,11 +22,7 @@ namespace Pinpad.Core.Commands
         /// <summary>
         /// Response Event
         /// </summary>
-        public override PrinterActionCode PRT_ACTION {
-            get {
-                return PrinterActionCode.Step;
-            }
-        }
+        public override PrinterActionCode PRT_ACTION { get { return PrinterActionCode.Step; } }
 
         /// <summary>
         /// Adds to the vertical offset of the next print buffer append

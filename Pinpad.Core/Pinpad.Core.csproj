@@ -146,8 +146,6 @@
     <Compile Include="TypeCode\KeyManagementMode.cs" />
     <Compile Include="TypeCode\OfflineTransactionStatus.cs" />
     <Compile Include="TypeCode\PrinterActionCode.cs" />
-    <Compile Include="TypeCode\PrinterAlignmentCode.cs" />
-    <Compile Include="TypeCode\PrinterStringSize.cs" />
     <Compile Include="TypeCode\AbecsResponseStatus.cs" />
     <Compile Include="Utilities\HexadecimalController.cs" />
     <Compile Include="Utilities\HexadecimalData.cs" />

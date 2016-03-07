@@ -1,18 +1,17 @@
 ﻿using Pinpad.Core.Properties;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Pinpad.Core.Commands {
+namespace Pinpad.Core.Commands
+{
     /// <summary>
     /// LFI request
     /// </summary>
-    public class LfiRequest : BaseStoneRequest {
+    public class LfiRequest : BaseStoneRequest
+    {
        /// <summary>
        /// Constructor
        /// </summary>
-       public LfiRequest() {
+       public LfiRequest()
+        {
            this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
            this.LFI_FILENAME = new VariableLengthProperty<string>("LFI_FILENAME", 3, 15, 1.0f, false, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
 

@@ -1,4 +1,4 @@
-﻿namespace Pinpad.Core.TypeCode 
+﻿namespace Pinpad.Sdk.Model.TypeCode 
 {
 	/// <summary>
 	/// Enumerator for PRT string font sizes

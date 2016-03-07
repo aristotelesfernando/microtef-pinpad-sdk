@@ -11,9 +11,10 @@ namespace Pinpad.Core.Commands.Gpn
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public GpnPinEntryRequest() {
-			this.GPN_MIN = new PinpadFixedLengthProperty<int?>("GPN_MIN", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
-			this.GPN_MAX = new PinpadFixedLengthProperty<int?>("GPN_MAX", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
+		public GpnPinEntryRequest()
+		{
+			this.GPN_MIN = new PinpadFixedLengthProperty<Nullable<int>>("GPN_MIN", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
+			this.GPN_MAX = new PinpadFixedLengthProperty<Nullable<int>>("GPN_MAX", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
 			this.GPN_MSG = new SimpleProperty<SimpleMessage>("GPN_MSG", false, DefaultStringFormatter.PropertyControllerStringFormatter, SimpleMessage.StringParser, null, new SimpleMessage());
 
 			this.AddProperty(this.GPN_MIN);

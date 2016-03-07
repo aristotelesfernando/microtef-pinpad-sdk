@@ -9,6 +9,11 @@ namespace Pinpad.Core.Events
 	public class PinpadNotificationEventArgs : EventArgs
 	{
 		/// <summary>
+		/// PinPad message
+		/// </summary>
+		public SimpleMessage Message { get; private set; }
+
+		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="message">PinPad message</param>
@@ -16,10 +21,5 @@ namespace Pinpad.Core.Events
 		{
 			this.Message = message;
 		}
-
-		/// <summary>
-		/// PinPad message
-		/// </summary>
-		public SimpleMessage Message { get; private set; }
 	}
 }

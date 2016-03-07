@@ -36,6 +36,39 @@ namespace Pinpad.Core.Pinpad
 		/// Timeout for Blocking messages
 		/// </summary>
 		public const int BLOCKING_TIMEOUT = 20000;
+		/// <summary>
+		/// Byte used to cancel the previous operation.
+		/// </summary>
+		public const byte CANCEL_BYTE = 0x18;
+		/// <summary>
+		/// Pinpad response when a CAN is acknowledged.
+		/// </summary>
+		public const byte EOT_BYTE = 0x04;
+		/// <summary>
+		/// Returned to the SPE from the pinpad, indicating an INVALID package. 
+		/// In this case, the SPE must remand the package.
+		/// </summary>
+		public const byte NOT_ACKNOWLEDGED_BYTE = 0x15;
+		/// <summary>
+		/// Returned to the SPE from the pinpad, indicating a valid package.
+		/// </summary>
+		public const byte ACKNOWLEDGE_BYTE = 0x06;
+		/// <summary>
+		/// Null byte, used to verify whether the pinpad is connected/alive.
+		/// </summary>
+		public const byte NULL_BYTE = 0x00;
+		/// <summary>
+		/// ETB bytes indicates the end of a package.
+		/// </summary>
+		public const byte ETB_BYTE = 0x17;
+		/// <summary>
+		/// SYN byte indicates the begining of a package.
+		/// </summary>
+		public const byte SYN_BYTE = 0x16;
+		/// <summary>
+		/// Number of times to try to remand a package in case of failure.
+		/// </summary>
+		public const short TIMES_TO_REMAND_PACKAGE_ON_FAILURE = 3;
 
 		// Public members
 		/// <summary>
@@ -57,13 +90,12 @@ namespace Pinpad.Core.Pinpad
 		{
 			get
 			{
-                /*if (this._stoneVersion.HasValue == false)
+				if (this._stoneVersion.HasValue == false)
 				{
 					this.InternalIsConnectionAlive();
 				}
 
-				return this._stoneVersion;*/
-                return 0;
+				return this._stoneVersion;
 			}
 		}
 
@@ -71,19 +103,19 @@ namespace Pinpad.Core.Pinpad
 		private Nullable<int> _stoneVersion;
 		private bool _requestCancelled { get; set; }
 
-		// Event handlers:
-		/// <summary>
-		/// Event for when the Pinpad receives a notification
-		/// </summary>
-		public event EventHandler<PinpadNotificationEventArgs> OnNotification;
+        // Event handlers:
+        /// <summary>
+        /// Event for when the Pinpad receives a notification
+        /// </summary>
+        public EventHandler<PinpadNotificationEventArgs> OnNotification { get; set; }
 
-		// Constructor:
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="pinPad">Owner Pinpad Facade</param>
-		/// <param name="pinPadConnection">Connection with Pinpad device</param>
-		public PinpadCommunication(IPinpadConnection pinPadConnection) 
+        // Constructor:
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="pinPad">Owner Pinpad Facade</param>
+        /// <param name="pinPadConnection">Connection with Pinpad device</param>
+        public PinpadCommunication(IPinpadConnection pinPadConnection) 
 		{
 			this.PinpadConnection = pinPadConnection;
 
@@ -120,13 +152,10 @@ namespace Pinpad.Core.Pinpad
 		/// <returns>true if the request was cancelled</returns>
 		public bool CancelRequest() 
 		{
-			if (this._requestCancelled == true) 
-			{
-				return true;
-			}
+			if (this._requestCancelled == true) { return true; }
 
-			// Send CAN byte
-			this.PinpadConnection.WriteByte(0x18); 
+			// Send CAN byte (byte to cancel previous command)
+			this.PinpadConnection.WriteByte(CANCEL_BYTE); 
 			lock (this.PinpadConnection) 
 			{
 				if (this._requestCancelled == false) 
@@ -134,6 +163,9 @@ namespace Pinpad.Core.Pinpad
 					this.PinpadConnection.ReadTimeout = PinpadCommunication.CANCEL_TIMEOUT;
 
 					byte b;
+
+					// Sends a CAN request while the pinpad does not acknowledge the cancellation.
+					// That is, while the application does not receive the EOT byte.
 					do 
 					{
 						try 
@@ -144,7 +176,8 @@ namespace Pinpad.Core.Pinpad
 						{
 							return false;
 						}
-					} while (b != 0x04); //Wait for EOT
+					} while (b != EOT_BYTE); // Wait for EOT
+
 					this._requestCancelled = true;
 				}
 			}
@@ -234,7 +267,7 @@ namespace Pinpad.Core.Pinpad
 		/// Receives a generic response then verifies if the command is not ERR and response code equals ST_OK
 		/// </summary>
 		/// <returns>true if the response was received, command is not ERR and response code equals ST_OK</returns>
-		public bool ReceiveResponseAndVerifyResponseCode( ) 
+		public bool ReceiveResponseAndVerifyResponseCode() 
 		{
 			GenericResponse response = this.ReceiveResponse<GenericResponse>();
 
@@ -282,7 +315,7 @@ namespace Pinpad.Core.Pinpad
 		/// <typeparam name="responseType">PinpadBaseResponseController to use</typeparam>
 		/// <returns>response object or null if cancelled</returns>
 		public responseType ReceiveResponse<responseType>()
-			where responseType : BaseResponse, new( ) 
+			where responseType : BaseResponse, new() 
 		{
 			responseType response = new responseType();
 
@@ -290,22 +323,22 @@ namespace Pinpad.Core.Pinpad
 			if (response.IsBlockingCommand == true) 
 			{
 				responseString = this.ReceiveResponseString(PinpadCommunication.BLOCKING_TIMEOUT);
-                Debug.WriteLine("Response (blocking): " + responseString);
+				Debug.WriteLine("Response (blocking): " + responseString);
 
-            }
+			}
 			else 
 			{
 				responseString = this.ReceiveResponseString(PinpadCommunication.NON_BLOCKING_TIMEOUT);
-                Debug.WriteLine("Response: " + responseString);
+				Debug.WriteLine("Response: " + responseString);
 			}
 
 			if (responseString == null) 
 			{
-                Debug.WriteLine("Response: (null)");
+				Debug.WriteLine("Response: (null)");
 				return null;
 			}
-            
-            
+			
+			
 			response.CommandString = responseString;
 			return response;
 		}
@@ -351,7 +384,7 @@ namespace Pinpad.Core.Pinpad
 					openedResponseString = responseString;
 				}
 
-				if (string.IsNullOrEmpty(openedResponseString)) 
+				if (string.IsNullOrEmpty(openedResponseString) == true) 
 				{
 					return null;
 				}
@@ -408,7 +441,9 @@ namespace Pinpad.Core.Pinpad
 			this.PinpadConnection.ReadTimeout = PinpadCommunication.ACKNOWLEDGE_TIMEOUT;
 
 			byte acknowledge;
-			do 
+
+			// Reads a byte while do not receiva an ACK or NAK.
+			do
 			{
 				try 
 				{
@@ -418,12 +453,13 @@ namespace Pinpad.Core.Pinpad
 				{
 					return null;
 				}
-				if (acknowledge == 0x15) 
+
+				// Return NULL in case of a Negative Acknowledge
+				if (acknowledge == NOT_ACKNOWLEDGED_BYTE) 
 				{
-					//Return NULL in case of a Negative Acknowledge
 					return false; 
 				}
-			} while (acknowledge != 0x06); //Otherwise iterate through possible garbage until an Acknowledge is found
+			} while (acknowledge != ACKNOWLEDGE_BYTE); 
 			
 			return true;
 		}
@@ -437,7 +473,7 @@ namespace Pinpad.Core.Pinpad
 		/// <returns></returns>
 		private bool InternalSendRequest(byte[] data, int counter = 0)
 		{
-			//Send data
+			// Send data
 			this.PinpadConnection.Write(data);
 
 			Nullable<bool> requestAccepted = this.WasRequestAccepted();
@@ -445,17 +481,17 @@ namespace Pinpad.Core.Pinpad
 			{
 				this._requestCancelled = false;
 
-				// Pinpad acknowdledged the request
+				// Pinpad acknowdledged the request:_
 				return true;
 			}
-			else if (requestAccepted == false && counter < 2)
+			// Try to remand up to 3 times:
+			else if (requestAccepted == false && counter < TIMES_TO_REMAND_PACKAGE_ON_FAILURE)
 			{
-				//Try to resend up to 3 times
 				return InternalSendRequest(data, counter + 1);
 			}
+			// Failed to send:
 			else
 			{
-				//Failed to send
 				return false;
 			}
 		}
@@ -463,14 +499,21 @@ namespace Pinpad.Core.Pinpad
 		{
 			try
 			{
+				// Set operation timeout:
 				this.PinpadConnection.ReadTimeout = PinpadCommunication.ACKNOWLEDGE_TIMEOUT;
-				this.PinpadConnection.WriteByte(0x00); //Send a NUL byte
+
+				// Send a null byte (if the pinpad is connected and alive, it'll return a null byte):
+				this.PinpadConnection.WriteByte(NULL_BYTE);
+
 				byte b;
+
+				// Reads a byte while a null byte is not received:
 				do
 				{
 					b = this.PinpadConnection.ReadByte();
 				}
-				while (b != 0x00); //Wait for NUL byte reply
+				while (b != NULL_BYTE);
+
 				return true;
 			}
 			catch (Exception ex)
@@ -492,24 +535,26 @@ namespace Pinpad.Core.Pinpad
 			try
 			{
 				OpnRequest request = new OpnRequest();
+
+				// Tries to send an OPN request.
+				// Verifies if the request was sent an replied:
 				if (this.InternalSendRequest(request.CommandString) == false)
 				{
 					return false;
 				}
+
+				// If there was any reply, read it:
 				OpnResponse response = this.ReceiveResponse<OpnResponse>();
 
-				if (response == null)
-				{
-					return false;
-				}
-				else if (response.OPN_STONEVER.HasValue)
+				// If the response is null, returns failure:
+				if (response == null) { return false; }
+
+				// If there is Stone Version in the reply:
+				else if (response.OPN_STONEVER.HasValue == true)
 				{
 					this._stoneVersion = response.OPN_STONEVER.Value;
 				}
-				else
-				{
-					this._stoneVersion = 0;
-				}
+				else { this._stoneVersion = 0; }
 
 				return true;
 			}
@@ -519,7 +564,6 @@ namespace Pinpad.Core.Pinpad
 					ex is TimeoutException == false &&
 					ex is InvalidOperationException == false)
 				{
-
 					//CrossPlatformController.SendMailController.SendReportMailThreaded("PinpadSDK: EXCEPTION AT IsConnectionAlive", ex.ToString());
 					throw;
 				}
@@ -529,10 +573,7 @@ namespace Pinpad.Core.Pinpad
 		}
 		private bool IsSecureResponse(string responseString)
 		{
-			if (String.IsNullOrEmpty(responseString))
-			{
-				return false;
-			}
+			if (String.IsNullOrEmpty(responseString) == true) { return false; }
 
 			GenericResponse response = new GenericResponse();
 			response.CommandString = responseString;
@@ -543,23 +584,28 @@ namespace Pinpad.Core.Pinpad
 		}
 		private bool InternalSendRequest(string request)
 		{
-            Debug.WriteLine("Request: " + request);
+			Debug.WriteLine("Request: " + request);
 
 			List<byte> requestByteCollection = new List<byte>(CrossPlatformController.TextEncodingController.GetBytes(TextEncodingType.Ascii, request));
 
-			//Add ETB
-			requestByteCollection.Add(0x17);
+			// Add ETB (indicating the end of a package):
+			requestByteCollection.Add(ETB_BYTE);
 
-			//Generate checksum
+			// Generate checksum:
 			requestByteCollection.AddRange(PinpadCommunication.GenerateChecksum(requestByteCollection.ToArray()));
 
-			//Add SYN
-			requestByteCollection.Insert(0, 0x16);
+			// Add SYN (indication the begining of a package):
+			requestByteCollection.Insert(0, SYN_BYTE);
 
 			lock (this.PinpadConnection)
 			{
+				// Cancel the previous request:
 				this.CancelRequest();
+
+				// Saves the current request as last:
 				this.LastSentRequest = request;
+
+				// Send the request:
 				return InternalSendRequest(requestByteCollection.ToArray());
 			}
 		}
@@ -575,40 +621,61 @@ namespace Pinpad.Core.Pinpad
 		{
 			byte b;
 
+			// Reads a byte (possible garbage) until the reading of a SYN (in case of a normal request) or 
+			// an EOT (in case of a cancel request):
 			do
 			{
+				// Reads one byte:
 				b = this.PinpadConnection.ReadByte();
-			} while (b != 0x16 && b != 0x04); //Iterate through possible garbage until an SYNor EOT is found
+			} while (b != SYN_BYTE && b != EOT_BYTE);
 
-			if (b == 0x04)
+			// In case of EOT, the request was cancelled:
+			if (b == EOT_BYTE)
 			{
 				this._requestCancelled = true;
-				return null; //In case of EOT the request was cancelled
+				return null; 
 			}
 
+			// In case of SYN:
 			string command = null;
 			List<byte> responseByteCollection = new List<byte>();
+
+			// Iterates, reading bytes from I/O buffer (while an ETB if found):
 			do
 			{
+				// Reads one byte:
 				b = this.PinpadConnection.ReadByte();
-				if (b == 0x17)
+
+				// If the byte read is an ETB (response from a CAN request):
+				if (b == ETB_BYTE)
 				{
 					command = CrossPlatformController.TextEncodingController.GetString(TextEncodingType.Ascii, responseByteCollection.ToArray());
 				}
+
+				// Adds the byte to the response:
 				responseByteCollection.Add(b);
-			} while (b != 0x17); //Read response bytes until ETB is found
+			} while (b != ETB_BYTE);
 
+			// Get's the checksum DIRECTLY from the response:
 			byte[] receivedChecksum = new byte[] { this.PinpadConnection.ReadByte(), this.PinpadConnection.ReadByte() };
-			byte[] generatedChecksum = PinpadCommunication.GenerateChecksum(responseByteCollection.ToArray());
 
-			if (receivedChecksum[0] != generatedChecksum[0] ||
-					receivedChecksum[1] != generatedChecksum[1])
+			// Generates a checksum from the response body:
+			byte [] generatedChecksum = PinpadCommunication.GenerateChecksum(responseByteCollection.ToArray());
+
+			// Verify if both checksums match:
+			if (receivedChecksum[0] != generatedChecksum[0] || receivedChecksum[1] != generatedChecksum[1])
 			{
-				if (counter < 3)
+				// If has tries to remand the message:
+				if (counter < TIMES_TO_REMAND_PACKAGE_ON_FAILURE)
 				{
-					this.PinpadConnection.WriteByte(0x15); //Send a NAK so the Pinpad resends the response
+					// Send a NAK to the pinpad:
+					this.PinpadConnection.WriteByte(NOT_ACKNOWLEDGED_BYTE); 
+
+					// Thies to read the message again:
 					return InternalReceiveResponseString(counter + 1);
 				}
+
+				// If number of tries has exceed:
 				else
 				{
 					this.LastReceivedResponse = null;
@@ -616,7 +683,7 @@ namespace Pinpad.Core.Pinpad
 				}
 			}
 
-			responseByteCollection.Remove(0x17);
+			responseByteCollection.Remove(ETB_BYTE);
 			this.LastReceivedResponse = CrossPlatformController.TextEncodingController.GetString(TextEncodingType.Ascii, responseByteCollection.ToArray());
 			return this.LastReceivedResponse;
 		}

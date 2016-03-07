@@ -32,9 +32,7 @@ namespace Pinpad.Core.Commands
 		/// <summary>
 		/// Is this a blocking command?
 		/// </summary>
-		public override bool IsBlockingCommand {
-			get { return false; }
-		}
+		public override bool IsBlockingCommand { get { return false; } }
 
 		/// <summary>
 		/// Name of the command

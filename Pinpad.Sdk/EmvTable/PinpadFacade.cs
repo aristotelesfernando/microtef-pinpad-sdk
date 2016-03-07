@@ -13,23 +13,23 @@ namespace Pinpad.Sdk.EmvTable
 		/// <summary>
 		/// Gets the default Communication adapter.
 		/// </summary>
-		public Core.Pinpad.PinpadCommunication Communication { get; set; }
+		public PinpadCommunication Communication { get; set; }
 		/// <summary>
 		/// Gets the default Keyboard adapter.
 		/// </summary>
-		public Core.Pinpad.PinpadKeyboard Keyboard { get; set; }
+		public PinpadKeyboard Keyboard { get; set; }
 		/// <summary>
 		/// Gets the default Display adapter
 		/// </summary>
-		public Core.Pinpad.PinpadDisplay Display { get; set; }
+		public PinpadDisplay Display { get; set; }
 		/// <summary>
 		/// Gets the default Printer adapter
 		/// </summary>
-		public Core.Pinpad.PinpadPrinter Printer { get; set; }
+		public PinpadPrinter Printer { get; set; }
 		/// <summary>
 		/// Gets the default Storage adapter
 		/// </summary>
-		public Core.Pinpad.PinpadStorage Storage { get; set; }
+		public PinpadStorage Storage { get; set; }
 		/// <summary>
 		/// Gets the default Table adapter
 		/// </summary>
@@ -37,11 +37,11 @@ namespace Pinpad.Sdk.EmvTable
 		/// <summary>
 		/// Gets the default Infos adapter
 		/// </summary>
-		public Core.Pinpad.PinpadInfos Infos { get; set; }
+		public PinpadInfos Infos { get; set; }
 		/// <summary>
 		/// Controller for Stone Secure Command.
 		/// </summary>
-		public Core.Pinpad.PinpadEncryption Encryption { get; set; }
+		public PinpadEncryption Encryption { get; set; }
 
 		/// <summary>
 		/// Creates all pinpad adapters.
@@ -58,7 +58,7 @@ namespace Pinpad.Sdk.EmvTable
 			this.Storage = new PinpadStorage(this.Communication);
 			this.Table = PinpadTable.GetInstance(this.PinpadConnection);
 			this.Infos = new PinpadInfos(this.Communication);
-			this.Printer = new PinpadPrinter(this.Communication, this.Infos.Model);
+			this.Printer = new PinpadPrinter(this.Communication, this.Infos);
 		}
 	}
 }

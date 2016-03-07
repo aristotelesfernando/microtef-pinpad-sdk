@@ -59,9 +59,12 @@ namespace Pinpad.Core.Commands
 		/// <param name="reader">string reader</param>
 		/// <param name="length">string length</param>
 		/// <returns>string</returns>
-		protected virtual string CommandNameStringParser(StringReader reader, int length) {
+		protected virtual string CommandNameStringParser(StringReader reader, int length)
+		{
 			string value = DefaultStringParser.StringStringParser(reader, length);
-			if (CommandName.Equals(value) == false) {
+
+			if (CommandName.Equals(value) == false)
+			{
 				throw new CommandNameMismatchException("\"" + value + "\" not supported for " + CommandName);
 			}
 			return value;

@@ -3,7 +3,8 @@
     /// <summary>
     /// Base Controller for Stone command Requests
     /// </summary>
-    public abstract class BaseStoneRequest : BaseCommand {
+    public abstract class BaseStoneRequest : BaseCommand
+    {
         /// <summary>
         /// Minimum stone version required for the request
         /// </summary>

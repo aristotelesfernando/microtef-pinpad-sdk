@@ -74,7 +74,7 @@
     <Compile Include="Exceptions\StoneVersionMismatchException.cs" />
     <Compile Include="Exceptions\UnsetPropertyException.cs" />
     <Compile Include="Pin.cs" />
-    <Compile Include="Pinpad\IPinpadInfo.cs" />
+    <Compile Include="Pinpad\IPinpadInfos.cs" />
     <Compile Include="Pinpad\IPinpadDisplay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeCode\CardType.cs" />
@@ -84,6 +84,8 @@
     <Compile Include="TypeCode\KeyboardMessageCode.cs" />
     <Compile Include="TypeCode\PinpadKeyCode.cs" />
     <Compile Include="TypeCode\PinpadPrinterStatus.cs" />
+    <Compile Include="TypeCode\PrinterAlignmentCode.cs" />
+    <Compile Include="TypeCode\PrinterStringSize.cs" />
     <Compile Include="TypeCode\ResponseStatus.cs" />
     <Compile Include="TypeCode\TransactionType.cs" />
   </ItemGroup>

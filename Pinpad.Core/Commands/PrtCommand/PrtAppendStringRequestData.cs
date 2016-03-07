@@ -1,5 +1,6 @@
 ﻿using Pinpad.Core.Properties;
 using Pinpad.Core.TypeCode;
+using Pinpad.Sdk.Model.TypeCode;
 
 /* WARNING!
  * 

@@ -9,11 +9,13 @@ namespace Pinpad.Core.Commands
     /// Controller for TLR command
     /// Table Load Record is used to load one or more table records
     /// </summary>
-    public class TlrRequest : BaseCommand {
+    public class TlrRequest : BaseCommand
+    {
         /// <summary>
         /// Constructor
         /// </summary>
-        public TlrRequest() {
+        public TlrRequest()
+        {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
             this.TLR_REC = new VariableLengthCollectionProperty<BaseTable>("TLR_REC", 2, 1, 999, DefaultStringFormatter.PropertyControllerStringFormatter, TlrRequest.TableStringParser);
 
@@ -46,27 +48,36 @@ namespace Pinpad.Core.Commands
         /// </summary>
         /// <param name="reader">string reader</param>
         /// <returns>PinPadBaseTableController</returns>
-        private static BaseTable TableStringParser(StringReader reader) {
-            int length = reader.PeekInt(TAB_LEN_Length); //Retrieve the table length
-            string commandString = reader.ReadString(length); //Retrieve full table command string
+        private static BaseTable TableStringParser(StringReader reader)
+        {
+            // Retrieve the table length
+            int length = reader.PeekInt(TAB_LEN_Length);
 
+            // Retrieve full table command string
+            string commandString = reader.ReadString(length);
+
+            // Parse the table command string
             BaseTable tableData = new BaseTable();
-            tableData.CommandString = commandString; //Parse the table command string
+            tableData.CommandString = commandString; 
 
-            //Now read the Table we just received
+            // Read the Table we just received
             BaseTable value;
-            switch (tableData.TAB_ID) {
+
+            switch (tableData.TAB_ID)
+            {
+                // It's an AID table, check for the application standard
                 case EmvTableType.Aid:
-                    //It's an AID table, check for the application standard
                     BaseAidTable aidTableData = new BaseAidTable();
                     aidTableData.CommandString = commandString;
-                    switch (aidTableData.T1_ICCSTD) {
+
+                    switch (aidTableData.T1_ICCSTD)
+                    {
                         case ApplicationType.IccEmv:
                             value = new EmvAidTable();
                             break;
 
+                        //We don't have the pattern, just keep the data received:
                         default:
-                            //We don't have the pattern, just keep the data received
                             value = new UnknownAidTable();
                             break;
                     }
@@ -83,7 +94,9 @@ namespace Pinpad.Core.Commands
                 default:
                     throw new InvalidOperationException("Attempt to parse unknown table: " + tableData.TAB_ID);
             }
+
             value.CommandString = commandString;
+
             return value;
         }
     }

@@ -20,10 +20,7 @@ namespace Pinpad.Core.Commands
 		/// <summary>
 		/// Is this a blocking command?
 		/// </summary>
-		public override bool IsBlockingCommand 
-		{
-			get { return true; }
-		}
+		public override bool IsBlockingCommand { get { return true; } }
 		/// <summary>
 		/// Name of the command
 		/// </summary>
@@ -37,11 +34,14 @@ namespace Pinpad.Core.Commands
 		/// </summary>
 		public virtual PrinterActionCode PRT_ACTION 
 		{
-			get {
-				if (this.PRT_ACTIONDATA.HasValue) {
+			get
+			{
+				if (this.PRT_ACTIONDATA.HasValue == true)
+				{
 					return this.PRT_ACTIONDATA.Value.PRT_ACTION;
 				}
-				else {
+				else
+				{
 					return PrinterActionCode.Undefined;
 				}
 			}
@@ -55,60 +55,40 @@ namespace Pinpad.Core.Commands
 		/// </summary>
 		public PrtBeginResponseData BeginData 
 		{
-			get {
-				return this.PRT_ACTIONDATA.Value as PrtBeginResponseData;
-			}
-			set {
-				this.PRT_ACTIONDATA.Value = value;
-			}
+			get { return this.PRT_ACTIONDATA.Value as PrtBeginResponseData; }
+			set { this.PRT_ACTIONDATA.Value = value; }
 		}
 		/// <summary>
 		/// End action data
 		/// </summary>
 		public PrtEndResponseData EndData 
 		{
-			get {
-				return this.PRT_ACTIONDATA.Value as PrtEndResponseData;
-			}
-			set {
-				this.PRT_ACTIONDATA.Value = value;
-			}
+			get { return this.PRT_ACTIONDATA.Value as PrtEndResponseData; }
+			set { this.PRT_ACTIONDATA.Value = value; }
 		}
 		/// <summary>
 		/// Append string action data
 		/// </summary>
 		public PrtAppendStringResponseData AppendStringData 
 		{
-			get {
-				return this.PRT_ACTIONDATA.Value as PrtAppendStringResponseData;
-			}
-			set {
-				this.PRT_ACTIONDATA.Value = value;
-			}
+			get { return this.PRT_ACTIONDATA.Value as PrtAppendStringResponseData; }
+			set { this.PRT_ACTIONDATA.Value = value; }
 		}
 		/// <summary>
 		/// Append image action data
 		/// </summary>
 		public PrtAppendImageResponseData AppendImageData 
 		{
-			get {
-				return this.PRT_ACTIONDATA.Value as PrtAppendImageResponseData;
-			}
-			set {
-				this.PRT_ACTIONDATA.Value = value;
-			}
+			get { return this.PRT_ACTIONDATA.Value as PrtAppendImageResponseData; }
+			set { this.PRT_ACTIONDATA.Value = value; }
 		}
 		/// <summary>
 		/// Step action data
 		/// </summary>
 		public PrtStepResponseData StepData 
 		{
-			get {
-				return this.PRT_ACTIONDATA.Value as PrtStepResponseData;
-			}
-			set {
-				this.PRT_ACTIONDATA.Value = value;
-			}
+			get { return this.PRT_ACTIONDATA.Value as PrtStepResponseData; }
+			set { this.PRT_ACTIONDATA.Value = value; }
 		}
 
 		// Constructor
@@ -139,7 +119,8 @@ namespace Pinpad.Core.Commands
 
 			BasePrtResponseData value = new BasePrtResponseData();
 			value.CommandString = commandString;
-			switch (value.PRT_ACTION) {
+			switch (value.PRT_ACTION)
+			{
 				case PrinterActionCode.Begin:
 					value = new PrtBeginResponseData();
 					break;

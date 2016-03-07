@@ -32,9 +32,5 @@ namespace Pinpad.Sdk.EmvTable
 		/// Gets the default Infos adapter
 		/// </summary>
 		PinpadInfos Infos { get; set; }
-		/// <summary>
-		/// Controller for Stone Secure Command.
-		/// </summary>
-		PinpadEncryption Encryption { get; set; }
 	}
 }

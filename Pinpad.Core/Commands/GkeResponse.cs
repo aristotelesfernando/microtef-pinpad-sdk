@@ -3,19 +3,17 @@
     /// <summary>
     /// GKE response
     /// </summary>
-    public class GkeResponse : BaseKeyResponse {
+    public class GkeResponse : BaseKeyResponse
+    {
         /// <summary>
         /// Constructor
         /// </summary>
-        public GkeResponse() {
-        }
+        public GkeResponse() {  }
 
         /// <summary>
         /// Is this a blocking command?
         /// </summary>
-        public override bool IsBlockingCommand {
-            get { return true; }
-        }
+        public override bool IsBlockingCommand { get { return true; } }
 
         /// <summary>
         /// Name of the command

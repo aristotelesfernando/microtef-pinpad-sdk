@@ -5,11 +5,13 @@ namespace Pinpad.Core.Commands
     /// <summary>
     /// LFC request
     /// </summary>
-    public class LfcRequest : BaseStoneRequest {
+    public class LfcRequest : BaseStoneRequest
+    {
         /// <summary>
         /// Constructor
         /// </summary>
-        public LfcRequest() {
+        public LfcRequest()
+        {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
             this.LFC_FILENAME = new VariableLengthProperty<string>("LFC_FILENAME", 3, 15, 1.0f, false, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
 

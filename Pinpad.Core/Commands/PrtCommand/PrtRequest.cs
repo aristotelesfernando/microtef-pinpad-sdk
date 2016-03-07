@@ -36,7 +36,7 @@ namespace Pinpad.Core.Commands
 		{
 			get 
 			{
-				if (this.PRT_ACTIONDATA.HasValue) 
+				if (this.PRT_ACTIONDATA.HasValue == true) 
 				{
 					return this.PRT_ACTIONDATA.Value.PRT_ACTION;
 				}

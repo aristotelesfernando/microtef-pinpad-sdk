@@ -4,17 +4,10 @@ using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.TypeCode;
 using System;
 
-/* WARNING!
- * 
- * DEPRECATED.
- * MUST BE REFACTORED.
- * 
- */
-
 namespace Pinpad.Core.Pinpad 
 {
 	/// <summary>
-	/// PinPad display tool
+	/// Pinpad display API.
 	/// </summary>
 	public class PinpadDisplay : IPinpadDisplay
 	{
@@ -57,8 +50,9 @@ namespace Pinpad.Core.Pinpad
 		/// </summary>
 		/// <param name="message">Message to display</param>
 		/// <returns>true if message is displayed in the PinPad</returns>
-		public bool DisplayMessage(SimpleMessage message) {
-			DspRequest request = new DspRequest( );
+		public bool DisplayMessage(SimpleMessage message)
+		{
+			DspRequest request = new DspRequest();
 			request.DSP_MSG.Value = message;
 
 			return this.communication.SendRequestAndVerifyResponseCode(request);
@@ -97,21 +91,12 @@ namespace Pinpad.Core.Pinpad
 
 			try
 			{
-
 				SimpleMessage message = new SimpleMessage(firstLine, secondLine, paddingType);
 
-				this.DisplayMessage(message);
-
-				return true;
+				return this.DisplayMessage (message);
 			}
-			catch (ArgumentOutOfRangeException ex)
-			{
-				throw ex;
-			}
-			catch (Exception)
-			{
-				return false;
-			}
+			catch (ArgumentOutOfRangeException) { throw; }
+			catch (Exception) { return false; }
 		}
 	}
 }

@@ -7,13 +7,15 @@ namespace Pinpad.Core.Commands
     /// <summary>
     /// SEC request
     /// </summary>
-    public class SecRequest : BaseStoneRequest {
+    public class SecRequest : BaseStoneRequest
+    {
         /// <summary>
         /// Constructor
         /// </summary>
-        public SecRequest() {
+        public SecRequest()
+        {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
-            this.SEC_ACQIDX = new PinpadFixedLengthProperty<int?>("SEC_ACQIDX", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
+            this.SEC_ACQIDX = new PinpadFixedLengthProperty<Nullable<int>>("SEC_ACQIDX", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
             this.SEC_CMDBLK = new VariableLengthProperty<HexadecimalData>("SEC_CMDBLK", 3, 999, 1.0f / 8, false, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
 
             this.StartRegion(this.CMD_LEN1);

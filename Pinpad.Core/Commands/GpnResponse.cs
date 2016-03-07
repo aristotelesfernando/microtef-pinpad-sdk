@@ -1,15 +1,18 @@
 ﻿using Pinpad.Core.Properties;
 using Pinpad.Core.Utilities;
 
-namespace Pinpad.Core.Commands {
+namespace Pinpad.Core.Commands
+{
     /// <summary>
     /// GPN response
     /// </summary>
-    public class GpnResponse : BaseResponse {
+    public class GpnResponse : BaseResponse
+    {
         /// <summary>
         /// Constructor
         /// </summary>
-        public GpnResponse() {
+        public GpnResponse()
+        {
             this.RSP_LEN1 = new RegionProperty("RSP_LEN1", 3);
             this.GPN_PINBLK = new PinpadFixedLengthProperty<HexadecimalData>("GPN_PINBLK", 16, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
             this.GPN_KSN = new PinpadFixedLengthProperty<HexadecimalData>("GPN_KSN", 20, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
@@ -25,9 +28,7 @@ namespace Pinpad.Core.Commands {
         /// <summary>
         /// Is this a blocking command?
         /// </summary>
-        public override bool IsBlockingCommand {
-            get { return true; }
-        }
+        public override bool IsBlockingCommand { get { return true; } }
 
         /// <summary>
         /// Name of the command
