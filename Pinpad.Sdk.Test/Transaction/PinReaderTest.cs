@@ -13,134 +13,67 @@ namespace Pinpad.Sdk.Test.Transaction
     [TestClass]
     public class PinReaderTest
     {
-        //PinpadFacade pinpadFacade;
+        PinReader pinReader;
 
         [TestInitialize]
         public void Setup()
         {
-            Mock<IPinpadConnection> mockedConn = new Mock<IPinpadConnection>();
-            //this.pinpadFacade = new PinpadFacade(mockedConn.Object);
+            this.pinReader = new PinReader(new MockedPinpadFacade());
         }
 
         [TestMethod]
         public void PinReader_should_not_return_null()
         {
-            PinReader auth = new PinReader(new MockedPinpadFacade(), CardType.Emv);
-            Assert.IsNotNull(auth);
+            Assert.IsNotNull(pinReader);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void PinReader_should_throw_exception_if_invalid_CardType()
+        [ExpectedException(typeof(ArgumentException))]
+        public void PinReader_reading_should_throw_exception_if_undefined_CardType()
         {
-			PinReader auth = new PinReader(new MockedPinpadFacade(), CardType.Undefined);
+            pinReader.Read(CardType.Undefined, 1000, "12345678901234567");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void PinReader_reading_should_throw_exception_if_invalid_CardType()
+        {
+            pinReader.Read((CardType)666, 1000, "12345678901234567");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void PinReader_reading_should_throw_exception_if_negative_amount()
+        {
+            pinReader.Read((CardType)666, -1000, "12345678901234567");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void PinReader_reading_should_throw_exception_if_amount_is_zero()
+        {
+            pinReader.Read((CardType)666, 0, "12345678901234567");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void PinReader_reading_should_throw_exception_if_null_pan()
+        {
+            pinReader.Read(CardType.MagneticStripe, 1000, null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void PinReader_reading_should_throw_exception_if_pan_is_empty()
+        {
+            pinReader.Read(CardType.MagneticStripe, 1000, string.Empty);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void PinReader_should_throw_exception_if_null_PinpadFacade()
         {
-			PinReader auth = new PinReader(null, CardType.MagneticStripe);
+			PinReader pinReader = new PinReader(null);
         }
-
-		// Mocked class for PinpadFacade.
-		internal class MockedPinpadFacade : IPinpadFacade 
-		{
-			public Core.Pinpad.PinpadCommunication Communication
-			{
-				get
-				{
-					return null;
-				}
-				set
-				{
-					
-				}
-			}
-
-			public Core.Pinpad.PinpadKeyboard Keyboard
-			{
-				get
-				{
-					return null;
-				}
-				set
-				{
-					
-				}
-			}
-
-			public Core.Pinpad.PinpadDisplay Display
-			{
-				get
-				{
-					return null;
-				}
-				set
-				{
-					
-				}
-			}
-
-			public Core.Pinpad.PinpadPrinter Printer
-			{
-				get
-				{
-					return null;
-				}
-				set
-				{
-					
-				}
-			}
-
-			public Core.Pinpad.PinpadStorage Storage
-			{
-				get
-				{
-					return null;
-				}
-				set
-				{
-					
-				}
-			}
-
-			public PinpadTable Table
-			{
-				get
-				{
-					return null;
-				}
-				set
-				{
-					
-				}
-			}
-
-			public Core.Pinpad.PinpadInfos Infos
-			{
-				get
-				{
-					return null;
-				}
-				set
-				{
-					
-				}
-			}
-
-			public Core.Pinpad.PinpadEncryption Encryption
-			{
-				get
-				{
-					return null;
-				}
-				set
-				{
-					
-				}
-			}
-		}
     }
 }

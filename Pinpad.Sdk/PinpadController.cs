@@ -30,6 +30,7 @@ namespace Pinpad.Sdk
 		/// Facade through which pinpad communication is made.
 		/// </summary>
 		private PinpadFacade pinpadFacade;
+        private PinReader pinReader;
 		
 		/// <summary>
 		/// Connection handler, is responsible for specifying the connection through which the pinpad will be looked for.
@@ -62,9 +63,7 @@ namespace Pinpad.Sdk
 		/// </summary>
 		/// <param name="pinpadConnection">Connection through which the pinpad will be looked for.</param>
 		public PinpadController(BasePinpadConnection pinpadConnection) 
-			: this(pinpadConnection, PinpadTable.GetInstance(pinpadConnection)) 
-		{
-		}
+			: this(pinpadConnection, PinpadTable.GetInstance(pinpadConnection)) {  }
 		/// <summary>
 		/// Alternative constructor, setter of all mandatory parameters and responsible for data validation.
 		/// </summary>
@@ -86,6 +85,8 @@ namespace Pinpad.Sdk
 			this.Display = this.pinpadFacade.Display;
 			this.Keyboard = this.pinpadFacade.Keyboard;
 			this.Infos = this.pinpadFacade.Infos;
+
+            this.pinReader = new PinReader(this.pinpadFacade);
 		}
 
 		// Transaction Methods
@@ -161,9 +162,11 @@ namespace Pinpad.Sdk
 			// Assembling GCR command request:
 			GcrRequest request = new GcrRequest();
 
-			request.GCR_ACQIDXREQ.Value = STONE_ACQUIRER_NUMBER;
+            // TODO: flag de acquirer.
+            //request.GCR_ACQIDXREQ.Value = STONE_ACQUIRER_NUMBER;
+            request.GCR_ACQIDXREQ.Value = 00;
 
-			if (transactionType != TransactionType.Undefined)
+            if (transactionType != TransactionType.Undefined)
 			{
 				request.GCR_APPTYPREQ.Value = (int)transactionType;
 			}
@@ -241,16 +244,14 @@ namespace Pinpad.Sdk
 		public Pin ReadPassword(decimal amount, string pan = "", CardType readingMode = CardType.Emv)
 		{
 			Debug.WriteLine("Readig mode <{0}>.", readingMode);
-
-			PinReader reader = new PinReader(this.pinpadFacade, readingMode);
 			
 			// Gets Pin:
-			Pin pin = reader.Read(amount, pan);
+			Pin pin = pinReader.Read(readingMode, amount, pan);
 
-			Debug.WriteLine("PIN read. Response <{0}>.", reader.CommandStatus);
+			Debug.WriteLine("PIN read. Response <{0}>.", pinReader.CommandStatus);
 
 			// Saving last command status:
-			this.LastCommandStatus = reader.CommandStatus;
+			this.LastCommandStatus = pinReader.CommandStatus;
 
 			return pin;
 		}

@@ -173,9 +173,10 @@ namespace Pinpad.Sdk.EmvTable
 
 			// Retrieves pinpad's EMV table version (on Stone index)
 			string expectedTableVersion = this.GetEmvTableVersion();
+            if (expectedTableVersion == null) { return false; }
 
 			// Verifies if it has a valid EMV table version:
-			if (forcePinpadUpdate == true || expectedTableVersion == "0000000000" || expectedTableVersion == null)
+			if (forcePinpadUpdate == true || expectedTableVersion == "0000000000")
 			{
 				// If it has not a valid version, generetas a new one:
 				Random randomGen = new Random();
@@ -209,11 +210,13 @@ namespace Pinpad.Sdk.EmvTable
 		{
 			GtsRequest request = new GtsRequest();
 
-			// Acquirer application ID:
-			request.GTS_ACQIDX.Value = 8;
+            // Acquirer application ID:
+            //TODO: flag de acquirer
+            //request.GTS_ACQIDX.Value = 8;
+            request.GTS_ACQIDX.Value = 00;
 
-			// Sends GTS request and gets it's response:
-			GtsResponse response = this.communication.SendRequestAndReceiveResponse<GtsResponse>(request);
+            // Sends GTS request and gets it's response:
+            GtsResponse response = this.communication.SendRequestAndReceiveResponse<GtsResponse>(request);
 
 			// Treats response status:
 			if (response == null || response.RSP_STAT.Value != AbecsResponseStatus.ST_OK)
@@ -362,8 +365,11 @@ namespace Pinpad.Sdk.EmvTable
 		private bool StartLoadingTables()
 		{
 			TliRequest request = new TliRequest();
-			request.TLI_ACQIDX.Value = 8; //0 indica que todas os indices serão atualizados
-			request.TLI_TABVER.Value = this.ExpectedTableVersion;
+
+            //TODO: flag de acquirer
+            //request.TLI_ACQIDX.Value = 8; //0 indica que todas os indices serão atualizados
+            request.TLI_ACQIDX.Value = 0;
+            request.TLI_TABVER.Value = this.ExpectedTableVersion;
 
 			GenericResponse response = this.communication.SendRequestAndReceiveResponse<GenericResponse>(request);
 			if (response == null ||

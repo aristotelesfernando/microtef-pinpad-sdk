@@ -10,53 +10,63 @@ namespace Pinpad.Sdk.Test.Transaction
     [TestClass]
     public class MagneticStripePinReaderTest
     {
-        PinpadFacade pinpadFacade;
-        string pan;
-        long amount;
-        string passwordLabel;
+        MagneticStripePinReader reader;
+        MockedPinpadFacade pinpadFacade;
         Pin pin;
 
         [TestInitialize]
         public void Setup()
         {
-			//Mock<IPinPadConnection> mockedConn = new Mock<IPinPadConnection>();
-			//this.pinpadFacade = new PinpadFacade(mockedConn.Object);
+            this.pinpadFacade = new MockedPinpadFacade();
+            this.reader = new MagneticStripePinReader();
+        }
 
-            this.pan = "1234567890123456";
-            this.amount = 10000;
-            this.passwordLabel = "Senha:";
+        [TestMethod]
+        public void MagneticStripePinReader_should_not_throw_exception_on_creation()
+        {
+            MagneticStripePinReader msReader = new MagneticStripePinReader();
+        }
+
+        [TestMethod]
+        public void MagneticStripePinReader_should_not_return_null_on_creation()
+        {
+            MagneticStripePinReader msReader = new MagneticStripePinReader();
+            Assert.IsNotNull(msReader);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void MagneticStripePinReader_should_throw_exception_if_null_PinpadFacade()
+        {
+            this.reader.Read(null, "1234567890123456", 1000, out this.pin);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void MagneticStripePinReader_should_throw_exception_if_negative_amount()
         {
-            this.amount = -10;
-            MagneticStripePinReader.Read(null, this.pan, this.amount, out this.pin);
+            this.reader.Read(this.pinpadFacade, "1234567890123456", -1000, out this.pin);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void MagneticStripePinReader_should_throw_exception_if_zero_amount()
         {
-            this.amount = 0;
-            MagneticStripePinReader.Read(null, this.pan, this.amount, out this.pin);
+            this.reader.Read(this.pinpadFacade, "1234567890123456", 0, out this.pin);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void MagneticStripePinReader_should_throw_exception_if_null_pan()
         {
-            this.pan = null;
-            MagneticStripePinReader.Read(null, this.pan, this.amount, out this.pin);
+            this.reader.Read(this.pinpadFacade, null, 1000, out this.pin);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void MagneticStripePinReader_should_throw_exception_if_empty_pan()
         {
-            this.pan = string.Empty;
-            MagneticStripePinReader.Read(null, this.pan, this.amount, out this.pin);
+            this.reader.Read(this.pinpadFacade, string.Empty, 1000, out this.pin);
         }
     }
 }

@@ -26,7 +26,8 @@ namespace Pinpad.Core.Properties
 			int elementLength,
 			Func<type, int, string> stringFormatter = null,
 			Func<StringReader, int, type> stringParser = null)
-			: base(name) {
+			: base(name)
+        {
 			this.HeaderLength = headerLength;
 			this.MinElementCount = minElementCount;
 			this.ElementLength = elementLength;

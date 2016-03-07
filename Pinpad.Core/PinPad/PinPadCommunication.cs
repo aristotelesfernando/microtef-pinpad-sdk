@@ -6,6 +6,7 @@ using Pinpad.Core.TypeCode;
 using Pinpad.Sdk.Model.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -22,11 +23,11 @@ namespace Pinpad.Core.Pinpad
 		/// <summary>
 		/// Timeout to acknowledge a message
 		/// </summary>
-		public const int ACKNOWLEDGE_TIMEOUT = 2000;
+		public const int ACKNOWLEDGE_TIMEOUT = 4000;
 		/// <summary>
 		/// Timeout to cancel a message
 		/// </summary>
-		public const int CANCEL_TIMEOUT = 2000;
+		public const int CANCEL_TIMEOUT = 4000;
 		/// <summary>
 		/// Timeout for NonBlocking messages
 		/// </summary>
@@ -56,12 +57,13 @@ namespace Pinpad.Core.Pinpad
 		{
 			get
 			{
-				if (this._stoneVersion.HasValue == false)
+                /*if (this._stoneVersion.HasValue == false)
 				{
 					this.InternalIsConnectionAlive();
 				}
 
-				return this._stoneVersion;
+				return this._stoneVersion;*/
+                return 0;
 			}
 		}
 
@@ -288,17 +290,22 @@ namespace Pinpad.Core.Pinpad
 			if (response.IsBlockingCommand == true) 
 			{
 				responseString = this.ReceiveResponseString(PinpadCommunication.BLOCKING_TIMEOUT);
-			}
+                Debug.WriteLine("Response (blocking): " + responseString);
+
+            }
 			else 
 			{
 				responseString = this.ReceiveResponseString(PinpadCommunication.NON_BLOCKING_TIMEOUT);
+                Debug.WriteLine("Response: " + responseString);
 			}
 
 			if (responseString == null) 
 			{
+                Debug.WriteLine("Response: (null)");
 				return null;
 			}
-
+            
+            
 			response.CommandString = responseString;
 			return response;
 		}
@@ -536,6 +543,8 @@ namespace Pinpad.Core.Pinpad
 		}
 		private bool InternalSendRequest(string request)
 		{
+            Debug.WriteLine("Request: " + request);
+
 			List<byte> requestByteCollection = new List<byte>(CrossPlatformController.TextEncodingController.GetBytes(TextEncodingType.Ascii, request));
 
 			//Add ETB

@@ -17,12 +17,21 @@ namespace Pinpad.Sdk.Transaction
 {
 	internal class MagneticStripePinReader
 	{
-		/* CONSTANTS */
+		// Constants
+        /// <summary>
+        /// Amount label presented on pinpad display.
+        /// </summary>
 		private const string AMOUNT_LABEL   = "VALOR:";
+        /// <summary>
+        /// Password label presented on pinpad display.
+        /// </summary>
 		private const string PASSWORD_LABEL = "SENHA:";
-		private const string BRAZIL_CULTURE = "pt-BR";
+        /// <summary>
+        /// Brazilian language culture.
+        /// </summary>
+		private const string BRAZILIAN_CULTURE = "pt-BR";
 
-		/* METHODS */
+		// Methods
 		/// <summary>
 		/// Read security information when card has no chip - magnetic stripe only.
 		/// </summary>
@@ -30,19 +39,19 @@ namespace Pinpad.Sdk.Transaction
 		/// <param name="amount">Transaction amount.</param>
 		/// <returns>Wheter is an online transaction or not.</returns>
 		/// <exception cref="System.InvalidOperationException">Thrown when parameter validation fails.</exception>
-		internal static ResponseStatus Read(IPinpadFacade pinpadFacade, string pan, decimal amount, out Pin pin)
+		internal ResponseStatus Read(IPinpadFacade pinpadFacade, string pan, decimal amount, out Pin pin)
 		{
 			pin = new Pin();
 
 			// Validating data
-			try { MagneticStripePinReader.Validate(amount, pan); }
+			try { this.Validate(pinpadFacade, amount, pan); }
 			catch (Exception ex)
 			{
 				throw new InvalidOperationException("Error while trying to read security info using magnetic stripe. Verify inner exception.", ex);
 			}
 
 			// Using ABECS GPN command to get pin block & KSN.
-			GpnResponse response = MagneticStripePinReader.SendGpn(pinpadFacade, pan, amount);
+			GpnResponse response = this.SendGpn(pinpadFacade, pan, amount);
 
 			// Saving command response status:
 			AbecsResponseStatus legacyStatus = response.RSP_STAT.Value;
@@ -67,7 +76,7 @@ namespace Pinpad.Sdk.Transaction
 		/// <param name="pan">Primary Account Number printed on the card.</param>
 		/// <param name="amount">Transaction amount.</param>
 		/// <returns>ABECS GPN command response.</returns>
-		private static GpnResponse SendGpn(IPinpadFacade pinpadFacade, string pan, decimal amount)
+		private GpnResponse SendGpn(IPinpadFacade pinpadFacade, string pan, decimal amount)
 		{
 			GpnRequest request = new GpnRequest();
 
@@ -83,7 +92,7 @@ namespace Pinpad.Sdk.Transaction
 			pinEntry.GPN_MIN.Value = PinReader.PASSWORD_MINIMUM_LENGTH;
 			pinEntry.GPN_MAX.Value = PinReader.PASSWORD_MAXIMUM_LENGTH;
 			pinEntry.GPN_MSG.Value.Padding = DisplayPaddingType.Left;
-			pinEntry.GPN_MSG.Value.FirstLine = MagneticStripePinReader.GetAmountLabel(amount);
+			pinEntry.GPN_MSG.Value.FirstLine = this.GetAmountLabel(amount);
 			pinEntry.GPN_MSG.Value.SecondLine = PASSWORD_LABEL;
 
 			// Adds the entry to list of entries supported by a GPN command.
@@ -99,7 +108,7 @@ namespace Pinpad.Sdk.Transaction
 		/// </summary>
 		/// <param name="amount">Transaction amount, on decimal format.</param>
 		/// <returns>Formatted string to be shown on pinpad screen when the cardholder should input his password.</returns>
-		private static string GetAmountLabel(decimal amount)
+		private string GetAmountLabel(decimal amount)
 		{
 			string amountLabel = AMOUNT_LABEL;
 			
@@ -124,14 +133,15 @@ namespace Pinpad.Sdk.Transaction
 			return amountLabel;
 		}
 
-		/* VALIDATION */
+		// Validation
 		/// <summary>
 		/// Validates parameters used on internal processing.
 		/// </summary>
 		/// <exception cref="System.ArgumentNullException">When one parameter is null.</exception>
 		/// <exception cref="System.ArgumentException">When one parameter is not null, but contains invalid data.</exception>
-		private static void Validate(decimal amount, string pan)
+		private void Validate(IPinpadFacade pinpadFacade, decimal amount, string pan)
 		{
+            if (pinpadFacade == null) { throw new ArgumentNullException("pinpadFacade cannot be null. Unable to communicate with the pinpad."); }
 			if (amount <= 0) { throw new ArgumentException("amount should be greater than 0."); }
 			if (pan == null) { throw new ArgumentNullException("pan"); }
 			if (pan.Length <= 0) { throw new ArgumentException("pan should not be empty."); }

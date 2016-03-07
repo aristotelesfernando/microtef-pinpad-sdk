@@ -16,6 +16,9 @@ namespace Pinpad.Core.Pinpad
 	/// </summary>
 	public class PinpadInfos : IPinpadInfos
 	{
+        // Constants
+        public const short ACQUIRER_APP_ID = 8;
+
 		// Members
 		/// <summary>
 		/// Pinpad communication.

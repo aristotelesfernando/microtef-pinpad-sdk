@@ -100,6 +100,8 @@
     <Compile Include="Mapper\CardMapperTest.cs" />
     <Compile Include="Mapper\EmvTrackMapperTest.cs" />
     <Compile Include="Mapper\MagneticStripeTrackMapperTest.cs" />
+    <Compile Include="MockedPinpadConnection.cs" />
+    <Compile Include="MockedPinpadFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transaction\MagneticStripePinReaderTest.cs" />
     <Compile Include="Transaction\PinReaderTest.cs" />

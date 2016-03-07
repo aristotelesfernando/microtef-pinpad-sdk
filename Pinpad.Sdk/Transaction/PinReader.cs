@@ -12,7 +12,7 @@ namespace Pinpad.Sdk.Transaction
 	/// </summary>
 	internal class PinReader
 	{
-		/* CONSTANTS */
+		// Constants
 		/// <summary>
 		/// MK index or DUKPT register.
 		/// </summary>
@@ -26,7 +26,7 @@ namespace Pinpad.Sdk.Transaction
 		/// </summary>
 		internal const short PASSWORD_MAXIMUM_LENGTH = 12;
 
-		/* MEMBERS */
+		// Members
 		/// <summary>
 		/// Facade through which pinpad communication is made.
 		/// </summary>
@@ -34,7 +34,8 @@ namespace Pinpad.Sdk.Transaction
 		/// <summary>
 		/// Defines how data is read, according to card type.
 		/// </summary>
-		private CardType readingMode;
+        private EmvPinReader chipReader;
+        private MagneticStripePinReader magneticStripeReader;
 		/// <summary>
 		/// Pinpad command response status.
 		/// </summary>
@@ -44,7 +45,7 @@ namespace Pinpad.Sdk.Transaction
 		/// </summary>
 		internal string EmvData { get; private set; }
 
-		/* CONSTRUCTOR */
+		// Constructor
 		/// <summary>
 		/// Reads pinblock and ksn and sets it's value into this class property. 
 		/// Is up to the user using these infos.
@@ -52,9 +53,9 @@ namespace Pinpad.Sdk.Transaction
 		/// <param name="pinpadFacade">PinpadFacade mandatory to this class be able to communicate with the pinpad.</param>
 		/// <param name="readingMode">Card type, that is, the method physical in which the card should be read.</param>
 		/// <exception cref="System.InvalidOperationException">Thrown when one parameter validation fails.</exception>
-		internal PinReader(IPinpadFacade pinpadFacade, CardType readingMode)
+		internal PinReader(IPinpadFacade pinpadFacade)
 		{
-			try { Validate(pinpadFacade, readingMode); }
+			try { this.Validate(pinpadFacade); }
 			catch (Exception ex)
 			{
 				this.CommandStatus = ResponseStatus.InvalidParameter;
@@ -62,11 +63,10 @@ namespace Pinpad.Sdk.Transaction
 			}
 
 			this.pinpadFacade = pinpadFacade;
-			this.readingMode = readingMode;
 			this.CommandStatus = ResponseStatus.Ok;
 		}
 
-		/* METHODS */
+		// Methods
 		/// <summary>
 		/// Reads Pin Block and Key Serial Number (KSN) from the card.
 		/// If needed, prompts for cardholder password.
@@ -75,24 +75,25 @@ namespace Pinpad.Sdk.Transaction
 		/// <param name="amount">Transaction amount.</param>
 		/// <returns>Whether is an online transaction or not.</returns>
 		/// <exception cref="System.NotImplementedException">Thrown when a reading mode is unknown.</exception>
-		internal Pin Read(decimal amount, string pan)
+		internal Pin Read(CardType readingMode, decimal amount, string pan)
 		{
 			Pin pin;
 
-			if (this.readingMode == CardType.Emv)
+            this.Validate(readingMode, amount, pan);
+
+			if (readingMode == CardType.Emv)
 			{
 				Debug.WriteLine("EMV reading was selected.");
-				this.CommandStatus = EmvPinReader.Read(this.pinpadFacade, amount, out pin);
+				this.CommandStatus = this.chipReader.Read(this.pinpadFacade, amount, out pin);
 			}
 
-			else if (this.readingMode == CardType.MagneticStripe)
+			else if (readingMode == CardType.MagneticStripe)
 			{
 				Debug.WriteLine("Magnetic stripe reading was selected.");
-				this.CommandStatus = MagneticStripePinReader.Read(this.pinpadFacade, pan, amount, out pin);
+				this.CommandStatus = this.magneticStripeReader.Read(this.pinpadFacade, pan, amount, out pin);
 			}
 			else
 			{
-				Debug.WriteLine("There was no valid reading mode <{0}>.", this.readingMode);
 				throw new NotImplementedException("Unknown Pin reading mode. Verify what kind of card (EMV/Magnetic Stripe) you are reading.");
 			}
 
@@ -105,20 +106,27 @@ namespace Pinpad.Sdk.Transaction
 		/// </summary>
 		/// <exception cref="System.ArgumentNullException">When one parameter is null.</exception>
 		/// <exception cref="System.ArgumentException">When one parameter is not null, but contains invalid data.</exception>
-		private void Validate(IPinpadFacade pinpadFacade, CardType readingMode)
+		private void Validate(IPinpadFacade pinpadFacade)
 		{
 			if (pinpadFacade == null)
 			{
 				throw new ArgumentNullException("pinpadFacade");
 			}
-			if (Enum.IsDefined(typeof(CardType), readingMode) == false)
-			{
-				throw new ArgumentException("readingMode is of invalid type.");
-			}
-			if (readingMode == CardType.Undefined)
-			{
-				throw new ArgumentException("readingMode cannot be undefined.");
-			}
 		}
+        private void Validate(CardType readingMode, decimal amount, string pan)
+        {
+            // Card reading type validation:
+            if (Enum.IsDefined(typeof(CardType), readingMode) == false)
+            {
+                throw new ArgumentException("readingMode is of invalid type.");
+            }
+            if (readingMode == CardType.Undefined) { throw new ArgumentException("readingMode cannot be undefined."); }
+
+            // Amount validation:
+            if (amount <= 0) { throw new ArgumentException("amount shall be greater than 0."); }
+
+            // PAN validation:
+            if (string.IsNullOrEmpty(pan) == true) { throw new ArgumentException("Primary Accouunt Number (PAN) cannot be null."); }
+        }
 	}
 }
