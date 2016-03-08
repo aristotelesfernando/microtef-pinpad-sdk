@@ -16,12 +16,6 @@ namespace Pinpad.Core.Pinpad
 	/// </summary>
 	public class PinpadInfos : IPinpadInfos
 	{
-		// Constants
-		/// <summary>
-		/// Stone application ID.
-		/// </summary>
-		public const short STONE_ACQUIRER_APP_ID = 8;
-
 		// Members
 		/// <summary>
 		/// Pinpad communication.
@@ -140,7 +134,7 @@ namespace Pinpad.Core.Pinpad
 			GinRequest request = new GinRequest();
 
 			// Sets it to refer to all acquirers:
-			request.GIN_ACQIDX.Value = 00;
+			request.GIN_ACQIDX.Value = (int)StoneIndexCode.Generic;
 
 			// Sends the request and gets the response:
 			GinResponse response = this.communication.SendRequestAndReceiveResponse<GinResponse>(request);

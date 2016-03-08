@@ -21,9 +21,12 @@ namespace Pinpad.Core.Pinpad
 	{
 		// Members
 		/// <summary>
-		/// Pinpad facade.
+		/// Pinpad communication provider.
 		/// </summary>
 		private PinpadCommunication communication;
+		/// <summary>
+		/// Pinpad information provider.
+		/// </summary>
 		private PinpadInfos informations;
 		/// <summary>
 		/// If pinpad has printer.
@@ -32,7 +35,8 @@ namespace Pinpad.Core.Pinpad
 		/// <summary>
 		/// If pinpad has printer.
 		/// </summary>
-		public bool PrinterSupported {
+		public bool PrinterSupported
+		{
 			get 
 			{
 				if (ispPinterSupported.HasValue == false) 
@@ -43,18 +47,17 @@ namespace Pinpad.Core.Pinpad
 				{
 					return ispPinterSupported.Value;
 				}
-				else 
-				{
-					return false;
-				}
+
+				else { return false; }
 			}
 		}
 
 		// Constructor
 		/// <summary>
-		/// Constructor
+		/// Basic constructor.
 		/// </summary>
-		/// <param name="pinPad">PinPad to use</param>
+		/// <param name="communication">Pinpad communication provider.</param>
+		/// <param name="informations">Pinpad information provider.</param>
 		public PinpadPrinter(PinpadCommunication communication, PinpadInfos informations) 
 		{
 			this.communication = communication;
@@ -64,15 +67,14 @@ namespace Pinpad.Core.Pinpad
 		// Methods
 		private Nullable<bool> IsPrinterSupported()
 		{
-			if (this.communication.StoneVersion == null)
-			{
-				return null;
-			}
+			if (this.communication.StoneVersion == null) { return null; }
+
 			else if (this.communication.StoneVersion < new PrtRequest().MinimumStoneVersion)
 			{
 				return false;
 			}
 
+			// Pinpad models that contain printer should be specified here:
 			switch (this.informations.Model.Trim())
 			{
 				case "D210":
@@ -82,33 +84,36 @@ namespace Pinpad.Core.Pinpad
 			}
 		}
 		/// <summary>
-		/// Prepares the Printer to receive data
+		/// Prepares the Printer to receive data.
 		/// </summary>
-		/// <returns>true on sucess</returns>
+		/// <returns>True on success.</returns>
 		public bool Begin() 
 		{
 			PrtRequest request = new PrtRequest( );
 			request.BeginData = new PrtBeginRequestData();
 
+			// Send a request to the pinpad, indicating that a pressing is about to begin:
 			return this.SendPrt(request);
 		}
 		/// <summary>
-		/// Prints the data at the buffer
+		/// Prints the data at the buffer.
 		/// </summary>
-		/// <returns>true on sucess</returns>
-		public bool End() {
+		/// <returns>True on success.</returns>
+		public bool End()
+		{
 			PrtRequest request = new PrtRequest();
 			request.EndData = new PrtEndRequestData();
 
+			// Sends a request to the pinpad, indicating that there is no more content to be pressed:
 			return this.SendPrt(request);
 		}
 		/// <summary>
-		/// Appends a string to the print buffer
+		/// Appends a string to the print buffer.
 		/// </summary>
-		/// <param name="message">string to append</param>
-		/// <param name="size">Size of the message</param>
-		/// <param name="alignment">Alignment of the message</param>
-		/// <returns>true on sucess</returns>
+		/// <param name="message">String to append.</param>
+		/// <param name="size">Size of the message.</param>
+		/// <param name="alignment">Alignment of the message.</param>
+		/// <returns>True on success.</returns>
 		public bool AppendString(string message, PrinterStringSize size, PrinterAlignmentCode alignment)
 		{
 			PrtRequest request = new PrtRequest();
@@ -123,11 +128,11 @@ namespace Pinpad.Core.Pinpad
 			return this.SendPrt(request);
 		}
 		/// <summary>
-		/// Appends a image to the print buffer
+		/// Appends a image to the print buffer.
 		/// </summary>
-		/// <param name="fileName">Image file at the PinPad</param>
-		/// <param name="horizontal">Left padding in pixels</param>
-		/// <returns>true on sucess</returns>
+		/// <param name="fileName">Image file at the Pinpad.</param>
+		/// <param name="horizontal">Left padding in pixels.</param>
+		/// <returns>True on success.</returns>
 		public bool AppendImage(string fileName, int horizontal) 
 		{
 			PrtRequest request = new PrtRequest();
@@ -141,10 +146,10 @@ namespace Pinpad.Core.Pinpad
 			return this.SendPrt(request);
 		}
 		/// <summary>
-		/// Sets the vertical offset for the next append
+		/// Sets the vertical offset for the next append.
 		/// </summary>
-		/// <param name="steps">Vertical offset for the next append, can be negative</param>
-		/// <returns>true on sucess</returns>
+		/// <param name="steps">Vertical offset for the next append, can be negative.</param>
+		/// <returns>True on success.</returns>
 		public bool Step(int steps) 
 		{
 			PrtRequest request = new PrtRequest();
@@ -156,24 +161,21 @@ namespace Pinpad.Core.Pinpad
 
 			return this.SendPrt(request);
 		}
-        /// <summary>
-        /// Sends the request to print.
-        /// </summary>
-        /// <param name="request">Content to be printed.</param>
-        /// <returns>If the content was printed or not.</returns>
+		/// <summary>
+		/// Sends the request to print.
+		/// </summary>
+		/// <param name="request">Content to be printed.</param>
+		/// <returns>If the content was printed or not.</returns>
 		private bool SendPrt(PrtRequest request) 
 		{
 			PrtResponse response = this.communication.SendRequestAndReceiveResponse<PrtResponse>(request);
 
-			if (response == null) 
+			if (response == null || response.RSP_STAT.Value != AbecsResponseStatus.ST_OK) 
 			{
 				return false;
 			}
-			else if (response.RSP_STAT.Value != AbecsResponseStatus.ST_OK) 
-			{
-				return false;
-			}
-			else if (response.BeginData != null) 
+
+			if (response.BeginData != null) 
 			{
 				if (response.BeginData.PRT_STATUS.Value == PinpadPrinterStatus.Ready) 
 				{

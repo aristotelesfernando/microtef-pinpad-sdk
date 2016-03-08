@@ -56,7 +56,7 @@ namespace Pinpad.Sdk.EmvTable
 			this.Keyboard = new PinpadKeyboard(this.Communication);
 			this.Display = new PinpadDisplay(this.Communication);
 			this.Storage = new PinpadStorage(this.Communication);
-			this.Table = PinpadTable.GetInstance(this.PinpadConnection);
+			this.Table = new PinpadTable(this.Communication);
 			this.Infos = new PinpadInfos(this.Communication);
 			this.Printer = new PinpadPrinter(this.Communication, this.Infos);
 		}

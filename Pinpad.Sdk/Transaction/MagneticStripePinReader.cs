@@ -12,23 +12,24 @@ using Pinpad.Core.Utilities;
 using Pinpad.Core.Properties;
 using Pinpad.Core.TypeCode;
 using Pinpad.Sdk.Model.TypeCode;
+using Pinpad.Core;
 
 namespace Pinpad.Sdk.Transaction
 {
 	internal class MagneticStripePinReader
 	{
 		// Constants
-        /// <summary>
-        /// Amount label presented on pinpad display.
-        /// </summary>
+		/// <summary>
+		/// Amount label presented on pinpad display.
+		/// </summary>
 		private const string AMOUNT_LABEL   = "VALOR:";
-        /// <summary>
-        /// Password label presented on pinpad display.
-        /// </summary>
+		/// <summary>
+		/// Password label presented on pinpad display.
+		/// </summary>
 		private const string PASSWORD_LABEL = "SENHA:";
-        /// <summary>
-        /// Brazilian language culture.
-        /// </summary>
+		/// <summary>
+		/// Brazilian language culture.
+		/// </summary>
 		private const string BRAZILIAN_CULTURE = "pt-BR";
 
 		// Methods
@@ -82,7 +83,7 @@ namespace Pinpad.Sdk.Transaction
 
 			// Assembling GPN command.
 			request.GPN_METHOD.Value = new CryptographyMethod(KeyManagementMode.DerivedUniqueKeyPerTransaction, CryptographyMode.TripleDataEncryptionStandard);
-			request.GPN_KEYIDX.Value = PinReader.STONE_DUKPT_KEY_INDEX;
+			request.GPN_KEYIDX.Value = (int)StoneIndexCode.EncryptionKey;
 			request.GPN_WKENC.Value = new HexadecimalData("");
 			request.GPN_PAN.Value = pan;
 
@@ -141,7 +142,7 @@ namespace Pinpad.Sdk.Transaction
 		/// <exception cref="System.ArgumentException">When one parameter is not null, but contains invalid data.</exception>
 		private void Validate(IPinpadFacade pinpadFacade, decimal amount, string pan)
 		{
-            if (pinpadFacade == null) { throw new ArgumentNullException("pinpadFacade cannot be null. Unable to communicate with the pinpad."); }
+			if (pinpadFacade == null) { throw new ArgumentNullException("pinpadFacade cannot be null. Unable to communicate with the pinpad."); }
 			if (amount <= 0) { throw new ArgumentException("amount should be greater than 0."); }
 			if (pan == null) { throw new ArgumentNullException("pan"); }
 			if (pan.Length <= 0) { throw new ArgumentException("pan should not be empty."); }

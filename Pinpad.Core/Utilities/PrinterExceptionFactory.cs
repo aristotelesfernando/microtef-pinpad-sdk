@@ -16,7 +16,8 @@ namespace Pinpad.Core.Utilities
 		/// <returns>PrinterException</returns>
 		public PrinterException Create(PinpadPrinterStatus status) 
 		{
-			switch (status) {
+			switch (status)
+			{
 				case PinpadPrinterStatus.Undefined: 
 					throw new InvalidOperationException("Attempt to create a PrinterException without a Printer Status");
 

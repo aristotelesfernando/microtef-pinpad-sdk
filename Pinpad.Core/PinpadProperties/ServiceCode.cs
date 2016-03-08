@@ -10,18 +10,11 @@ namespace Pinpad.Core.Properties
 	public class ServiceCode 
 	{
 		/// <summary>
-		/// Constructor
+		/// The service code as string.
 		/// </summary>
-		/// <param name="code">Service Code to read</param>
-		public ServiceCode(string code) 
-		{
-			this.Code = code;
-		}
-
 		private string _code;
-
 		/// <summary>
-		/// The service code string in the controller
+		/// The service code as string, in the controller.
 		/// </summary>
 		public string Code 
 		{
@@ -37,7 +30,76 @@ namespace Pinpad.Core.Properties
 				this._code = value;
 			}
 		}
+		/// <summary>
+		/// Does the service code contains a EMV chip?
+		/// </summary>
+		public bool IsEmv 
+		{
+			get 
+			{
+				switch (this.GetPositionValue(0)) 
+				{
+					case 2:
+					case 6:
+						return true;
 
+					default:
+						return false;
+				}
+			}
+		}
+		/// <summary>
+		/// Is the Pin required for this card?
+		/// </summary>
+		public bool IsPinRequired 
+		{
+			get 
+			{
+				switch (this.GetPositionValue(2)) 
+				{
+					case 0:
+					case 3:
+					case 5:
+					case 6:
+					case 7:
+						return true;
+
+					default:
+						return false;
+				}
+			}
+		}
+		/// Is the pin mandatory?
+		/// Some cases are not required to get the Pin if a Pin Entry Device is not present
+		/// </summary>
+		public bool IsPinMandatory 
+		{
+			get 
+			{
+				switch (this.GetPositionValue(2)) 
+				{
+					case 0:
+					case 3:
+					case 5:
+						return true;
+
+					default:
+						return false;
+				}
+			}
+		}
+
+		// Constructor
+		/// <summary>
+		/// Constructor with values.
+		/// </summary>
+		/// <param name="code">Service Code to read</param>
+		public ServiceCode(string code) 
+		{
+			this.Code = code;
+		}
+
+		// Methods:
 		/// <summary>
 		/// Interchange
 		/// </summary>
@@ -66,76 +128,6 @@ namespace Pinpad.Core.Properties
 				}
 			}
 		}
-
-		/// <summary>
-		/// Does the service code contains a EMV chip?
-		/// </summary>
-		public bool IsEmv 
-		{
-			get 
-			{
-				switch (this.GetPositionValue(0)) 
-				{
-					case 2:
-					case 6:
-						return true;
-
-					default:
-						return false;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Is the Pin required for this card?
-		/// </summary>
-		public bool IsPinRequired 
-		{
-			get 
-			{
-				switch (this.GetPositionValue(2)) 
-				{
-					case 0:
-					case 3:
-					case 5:
-					case 6:
-					case 7:
-						return true;
-
-					default:
-						return false;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Is the pin mandatory?
-		/// Some cases are not required to get the Pin if a Pin Entry Device is not present
-		/// </summary>
-		public bool IsPinMandatory 
-		{
-			get 
-			{
-				switch (this.GetPositionValue(2)) 
-				{
-					case 0:
-					case 3:
-					case 5:
-						return true;
-
-					default:
-						return false;
-				}
-			}
-		}
-
-		private int GetPositionValue(int position) 
-		{
-			string digit = Code.Substring(position, 1);
-		
-			return Convert.ToInt32(digit); ;
-		}
-
 		/// <summary>
 		/// String formatter for ServiceCodeController
 		/// </summary>
@@ -145,7 +137,6 @@ namespace Pinpad.Core.Properties
 		{
 			return obj.Code;
 		}
-
 		/// <summary>
 		/// String parser for ServiceCodeController
 		/// </summary>
@@ -167,6 +158,19 @@ namespace Pinpad.Core.Properties
 				
 				return value;
 			}
+		}
+
+		// Internally used:
+		/// <summary>
+		/// Get the value in a specific index of the service code.
+		/// </summary>
+		/// <param name="position">Index.</param>
+		/// <returns>The value at a specific index.</returns>
+		private int GetPositionValue(int position) 
+		{
+			string digit = Code.Substring(position, 1);
+		
+			return Convert.ToInt32(digit);
 		}
 	}
 }

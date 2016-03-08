@@ -1,10 +1,10 @@
 ﻿using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.TypeCode;
 using System;
-using LegacyPinpadAid = Pinpad.Core.Tables.EmvAidTable;
-using PinpadContactlessMode = Pinpad.Sdk.Model.TypeCode.PinpadContactlessMode;
-using LegacyContactlessMode = Pinpad.Core.TypeCode.ContactlessMode;
 using Pinpad.Core.Utilities;
+using Pinpad.Core.Tables;
+using Pinpad.Core.TypeCode;
+using System.Collections.Generic;
 
 namespace Pinpad.Sdk.EmvTable.Mapper
 {
@@ -13,16 +13,39 @@ namespace Pinpad.Sdk.EmvTable.Mapper
     /// </summary>
     internal class AidMapper
     {
+        internal static ICollection<PinpadAid> MapToAidCollection (EmvAidTable [] aidCollection)
+        {
+            ICollection<PinpadAid> aids = new List<PinpadAid>();
+
+            foreach (EmvAidTable a in aidCollection)
+            {
+                PinpadAid newAid = MapToAidEntry(a);
+                aids.Add(newAid);
+            }
+
+            return aids;
+        }
+
+        internal static EmvAidTable MapGenericToLegacyAid (BaseTableEntry baseEntry)
+        {
+            if (baseEntry is PinpadAid == true)
+            {
+                return MapToLegacyAid(baseEntry as PinpadAid);
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Translates a <see cref="Pinpad.Sdk.EmvTable.Entry.AidEntry">Pinpd.Sdk AidEntry</see> into legacy representation of Aid.
         /// </summary>
         /// <param name="aid">Aid entry.</param>
         /// <returns>Legacy representation of Aid.</returns>
-        internal static LegacyPinpadAid MapToLegacyAid(PinpadAid aid)
+        internal static EmvAidTable MapToLegacyAid(PinpadAid aid)
         {
             AidMapper.Validate(aid);
 
-            LegacyPinpadAid mappedAid = new LegacyPinpadAid();
+            EmvAidTable mappedAid = new EmvAidTable();
 
             // Mapping application stuff
             mappedAid.TAB_ACQ.Value = aid.AcquirerNumber;
@@ -77,7 +100,7 @@ namespace Pinpad.Sdk.EmvTable.Mapper
         /// </summary>
         /// <param name="aid">Legacy representation of Aid.</param>
         /// <returns>Actual Aid.</returns>
-        internal static PinpadAid MapToAidEntry(LegacyPinpadAid aid)
+        internal static PinpadAid MapToAidEntry(EmvAidTable aid)
         {
             PinpadAid mappedAid = new PinpadAid();
 
@@ -127,18 +150,18 @@ namespace Pinpad.Sdk.EmvTable.Mapper
         /// </summary>
         /// <param name="mode">String representing the enum <see cref="Pinpad.Core.Enums.ContactlessMode">ContactlessMode</see>.</param>
         /// <returns>Enumerator value corresponding to the string received as parameter.</returns>
-        internal static LegacyContactlessMode MapPinpadContactlessMode(PinpadContactlessMode mode)
+        internal static ContactlessMode MapPinpadContactlessMode(PinpadContactlessMode mode)
         {
             switch (mode)
             {
-                case PinpadContactlessMode.Unsupported: return LegacyContactlessMode.Unsupported;
-                case PinpadContactlessMode.VisaMagneticStripe: return LegacyContactlessMode.VisaMSD;
-                case PinpadContactlessMode.VisaChip: return LegacyContactlessMode.VisaQVSDC;
-                case PinpadContactlessMode.MasterMagneticStripe: return LegacyContactlessMode.MasterCardPayPassMagneticStripe;
-                case PinpadContactlessMode.MasterChip: return LegacyContactlessMode.MasterCardPayPassMChip;
-                case PinpadContactlessMode.AmexMagneticStripe: return LegacyContactlessMode.AmexExpresspayMagneticStripe;
-                case PinpadContactlessMode.AmexChip: return LegacyContactlessMode.AmexExpresspayEMV;
-                default: return LegacyContactlessMode.Undefined;
+                case PinpadContactlessMode.Unsupported: return ContactlessMode.Unsupported;
+                case PinpadContactlessMode.VisaMagneticStripe: return ContactlessMode.VisaMSD;
+                case PinpadContactlessMode.VisaChip: return ContactlessMode.VisaQVSDC;
+                case PinpadContactlessMode.MasterMagneticStripe: return ContactlessMode.MasterCardPayPassMagneticStripe;
+                case PinpadContactlessMode.MasterChip: return ContactlessMode.MasterCardPayPassMChip;
+                case PinpadContactlessMode.AmexMagneticStripe: return ContactlessMode.AmexExpresspayMagneticStripe;
+                case PinpadContactlessMode.AmexChip: return ContactlessMode.AmexExpresspayEMV;
+                default: return ContactlessMode.Undefined;
             }
         }
 
@@ -147,17 +170,17 @@ namespace Pinpad.Sdk.EmvTable.Mapper
         /// </summary>
         /// <param name="mode">Enumerator value.</param>
         /// <returns>String corresponding to the enum received as parameter.</returns>
-        internal static PinpadContactlessMode MapLegacyContactlessMode(LegacyContactlessMode mode)
+        internal static PinpadContactlessMode MapLegacyContactlessMode(ContactlessMode mode)
         {
             switch (mode)
             {
-                case LegacyContactlessMode.Unsupported: return PinpadContactlessMode.Unsupported;
-                case LegacyContactlessMode.VisaMSD: return PinpadContactlessMode.VisaMagneticStripe;
-                case LegacyContactlessMode.VisaQVSDC: return PinpadContactlessMode.VisaChip;
-                case LegacyContactlessMode.MasterCardPayPassMagneticStripe: return PinpadContactlessMode.MasterMagneticStripe;
-                case LegacyContactlessMode.MasterCardPayPassMChip: return PinpadContactlessMode.MasterChip;
-                case LegacyContactlessMode.AmexExpresspayMagneticStripe: return PinpadContactlessMode.AmexMagneticStripe;
-                case LegacyContactlessMode.AmexExpresspayEMV: return PinpadContactlessMode.AmexChip;
+                case ContactlessMode.Unsupported: return PinpadContactlessMode.Unsupported;
+                case ContactlessMode.VisaMSD: return PinpadContactlessMode.VisaMagneticStripe;
+                case ContactlessMode.VisaQVSDC: return PinpadContactlessMode.VisaChip;
+                case ContactlessMode.MasterCardPayPassMagneticStripe: return PinpadContactlessMode.MasterMagneticStripe;
+                case ContactlessMode.MasterCardPayPassMChip: return PinpadContactlessMode.MasterChip;
+                case ContactlessMode.AmexExpresspayMagneticStripe: return PinpadContactlessMode.AmexMagneticStripe;
+                case ContactlessMode.AmexExpresspayEMV: return PinpadContactlessMode.AmexChip;
                 default: return PinpadContactlessMode.Undefined;
             }
         }

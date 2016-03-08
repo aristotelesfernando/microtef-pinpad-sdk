@@ -10,6 +10,7 @@ using System.Globalization;
 using Pinpad.Sdk.EmvTable;
 using Pinpad.Core.Utilities;
 using Pinpad.Core.Properties;
+using Pinpad.Core;
 
 namespace Pinpad.Sdk.Transaction
 {
@@ -95,7 +96,7 @@ namespace Pinpad.Sdk.Transaction
             request.GOC_EXCLIST.Value = false;
             request.GOC_CONNECT.Value = true;
             request.GOC_METHOD.Value = new CryptographyMethod(KeyManagementMode.DerivedUniqueKeyPerTransaction, CryptographyMode.TripleDataEncryptionStandard);
-            request.GOC_KEYIDX.Value = PinReader.STONE_DUKPT_KEY_INDEX;
+            request.GOC_KEYIDX.Value = (int)StoneIndexCode.EncryptionKey;
             request.GOC_WKENC.Value = new HexadecimalData("00000000000000000000000000000000");
             request.GOC_RISKMAN.Value = false;
             request.GOC_FLRLIMIT.Value = new HexadecimalData("00000000");

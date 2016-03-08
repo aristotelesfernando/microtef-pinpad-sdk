@@ -15,94 +15,119 @@ namespace Pinpad.Core.Pinpad
 	/// </summary>
 	public class PinpadStorage
 	{
+		// Constants
+		internal const short DEFAULT_BUFFER_SIZE = 256;
+
 		// Members
 		/// <summary>
-		/// Pinpad communication adapter
+		/// Pinpad communication provider.
 		/// </summary>
 		private PinpadCommunication communication { get; set; }
-		private Dictionary<string, string> fileNameToPathDictionary { get; set; }
 		/// <summary>
-		/// Gets a new array containing the File Names used
+		/// Dictionary containing the name file related to it's path.
 		/// </summary>
-		public string[] FileNameCollection {
-			get {
-				lock (this.fileNameToPathDictionary) {
-					return this.fileNameToPathDictionary.Keys.ToArray();
+		private Dictionary<string, string> files { get; set; }
+		/// <summary>
+		/// Gets a new array containing the all file names used.
+		/// </summary>
+		public string [] FileNameCollection
+		{
+			get
+			{
+				lock (this.files)
+				{
+					return this.files.Keys.ToArray();
 				}
 			}
 		}
 		/// <summary>
-		/// Are all the files loaded into the PinPad?
+		/// Are all the files loaded into the Pinpad?
 		/// </summary>
 		public bool AreAllFilesUpToDate { get; private set; }
 		/// <summary>
-		/// Event called when a file is fully loaded into the PinPad
+		/// Event called when a file is fully loaded into the Pinpad.
 		/// </summary>
 		public event EventHandler<PinpadFileLoadedEventArgs> OnFileLoaded;
 
 		// Constructor
 		/// <summary>
-		/// Constructor
+		/// Basic constructor.
 		/// </summary>
-		/// <param name="pinPad">PinPad to use</param>
+		/// <param name="commuication">Pinpad communication provider.</param>
 		public PinpadStorage(PinpadCommunication communication)
 		{
 			this.communication = communication;
-			this.fileNameToPathDictionary = new Dictionary<string, string>();
+			this.files = new Dictionary<string, string>();
 			this.AreAllFilesUpToDate = true;
 		}
 
 		// Methods
 		/// <summary>
-		/// Adds a file to the collection
+		/// Adds a file to the collection.
 		/// </summary>
-		/// <param name="fileName">File name, up to 15 characters</param>
-		/// <param name="path">File path</param>
-		public void AddFile(string fileName, string path) {
-			lock (this.fileNameToPathDictionary) {
-				if (string.IsNullOrWhiteSpace(fileName) || fileName.Length > 15) {
+		/// <param name="fileName">File name, up to 15 characters.</param>
+		/// <param name="path">File path.</param>
+		public void AddFile(string fileName, string path)
+		{
+			lock (this.files)
+			{
+				// Validating parameters:
+				if (string.IsNullOrWhiteSpace(fileName) || fileName.Length > 15)
+				{
 					throw new ArgumentException("name");
 				}
-
-				if (string.IsNullOrWhiteSpace(path)) {
+				if (string.IsNullOrWhiteSpace(path))
+				{
 					throw new ArgumentException("path");
 				}
 
-				if (CrossPlatformController.StorageController.FileExist(path) == false) {
+				// Verifies if the file exists:
+				if (CrossPlatformController.StorageController.FileExist(path) == false)
+				{
 					throw new ArgumentException("path", "File does not exist");
 				}
 
-				if (this.fileNameToPathDictionary.ContainsKey(fileName) == false) {
-					this.fileNameToPathDictionary.Add(fileName, path);
+				// Verifies if the files is already in the collection, that is, if the file
+				// was already loaded:
+				if (this.files.ContainsKey(fileName) == false)
+				{
+					// Add the file if it wasn't loaded yet:
+					this.files.Add(fileName, path);
 				}
-				else {
-					this.fileNameToPathDictionary[fileName] = path;
-				}
+				
+				// The file exists, but the path has changed:
+				else { this.files[fileName] = path; }
+
+				// Indicates that something has change. In this case, that a file has been added:
 				this.AreAllFilesUpToDate = false;
 			}
 		}
 		/// <summary>
-		/// Removes a image from the collection
+		/// Removes a file from the collection of files.
 		/// </summary>
-		/// <param name="fileName">Image name, up to 15 characters</param>
-		public void RemoveFile(string fileName) {
-			lock (this.fileNameToPathDictionary) {
-				this.fileNameToPathDictionary.Remove(fileName);
+		/// <param name="fileName">File name, up to 15 characters.</param>
+		public void RemoveFile(string fileName)
+		{
+			lock (this.files)
+			{
+				this.files.Remove(fileName);
 			}
 		}
 		/// <summary>
-		/// Gets the file path currently assigned to the specified file name
+		/// Gets the file path currently assigned to the specified file name.
 		/// </summary>
-		/// <param name="fileName">File Name</param>
-		/// <returns>File Path or null if not found</returns>
-		public string GetFilePath(string fileName) {
-			lock (this.fileNameToPathDictionary) {
-				if (this.fileNameToPathDictionary.ContainsKey(fileName) == true) {
-					return this.fileNameToPathDictionary[fileName];
+		/// <param name="fileName">File name, up to 15 characters.</param>
+		/// <returns>File path, or null if not found.</returns>
+		public string GetFilePath(string fileName)
+		{
+			lock (this.files)
+			{
+				if (this.files.ContainsKey(fileName) == true)
+				{
+					return this.files[fileName];
 				}
-				else {
-					return null;
-				}
+
+				else { return null; }
 			}
 		}
 		/// <summary>
@@ -110,126 +135,163 @@ namespace Pinpad.Core.Pinpad
 		/// </summary>
 		/// <param name="force">If true will force load all the files</param>
 		/// <returns>true if all files were successfully loaded</returns>
-		public bool LoadFiles(bool force = false) {
-			lock (this.fileNameToPathDictionary) {
+		public bool LoadFiles(bool force = false)
+		{
+			lock (this.files)
+			{
 				bool wereAllFilesSuccessfullyLoaded = true;
 
 				int counter = 0;
-				foreach (string fileName in this.FileNameCollection) {
+				foreach (string fileName in this.FileNameCollection)
+				{
 					counter++;
 
-					string filePath = this.fileNameToPathDictionary[fileName];
+					string filePath = this.files[fileName];
 					bool successfullyLoaded;
-					if (force == true) {
+					if (force == true)
+					{
 						successfullyLoaded = this.LoadFile(fileName, filePath);
 					}
-					else {
+					else
+					{
 						successfullyLoaded = this.LoadFileIfNotExistOrSizeDiffers(fileName, filePath);
 					}
-					if (this.OnFileLoaded != null) {
-						this.OnFileLoaded(this, new PinpadFileLoadedEventArgs(this.communication, fileName, filePath, successfullyLoaded, counter, this.fileNameToPathDictionary.Count));
+					if (this.OnFileLoaded != null)
+					{
+						this.OnFileLoaded(this, new PinpadFileLoadedEventArgs(this.communication, fileName, filePath, successfullyLoaded, counter, this.files.Count));
 					}
 
 					wereAllFilesSuccessfullyLoaded &= successfullyLoaded;
 				}
+
 				this.AreAllFilesUpToDate = wereAllFilesSuccessfullyLoaded;
+
 				return wereAllFilesSuccessfullyLoaded;
 			}
 		}
 		/// <summary>
-		/// Checks if a file exists in the PinPad
+		/// Checks if a file exists in the Pinpad.
 		/// </summary>
-		/// <param name="fileName">File name, up to 15 characters</param>
-		/// <returns>true if exists, false if does not exist, null on error</returns>
-		public Nullable<bool> FileExists(string fileName) {
-			LfcRequest request = new LfcRequest( );
+		/// <param name="fileName">File name, up to 15 characters.</param>
+		/// <returns>True the file exists, false if does not exist, null on error.</returns>
+		public Nullable<bool> FileExists(string fileName)
+		{
+			LfcRequest request = new LfcRequest();
 			request.LFC_FILENAME.Value = fileName;
 			LfcResponse response = this.communication.SendRequestAndReceiveResponse<LfcResponse>(request);
 
-			if (response == null || response.RSP_STAT.Value != AbecsResponseStatus.ST_OK) {
+			if (response == null || response.RSP_STAT.Value != AbecsResponseStatus.ST_OK)
+			{
 				return null;
 			}
-			else {
+			else
+			{
 				return response.LFC_EXISTS.Value;
 			}
 		}
 		/// <summary>
-		/// Checks if a file exists in the PinPad and size is equal to the specified file path
+		/// Checks if a file exists in the pinpad and it's size is equal to the specified file path.
 		/// </summary>
-		/// <param name="fileName">File name, up to 15 characters</param>
-		/// <param name="path">File Path</param>
-		/// <returns>true if exists and is equal, false if does not exist or is not equal, null on error</returns>
-		public Nullable<bool> FileExistsAndHasSameSize(string fileName, string path) {
-			LfcRequest request = new LfcRequest( );
+		/// <param name="fileName">File name, up to 15 characters.</param>
+		/// <param name="path">File path.</param>
+		/// <returns>True if exists and is equal, false if does not exist or is not equal, null on error.</returns>
+		public Nullable<bool> FileExistsAndHasSameSize(string fileName, string path)
+		{
+			LfcRequest request = new LfcRequest();
 			request.LFC_FILENAME.Value = fileName;
 			LfcResponse response = this.communication.SendRequestAndReceiveResponse<LfcResponse>(request);
 
-			if (response == null || response.RSP_STAT.Value != AbecsResponseStatus.ST_OK) {
+			if (response == null || response.RSP_STAT.Value != AbecsResponseStatus.ST_OK)
+			{
 				return null;
 			}
-			else {
+			else
+			{
 				return CrossPlatformController.StorageController.OpenFile(path).Length == response.LFC_FILESIZE.Value;
 			}
 		}
 		/// <summary>
-		/// Loads a file if it does not exist or it's size differs
+		/// Loads a file if it does not exist or it's size differs.
 		/// </summary>
-		/// <param name="fileName">File name, up to 15 characters</param>
-		/// <param name="path">File path</param>
-		/// <returns>false on error</returns>
-		private bool LoadFileIfNotExistOrSizeDiffers(string fileName, string path) {
+		/// <param name="fileName">File name, up to 15 characters.</param>
+		/// <param name="path">File path.</param>
+		/// <returns>False on error.</returns>
+		private bool LoadFileIfNotExistOrSizeDiffers(string fileName, string path)
+		{
 			Nullable<bool> fileExists = FileExistsAndHasSameSize(fileName, path);
-			if (fileExists == null || fileExists == false) {
+			if (fileExists == null || fileExists == false)
+			{
 				return LoadFile(fileName, path);
 			}
-			else {
-				return true;
-			}
+
+			else { return true; }
 		}
 		/// <summary>
-		/// Loads a file to the PinPad
+		/// Loads a file into the pinpad.
 		/// </summary>
-		/// <param name="fileName">File name, up to 15 characters</param>
-		/// <param name="path">File Path</param>
-		/// <returns>true if file was successfully loaded</returns>
-		private bool LoadFile(string fileName, string path) {
+		/// <param name="fileName">File name, up to 15 characters.</param>
+		/// <param name="path">File path.</param>
+		/// <returns>True if file was successfully loaded.</returns>
+		private bool LoadFile(string fileName, string path)
+		{
 			return LoadFile(CrossPlatformController.StorageController.OpenFile(path), fileName);
 		}
 		/// <summary>
-		/// Loads a file to the PinPad
+		/// Loads a file into the pinpad.
 		/// </summary>
-		/// <param name="stream">File Stream</param>
-		/// <param name="fileName">File name, up to 15 characters</param>
-		/// <returns>true if file was successfully loaded</returns>
-		private bool LoadFile(Stream stream, string fileName) {
-			if (this.StartLoadingFile(fileName) == false) {
-				return false;
-			}
+		/// <param name="stream">File stream.</param>
+		/// <param name="fileName">File name, up to 15 characters.</param>
+		/// <returns>True if file was successfully loaded.</returns>
+		private bool LoadFile(Stream stream, string fileName)
+		{
+			if (this.StartLoadingFile(fileName) == false) { return false; }
 
-			while (stream.Position < stream.Length) {
-				byte[] buffer = new byte[256];
-				int count = stream.Read(buffer, 0, 256);
+			while (stream.Position < stream.Length)
+			{
+				byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
 
-				if (this.LoadFileData(buffer.Take(count).ToArray( )) == false) {
+				// Reads 256 bytes from the stream:
+				int count = stream.Read(buffer, 0, DEFAULT_BUFFER_SIZE);
+
+				if (this.LoadFileData(buffer.Take(count).ToArray()) == false)
+				{
 					return false;
 				}
 			}
-
-			return this.FinishLoadingFile( );
+			
+			// Sends a request to the pinpad, indicating that there's no more files to be loaded:
+			return this.FinishLoadingFile();
 		}
-		private bool StartLoadingFile(string fileName) {
-			LfiRequest request = new LfiRequest( );
+		/// <summary>
+		/// Sends a command to the pinpad, indicating that a file loading is about to begin.
+		/// </summary>
+		/// <param name="fileName">File name, up to 15 characters.</param>
+		/// <returns>If the operation succeed.</returns>
+		private bool StartLoadingFile(string fileName)
+		{
+			LfiRequest request = new LfiRequest();
 			request.LFI_FILENAME.Value = fileName;
 
 			return this.communication.SendRequestAndVerifyResponseCode(request);
 		}
-		private bool LoadFileData(byte[] data) {
-			LfrRequest request = new LfrRequest( );
+		/// <summary>
+		/// Loads a file into the pinpad.
+		/// </summary>
+		/// <param name="data">Data to be loaded.</param>
+		/// <returns>If the operation succeed.</returns>
+		private bool LoadFileData(byte [] data)
+		{
+			LfrRequest request = new LfrRequest();
 			request.LFR_DATA.Value = new HexadecimalData(data);
 
 			return this.communication.SendRequestAndVerifyResponseCode(request);
 		}
-		private bool FinishLoadingFile( ) {
+		/// <summary>
+		/// Sends a command to the pinpad, indicating that there's no more files to be loaded.
+		/// </summary>
+		/// <returns>If the operation succeed.</returns>
+		private bool FinishLoadingFile()
+		{
 			LfeRequest request = new LfeRequest( );
 
 			return this.communication.SendRequestAndVerifyResponseCode(request);

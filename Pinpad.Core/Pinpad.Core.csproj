@@ -127,6 +127,7 @@
     <Compile Include="Pinpad\PinpadPrinter.cs" />
     <Compile Include="Pinpad\PinpadStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoneIndexCode.cs" />
     <Compile Include="Tables\BaseAidTable.cs" />
     <Compile Include="Tables\BaseTable.cs" />
     <Compile Include="Tables\CapkTable.cs" />

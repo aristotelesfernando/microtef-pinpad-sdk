@@ -1,69 +1,81 @@
 ﻿using Pinpad.Core.TypeCode;
 using System;
 
+/* WARNING!
+ * 
+ * DEPRECATED.
+ * MUST BE REFACTORED.
+ * 
+ */
+
 namespace Pinpad.Core.Properties
 {
-    /// <summary>
-    /// Controller for cryptography method
-    /// </summary>
-    public class CryptographyMethod {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public CryptographyMethod() {
-        }
+	/// <summary>
+	/// Controller for cryptography methods.
+	/// </summary>
+	public class CryptographyMethod
+	{
+		/// <summary>
+		/// Cryptography Key Management Method
+		/// </summary>
+		public KeyManagementMode KeyManagement { get; set; }
+		/// <summary>
+		/// Cryptography Method
+		/// </summary>
+		public CryptographyMode Cryptography { get; set; }
 
-        /// <summary>
-        /// Constructor with initial value
-        /// </summary>
-        /// <param name="keyManagement">Online Pin Cryptography Key Management Mode</param>
-        /// <param name="cryptography">Online Pin Cryptography Mode</param>
-        public CryptographyMethod(KeyManagementMode keyManagement, CryptographyMode cryptography)
-        : this(){
-            this.KeyManagement = keyManagement;
-            this.Cryptography = cryptography;
-        }
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
+		public CryptographyMethod() { }
 
-        /// <summary>
-        /// PinPadCryptographyMethodController string formatter
-        /// </summary>
-        /// <param name="obj">value to convert</param>
-        /// <returns>Value of the property as string or InvalidCastException for invalid values</returns>
-        public static string StringFormatter(CryptographyMethod obj) {
-            if (obj.KeyManagement == KeyManagementMode.Undefined || obj.Cryptography == CryptographyMode.Undefined) {
-                throw new InvalidCastException("KeyManagementMethod and CryptographyMethod cannot be undefined.");
-            }
-            int value = (((int)obj.KeyManagement) - 1) * 2;
-            value += ((int)obj.Cryptography) - 1;
-            return value.ToString();
-        }
+		/// <summary>
+		/// Constructor with initial value.
+		/// </summary>
+		/// <param name="keyManagement">Online Pin Cryptography Key Management Mode.</param>
+		/// <param name="cryptography">Online Pin Cryptography Mode.</param>
+		public CryptographyMethod(KeyManagementMode keyManagement, CryptographyMode cryptography)
+		: this()
+		{
+			this.KeyManagement = keyManagement;
+			this.Cryptography = cryptography;
+		}
+		/// <summary>
+		/// PinPadCryptographyMethodController string formatter.
+		/// </summary>
+		/// <param name="obj">Value to convert.</param>
+		/// <returns>Value of the property as string or InvalidCastException for invalid values.</returns>
+		public static string StringFormatter(CryptographyMethod obj)
+		{
+			// Validates parameter value:
+			if (obj.KeyManagement == KeyManagementMode.Undefined || obj.Cryptography == CryptographyMode.Undefined)
+			{
+				throw new InvalidCastException("KeyManagementMethod and CryptographyMethod cannot be undefined.");
+			}
 
-        /// <summary>
-        /// PinPadCryptographyMethodController string parser
-        /// </summary>
-        /// <param name="reader">string reader</param>
-        /// <returns>PinPadCryptographyMethodController</returns>
-        public static CryptographyMethod StringParser(StringReader reader) {
-            int intValue = DefaultStringParser.IntegerStringParser(reader, 1).Value;
+			// Converts to string:
+			int value = (((int)obj.KeyManagement) - 1) * 2;
+			value += ((int)obj.Cryptography) - 1;
 
-            int keyManagementMethodValue = (intValue / 2) + 1;
-            KeyManagementMode keyManagementMethod = (KeyManagementMode)keyManagementMethodValue;
+			return value.ToString();
+		}
+		/// <summary>
+		/// PinPadCryptographyMethodController string parser.
+		/// </summary>
+		/// <param name="reader">String reader.</param>
+		/// <returns>PinPadCryptographyMethodController</returns>
+		public static CryptographyMethod StringParser(StringReader reader)
+		{
+			int intValue = DefaultStringParser.IntegerStringParser(reader, 1).Value;
 
-            int cryptographyMethodValue = (intValue % 2) + 1;
-            CryptographyMode cryptographyMethod = (CryptographyMode)cryptographyMethodValue;
+			int keyManagementMethodValue = (intValue / 2) + 1;
+			KeyManagementMode keyManagementMethod = (KeyManagementMode)keyManagementMethodValue;
 
-            CryptographyMethod value = new CryptographyMethod(keyManagementMethod, cryptographyMethod);
-            return value;
-        }
+			int cryptographyMethodValue = (intValue % 2) + 1;
+			CryptographyMode cryptographyMethod = (CryptographyMode)cryptographyMethodValue;
 
-        /// <summary>
-        /// Cryptography Key Management Method
-        /// </summary>
-        public KeyManagementMode KeyManagement { get; set; }
-
-        /// <summary>
-        /// Cryptography Method
-        /// </summary>
-        public CryptographyMode Cryptography { get; set; }
-    }
+			CryptographyMethod value = new CryptographyMethod(keyManagementMethod, cryptographyMethod);
+			return value;
+		}
+	}
 }

@@ -20,53 +20,51 @@ namespace Pinpad.Core.Properties
         /// <summary>
         /// Length of the property as string
         /// </summary>
-        public int Length {
-            get;
-            private set;
-        }
+        public int Length { get; private set; }
         /// <summary>
         /// Whether or not the length of this property included on the region length calculation
         /// </summary>
-        public bool LengthIncludedOnValue {
-            get;
-            private set;
-        }
+        public bool LengthIncludedOnValue { get; private set; }
         /// <summary>
         /// Calculates when called, 
         /// Start of the region cannot be set
         /// </summary>
         public override Nullable<int> Value {
-            get {
+            get
+			{
                 int value = 0;
-                if (this.LengthIncludedOnValue == true) {
+                if (this.LengthIncludedOnValue == true)
+				{
                     value += this.Length;
                 }
-                foreach (IProperty property in PropertyCollection) {
 
+				foreach (IProperty property in PropertyCollection)
+				{
                     PinpadFixedLengthProperty<object> propertyWithLength = property as PinpadFixedLengthProperty<object>;
-                    if (propertyWithLength != null) {
+
+					if (propertyWithLength != null)
+					{
                         value += propertyWithLength.Length;
                     }
-                    else {
-                        string propertyValue = property.GetString( );
-                        if (propertyValue != null) {
+                    else
+					{
+                        string propertyValue = property.GetString();
+                        if (propertyValue != null)
+						{
                             value += propertyValue.Length;
                         }
                     }
                 }
-                if (this.IsOptional == true && value == 0) {
-                    return null;
-                }
-                else {
-                    return value;
-                }
+                if (this.IsOptional == true && value == 0) { return null; }
+
+				return value;
             }
             set { }
         }
-        private List<IProperty> PropertyCollection {
-            get;
-            set;
-        }
+		/// <summary>
+		/// Contains all property from a region.
+		/// </summary>
+        private List<IProperty> PropertyCollection { get; set; }
 
 		// Constructor
 		/// <summary>
@@ -76,8 +74,8 @@ namespace Pinpad.Core.Properties
         /// <param name="length">Length of the property</param>
         /// <param name="lengthIncludedOnValue">Whether or not the length of this property included on the region length calculation</param>
         /// <param name="isOptional">Indicates if this property must exist in the command string or not</param>
-        public RegionProperty(string name, int length, bool lengthIncludedOnValue = false, bool isOptional = false) :
-            base(name, isOptional) 
+        public RegionProperty(string name, int length, bool lengthIncludedOnValue = false, bool isOptional = false) 
+			: base(name, isOptional) 
 		{
             this.Length = length;
             this.LengthIncludedOnValue = lengthIncludedOnValue;
@@ -100,13 +98,13 @@ namespace Pinpad.Core.Properties
         public override string GetString() 
 		{
             Nullable<int> obj = this.GetValue();
-            if (obj == null) 
-			{
-                return String.Empty;
-            }
+            if (obj.HasValue == false) { return String.Empty; }
 
+			// Get integer value as string:
             string value = DefaultStringFormatter.IntegerStringFormatter(obj, this.Length);
-            if (value.Length != Length) 
+
+			// Validating length:
+			if (value.Length != Length) 
 			{
                 throw new LenghtMismatchException(this.Name + " : \"" + value + "\" is " + value.Length + " long while it should be " + Length + " long.");
             }
@@ -116,11 +114,14 @@ namespace Pinpad.Core.Properties
         /// Parses a string into the property Value
         /// </summary>
         /// <param name="reader">string reader</param>
-        public override void ParseString(StringReader reader) {
-            if (reader.Remaining < this.Length && this.IsOptional == true) {
+        public override void ParseString(StringReader reader)
+		{
+            if (reader.Remaining < this.Length && this.IsOptional == true)
+			{
                 this.Value = default(Nullable<int>);
             }
-            else {
+            else
+			{
                 this.Value = DefaultStringParser.IntegerStringParser(reader, Length);
             }
         }

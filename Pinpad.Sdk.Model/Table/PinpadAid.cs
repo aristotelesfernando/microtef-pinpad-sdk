@@ -19,10 +19,6 @@ namespace Pinpad.Sdk.Model
 		/// Additional capabilities exact size.
 		/// </summary>
         public const int ADDITIONAL_TERMINAL_CAPABILITIES_LENGTH = 10;
-		/// <summary>
-		/// Stone application number into the pinpad.
-		/// </summary>
-        public const int STONE_ACQUIRER_NUMBER = 8;
 
         // Members
         /// <summary>

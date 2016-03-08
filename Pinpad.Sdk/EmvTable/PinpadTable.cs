@@ -19,436 +19,336 @@ using System.Linq;
 
 namespace Pinpad.Sdk.EmvTable
 {
-	/// <summary>
-	/// PinpadTable manager. PinpadTable is responsible for all operations related to table (CAPK and AID tables) controlling.
-	/// </summary>
-	public class PinpadTable : IPinpadTable
-	{
-		// Singleton
-		private static PinpadTable _pinpadTable;
+    /// <summary>
+    /// PinpadTable manager. PinpadTable is responsible for all operations related to table (CAPK and AID tables) controlling.
+    /// </summary>
+    public class PinpadTable : IPinpadTable
+    {
+        // Constants:
+        /// <summary>
+        /// Stone acquirer application index.
+        /// </summary>
+        public const short DOWNLOAD_TABLES_FOR_STONE = 8;
+        /// <summary>
+        /// Generic acquirer application index.
+        /// </summary>
+        public const short DOWNLOAD_TABLES_FOR_ALL = 0;
+        /// <summary>
+        /// EMV table version lewgth required by ABECS protocol.
+        /// </summary>
+        public const short EMV_TABLE_VERSION_LENGTH = 10;
 
-		// Members
-		/// <summary>
-		/// Pinpad facade with all pinpad functionalities.
-		/// </summary>
-		private PinpadCommunication communication;
-		/// <summary>
-		/// Pinpad facade with all pinpad functionalities.
-		/// </summary>
-		private BasePinpadConnection pinpadConnection;
-		/// <summary>
-		/// Capk collection, containing all capk added to the capk table.
-		/// </summary>
-		public ICollection<PinpadCapk> CapkTable
-		{
-			get;
-			private set;
-		}
-		/// <summary>
-		/// Aid collection, containing all aid added to the aid table.
-		/// </summary>
-		public ICollection<PinpadAid> AidTable
-		{
-			get;
-			private set;
-		}
-		/// <summary>
-		/// Expected TableVersion in the Pinpad, used to load tables and verify tables at the Pinpad
-		/// </summary>
-		public string ExpectedTableVersion
-		{
-			get
-			{
-				return this._expectedTableVersion;
-			}
-			set
-			{
-				if (String.IsNullOrEmpty(value) == true || value.Length != 10)
-				{
-					throw new InvalidOperationException("TableVersions must be a string 10 characters long.");
-				}
-				else
-				{
-					this._expectedTableVersion = value;
-				}
-			}
-		}
-		/// <summary>
-		/// Expected TableVersion in the Pinpad, used to load tables and verify tables at the Pinpad
-		/// </summary>
-		private string _expectedTableVersion { get; set; }
-		/// <summary>
-		/// Table collection containing pinpad AID and CAPK entries.
-		/// </summary>
-		private List<BaseTable> _tableCollection { get; set; }
-		/// <summary>
-		/// MEDIFIED table collection containing pinpad AID and CAPK entries.
-		/// </summary>
-		private bool _tableCollectionModified { get; set; }
-		/// <summary>
-		/// Gets the tables currently in the buffer
-		/// </summary>
-		public BaseTable[] TableCollection
-		{
-			get
-			{
-				lock (this._tableCollection)
-				{
-					return _tableCollection.ToArray();
-				}
-			}
-		}
-		
-		// Constructor
-		public static PinpadTable GetInstance(BasePinpadConnection pinpadConnection = null)
-		{
-			if (pinpadConnection != null)
-			{
-				if (_pinpadTable == null)
-				{
-					_pinpadTable = new PinpadTable(pinpadConnection);
-				}
-			}
-			else
-			{
-				if (_pinpadTable == null)
-				{
-					throw new ArgumentNullException("PinpadTable was not intantiated yet - in this case, the parameter PinpadConnection should not be null.");
-				}
-			}
+        // Pinpad providers:
+        /// <summary>
+        /// Pinpad communication provider.
+        /// </summary>
+        public PinpadCommunication PinpadCommunication { get; private set; }
 
-			return _pinpadTable;
-		}
-		/// <summary>
-		/// Constructor, sets all mandatory data. 
-		/// </summary>
-		/// <param name="pinpadConnection">Physical environment in which the application will communicate with the pinpad (for example, serial port, bluetooth, usb, etc).</param>
-		/// <exception cref="System.ArgumentNullException">Thrown if pinpadConnection is null.</exception>
-		private PinpadTable(BasePinpadConnection pinpadConnection)
-		{
-			if (pinpadConnection == null)
-			{
-				throw new ArgumentNullException("pinpadConnection");
-			}
+        // Table controlling members:
+        /// <summary>
+        /// Contains all CAPK and AID entry tables.
+        /// </summary>
+        private List<BaseTable> tableCollection { get; set; }
+        /// <summary>
+        /// If the tables were modified or not.
+        /// </summary>
+        private bool tableCollectionModified { get; set; }
 
-			this.pinpadConnection = pinpadConnection;
-			this.communication = new PinpadCommunication(pinpadConnection.PlatformPinpadConnection);
-			this.AidTable = new Collection<PinpadAid>();
-			this.CapkTable = new Collection<PinpadCapk>();
-			this._tableCollection = new List<BaseTable>();
-		}
+        // Members
+        /// <summary>
+        /// AID entries.
+        /// </summary>
+        public ICollection<PinpadAid> AidTable
+        {
+            get
+            {
+                BaseTable [] baseTableCollection;
 
-		// Public methods
-		/// <summary>
-		/// Adds one entry, CAPK or AID, into it respective collection.
-		/// </summary>
-		/// <param name="entry">Entry: could be a <see cref="Pinpad.Sdk.EmvTable.Entry.CapkEntry">CAPK</see> or <see cref="Pinpad.Sdk.EmvTable.Entry.AidEntry">AID</see> entry.</param>
-		/// <exception cref="System.NotImplementedException">Thrown if the parameter is valid, but not recognized.</exception>
-		public void AddEntry(BaseTableEntry entry)
-		{
-			if (entry is PinpadAid)
-			{
-				this.AidTable.Add((PinpadAid)entry);
-			}
-			else if (entry is PinpadCapk)
-			{
-				this.CapkTable.Add((PinpadCapk)entry);
-			}
-			else
-			{
-				throw new NotImplementedException("Type of entry was not implemented. Please create a new table entry type or change entry parameter.");
-			}
-		}
-		/// <summary>
-		/// Updates pinpad AID & CAPK tables.
-		/// </summary>
-		/// <returns>Whether tables were successfuly updated or not.</returns>
-		public bool UpdatePinpad(bool forcePinpadUpdate = false)
-		{
-			// Adding this class aid table to legacy aid table.
-			if (UpdateLegacyPinpadAidTable() == false) { return false; }
+                lock (this.tableCollection)
+                {
+                    // Get's all AID entries (as raw):
+                    baseTableCollection = tableCollection.Where ((table) =>
+                    {
+                        return table is EmvAidTable;
+                    }).ToArray ();
+                }
 
-			// Adding this class capk table to legacy capk table.
-			if (UpdateLegacyPinpadCapkTable() == false) { return false; }
+                // Mapps raw AID entries into pinpad AID entries:
+                ICollection<PinpadAid> emvAidTableCollection = AidMapper.MapToAidCollection(baseTableCollection.Cast<EmvAidTable>().ToArray());
 
-			// Retrieves pinpad's EMV table version (on Stone index)
-			string expectedTableVersion = this.GetEmvTableVersion();
-            if (expectedTableVersion == null) { return false; }
+                return emvAidTableCollection;
+            }
+        }
+        /// <summary>
+        /// CAPK entries.
+        /// </summary>
+        public ICollection<PinpadCapk> CapkTable
+        {
+            get
+            {
+                BaseTable [] baseTableCollection;
+                lock (this.tableCollection)
+                {
+                    // Get's all CAPK entries (as raw):
+                    baseTableCollection = tableCollection.Where((table) =>
+                    {
+                        return table is CapkTable;
+                    }).ToArray();
+                }
 
-			// Verifies if it has a valid EMV table version:
-			if (forcePinpadUpdate == true || expectedTableVersion == "0000000000")
-			{
-				// If it has not a valid version, generetas a new one:
-				Random randomGen = new Random();
-				expectedTableVersion = randomGen.Next(1, Int32.MaxValue).ToString();
-				expectedTableVersion = expectedTableVersion.PadRight(10, '0');
-			}
+                // Mapps raw CAPK entries into pinpad CAPK entries:
+                ICollection<PinpadCapk> capkTableCollection = CapkMapper.MapToPinpadCapkCollection(baseTableCollection.Cast<CapkTable>().ToArray());
 
-			// Load new tables of the specific version on pinpad memmory:
-			this.LoadTables(expectedTableVersion);
+                return capkTableCollection;
+            }
+        }
+        /// <summary>
+        /// Expected EMV table version.
+        /// </summary>
+        private string expectedTableVersion;
+        /// <summary>
+        /// Expected EMV table version.
+        /// </summary>
+        public string ExpectedTableVersion
+        {
+            get
+            {
+                return this.expectedTableVersion;
+            }
+            set
+            {
+                if (String.IsNullOrEmpty(value) == true || value.Length != 10)
+                {
+                    throw new InvalidOperationException("TableVersions must be a string 10 characters long.");
+                }
+                else
+                {
+                    this.expectedTableVersion = value;
+                }
+            }
+        }
 
-			return true;
-		}
-		/// <summary>
-		/// Cleans all stuff from CAPK & AID collections.
-		/// </summary>
-		public void Clear()
-		{
-			this.CapkTable.Clear();
-			this.AidTable.Clear();
+        // Constructor:
+        public PinpadTable (PinpadCommunication pinpadCommunication)
+        {
+            this.PinpadCommunication = pinpadCommunication;
+            this.tableCollection = new List<BaseTable>();
+        }
 
-			lock (this._tableCollection)
-			{
-				this._tableCollection.Clear();
-				this._tableCollectionModified = true;
-			}
-		}
-		/// <summary>
-		/// Actual version of the EMV table.
-		/// </summary>
-		public string GetEmvTableVersion()
-		{
-			GtsRequest request = new GtsRequest();
+        /// <summary>
+        /// Adds a pinpad entry, converts it into raw pinpad entry and adds to the collection.
+        /// </summary>
+        /// <param name="entry">Pinpad AID or CAPK entry.</param>
+        /// <returns>If the entry was added or not. In case of false return, verify if the entry is CAPK or AID.</returns>
+        public bool AddEntry (BaseTableEntry entry)
+        {
+            BaseTable table;
+
+            // Verifies which entry is (AID or CAPK):
+            if (entry is PinpadAid)
+            {
+                table = AidMapper.MapGenericToLegacyAid(entry);
+            }
+            else if (entry is PinpadCapk)
+            {
+                table = CapkMapper.MapGenericToLegacyCapk(entry);
+            }
+            else
+            {
+                return false;
+            }
+
+            lock (this.tableCollection)
+            {
+                // Check for a table entry collision:
+                BaseTable collision = this.tableCollection.FirstOrDefault((tableEntry) =>
+                {
+                    return tableEntry.TAB_ID == table.TAB_ID &&
+                    tableEntry.TAB_ACQ.Value == table.TAB_ACQ.Value &&
+                    tableEntry.TAB_RECIDX.Value == table.TAB_RECIDX.Value;
+                });
+
+                // If a collision was detected, remove the old entry:
+                if (collision != null)
+                {
+                    this.RemoveTable(collision);
+                }
+
+                // Add raw entry here:
+                this.tableCollection.Add(table);
+
+                // Indicates changes (pinpad is not updated):
+                this.tableCollectionModified = true;
+            }
+
+            return true;
+        }
+        /// <summary>
+        /// Clear all AID and CAPK tables.
+        /// </summary>
+        public void Clear ()
+        {
+            lock (this.tableCollection)
+            {
+                this.tableCollection.Clear();
+                this.tableCollectionModified = true;
+            }
+        }
+        /// <summary>
+        /// Get's the current EMV table version. This is used to verify if the pinpad has the last version of tables.
+        /// </summary>
+        /// <returns>The curret EMV table version.</returns>
+        public string GetEmvTableVersion ()
+        {
+            GtsRequest request = new GtsRequest();
 
             // Acquirer application ID:
-            //TODO: flag de acquirer
-            //request.GTS_ACQIDX.Value = 8;
             request.GTS_ACQIDX.Value = 00;
 
             // Sends GTS request and gets it's response:
-            GtsResponse response = this.communication.SendRequestAndReceiveResponse<GtsResponse>(request);
+            GtsResponse response = this.PinpadCommunication.SendRequestAndReceiveResponse<GtsResponse>(request);
 
-			// Treats response status:
-			if (response == null || response.RSP_STAT.Value != AbecsResponseStatus.ST_OK)
-			{
-				return null;
-			}
+            // Treats response status:
+            if (response == null || response.RSP_STAT.Value != AbecsResponseStatus.ST_OK)
+            {
+                return null;
+            }
 
-			return response.GTS_TABVER.Value; 
-		}
-		/// <summary>
-		/// Fulfill CapkTable and AidTable with retrieved tables from pinpad.
-		/// </summary>
-		/// <exception cref="System.InvalidOperationException">If one table entry is either see cref="Pinpad.Sdk.EmvTable.Entry.AidEntry">AID</see> nor see cref="Pinpad.Sdk.EmvTable.Entry.CapkEntry">CAPK</see> entry.</exception>
-		public void RefreshFromPinpad()
-		{
-			// Creating a list with current pinpad table.
-			List<BaseTable> tableList = new List<BaseTable>(this.TableCollection);
+            return response.GTS_TABVER.Value;
+        }
+        /// <summary>
+        /// Verifies if pinpad tables are up to dated.
+        /// </summary>
+        /// <returns>If the pinpad tables are up to dated or not.</returns>
+        public bool IsPinpadUpdated ()
+        {
+            return (this.tableCollectionModified == false && this.ExpectedTableVersion == this.GetEmvTableVersion());
+        }
 
-			// Clear all actual table content.
-			this.AidTable.Clear();
-			this.CapkTable.Clear();
+        public void RefreshFromPinpad ()
+        {
+            
+        }
 
-			// Iterating through the list retrieved and setting each item into it respective collection.
-			foreach (BaseTable currentTableEntry in tableList)
-			{
-				if (currentTableEntry is EmvAidTable)
-				{
-					// Maps legacy aid into AidEntry.
-					PinpadAid mappedAid = AidMapper.MapToAidEntry(currentTableEntry as EmvAidTable);
-					
-					// Adds to collection.
-					this.AidTable.Add(mappedAid);
-				}
-				else if (currentTableEntry is CapkTable)
-				{
-					// Maps legacy capk into CapkEntry.
-					PinpadCapk mappedCapk = CapkMapper.MapToPinpadCapk(currentTableEntry as CapkTable);
+        /// <summary>
+        /// Performs all operations to download tables.
+        /// </summary>
+        /// <param name="forceUpdate">If should inject tables even with a updated EMV table version.</param>
+        /// <returns>If the operation succeed.</returns>
+        public bool UpdatePinpad (bool forceUpdate)
+        {
+            // Retrieves pinpad's EMV table version (on Stone index)
+            string expectedTableVersion = this.GetEmvTableVersion();
 
-					// Adds to collection.
-					this.CapkTable.Add(mappedCapk);
-				}
-				else
-				{
-					// If one table entry is either aid nor capk, throw exception.
-					throw new InvalidOperationException("Could not retrieve pinpad table, because an unknown table entry was received.");
-				}
-			}
+            if (expectedTableVersion == null) { return false; }
 
-			Debug.WriteLine("Tables were refreshed. <AIDs {0}, CAPKs {1}>", this.AidTable.Count, this.CapkTable.Count);
-		}
-		/// <summary>
-		/// Returns whether the pinpad has tables or not.
-		/// </summary>
-		/// <returns>False if there is not tables into the pinpad (that is, it cannot transact); and true otherwise. </returns>
-		public bool IsPinpadUpdated()
-		{
-			if (this.TableCollection.Count() <= 0)
-			{
-				return false;
-			}
+            // Pinpad is already updated and it's not a forced update:
+            if (expectedTableVersion == this.expectedTableVersion && forceUpdate == false)
+            {
+                return true;
+            }
 
-			return true;
-		}
+            // If pinpad is not updated or is a forced update...
+            // Verifies if it has a valid EMV table version:
+            if (forceUpdate == true || expectedTableVersion == "0000000000")
+            {
+                // If it has not a valid version, generetas a new one:
+                Random randomGen = new Random();
+                expectedTableVersion = randomGen.Next(1, Int32.MaxValue).ToString();
 
-		// Private methods
-		/// <summary>
-		/// Updates pinpad AID table.
-		/// </summary>
-		/// <returns>Whether AID table was successfuly updated or not.</returns>
-		private bool UpdateLegacyPinpadAidTable()
-		{
-			// Iterating through this class AidTable.
-			foreach (PinpadAid aid in this.AidTable)
-			{
-				// Translating AidEntry into legacy AidEntry (Pinpad.Core).
-				EmvAidTable mappedAid = AidMapper.MapToLegacyAid(aid);
+                // Get's a string with legth of exactly 10 characters (required by ABECS protocol):
+                expectedTableVersion = expectedTableVersion.PadRight(EMV_TABLE_VERSION_LENGTH, '0');
+            }
 
-				// Adding legacy aid stuff and verifying if it was successfuly updated.
-				if (this.AddTable(mappedAid) == false) { return false; }
-			}
+            // Load tables into the pinpad:
+            lock (this.tableCollection)
+            {
+				this.expectedTableVersion = expectedTableVersion;
 
-			return true;
-		}
-		/// <summary>
-		/// Updates pinpad CAPK table.
-		/// </summary>
-		/// <returns>Whether CAPK table was successfuly updated or not.</returns>
-		private bool UpdateLegacyPinpadCapkTable()
-		{
-			// Iterating through this class CapkTable.
-			foreach(PinpadCapk capk in this.CapkTable)
-			{
-				// Translating CapkEntry into legacy CapkEntry (Pinpad.Core).
-				CapkTable mappedCapk = CapkMapper.MapToLegacyCapk(capk);
+                // Sends a command to the pinpad, indicating that a table injection is about to happen:
+                if (this.StartLoadingTables() == false) { return false; }
 
-				// Adding legacy capk stuff and verifying if it was successfuly updated.
-				if (this.AddTable(mappedCapk) == false) { return false; }
-			}
+                foreach (BaseTable table in this.tableCollection)
+                {
+                    // Loads one entry into the pinpad:
+                    if (this.LoadTableEntry(table) == false) { return false; }
+                }
 
-			return true;
-		}
-		/// <summary>
-		/// Loads the table buffer to the Pinpad
-		/// </summary>
-		/// <returns>true if successfully loaded</returns>
-		private bool LoadTables(string expectedTableVersion)
-		{
-			if (expectedTableVersion != null)
-			{
-				this.ExpectedTableVersion = expectedTableVersion;
-			}
+                // Sends a command to the pinpad, indicating that there's no more tables to be injected:
+                if (this.FinishLoadingTables() == false) { return false; }
 
-			if (this.ExpectedTableVersion == null) 
-			{
-				throw new InvalidOperationException("ExpectedTableVersion was not set.");
-			}
+                // Indicates that all changes has been saved:
+                this.tableCollectionModified = false;
 
-			lock (this._tableCollection)
-			{
-				if (this.StartLoadingTables() == false)
-				{
-					return false;
-				}
+                return true;
+            }
+        }
 
-				foreach (BaseTable table in this._tableCollection)
-				{
-					if (this.LoadTableEntry(table) == false)
-					{
-						return false;
-					}
-				}
+        // Internally used:
+        /// <summary>
+        /// Removes a CAPK or AID entry from the collection and sinalizes that change.
+        /// </summary>
+        /// <param name="table">Table entry to be removed.</param>
+        private void RemoveTable (BaseTable table)
+        {
+            lock (this.tableCollection)
+            {
+                // Removes the entry:
+                this.tableCollection.Remove(table);
 
-				if (this.FinishLoadingTables() == false)
-				{
-					return false;
-				}
+                // Indicates change:
+                this.tableCollectionModified = true;
+            }
+        }
 
-				this._tableCollectionModified = false;
-				return true;
-			}
-		}
-		/// <summary>
-		/// Noticing Pinpad that table download has began
-		/// </summary>
-		/// <returns></returns>
-		private bool StartLoadingTables()
-		{
-			TliRequest request = new TliRequest();
+        // Loading tables commands:
+        /// <summary>
+        /// Sends a command to the pinpad, indicating that a table injection is about to happen.
+        /// </summary>
+        /// <returns>If the operation succeed.</returns>
+        private bool StartLoadingTables ()
+        {
+            TliRequest request = new TliRequest();
 
-            //TODO: flag de acquirer
-            //request.TLI_ACQIDX.Value = 8; //0 indica que todas os indices serão atualizados
-            request.TLI_ACQIDX.Value = 0;
+            // Specifying how tables will be stored in pinpad memmory:
+            //request.TLI_ACQIDX.Value = DOWNLOAD_TABLES_FOR_STONE;
+            request.TLI_ACQIDX.Value = DOWNLOAD_TABLES_FOR_ALL;
+
+            // Specifying the version of the tables to be injected:
             request.TLI_TABVER.Value = this.ExpectedTableVersion;
 
-			GenericResponse response = this.communication.SendRequestAndReceiveResponse<GenericResponse>(request);
-			if (response == null ||
-				(response.RSP_STAT.Value != AbecsResponseStatus.ST_OK && response.RSP_STAT.Value != AbecsResponseStatus.ST_TABVERDIF))
-			{
-				return false;
-			}
-			else { return true; }
-		}
-		/// <summary>
-		/// Loads one CAPK or AID entry into the Pinpad
-		/// </summary>
-		/// <param name="table"></param>
-		/// <returns></returns>
-		private bool LoadTableEntry(BaseTable table)
-		{
-			TlrRequest request = new TlrRequest();
-			request.TLR_REC.Value.Add(table);
+            // Sends the request and gets the response:
+            GenericResponse response = this.PinpadCommunication.SendRequestAndReceiveResponse<GenericResponse>(request);
 
-			return this.communication.SendRequestAndVerifyResponseCode(request);
-		}
-		/// <summary>
-		/// Noticing Pinpad that table download has finished
-		/// </summary>
-		/// <returns></returns>
-		private bool FinishLoadingTables()
-		{
-			TleRequest request = new TleRequest();
+            // Verify the response:
+            if (response == null ||
+                (response.RSP_STAT.Value != AbecsResponseStatus.ST_OK && response.RSP_STAT.Value != AbecsResponseStatus.ST_TABVERDIF))
+            {
+                return false;
+            }
+            else { return true; }
+        }
+        /// <summary>
+        /// Loads one entry into the pinpad.
+        /// </summary>
+        /// <param name="table">Table (entry) to be loaded.</param>
+        /// <returns>If the operation succeed.</returns>
+        private bool LoadTableEntry (BaseTable table)
+        {
+            TlrRequest request = new TlrRequest();
+            request.TLR_REC.Value.Add(table);
 
-			return this.communication.SendRequestAndVerifyResponseCode(request);
-		}
-		/// <summary>
-		/// Adds a table to the buffer
-		/// </summary>
-		/// <param name="table">BaseTable</param>
-		/// <returns>true if successfully added</returns>
-		private bool AddTable(BaseTable table)
-		{
-			try
-			{
-				string temp = table.CommandString;
-			}
-			catch (Exception)
-			{
-				return false;
-			}
+            return this.PinpadCommunication.SendRequestAndVerifyResponseCode(request);
+        }
+        /// <summary>
+        /// Sends a command to the pinpad, indicating that there's no more tables to be injected.
+        /// </summary>
+        /// <returns>If the operation succeed.</returns>
+        private bool FinishLoadingTables ()
+        {
+            TleRequest request = new TleRequest();
 
-			lock (this._tableCollection)
-			{
-				//Check for a table entry collision
-				BaseTable collision = this._tableCollection.FirstOrDefault((tableEntry) =>
-				{
-					return tableEntry.TAB_ID == table.TAB_ID &&
-					tableEntry.TAB_ACQ.Value == table.TAB_ACQ.Value &&
-					tableEntry.TAB_RECIDX.Value == table.TAB_RECIDX.Value;
-				});
-
-				//Remove the old entry
-				if (collision != null)
-				{
-					this.RemoveTable(collision);
-				}
-
-				this._tableCollection.Add(table);
-				this._tableCollectionModified = true;
-				return true;
-			}
-		}
-		/// <summary>
-		/// Remove a table from Pinpad
-		/// </summary>
-		/// <param name="table">The table to be removed.</param>
-		private void RemoveTable(BaseTable table)
-		{
-			lock (this._tableCollection)
-			{
-				this._tableCollection.Remove(table);
-				this._tableCollectionModified = true;
-			}
-		}
-	}
+            return this.PinpadCommunication.SendRequestAndVerifyResponseCode(request);
+        }
+    }
 }

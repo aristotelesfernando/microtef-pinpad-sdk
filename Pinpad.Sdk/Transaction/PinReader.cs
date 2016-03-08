@@ -14,10 +14,6 @@ namespace Pinpad.Sdk.Transaction
 	{
 		// Constants
 		/// <summary>
-		/// MK index or DUKPT register.
-		/// </summary>
-		internal const short STONE_DUKPT_KEY_INDEX = 16;
-		/// <summary>
 		/// Cardholder password minimum length.
 		/// </summary>
 		internal const short PASSWORD_MINIMUM_LENGTH = 4;

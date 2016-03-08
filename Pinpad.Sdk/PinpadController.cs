@@ -15,6 +15,7 @@ using Pinpad.Core.TypeCode;
 using Pinpad.Core.Commands;
 using Pinpad.Core.Properties;
 using System.Diagnostics;
+using Pinpad.Core;
 
 namespace Pinpad.Sdk
 {
@@ -23,14 +24,11 @@ namespace Pinpad.Sdk
 	/// </summary>
 	public class PinpadController
 	{
-		// Costants
-		internal const short STONE_ACQUIRER_NUMBER = 8;
-
 		/// <summary>
 		/// Facade through which pinpad communication is made.
 		/// </summary>
 		private PinpadFacade pinpadFacade;
-        private PinReader pinReader;
+		private PinReader pinReader;
 		
 		/// <summary>
 		/// Connection handler, is responsible for specifying the connection through which the pinpad will be looked for.
@@ -59,18 +57,12 @@ namespace Pinpad.Sdk
 
 		// Constructors
 		/// <summary>
-		/// Primary constructor.
-		/// </summary>
-		/// <param name="pinpadConnection">Connection through which the pinpad will be looked for.</param>
-		public PinpadController(BasePinpadConnection pinpadConnection) 
-			: this(pinpadConnection, PinpadTable.GetInstance(pinpadConnection)) {  }
-		/// <summary>
-		/// Alternative constructor, setter of all mandatory parameters and responsible for data validation.
+		/// Primary constructor, setter of all mandatory parameters and responsible for data validation.
 		/// </summary>
 		/// <param name="pinpadConnection">Connection through which the pinpad will be looked for.</param>
 		/// <param name="pinpadDisplay">Display handler.</param>
 		/// <param name="pinpadTable">Pinpad emv table handler.</param>
-		internal PinpadController(BasePinpadConnection pinpadConnection, IPinpadTable pinpadTable)
+		public PinpadController(BasePinpadConnection pinpadConnection)
 		{
 			if (pinpadConnection == null)
 			{
@@ -79,14 +71,16 @@ namespace Pinpad.Sdk
 			}
 
 			this.LastCommandStatus = ResponseStatus.Ok;
+
 			this.PinpadConnection = pinpadConnection;
-			this.EmvTable = pinpadTable;
+
 			this.pinpadFacade = new PinpadFacade(this.PinpadConnection.PlatformPinpadConnection);
 			this.Display = this.pinpadFacade.Display;
 			this.Keyboard = this.pinpadFacade.Keyboard;
 			this.Infos = this.pinpadFacade.Infos;
+			this.EmvTable = this.pinpadFacade.Table;
 
-            this.pinReader = new PinReader(this.pinpadFacade);
+			this.pinReader = new PinReader(this.pinpadFacade);
 		}
 
 		// Transaction Methods
@@ -162,11 +156,11 @@ namespace Pinpad.Sdk
 			// Assembling GCR command request:
 			GcrRequest request = new GcrRequest();
 
-            // TODO: flag de acquirer.
-            //request.GCR_ACQIDXREQ.Value = STONE_ACQUIRER_NUMBER;
-            request.GCR_ACQIDXREQ.Value = 00;
+			// TODO: flag de acquirer.
+			request.GCR_ACQIDXREQ.Value = (int)StoneIndexCode.Application;
+			request.GCR_ACQIDXREQ.Value = 00;
 
-            if (transactionType != TransactionType.Undefined)
+			if (transactionType != TransactionType.Undefined)
 			{
 				request.GCR_APPTYPREQ.Value = (int)transactionType;
 			}

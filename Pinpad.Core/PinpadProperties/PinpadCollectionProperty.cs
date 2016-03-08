@@ -11,6 +11,44 @@ namespace Pinpad.Core.Properties
 	/// <typeparam name="type">data type to hold</typeparam>
 	public class PinpadCollectionProperty<type> : SimpleProperty<List<type>>
 	{
+		private List<type> Collection { get; set; }
+		/// <summary>
+		/// Length of the property header
+		/// </summary>
+		public int HeaderLength { get; private set; }
+		/// <summary>
+		/// Minimum amount of elements
+		/// </summary>
+		public int MinElementCount { get; private set; }
+		/// <summary>
+		/// Length of each property element
+		/// </summary>
+		public int ElementLength { get; private set; }
+		/// <summary>
+		/// Override of the value of the property
+		/// Prevents the collection from becoming null
+		/// </summary>
+		public new List<type> Value {
+			get { return this.Collection; }
+			set {
+				if (value != null) {
+					this.Collection = value;
+				}
+				else {
+					this.Collection.Clear();
+				}
+			}
+		}
+		/// <summary>
+		/// Responsible for string formatting.
+		/// </summary>
+		private Func<type, int, string> stringFormatter;
+		/// <summary>
+		/// Responsible for string parsing.
+		/// </summary>
+		private Func<StringReader, int, type> stringParser;
+
+		// Constructor
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -20,14 +58,9 @@ namespace Pinpad.Core.Properties
 		/// <param name="elementLength">Length of each list element</param>
 		/// <param name="stringFormatter">Element string formatter</param>
 		/// <param name="stringParser">Element string parser</param>
-		public PinpadCollectionProperty(string name,
-			int headerLength, 
-			int minElementCount,
-			int elementLength,
-			Func<type, int, string> stringFormatter = null,
-			Func<StringReader, int, type> stringParser = null)
+		public PinpadCollectionProperty(string name, int headerLength,  int minElementCount, int elementLength, Func<type, int, string> stringFormatter = null, Func<StringReader, int, type> stringParser = null)
 			: base(name)
-        {
+		{
 			this.HeaderLength = headerLength;
 			this.MinElementCount = minElementCount;
 			this.ElementLength = elementLength;
@@ -37,6 +70,7 @@ namespace Pinpad.Core.Properties
 			this.Collection = new List<type>();
 		}
 
+		// Methods:
 		/// <summary>
 		/// Gets the value of the property as a String, throws UnsetPropertyException if the value is null
 		/// </summary>
@@ -61,7 +95,6 @@ namespace Pinpad.Core.Properties
 			}
 			return stringBuilder.ToString();
 		}
-
 		/// <summary>
 		/// Parses a string into the property Value
 		/// </summary>
@@ -75,42 +108,5 @@ namespace Pinpad.Core.Properties
 				this.Collection.Add(element);
 			}
 		}
-
-		private List<type> Collection { get; set; }
-
-		/// <summary>
-		/// Length of the property header
-		/// </summary>
-		public int HeaderLength { get; private set; }
-
-		/// <summary>
-		/// Minimum amount of elements
-		/// </summary>
-		public int MinElementCount { get; private set; }
-
-		/// <summary>
-		/// Length of each property element
-		/// </summary>
-		public int ElementLength { get; private set; }
-
-		/// <summary>
-		/// Override of the value of the property
-		/// Prevents the collection from becoming null
-		/// </summary>
-		public new List<type> Value {
-			get { return this.Collection; }
-			set {
-				if (value != null) {
-					this.Collection = value;
-				}
-				else {
-					this.Collection.Clear();
-				}
-			}
-		}
-
-		private Func<type, int, string> stringFormatter;
-
-		private Func<StringReader, int, type> stringParser;
 	}
 }

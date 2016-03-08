@@ -10,9 +10,6 @@ namespace Pinpad.Core.Pinpad
 	/// </summary>
 	public class PinpadEncryption
 	{
-		// Constants:
-		public const short STONE_KEY_INDEX = 16;
-
 		// Members:
 		private static PinpadEncryption instance = new PinpadEncryption();
 		/// <summary>
@@ -57,7 +54,7 @@ namespace Pinpad.Core.Pinpad
 		{
 			// Creates the secure request:
 			SecRequest secureRequest = new SecRequest();
-			secureRequest.SEC_ACQIDX.Value = STONE_KEY_INDEX;
+			secureRequest.SEC_ACQIDX.Value = (int)StoneIndexCode.EncryptionKey;
 
 			// Turns the text into bytes:
 			byte [] requestBytes = CrossPlatformController.TextEncodingController.GetBytes(TextEncodingType.Ascii, request);
