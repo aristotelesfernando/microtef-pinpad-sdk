@@ -119,14 +119,14 @@ namespace Pinpad.Sdk
 		/// </summary>
 		/// <param name="transactionType">Transaction type, that is, debit/credit.</param>
 		/// <returns>Card basic info.</returns>
-		public CardEntry ReadCard(TransactionType transactionType, decimal amount)
+		public CardEntry ReadCard(TransactionType transactionType, decimal amount, out TransactionType newTransactionType)
 		{
 			AbecsResponseStatus status;
 			CardEntry cardRead;
 
 			do
 			{
-				status = PerformCardReading(transactionType, amount, out cardRead);
+				status = PerformCardReading(transactionType, amount, out cardRead, out newTransactionType);
 				this.LastCommandStatus = ResponseStatusMapper.MapLegacyResponseStatus(status);
 
 				// EMV tables are incompatible. Recharging tables:
@@ -149,9 +149,11 @@ namespace Pinpad.Sdk
 
 			return cardRead;
 		}
-		private AbecsResponseStatus PerformCardReading(TransactionType transactionType, decimal amount, out CardEntry cardRead)
+		private AbecsResponseStatus PerformCardReading(TransactionType transactionType, decimal amount, out CardEntry cardRead, out TransactionType newTransactionType)
 		{
 			cardRead = new CardEntry();
+
+			newTransactionType = transactionType;
 
 			// Assembling GCR command request:
 			GcrRequest request = new GcrRequest();
@@ -193,17 +195,20 @@ namespace Pinpad.Sdk
 				return AbecsResponseStatus.ST_TIMEOUT;
 			}
 
-			Debug.WriteLine("GCR response <{0}>.", response.RSP_STAT.Value);
-			Debug.WriteLine("GCR raw response <{0}>.", response.CommandString);
-
 			if (response.RSP_STAT.Value != AbecsResponseStatus.ST_OK)
 			{
+				
 				return response.RSP_STAT.Value;
 			}
 
-			// Saving command response status:
+			// Saving the transaction type. This is handy if you have initiated the transaction without knowing the transaction type.
+			// In this situation, the user will select transaction type throgh the pinpad.
+			newTransactionType = (TransactionType) response.GCR_APPTYPE.Value;
+
+			// Saving command response status.
 			// Getting legacy response status code:
 			AbecsResponseStatus legacyStatus = response.RSP_STAT.Value;
+			
 			// Mapping legacy status code into Pinpad.Sdk response status code.
 			this.LastCommandStatus = ResponseStatusMapper.MapLegacyResponseStatus(legacyStatus);
 
