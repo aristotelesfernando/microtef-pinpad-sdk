@@ -60,6 +60,8 @@ namespace Pinpad.Sdk.Transaction
 
 			this.pinpadFacade = pinpadFacade;
 			this.CommandStatus = ResponseStatus.Ok;
+			this.chipReader = new EmvPinReader();
+			this.magneticStripeReader = new MagneticStripePinReader();
 		}
 
 		// Methods
