@@ -64,7 +64,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MicroPos.CrossPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b64391aecf921c4f, processorArchitecture=MSIL">
-      <HintPath>..\packages\MicroPos.CrossPlatform.1.1.1\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.CrossPlatform.dll</HintPath>
+      <HintPath>..\packages\MicroPos.CrossPlatform.1.1.2\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.CrossPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Moq">
@@ -100,6 +100,7 @@
     <Compile Include="Mapper\CardMapperTest.cs" />
     <Compile Include="Mapper\EmvTrackMapperTest.cs" />
     <Compile Include="Mapper\MagneticStripeTrackMapperTest.cs" />
+    <Compile Include="MockedBaseTableEntry.cs" />
     <Compile Include="MockedPinpadConnection.cs" />
     <Compile Include="MockedPinpadFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -107,6 +108,10 @@
     <Compile Include="Transaction\PinReaderTest.cs" />
     <Compile Include="Transaction\CardEntryTest.cs" />
     <Compile Include="Transaction\EmvPinReaderTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="PinpadSdkTest_key.snk" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pinpad.Core\Pinpad.Core.csproj">
@@ -121,10 +126,6 @@
       <Project>{9a69f5e7-6b6b-4bd0-81cb-7f4d59c8290e}</Project>
       <Name>Pinpad.Sdk</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="PinpadSdkTest_key.snk" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

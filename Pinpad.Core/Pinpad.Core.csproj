@@ -41,13 +41,6 @@
     <AssemblyOriginatorKeyFile>PinpadCore_key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\Pinpad.Sdk.Model\Pinpad.Sdk.Model.csproj">
-      <Project>{8deb5a99-825b-4631-b84c-c2c06bf28c2e}</Project>
-      <Name>Pinpad.Sdk.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\BaseKeyResponse.cs" />
     <Compile Include="Commands\BaseResponse.cs" />
@@ -161,6 +154,12 @@
       <HintPath>..\packages\MicroPos.CrossPlatform.1.1.2\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.CrossPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pinpad.Sdk.Model\Pinpad.Sdk.Model.csproj">
+      <Project>{8deb5a99-825b-4631-b84c-c2c06bf28c2e}</Project>
+      <Name>Pinpad.Sdk.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

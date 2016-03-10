@@ -84,6 +84,12 @@
     <None Include="PinpadSdk_key.snk" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="MicroPos.CrossPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b64391aecf921c4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MicroPos.CrossPlatform.1.1.2\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.CrossPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Pinpad.Core\Pinpad.Core.csproj">
       <Project>{479287c0-69a0-4e9f-b90f-a8690781ff40}</Project>
       <Name>Pinpad.Core</Name>
@@ -92,12 +98,6 @@
       <Project>{8deb5a99-825b-4631-b84c-c2c06bf28c2e}</Project>
       <Name>Pinpad.Sdk.Model</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="MicroPos.CrossPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b64391aecf921c4f, processorArchitecture=MSIL">
-      <HintPath>..\packages\MicroPos.CrossPlatform.1.1.1\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.CrossPlatform.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,6 +5,7 @@ using LegacyPinpadCapk = Pinpad.Core.Tables.CapkTable;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.EmvTable.Mapper;
 using Pinpad.Core.Utilities;
+using Pinpad.Core;
 
 namespace Pinpad.Sdk.Test.EmvTable.Mapper
 {
@@ -34,7 +35,7 @@ namespace Pinpad.Sdk.Test.EmvTable.Mapper
             capk.T2_MOD.Value = new HexadecimalData("AB79FCC9520896967E776E64444E5DCDD6E13611874F3985722520425295EEA4BD0C2781DE7F31CD3D041F565F747306EED62954B17EDABA3A6C5B85A1DE1BEB9A34141AF38FCF8279C9DEA0D5A6710D08DB4124F041945587E20359BAB47B7575AD94262D4B25F264AF33DEDCF28E09615E937DE32EDC03C54445FE7E38277700000000000000000000000000000000");
             capk.T2_RID.Value = new HexadecimalData("A000000003");
             capk.TAB_RECIDX.Value = 99;
-            capk.TAB_ACQ.Value = PinpadAid.STONE_ACQUIRER_NUMBER;
+            capk.TAB_ACQ.Value = (int)StoneIndexCode.Generic;
 
             return capk;
         }
@@ -43,7 +44,7 @@ namespace Pinpad.Sdk.Test.EmvTable.Mapper
         {
             PinpadCapk capk = new PinpadCapk();
 
-            capk.AcquirerNumber = PinpadAid.STONE_ACQUIRER_NUMBER;
+            capk.AcquirerNumber = (int)StoneIndexCode.Generic;
             capk.CapkIndex = "99";
             capk.CapkIndexInTable = "99";
             capk.CheckSum = "4ABFFD6B1C51212D05552E431C5B17007D2F5E6D";

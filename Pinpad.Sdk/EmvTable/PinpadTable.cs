@@ -131,6 +131,7 @@ namespace Pinpad.Sdk.EmvTable
         // Constructor:
         public PinpadTable (PinpadCommunication pinpadCommunication)
         {
+			if (pinpadCommunication == null) { throw new ArgumentNullException("pinpad communication cannot be null."); }
             this.PinpadCommunication = pinpadCommunication;
             this.tableCollection = new List<BaseTable>();
         }
@@ -155,8 +156,9 @@ namespace Pinpad.Sdk.EmvTable
             }
             else
             {
-                return false;
-            }
+				throw new NotImplementedException("This sort of entry was not implemented yet. The current supported entries are: CAPK and AID.");
+
+			}
 
             lock (this.tableCollection)
             {
