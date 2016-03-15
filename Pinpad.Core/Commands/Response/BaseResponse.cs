@@ -1,4 +1,5 @@
-﻿using Pinpad.Core.Properties;
+﻿using Pinpad.Core.Commands.Context;
+using Pinpad.Core.Properties;
 using Pinpad.Core.TypeCode;
 
 /* WARNING!
@@ -30,9 +31,13 @@ namespace Pinpad.Core.Commands
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public BaseResponse () 
+		public BaseResponse (IContext context = null)
+			: base(context)
 		{
-			this.RSP_STAT = new PinpadFixedLengthProperty<AbecsResponseStatus>("RSP_STAT", 3, false, DefaultStringFormatter.EnumStringFormatter<AbecsResponseStatus>, DefaultStringParser.EnumStringParser<AbecsResponseStatus>);
+			if (context == null) { context = new AbecsContext(); }
+			this.CommandContext = context;
+
+			this.RSP_STAT = new PinpadFixedLengthProperty<AbecsResponseStatus>("RSP_STAT", this.CommandContext.StatusLength, false, DefaultStringFormatter.EnumStringFormatter<AbecsResponseStatus>, DefaultStringParser.EnumStringParser<AbecsResponseStatus>);
 
 			this.AddProperty(this.RSP_STAT);
 		}

@@ -1,6 +1,7 @@
 ﻿using MicroPos.CrossPlatform;
 using MicroPos.CrossPlatform.TypeCode;
 using Pinpad.Core.Commands;
+using Pinpad.Core.Commands.Context;
 using Pinpad.Core.Events;
 using Pinpad.Core.TypeCode;
 using Pinpad.Sdk.Model.Exceptions;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using Pinpad.Core.Commands.Context;
 
 namespace Pinpad.Core.Pinpad
 {
@@ -19,7 +21,6 @@ namespace Pinpad.Core.Pinpad
 	{
 		/* Members! */
 		// Constants
-		const UInt16 CRC_MASK = 0x1021;
 		/// <summary>
 		/// Timeout to acknowledge a message
 		/// </summary>
@@ -57,14 +58,6 @@ namespace Pinpad.Core.Pinpad
 		/// Null byte, used to verify whether the pinpad is connected/alive.
 		/// </summary>
 		public const byte NULL_BYTE = 0x00;
-		/// <summary>
-		/// ETB bytes indicates the end of a package.
-		/// </summary>
-		public const byte ETB_BYTE = 0x17;
-		/// <summary>
-		/// SYN byte indicates the begining of a package.
-		/// </summary>
-		public const byte SYN_BYTE = 0x16;
 		/// <summary>
 		/// Number of times to try to remand a package in case of failure.
 		/// </summary>
@@ -204,46 +197,77 @@ namespace Pinpad.Core.Pinpad
 				}
 			}
 
-			return this.SendRequest(request.CommandString);
-		}
-		/// <summary>
-		/// Sends a command request to the Pinpad
-		/// </summary>
-		/// <param name="request">request string</param>
-		/// <returns>Was the request successfully sent?</returns>
-		public bool SendRequest(string request) 
-		{
-			try 
+			//return this.SendRequest(request);
+
+			try
 			{
-				if (this.StoneVersion >= new SecRequest().MinimumStoneVersion) 
+				if (this.StoneVersion >= new SecRequest().MinimumStoneVersion)
 				{
-					SecRequest secureRequest = PinpadEncryption.Instance.WrapRequest(request);
-					
+					SecRequest secureRequest = PinpadEncryption.Instance.WrapRequest(request.CommandString);
+
 					string secureRequestString = secureRequest.CommandString;
-					
-					return this.InternalSendRequest(secureRequestString);
+
+					return this.InternalSendRequest(secureRequest); // 589
 				}
-				else 
+				else
 				{
-					return this.InternalSendRequest(request);
+					return this.InternalSendRequest(request); // 589
 				}
 			}
-			catch (Exception ex) 
+			catch (Exception ex)
 			{
 				if (ex is IOException == false &&
 					ex is TimeoutException == false &&
-					ex is InvalidOperationException == false) 
+					ex is InvalidOperationException == false)
 				{
 
 					//CrossPlatformController.SendMailController.SendReportMailThreaded("PinpadSDK: EXCEPTION AT IsConnectionAlive", ex.ToString());
 					throw;
 				}
-				else 
+				else
 				{
 					return false;
 				}
 			}
 		}
+		///// <summary>
+		///// Sends a command request to the Pinpad
+		///// </summary>
+		///// <param name="request">request string</param>
+		///// <returns>Was the request successfully sent?</returns>
+		//public bool SendRequest(BaseCommand request) 
+		//{
+		//	try 
+		//	{
+		//		if (this.StoneVersion >= new SecRequest().MinimumStoneVersion) 
+		//		{
+		//			SecRequest secureRequest = PinpadEncryption.Instance.WrapRequest(request.CommandString);
+					
+		//			string secureRequestString = secureRequest.CommandString;
+					
+		//			return this.InternalSendRequest(secureRequestString); // 589
+		//		}
+		//		else 
+		//		{
+		//			return this.InternalSendRequest(request.CommandString); // 589
+		//		}
+		//	}
+		//	catch (Exception ex) 
+		//	{
+		//		if (ex is IOException == false &&
+		//			ex is TimeoutException == false &&
+		//			ex is InvalidOperationException == false) 
+		//		{
+
+		//			//CrossPlatformController.SendMailController.SendReportMailThreaded("PinpadSDK: EXCEPTION AT IsConnectionAlive", ex.ToString());
+		//			throw;
+		//		}
+		//		else 
+		//		{
+		//			return false;
+		//		}
+		//	}
+		//}
 		/// <summary>
 		/// Sends a request, receives the response then verifies if the command is not ERR and response code equals ST_OK
 		/// </summary>
@@ -322,13 +346,13 @@ namespace Pinpad.Core.Pinpad
 			string responseString;
 			if (response.IsBlockingCommand == true) 
 			{
-				responseString = this.ReceiveResponseString(PinpadCommunication.BLOCKING_TIMEOUT);
+				responseString = this.ReceiveResponseString(PinpadCommunication.BLOCKING_TIMEOUT, response.CommandContext);
 				Debug.WriteLine("Response (blocking): " + responseString);
 
 			}
 			else 
 			{
-				responseString = this.ReceiveResponseString(PinpadCommunication.NON_BLOCKING_TIMEOUT);
+				responseString = this.ReceiveResponseString(PinpadCommunication.NON_BLOCKING_TIMEOUT, response.CommandContext);
 				Debug.WriteLine("Response: " + responseString);
 			}
 
@@ -347,7 +371,7 @@ namespace Pinpad.Core.Pinpad
 		/// </summary>
 		/// <param name="timeout">Timeout of the message</param>
 		/// <returns>response string or null if cancelled</returns>
-		public string ReceiveResponseString(int timeout) 
+		public string ReceiveResponseString(int timeout, IContext context) 
 		{
 			lock (this.PinpadConnection) 
 			{
@@ -356,7 +380,7 @@ namespace Pinpad.Core.Pinpad
 				
 				try 
 				{
-					responseString = InternalReceiveResponseString();
+					responseString = InternalReceiveResponseString(context);
 				}
 				catch (Exception ex) 
 				{
@@ -389,7 +413,7 @@ namespace Pinpad.Core.Pinpad
 					return null;
 				}
 
-				GenericResponse response = new GenericResponse();
+				GenericResponse response = new GenericResponse(context);
 				response.CommandString = openedResponseString;
 
 				NtmResponse notificationResponse = new NtmResponse();
@@ -401,41 +425,18 @@ namespace Pinpad.Core.Pinpad
 						this.OnNotification(this, new PinpadNotificationEventArgs(notificationResponse.NTM_MSG.Value));
 					}
 					
-					return this.ReceiveResponseString(timeout);
+					return this.ReceiveResponseString(timeout, response.CommandContext);
 				}
 
 				return openedResponseString;
 			}
 		}
-		/// <summary>
-		/// Generates the Data checksum accordingly to the ABECS specification
-		/// </summary>
-		/// <param name="data">Message Bytes</param>
-		/// <returns>Checksum</returns>
-		public static byte [] GenerateChecksum(byte [] data) 
-		{
-			UInt16 wData, wCRC = 0;
-
-			for (int i = 0; i < data.Length; i++) 
-			{
-				wData = (UInt16)(data[i] << 8);
-				for (int d = 0; d < 8; d++, wData <<= 1) 
-				{
-					if (((wCRC ^ wData) & 0x8000) != 0) 
-					{
-						wCRC = (UInt16)((wCRC << 1) ^ CRC_MASK);
-					}
-					else 
-					{
-						wCRC <<= 1;
-					}
-				}
-			}
-
-			return BitConverter.GetBytes(wCRC).Reverse().ToArray();
-		}
 
 		// Protected methods
+		/// <summary>
+		/// Verifies if the pinpad has acknowledged the request.
+		/// </summary>
+		/// <returns>True if the pinpad has acknowledged the request; false otherwise and null if error.</returns>
 		protected Nullable<bool> WasRequestAccepted() 
 		{
 			this.PinpadConnection.ReadTimeout = PinpadCommunication.ACKNOWLEDGE_TIMEOUT;
@@ -538,7 +539,7 @@ namespace Pinpad.Core.Pinpad
 
 				// Tries to send an OPN request.
 				// Verifies if the request was sent an replied:
-				if (this.InternalSendRequest(request.CommandString) == false)
+				if (this.InternalSendRequest(request) == false)
 				{
 					return false;
 				}
@@ -582,20 +583,11 @@ namespace Pinpad.Core.Pinpad
 
 			return response.CommandName == secureResponse.CommandName;
 		}
-		private bool InternalSendRequest(string request)
+		private bool InternalSendRequest(BaseCommand request)
 		{
 			Debug.WriteLine("Request: " + request);
 
-			List<byte> requestByteCollection = new List<byte>(CrossPlatformController.TextEncodingController.GetBytes(TextEncodingType.Ascii, request));
-
-			// Add ETB (indicating the end of a package):
-			requestByteCollection.Add(ETB_BYTE);
-
-			// Generate checksum:
-			requestByteCollection.AddRange(PinpadCommunication.GenerateChecksum(requestByteCollection.ToArray()));
-
-			// Add SYN (indication the begining of a package):
-			requestByteCollection.Insert(0, SYN_BYTE);
+			List<byte> requestByteCollection = request.CommandContext.GetRequestBody(request);
 
 			lock (this.PinpadConnection)
 			{
@@ -603,7 +595,7 @@ namespace Pinpad.Core.Pinpad
 				this.CancelRequest();
 
 				// Saves the current request as last:
-				this.LastSentRequest = request;
+				this.LastSentRequest = request.CommandString;
 
 				// Send the request:
 				return InternalSendRequest(requestByteCollection.ToArray());
@@ -617,7 +609,7 @@ namespace Pinpad.Core.Pinpad
 			string responseString = PinpadEncryption.Instance.UnwrapResponse(secureResponse);
 			return responseString;
 		}
-		private string InternalReceiveResponseString(int counter = 0)
+		private string InternalReceiveResponseString(IContext context, int counter = 0)
 		{
 			byte b;
 
@@ -627,7 +619,7 @@ namespace Pinpad.Core.Pinpad
 			{
 				// Reads one byte:
 				b = this.PinpadConnection.ReadByte();
-			} while (b != SYN_BYTE && b != EOT_BYTE);
+			} while (b != context.StartByte && b != EOT_BYTE);
 
 			// In case of EOT, the request was cancelled:
 			if (b == EOT_BYTE)
@@ -647,20 +639,20 @@ namespace Pinpad.Core.Pinpad
 				b = this.PinpadConnection.ReadByte();
 
 				// If the byte read is an ETB (response from a CAN request):
-				if (b == ETB_BYTE)
+				if (b == context.EndByte)
 				{
 					command = CrossPlatformController.TextEncodingController.GetString(TextEncodingType.Ascii, responseByteCollection.ToArray());
 				}
 
 				// Adds the byte to the response:
 				responseByteCollection.Add(b);
-			} while (b != ETB_BYTE);
+			} while (b != context.EndByte);
 
 			// Get's the checksum DIRECTLY from the response:
 			byte[] receivedChecksum = new byte[] { this.PinpadConnection.ReadByte(), this.PinpadConnection.ReadByte() };
 
 			// Generates a checksum from the response body:
-			byte [] generatedChecksum = PinpadCommunication.GenerateChecksum(responseByteCollection.ToArray());
+			byte [] generatedChecksum = context.GetIntegrityCode(responseByteCollection.ToArray());
 
 			// Verify if both checksums match:
 			if (receivedChecksum[0] != generatedChecksum[0] || receivedChecksum[1] != generatedChecksum[1])
@@ -672,7 +664,7 @@ namespace Pinpad.Core.Pinpad
 					this.PinpadConnection.WriteByte(NOT_ACKNOWLEDGED_BYTE); 
 
 					// Thies to read the message again:
-					return InternalReceiveResponseString(counter + 1);
+					return InternalReceiveResponseString(context, counter + 1);
 				}
 
 				// If number of tries has exceed:
@@ -683,7 +675,8 @@ namespace Pinpad.Core.Pinpad
 				}
 			}
 
-			responseByteCollection.Remove(ETB_BYTE);
+			responseByteCollection.Remove(context.EndByte);
+			context.FormatResponse(responseByteCollection);
 			this.LastReceivedResponse = CrossPlatformController.TextEncodingController.GetString(TextEncodingType.Ascii, responseByteCollection.ToArray());
 			return this.LastReceivedResponse;
 		}
