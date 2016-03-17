@@ -5,21 +5,22 @@
 	/// </summary>
 	public enum GertecEx07OperationStatusCode
 	{
+		Undefined = 0,
 		/// <summary>
 		/// Operation succeed.
 		/// </summary>
-		Success = '0',
+		Success = 1,
 		/// <summary>
 		/// Host cancelled.
 		/// </summary>
-		HostCancelled = 'H',
+		HostCancelled = 72,
 		/// <summary>
 		/// User cancelled.
 		/// </summary>
-		UserCancelled = 'U',
+		UserCancelled = 85,
 		/// <summary>
 		/// Time out.
 		/// </summary>
-		TimeOut = 'T'
+		TimeOut = 84
 	}
 }

@@ -35,7 +35,6 @@ namespace Pinpad.Core.Commands.Context
 		/// </summary>
 		public byte EndByte { get { return ETX_BYTE; } }
 
-
 		public short StatusLength
 		{
 			get
@@ -43,6 +42,10 @@ namespace Pinpad.Core.Commands.Context
 				return 1;
 			}
 		}
+
+		public short IntegrityCodeLength { get { return 1; } }
+
+		public bool HasToIncludeFirstByte { get { return true; } }
 
 		/// <summary>
 		/// Generates the LRC (Longitudinal Redundancy Check – XOR of all bytes).
@@ -53,7 +56,7 @@ namespace Pinpad.Core.Commands.Context
 		{
 			byte lrc = 0;
 
-			for (int i = 0; i < data.Length - 1; i++)
+			for (int i = 0; i < data.Length; i++)
 			{
 				lrc ^= data [i];
 			}
@@ -88,11 +91,23 @@ namespace Pinpad.Core.Commands.Context
 		}
 		public void FormatResponse (List<byte> response)
 		{
+			// Remove STX
+			response.Remove(STX_BYTE);
+
 			// Remove o byte nulo
 			response.Remove(PinpadCommunication.NULL_BYTE);
 
 			// Remove o byte de tamanho.
 			response.Remove(0x0C);
+		}
+		public bool IsIntegrityCodeValid (byte [] firstCode, byte [] secondCode)
+		{
+			if (firstCode [0] != secondCode [0])
+			{
+				return false;
+			}
+
+			return true;
 		}
 	}
 }

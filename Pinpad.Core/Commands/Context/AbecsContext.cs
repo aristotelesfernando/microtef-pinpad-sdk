@@ -53,6 +53,10 @@ namespace Pinpad.Core.Commands.Context
 			}
 		}
 
+		public short IntegrityCodeLength { get { return 2; } }
+
+		public bool HasToIncludeFirstByte { get { return false; } }
+
 		// Methods
 		/// <summary>
 		/// Generates the data checksum accordingly to the ABECS specification.
@@ -108,5 +112,14 @@ namespace Pinpad.Core.Commands.Context
 		/// </summary>
 		/// <param name="response">Response received from SPE.</param>
 		public void FormatResponse (List<byte> response) { }
+		public bool IsIntegrityCodeValid (byte [] firstCode, byte [] secondByte)
+		{
+			if (firstCode [0] != secondByte [0] || firstCode [1] != secondByte [1])
+			{
+				return false;
+			}
+
+			return true;
+		}
 	}
 }

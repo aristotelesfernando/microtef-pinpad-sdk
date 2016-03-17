@@ -23,6 +23,10 @@ namespace Pinpad.Core.Commands.Context
 
 		short StatusLength { get; }
 
+		short IntegrityCodeLength { get; }
+
+		bool HasToIncludeFirstByte { get; }
+
 		/// <summary>
 		/// Performs a hash of some kind under the original data. 
 		/// Used to verify whether the block of data was transmitted without errors.
@@ -37,5 +41,6 @@ namespace Pinpad.Core.Commands.Context
 		/// <returns>List of bytes ready to be sent to the pinpad.</returns>
 		List<byte> GetRequestBody (BaseCommand request);
 		void FormatResponse (List<byte> response);
+		bool IsIntegrityCodeValid (byte [] firstCode, byte [] secondCode);
 	}
 }

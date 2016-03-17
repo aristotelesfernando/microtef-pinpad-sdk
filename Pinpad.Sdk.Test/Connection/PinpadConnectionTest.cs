@@ -28,9 +28,17 @@ namespace Pinpad.Sdk.Test.Connection
 		public void MyTestMethod2 ()
 		{
 			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
-			this.mockedPinpadConnection = new MockedPinpadConnection();
-			PinpadCommunication comm = new PinpadCommunication(this.mockedPinpadConnection);
 
+			// testes:
+			//this.mockedPinpadConnection = new MockedPinpadConnection();
+
+			// prod:
+			PinpadConnection conn = new PinpadConnection();
+			string portName = PinpadConnection.SearchPinpadPort();
+			conn.Open(portName);
+
+			PinpadCommunication comm = new PinpadCommunication(conn.PlatformPinpadConnection);
+			
 			GertecEx07Request request = new GertecEx07Request();
 
 			request.NumericInputType.Value = GertecEx07NumberFormat.Decimal;
@@ -42,13 +50,6 @@ namespace Pinpad.Sdk.Test.Connection
 			request.TimeOut.Value = 45;
 			request.TimeIdle.Value = 0;
 			
-			Debug.WriteLine(request.LabelFirstLine.Value);
-			Debug.WriteLine(request.LabelSecondLine.Value);
-			Debug.WriteLine(request.MaximumCharacterLength.Value);
-			Debug.WriteLine(request.MinimumCharacterLength.Value);
-			Debug.WriteLine(request.TimeOut.Value);
-			Debug.WriteLine(request.TimeIdle.Value);
-
 			Debug.WriteLine(request.CommandString);
 
 			GertecEx07Response response = comm.SendRequestAndReceiveResponse<GertecEx07Response>(request);
