@@ -123,7 +123,7 @@ namespace Pinpad.Core.Pinpad
 			this.communication = communication;
 		}
 
-		// Method
+		// Private Methods
 		/// <summary>
 		/// Sends a GIN command to the pinpad.
 		/// </summary>
@@ -142,5 +142,11 @@ namespace Pinpad.Core.Pinpad
 			// Returns the response:
 			return response;
 		}
+
+        // Public Methods
+        public void Update ()
+        {
+            this._ginResponse = null;
+        }
 	}
 }
