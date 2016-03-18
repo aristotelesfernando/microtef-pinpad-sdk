@@ -279,7 +279,7 @@ namespace Pinpad.Core.Pinpad
 			{
 				if (this.SendRequest(request) == true)
 				{
-					return this.ReceiveResponseAndVerifyResponseCode();
+					return this.ReceiveResponseAndVerifyResponseCode(request.CommandContext);
 				}
 				else
 				{
@@ -291,9 +291,9 @@ namespace Pinpad.Core.Pinpad
 		/// Receives a generic response then verifies if the command is not ERR and response code equals ST_OK
 		/// </summary>
 		/// <returns>true if the response was received, command is not ERR and response code equals ST_OK</returns>
-		public bool ReceiveResponseAndVerifyResponseCode ()
+		public bool ReceiveResponseAndVerifyResponseCode (IContext context)
 		{
-			GenericResponse response = this.ReceiveResponse<GenericResponse>();
+			GenericResponse response = this.ReceiveResponse<GenericResponse>(context);
 
 			if (response == null)
 			{
@@ -338,10 +338,16 @@ namespace Pinpad.Core.Pinpad
 		/// </summary>
 		/// <typeparam name="responseType">PinpadBaseResponseController to use</typeparam>
 		/// <returns>response object or null if cancelled</returns>
-		public responseType ReceiveResponse<responseType> ()
+		public responseType ReceiveResponse<responseType> (IContext context = null)
 			where responseType : BaseResponse, new()
 		{
 			responseType response = new responseType();
+
+			if (response is GenericResponse)
+			{
+				if (context == null) { throw new ArgumentNullException("Context cannot be null."); }
+				response.CommandContext = context;
+			}
 
 			string responseString;
 			if (response.IsBlockingCommand == true)
