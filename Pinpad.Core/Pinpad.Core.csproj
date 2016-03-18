@@ -104,7 +104,7 @@
     <Compile Include="Events\PinpadFileLoadedEventArgs.cs" />
     <Compile Include="Events\PinpadNotificationEventArgs.cs" />
     <Compile Include="Commands\GertecData\GertecEx07MessageCode.cs" />
-    <Compile Include="Commands\GertecData\GertecEx07OperationStatusCode.cs" />
+    <Compile Include="Commands\GertecData\GertecResponseCode.cs" />
     <Compile Include="PinpadProperties\BaseProperty.cs" />
     <Compile Include="PinpadProperties\PinpadCollectionProperty.cs" />
     <Compile Include="PinpadProperties\CryptographyMethod.cs" />

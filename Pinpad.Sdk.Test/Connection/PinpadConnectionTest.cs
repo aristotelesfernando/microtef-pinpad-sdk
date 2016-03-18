@@ -31,7 +31,7 @@ namespace Pinpad.Sdk.Test.Connection
 
 			// testes:
 			//this.mockedPinpadConnection = new MockedPinpadConnection();
-
+			
 			// prod:
 			PinpadConnection conn = new PinpadConnection();
 			string portName = PinpadConnection.SearchPinpadPort();
@@ -43,7 +43,7 @@ namespace Pinpad.Sdk.Test.Connection
 
 			request.NumericInputType.Value = GertecEx07NumberFormat.Decimal;
 			request.TextInputType.Value = GertecEx07TextFormat.None;
-			request.LabelFirstLine.Value = GertecEx07MessageInFirstLine.Number;
+			request.LabelFirstLine.Value = GertecEx07MessageInFirstLine.TypeNumber;
 			request.LabelSecondLine.Value = GertecEx07MessageInSecondLine.GasPump;
 			request.MaximumCharacterLength.Value = 1;
 			request.MinimumCharacterLength.Value = 3;

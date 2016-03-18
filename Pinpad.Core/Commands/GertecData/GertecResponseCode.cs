@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Operation status of an EX07 command.
 	/// </summary>
-	public enum GertecEx07OperationStatusCode
+	public enum GertecResponseCode
 	{
 		Undefined = 0,
 		/// <summary>

@@ -16,12 +16,12 @@ namespace Pinpad.Core.Commands
 		/// </summary>
 		public override bool IsBlockingCommand { get { return true; } }
 
-		public new VariableLengthProperty<string> RSP_RESULT { get; set; }
+		public VariableLengthProperty<string> RSP_RESULT { get; set; }
 
 		public GertecEx07Response ()
 			: base(new GertecContext())
 		{
-			this.RSP_RESULT = new VariableLengthProperty<string>("RSP_RESULT", 2, 3, 0.5f, false, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
+			this.RSP_RESULT = new VariableLengthProperty<string>("RSP_RESULT", 1, 3, 1f, false, true, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
 
 			// Start region
 			{
