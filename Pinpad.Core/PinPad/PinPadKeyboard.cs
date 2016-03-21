@@ -165,14 +165,13 @@ namespace Pinpad.Core.Pinpad
 
 		/// <summary>
 		/// Gets a numeric input from pinpad keyboard.
+		/// Minimum length 1 character; maximum length 3 characters.
 		/// </summary>
 		/// <param name="firstLine">First line label.</param>
 		/// <param name="secondLine">Second line label.</param>
-		/// <param name="minimumLength">Minimum input size.</param>
-		/// <param name="maximumLength">Maximum input size.</param>
 		/// <param name="timeOut">Time out.</param>
 		/// <returns>Input from the keyboard. Null if nothing was received, whether of timeout or cancellation.</returns>
-		public Nullable<int> GetNumericInput(GertecMessageInFirstLineCode firstLine, GertecMessageInSecondLineCode secondLine, short minimumLength, short maximumLength, int timeOut)
+		public Nullable<int> GetNumericInput(GertecMessageInFirstLineCode firstLine, GertecMessageInSecondLineCode secondLine, int timeOut)
 		{
 			GertecEx07Request request = new GertecEx07Request();
 
@@ -180,8 +179,10 @@ namespace Pinpad.Core.Pinpad
 			request.TextInputType.Value = GertecEx07TextFormat.None;
 			request.LabelFirstLine.Value = firstLine;
 			request.LabelSecondLine.Value = secondLine;
-			request.MaximumCharacterLength.Value = minimumLength;
-			request.MinimumCharacterLength.Value = maximumLength;
+			//request.MaximumCharacterLength.Value = minimumLength;
+			//request.MinimumCharacterLength.Value = maximumLength;
+			request.MaximumCharacterLength.Value = 1;
+			request.MinimumCharacterLength.Value = 3;
 			request.TimeOut.Value = timeOut;
 			request.TimeIdle.Value = 0;
 
