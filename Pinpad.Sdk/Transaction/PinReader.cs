@@ -98,7 +98,7 @@ namespace Pinpad.Sdk.Transaction
 			return pin;
 		}
 
-		/* VALIDATORS */
+		// Validation
 		/// <summary>
 		/// Validates parameters sent to the constructor.
 		/// </summary>

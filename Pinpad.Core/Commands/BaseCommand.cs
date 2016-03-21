@@ -1,5 +1,7 @@
-﻿using Pinpad.Core.Properties;
+﻿using Pinpad.Core.Commands.Context;
+using Pinpad.Core.Properties;
 using Pinpad.Sdk.Model.Exceptions;
+using Pinpad.Core.Pinpad;
 
 /* WARNING!
  * 
@@ -24,14 +26,23 @@ namespace Pinpad.Core.Commands
 		/// Command Id
 		/// </summary>
 		protected PinpadFixedLengthProperty<string> CMD_ID { get; set; }
-		
+		/// <summary>
+		/// Context of the command.
+		/// </summary>
+		internal IContext CommandContext { get; set; }
+
 		// Constructor
 		/// <summary>
-		/// Constructor
+		/// Creates all properties for a basic command.
 		/// </summary>
-		public BaseCommand() 
+		/// <param name="commandNameLength">CommandName property length. The default value is 3.</param>
+		/// <param name="context"></param>
+		public BaseCommand (IContext context = null)
 		{
-			this.CMD_ID = new PinpadFixedLengthProperty<string>("CMD_ID", 3, false, this.CommandNameStringFormatter, this.CommandNameStringParser, null, this.CommandName);
+			if (context == null) { context = new AbecsContext(); }
+			this.CommandContext = context;
+
+			this.CMD_ID = new PinpadFixedLengthProperty<string>("CMD_ID", this.CommandContext.CommandNameLength, false, this.CommandNameStringFormatter, this.CommandNameStringParser, null, this.CommandName);
 
 			this.AddProperty(this.CMD_ID);
 		}

@@ -1,4 +1,5 @@
-﻿using Pinpad.Core.Properties;
+﻿using Pinpad.Core.Commands.Context;
+using Pinpad.Core.Properties;
 
 /* WARNING!
  * 
@@ -12,7 +13,7 @@ namespace Pinpad.Core.Commands
 	/// <summary>
 	/// generic response
 	/// </summary>
-	public class GenericResponse : BaseResponse 
+	public class GenericResponse : BaseResponse
 	{
 		// Members
 		/// <summary>
@@ -38,10 +39,12 @@ namespace Pinpad.Core.Commands
 		}
 
 		// Constructor
+		public GenericResponse () { }
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public GenericResponse() {  }
+		public GenericResponse (IContext context = null)
+			: base(context) { }
 
 		// Methods
 		/// <summary>

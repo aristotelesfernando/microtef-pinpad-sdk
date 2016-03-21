@@ -155,16 +155,53 @@ namespace Pinpad.Core.Pinpad
 			}
 		}
 		/// <summary>
-		/// Gets a numeric input from pinpad keyboard.
+		/// 
 		/// </summary>
 		/// <param name="messageCode">Message to be presented on pinpad display while waiting the input.</param>
 		/// <param name="minimumLength">Minimum input size.</param>
 		/// <param name="maximumLength">Maximum input size.</param>
-		/// <param name="timeOut">Time out. Null if should ignore timeout (not recommended).</param>
+		/// <param name="timeOut"> Null if should ignore timeout (not recommended).</param>
 		/// <returns></returns>
-		public int GetNumericInput(KeyboardMessageCode messageCode, short minimumLength, short maximumLength, Nullable<int> timeOut)
+
+		/// <summary>
+		/// Gets a numeric input from pinpad keyboard.
+		/// </summary>
+		/// <param name="firstLine">First line label.</param>
+		/// <param name="secondLine">Second line label.</param>
+		/// <param name="minimumLength">Minimum input size.</param>
+		/// <param name="maximumLength">Maximum input size.</param>
+		/// <param name="timeOut">Time out.</param>
+		/// <returns>Input from the keyboard. Null if nothing was received, whether of timeout or cancellation.</returns>
+		public Nullable<int> GetNumericInput(GertecMessageInFirstLineCode firstLine, GertecMessageInSecondLineCode secondLine, short minimumLength, short maximumLength, int timeOut)
 		{
-			throw new NotImplementedException ("This functionality will be implemented soon.");
+			GertecEx07Request request = new GertecEx07Request();
+
+			request.NumericInputType.Value = GertecEx07NumberFormat.Decimal;
+			request.TextInputType.Value = GertecEx07TextFormat.None;
+			request.LabelFirstLine.Value = firstLine;
+			request.LabelSecondLine.Value = secondLine;
+			request.MaximumCharacterLength.Value = minimumLength;
+			request.MinimumCharacterLength.Value = maximumLength;
+			request.TimeOut.Value = timeOut;
+			request.TimeIdle.Value = 0;
+
+			GertecEx07Response response = this.Communication.SendRequestAndReceiveResponse<GertecEx07Response>(request);
+
+			if (response.RSP_STAT.Value != AbecsResponseStatus.ST_OK) { return null; }
+
+			if (response.RSP_RESULT.HasValue == true)
+			{
+				int input;
+
+				if (Int32.TryParse(response.RSP_RESULT.Value, out input) == true)
+				{
+					return input;
+				}
+
+				return null;
+			}
+
+			return 0;
 		}
 	}
 }

@@ -67,6 +67,9 @@
       <HintPath>..\packages\MicroPos.CrossPlatform.1.1.2\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.CrossPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MicroPos.Platform.Desktop">
+      <HintPath>..\..\micropos-platform-desktop\MicroPos.Platform.Desktop\bin\Release\MicroPos.Platform.Desktop.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>

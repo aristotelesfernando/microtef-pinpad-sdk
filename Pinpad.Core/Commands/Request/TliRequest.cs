@@ -1,4 +1,5 @@
-﻿using Pinpad.Core.Properties;
+﻿using Pinpad.Core.Commands.Context;
+using Pinpad.Core.Properties;
 using System;
 
 namespace Pinpad.Core.Commands
@@ -11,7 +12,8 @@ namespace Pinpad.Core.Commands
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public TliRequest()
+		public TliRequest() 
+			: base (new AbecsContext())
 		{
 			this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
 			this.TLI_ACQIDX = new PinpadFixedLengthProperty<Nullable<int>>("TLI_ACQIDX", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);

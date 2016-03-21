@@ -1,4 +1,5 @@
 ﻿using Pinpad.Sdk.Model.TypeCode;
+using System;
 
 namespace Pinpad.Sdk.Model
 {
@@ -13,5 +14,15 @@ namespace Pinpad.Sdk.Model
 		/// </summary>
 		/// <returns>PinpadKey or Undefined on failure.</returns>
 		PinpadKeyCode GetKey();
+		/// <summary>
+		/// Gets a numeric input from pinpad keyboard.
+		/// </summary>
+		/// <param name="firstLine">First line label.</param>
+		/// <param name="secondLine">Second line label.</param>
+		/// <param name="minimumLength">Minimum input size.</param>
+		/// <param name="maximumLength">Maximum input size.</param>
+		/// <param name="timeOut">Time out.</param>
+		/// <returns>Input from the keyboard. Null if nothing was received, whether of timeout or cancellation.</returns>
+		Nullable<int> GetNumericInput (GertecMessageInFirstLineCode firstLine, GertecMessageInSecondLineCode secondLine, short minimumLength, short maximumLength, int timeOut);
 	}
 }
