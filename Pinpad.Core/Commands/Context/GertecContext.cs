@@ -91,12 +91,12 @@ namespace Pinpad.Core.Commands.Context
 		}
 		public void FormatResponse (List<byte> response)
 		{
-			// Removes 3 first bytes (header; STX + command lmngth).
+			// Removes 3 first bytes (header; STX + command length).
 			// These bytes are removed, because Gertec implementation is way different from ABECS protocol.
 			response.RemoveRange(0, 3);
 			
 			// Includes the length of the string read from the pinpad keyboard:
-			// Considering that 5 is a fixed length for this command. (not generic)
+			// Considering that 5 is a fixed length for this command. (it has to change)
 			int length = response.Count - 5;
 
 			if (length != 0)
@@ -108,6 +108,12 @@ namespace Pinpad.Core.Commands.Context
 				{
 					response.Insert(i, lengthBytes [j]);
 				}
+			}
+
+			else
+			{
+				response.RemoveAt(4);
+				response.AddRange(new byte [] { 0x32 });
 			}
 		}
 		public bool IsIntegrityCodeValid (byte [] firstCode, byte [] secondCode)

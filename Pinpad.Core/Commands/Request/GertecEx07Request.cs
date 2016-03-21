@@ -1,6 +1,7 @@
 ﻿using Pinpad.Core.Commands.Context;
 using Pinpad.Core.Properties;
 using Pinpad.Core.Utilities;
+using Pinpad.Sdk.Model.TypeCode;
 using System;
 
 namespace Pinpad.Core.Commands
@@ -10,8 +11,8 @@ namespace Pinpad.Core.Commands
 		public override string CommandName { get { return "EX07"; } }
 		public PinpadFixedLengthProperty<GertecEx07NumberFormat> NumericInputType { get; set; }
 		public PinpadFixedLengthProperty<GertecEx07TextFormat> TextInputType { get; set; }
-		public PinpadFixedLengthProperty<GertecEx07MessageInFirstLine> LabelFirstLine { get; set; }
-		public PinpadFixedLengthProperty<GertecEx07MessageInSecondLine> LabelSecondLine { get; set; }
+		public PinpadFixedLengthProperty<GertecMessageInFirstLineCode> LabelFirstLine { get; set; }
+		public PinpadFixedLengthProperty<GertecMessageInSecondLineCode> LabelSecondLine { get; set; }
 		public PinpadFixedLengthProperty<Nullable<int>> MaximumCharacterLength { get; set; }
 		public PinpadFixedLengthProperty<Nullable<int>> MinimumCharacterLength { get; set; }
 		public PinpadFixedLengthProperty<Nullable<int>> TimeOut { get; set; }
@@ -22,8 +23,8 @@ namespace Pinpad.Core.Commands
 		{
 			this.NumericInputType = new PinpadFixedLengthProperty<GertecEx07NumberFormat>("NumericInputType", 1, false, DefaultStringFormatter.EnumStringFormatter<GertecEx07NumberFormat>, DefaultStringParser.EnumStringParser<GertecEx07NumberFormat>);
 			this.TextInputType = new PinpadFixedLengthProperty<GertecEx07TextFormat>("TextInputType", 1, false, DefaultStringFormatter.EnumStringFormatter<GertecEx07TextFormat>, DefaultStringParser.EnumStringParser<GertecEx07TextFormat>);
-			this.LabelFirstLine = new PinpadFixedLengthProperty<GertecEx07MessageInFirstLine>("LabelFirstLine", 2, false, DefaultStringFormatter.EnumStringFormatter<GertecEx07MessageInFirstLine>, DefaultStringParser.EnumStringParser<GertecEx07MessageInFirstLine>);
-			this.LabelSecondLine = new PinpadFixedLengthProperty<GertecEx07MessageInSecondLine>("LabelSecondLine", 2, false, DefaultStringFormatter.EnumStringFormatter<GertecEx07MessageInSecondLine>, DefaultStringParser.EnumStringParser<GertecEx07MessageInSecondLine>);
+			this.LabelFirstLine = new PinpadFixedLengthProperty<GertecMessageInFirstLineCode>("LabelFirstLine", 2, false, DefaultStringFormatter.EnumStringFormatter<GertecMessageInFirstLineCode>, DefaultStringParser.EnumStringParser<GertecMessageInFirstLineCode>);
+			this.LabelSecondLine = new PinpadFixedLengthProperty<GertecMessageInSecondLineCode>("LabelSecondLine", 2, false, DefaultStringFormatter.EnumStringFormatter<GertecMessageInSecondLineCode>, DefaultStringParser.EnumStringParser<GertecMessageInSecondLineCode>);
 
 			this.MaximumCharacterLength = new PinpadFixedLengthProperty<Nullable<int>>("MaximumCharacterLength", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
 			this.MinimumCharacterLength = new PinpadFixedLengthProperty<Nullable<int>>("MinimumCharacterLength", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);

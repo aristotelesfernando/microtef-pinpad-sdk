@@ -1,9 +1,9 @@
-﻿namespace Pinpad.Core.Commands
+﻿namespace Pinpad.Sdk.Model.TypeCode
 {
 	/// <summary>
 	/// Indicates the message to be presented on pinpad's first line.
 	/// </summary>
-	public enum GertecEx07MessageInFirstLine
+	public enum GertecMessageInFirstLineCode
 	{
 		/// <summary>
 		/// Undefined message. Sending this value to the SPE will throw an exception.
@@ -98,7 +98,7 @@
 	/// <summary>
 	/// Indicates the message to be presented on pinpad's second line.
 	/// </summary>
-	public enum GertecEx07MessageInSecondLine
+	public enum GertecMessageInSecondLineCode
 	{
 		/// <summary>
 		/// Undefined message. Sending this value to the SPE will throw an exception.

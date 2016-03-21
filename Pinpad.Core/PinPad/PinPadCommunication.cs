@@ -329,7 +329,7 @@ namespace Pinpad.Core.Pinpad
 				}
 				else
 				{
-					return this.ReceiveResponse<responseType>();
+					return this.ReceiveResponse<responseType>(request.CommandContext);
 				}
 			}
 		}
@@ -405,7 +405,7 @@ namespace Pinpad.Core.Pinpad
 				}
 
 				string openedResponseString;
-				if (this.IsSecureResponse(responseString) == true)
+				if (context is AbecsContext && this.IsSecureResponse(responseString) == true)
 				{
 					openedResponseString = this.TranslateSecureResponse(responseString);
 				}
@@ -419,19 +419,22 @@ namespace Pinpad.Core.Pinpad
 					return null;
 				}
 
-				GenericResponse response = new GenericResponse(context);
-				response.CommandString = openedResponseString;
-
-				NtmResponse notificationResponse = new NtmResponse();
-				if (response.CommandName == notificationResponse.CommandName)
+				if (context is AbecsContext)
 				{
-					notificationResponse.CommandString = openedResponseString;
-					if (this.OnNotification != null)
-					{
-						this.OnNotification(this, new PinpadNotificationEventArgs(notificationResponse.NTM_MSG.Value));
-					}
+					GenericResponse response = new GenericResponse(context);
+					response.CommandString = openedResponseString;
 
-					return this.ReceiveResponseString(timeout, response.CommandContext);
+					NtmResponse notificationResponse = new NtmResponse();
+					if (response.CommandName == notificationResponse.CommandName)
+					{
+						notificationResponse.CommandString = openedResponseString;
+						if (this.OnNotification != null)
+						{
+							this.OnNotification(this, new PinpadNotificationEventArgs(notificationResponse.NTM_MSG.Value));
+						}
+
+						return this.ReceiveResponseString(timeout, response.CommandContext);
+					}
 				}
 
 				return openedResponseString;

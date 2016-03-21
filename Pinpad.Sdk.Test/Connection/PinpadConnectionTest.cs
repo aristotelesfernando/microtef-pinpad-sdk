@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Pinpad.Core.Utilities;
 using Pinpad.Core.Pinpad;
 using Pinpad.Sdk.Connection;
+using Pinpad.Sdk.Model.TypeCode;
 
 namespace Pinpad.Sdk.Test.Connection
 {
@@ -43,8 +44,8 @@ namespace Pinpad.Sdk.Test.Connection
 
 			request.NumericInputType.Value = GertecEx07NumberFormat.Decimal;
 			request.TextInputType.Value = GertecEx07TextFormat.None;
-			request.LabelFirstLine.Value = GertecEx07MessageInFirstLine.TypeNumber;
-			request.LabelSecondLine.Value = GertecEx07MessageInSecondLine.GasPump;
+			request.LabelFirstLine.Value = GertecMessageInFirstLineCode.TypeNumber;
+			request.LabelSecondLine.Value = GertecMessageInSecondLineCode.GasPump;
 			request.MaximumCharacterLength.Value = 1;
 			request.MinimumCharacterLength.Value = 3;
 			request.TimeOut.Value = 45;

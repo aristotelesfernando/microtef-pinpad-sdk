@@ -16,6 +16,7 @@ using Pinpad.Core.Commands;
 using Pinpad.Core.Properties;
 using System.Diagnostics;
 using Pinpad.Core;
+using Pinpad.Sdk.Model.Exceptions;
 
 namespace Pinpad.Sdk
 {
@@ -116,9 +117,11 @@ namespace Pinpad.Sdk
 		}
 		/// <summary>
 		/// Read basic card information, that is, brand id, card type, card primary account number (PAN), cardholder name and expiration date.
+		/// If the card is removed in the middle of the process, returns CANCEL status.
 		/// </summary>
 		/// <param name="transactionType">Transaction type, that is, debit/credit.</param>
 		/// <returns>Card basic info.</returns>
+		/// <exception cref="ExpiredCardException">When an expired card is read.</exception>
 		public CardEntry ReadCard(TransactionType transactionType, decimal amount, out TransactionType newTransactionType)
 		{
 			AbecsResponseStatus status;
@@ -159,7 +162,7 @@ namespace Pinpad.Sdk
 			GcrRequest request = new GcrRequest();
 
 			// TODO: flag de acquirer.
-			request.GCR_ACQIDXREQ.Value = (int)StoneIndexCode.Application;
+			//request.GCR_ACQIDXREQ.Value = (int)StoneIndexCode.Application;
 			request.GCR_ACQIDXREQ.Value = 00;
 
 			if (transactionType != TransactionType.Undefined)
@@ -190,11 +193,24 @@ namespace Pinpad.Sdk
 			// Sending and receiving response.
 			Debug.WriteLine("Sending GCR command <{0}>", request.CommandString);
 			GcrResponse response = this.pinpadFacade.Communication.SendRequestAndReceiveResponse<GcrResponse>(request);
+
+			// If timeout was reached:
 			if (response == null)
 			{
 				return AbecsResponseStatus.ST_TIMEOUT;
 			}
+			//If the card was removed at the middle of reading process:
+			else if (response.RSP_STAT.Value == AbecsResponseStatus.ST_NOCARD)
+			{
+				return AbecsResponseStatus.ST_CANCEL;
+			}
+			// If the card has expired:
+			else if (response.GCR_CARDEXP.HasValue == false)
+			{
+				throw new ExpiredCardException();
+			}
 
+			// If it's OK with card reading:
 			if (response.RSP_STAT.Value != AbecsResponseStatus.ST_OK)
 			{
 				

@@ -59,6 +59,7 @@
     <Compile Include="Commands\Response\GenericResponse.cs" />
     <Compile Include="Commands\Request\GertecEx07Request.cs" />
     <Compile Include="Commands\GertecData\GertecEx07InputFormatType.cs" />
+    <Compile Include="Commands\Response\GertecBaseResponse.cs" />
     <Compile Include="Commands\Response\GertecEx07Response.cs" />
     <Compile Include="Commands\Request\GinRequest.cs" />
     <Compile Include="Commands\Response\GinResponse.cs" />
@@ -103,7 +104,6 @@
     <Compile Include="Commands\Request\TlrRequest.cs" />
     <Compile Include="Events\PinpadFileLoadedEventArgs.cs" />
     <Compile Include="Events\PinpadNotificationEventArgs.cs" />
-    <Compile Include="Commands\GertecData\GertecEx07MessageCode.cs" />
     <Compile Include="Commands\GertecData\GertecResponseCode.cs" />
     <Compile Include="PinpadProperties\BaseProperty.cs" />
     <Compile Include="PinpadProperties\PinpadCollectionProperty.cs" />

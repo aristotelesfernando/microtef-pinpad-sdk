@@ -13,7 +13,7 @@ namespace Pinpad.Core.Commands
 	/// <summary>
 	/// generic response
 	/// </summary>
-	public class GenericResponse : BaseResponse 
+	public class GenericResponse : BaseResponse
 	{
 		// Members
 		/// <summary>
