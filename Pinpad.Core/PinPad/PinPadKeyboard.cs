@@ -155,15 +155,6 @@ namespace Pinpad.Core.Pinpad
 			}
 		}
 		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="messageCode">Message to be presented on pinpad display while waiting the input.</param>
-		/// <param name="minimumLength">Minimum input size.</param>
-		/// <param name="maximumLength">Maximum input size.</param>
-		/// <param name="timeOut"> Null if should ignore timeout (not recommended).</param>
-		/// <returns></returns>
-
-		/// <summary>
 		/// Gets a numeric input from pinpad keyboard.
 		/// Minimum length 1 character; maximum length 3 characters.
 		/// </summary>

@@ -45,7 +45,7 @@ namespace Pinpad.Sdk.Test
 			request.LabelSecondLine.Value = GertecMessageInSecondLineCode.GasPump;
 			request.MaximumCharacterLength.Value = 1;
 			request.MinimumCharacterLength.Value = 3;
-			request.TimeOut.Value = 45;
+			request.TimeOut.Value = 10;
 			request.TimeIdle.Value = 0;
 
 			Debug.WriteLine(request.CommandString);
@@ -54,6 +54,29 @@ namespace Pinpad.Sdk.Test
 
 			Debug.WriteLine("Response status: " + response.RSP_STAT.Value);
 			Debug.WriteLine("Value typed: " + response.RSP_RESULT.Value);
+		}
+
+		[TestMethod]
+		public void Keyboard_getNumber_test ()
+		{
+			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
+
+			PinpadConnection conn = new PinpadConnection();
+			string portName = PinpadConnection.SearchPinpadPort();
+			conn.Open(portName);
+			
+			PinpadController controller = new PinpadController(conn);
+
+			int? pump = controller.Keyboard.GetNumericInput(GertecMessageInFirstLineCode.TypeNumber, GertecMessageInSecondLineCode.GasPump, 10);
+
+			if (pump.HasValue == false)
+			{
+				Debug.WriteLine("Nao foi possivel ler um valor. Time out ou cancelamento.");
+			}
+			else
+			{
+				Debug.WriteLine("Valor digitado: " + pump.Value);
+			}
 		}
 
 		//[TestMethod]
