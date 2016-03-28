@@ -53,11 +53,11 @@ namespace Pinpad.Sdk.EmvTable
 			this.PinpadConnection.PlatformPinpadConnection = pinpadConnection;
 
 			this.Communication = new PinpadCommunication(this.PinpadConnection.PlatformPinpadConnection);
-			this.Keyboard = new PinpadKeyboard(this.Communication);
+			this.Infos = new PinpadInfos(this.Communication);
+			this.Keyboard = new PinpadKeyboard(this.Communication, this.Infos);
 			this.Display = new PinpadDisplay(this.Communication);
 			this.Storage = new PinpadStorage(this.Communication);
 			this.Table = new PinpadTable(this.Communication);
-			this.Infos = new PinpadInfos(this.Communication);
 			this.Printer = new PinpadPrinter(this.Communication, this.Infos);
 		}
 	}

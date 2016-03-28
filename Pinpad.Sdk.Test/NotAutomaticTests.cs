@@ -2,6 +2,7 @@
 using Pinpad.Core.Commands;
 using Pinpad.Core.Pinpad;
 using Pinpad.Sdk.Connection;
+using Pinpad.Sdk.EmvTable;
 using Pinpad.Sdk.Model.TypeCode;
 using System.Diagnostics;
 
@@ -22,7 +23,7 @@ namespace Pinpad.Sdk.Test
 			Debug.WriteLine(r.CommandString);
 		}
 
-		//[TestMethod]
+		[TestMethod]
 		public void Gertec_EX07_test ()
 		{
 			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
@@ -65,9 +66,9 @@ namespace Pinpad.Sdk.Test
 			string portName = PinpadConnection.SearchPinpadPort();
 			conn.Open(portName);
 			
-			PinpadController controller = new PinpadController(conn);
+			PinpadFacade facade = new PinpadFacade(conn.PlatformPinpadConnection);
 
-			int? pump = controller.Keyboard.GetNumericInput(GertecMessageInFirstLineCode.TypeNumber, GertecMessageInSecondLineCode.GasPump, 10);
+			int? pump = facade.Keyboard.GetNumericInput(GertecMessageInFirstLineCode.TypeNumber, GertecMessageInSecondLineCode.GasPump, 10);
 
 			if (pump.HasValue == false)
 			{

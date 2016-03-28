@@ -20,6 +20,7 @@ namespace Pinpad.Core.Pinpad
 		/// Pinpad communication adapter
 		/// </summary>
 		public PinpadCommunication Communication { get; private set; }
+		internal PinpadInfos Informations { get; private set; }
 		private Lazy<bool> extendedKeysSupport;
 		/// <summary>
 		/// Are the Extended key and clear buffer functions supported in the Pinpad?
@@ -31,9 +32,10 @@ namespace Pinpad.Core.Pinpad
 		/// Constructor
 		/// </summary>
 		/// <param name="pinPad">Pinpad to use</param>
-		public PinpadKeyboard(PinpadCommunication communication)
+		public PinpadKeyboard(PinpadCommunication communication, PinpadInfos infos)
 		{
 			this.Communication = communication;
+			this.Informations = infos;
 			this.extendedKeysSupport = new Lazy<bool>(this.IsExtendedKeySupported);
 		}
 
@@ -164,6 +166,30 @@ namespace Pinpad.Core.Pinpad
 		/// <returns>Input from the keyboard. Null if nothing was received, whether of timeout or cancellation.</returns>
 		public Nullable<int> GetNumericInput(GertecMessageInFirstLineCode firstLine, GertecMessageInSecondLineCode secondLine, int timeOut)
 		{
+			int v1, v2, v3;
+
+			if (this.Informations.ManufacturerName.Contains("GERTEC") == false) { return null; }
+
+			if (this.Informations.Model.Contains("MOBI PIN 10") == true)
+			{
+				string [] v = this.Informations.ManufacturerVersion.Trim().Split('.', ' ');
+
+				if (v.Length != 3) { return null; }
+
+				if (Int32.TryParse(v [0], out v1) == true && Int32.TryParse(v [1], out v2) == true && Int32.TryParse(v [2], out v3) == true)
+				{
+					if (v1 < 1 && v2 < 11 && v3 < 160311)
+					{
+						return null;
+					}
+				}
+				else
+				{
+					return null;
+				}
+			}
+			else { return null; }
+
 			GertecEx07Request request = new GertecEx07Request();
 
 			request.NumericInputType.Value = GertecEx07NumberFormat.Decimal;
