@@ -13,7 +13,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile344</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile336</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -37,14 +37,33 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbcdResponse.cs" />
-    <Compile Include="AbcdResponseCode.cs" />
-    <Compile Include="ICommand.cs" />
+    <Compile Include="Abecs\AbecsContext.cs" />
+    <Compile Include="Abecs\AbecsRequestBase.cs" />
+    <Compile Include="Gertec\Commands\Ex07Request.cs" />
+    <Compile Include="Gertec\GertecContext.cs" />
+    <Compile Include="Abecs\Commands\CloRequest.cs" />
+    <Compile Include="Abecs\Commands\DexRequest.cs" />
+    <Compile Include="Abecs\Commands\GcrRequest.cs" />
+    <Compile Include="Abecs\Commands\GinRequest.cs" />
+    <Compile Include="Abecs\Commands\GkeRequest.cs" />
+    <Compile Include="Abecs\Commands\GocRequest.cs" />
+    <Compile Include="Abecs\Commands\GpnRequest.cs" />
+    <Compile Include="Abecs\Commands\GtsRequest.cs" />
+    <Compile Include="Abecs\Commands\OpnRequest.cs" />
+    <Compile Include="Abecs\Commands\RmcRequest.cs" />
+    <Compile Include="Abecs\Commands\TleRequest.cs" />
+    <Compile Include="Abecs\Commands\TliRequest.cs" />
+    <Compile Include="Abecs\Commands\TlrRequest.cs" />
+    <Compile Include="CommandBuilder.cs" />
+    <Compile Include="CommandCode.cs" />
+    <Compile Include="CommandFactory.cs" />
+    <Compile Include="Gertec\GertecInputFormatCode.cs" />
+    <Compile Include="Gertec\GertecLabelCode.cs" />
+    <Compile Include="ICommandRequest.cs" />
     <Compile Include="IContext.cs" />
-    <Compile Include="IPinpadResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XptoResponse.cs" />
-    <Compile Include="XptoResponseCode.cs" />
+    <Compile Include="Property\IProperty.cs" />
+    <Compile Include="TransactionType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
