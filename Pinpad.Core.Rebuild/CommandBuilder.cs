@@ -1,8 +1,10 @@
 ﻿using Pinpad.Core.Rebuild.Gertec;
+using Pinpad.Core.Rebuild.Property;
+using System.Linq;
 
 namespace Pinpad.Core.Rebuild
 {
-	internal class CommandBuilder
+	public class CommandBuilder
 	{
 		private ICommandRequest command;
 
@@ -12,64 +14,15 @@ namespace Pinpad.Core.Rebuild
 		}
 
 		// Building methods:
-		public CommandBuilder AddLabel (string label)
+		public CommandBuilder Add (PropertyCode propertyCode, IProperty value)
 		{
-			// TODO: implementar lógica.
-			return this;
-		}
-		public CommandBuilder AddLabel (GertecFirstLabelCode labelCode)
-		{
-			// TODO: implementar lógica.
-			return this;
-		}
-		public CommandBuilder AddLabel (GertecSecondLabelCode labelCode)
-		{
-			// TODO: implementar lógica.
-			return this;
-		}
-		public CommandBuilder ShouldReadKeys (bool shouldReadKeys)
-		{
-			// TODO: implementar lógica.
-			return this;
-		}
-		public CommandBuilder ShouldReadMagneticStripe (bool shouldReadMagneticStripe)
-		{
-			// TODO: implementar lógica.
-			return this;
-		}
-		public CommandBuilder ShouldReadIcc (bool shouldReadIcc)
-		{
-			// TODO: implementar lógica.
-			return this;
-		}
-		public CommandBuilder AddNumericFormatting (GertecNumberFormatCode formattingCode)
-		{
-			// TODO: implementar lógica.
-			return this;
-		}
-		public CommandBuilder AddTextFormatting (GertecTextFormatCode formattingCode)
-		{
-			// TODO: implementar lógica.
-			return this;
-		}
-		public CommandBuilder AddAmount (decimal amount)
-		{
-			// TODO: implementar lógica.
-			return this;
-		}
-		public CommandBuilder AddTransactionType (TransactionType transactionType)
-		{
-			// TODO: implementar lógica.
-			return this;
-		}
-		public CommandBuilder AddEmvTable ()
-		{
-			// TODO: implementar lógica.
+			this.command.Properties[propertyCode] = value;
 			return this;
 		}
 		
 		public ICommandRequest Build ()
 		{
+			// TODO: verificar se falta alguma propriedade mandatória do comando.
 			return this.command;
 		}
 	}
