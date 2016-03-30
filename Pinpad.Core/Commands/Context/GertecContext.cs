@@ -97,21 +97,13 @@ namespace Pinpad.Core.Commands.Context
 			
 			// Includes the length of the string read from the pinpad keyboard:
 			// Considering that 5 is a fixed length for this command. (it has to change)
+			// 5 = command name + ETX
 			int length = response.Count - 5;
 
-			if (length != 0)
+			if (length <= 0)
 			{
-				byte [] lengthBytes = CrossPlatformController.TextEncodingController.GetBytes(TextEncodingType.Ascii, length.ToString());
-
-				int i = 5;
-				for (int j = 0; j < lengthBytes.Length; j++, i++)
-				{
-					response.Insert(i, lengthBytes [j]);
-				}
-			}
-
-			else
-			{
+				// Removes status byte and puts a 2 (ascii) in its place. 
+				// That means that something went wrong (user cancellation, timeout).
 				response.RemoveAt(4);
 				response.AddRange(new byte [] { 0x32 });
 			}

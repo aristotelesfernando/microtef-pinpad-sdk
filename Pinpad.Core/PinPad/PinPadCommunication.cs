@@ -207,11 +207,11 @@ namespace Pinpad.Core.Pinpad
 
 					string secureRequestString = secureRequest.CommandString;
 
-					return this.InternalSendRequest(secureRequest); // 589
+					return this.InternalSendRequest(secureRequest); 
 				}
 				else
 				{
-					return this.InternalSendRequest(request); // 589
+					return this.InternalSendRequest(request); 
 				}
 			}
 			catch (Exception ex)
@@ -220,7 +220,6 @@ namespace Pinpad.Core.Pinpad
 					ex is TimeoutException == false &&
 					ex is InvalidOperationException == false)
 				{
-
 					//CrossPlatformController.SendMailController.SendReportMailThreaded("PinpadSDK: EXCEPTION AT IsConnectionAlive", ex.ToString());
 					throw;
 				}

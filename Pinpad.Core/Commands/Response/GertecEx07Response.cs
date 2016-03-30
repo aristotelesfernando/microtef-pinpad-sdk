@@ -21,7 +21,7 @@ namespace Pinpad.Core.Commands
 		public GertecEx07Response ()
 			: base(new GertecContext())
 		{
-			this.RSP_RESULT = new VariableLengthProperty<string>("RSP_RESULT", 1, 3, 1f, false, true, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
+			this.RSP_RESULT = new VariableLengthProperty<string>("RSP_RESULT", 2, 32, 1f, false, true, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
 
 			// Start region
 			{

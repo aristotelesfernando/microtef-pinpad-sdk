@@ -205,13 +205,20 @@ namespace Pinpad.Sdk
 				return AbecsResponseStatus.ST_CANCEL;
 			}
 			// If the card has expired:
+			else if (response.GCR_CARDTYPE.Value == Pinpad.Core.TypeCode.ApplicationType.MagneticStripe)
+			{
+				if (CardMapper.MapCardFromTracks(response).ExpirationDate < DateTime.Now)
+				{
+					throw new ExpiredCardException();
+				}
+			}
 			else if (response.GCR_CARDEXP.HasValue == false)
 			{
 				throw new ExpiredCardException();
 			}
 
 			// If it's OK with card reading:
-			if (response.RSP_STAT.Value != AbecsResponseStatus.ST_OK)
+				if (response.RSP_STAT.Value != AbecsResponseStatus.ST_OK)
 			{
 				
 				return response.RSP_STAT.Value;

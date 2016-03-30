@@ -23,6 +23,6 @@ namespace Pinpad.Sdk.Model
 		/// <param name="maximumLength">Maximum input size.</param>
 		/// <param name="timeOut">Time out.</param>
 		/// <returns>Input from the keyboard. Null if nothing was received, whether of timeout or cancellation.</returns>
-		Nullable<int> GetNumericInput (GertecMessageInFirstLineCode firstLine, GertecMessageInSecondLineCode secondLine, int timeOut);
+		string GetNumericInput (GertecMessageInFirstLineCode firstLine, GertecMessageInSecondLineCode secondLine, int minimumLength, int maximumLength, int timeOut);
 	}
 }

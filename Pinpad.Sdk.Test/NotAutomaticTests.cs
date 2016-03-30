@@ -44,17 +44,24 @@ namespace Pinpad.Sdk.Test
 			request.TextInputType.Value = GertecEx07TextFormat.None;
 			request.LabelFirstLine.Value = GertecMessageInFirstLineCode.TypeNumber;
 			request.LabelSecondLine.Value = GertecMessageInSecondLineCode.GasPump;
-			request.MaximumCharacterLength.Value = 1;
-			request.MinimumCharacterLength.Value = 3;
-			request.TimeOut.Value = 10;
+			request.MaximumCharacterLength.Value = 5;
+			request.MinimumCharacterLength.Value = 20;
+			request.TimeOut.Value = 30;
 			request.TimeIdle.Value = 0;
 
 			Debug.WriteLine(request.CommandString);
 
 			GertecEx07Response response = comm.SendRequestAndReceiveResponse<GertecEx07Response>(request);
 
-			Debug.WriteLine("Response status: " + response.RSP_STAT.Value);
-			Debug.WriteLine("Value typed: " + response.RSP_RESULT.Value);
+			if (response != null)
+			{
+				Debug.WriteLine("Response status: " + response.RSP_STAT.Value);
+				Debug.WriteLine("Value typed: " + response.RSP_RESULT.Value);
+			}
+			else
+			{
+				Debug.WriteLine("Resposta nula. Cancelamento ou timeout.");
+			}
 		}
 
 		[TestMethod]
@@ -68,19 +75,21 @@ namespace Pinpad.Sdk.Test
 			
 			PinpadFacade facade = new PinpadFacade(conn.PlatformPinpadConnection);
 
-			int? pump = facade.Keyboard.GetNumericInput(GertecMessageInFirstLineCode.TypeNumber, GertecMessageInSecondLineCode.GasPump, 10);
+			facade.Display.ShowMessage("ola", "tudo bom?", DisplayPaddingType.Center);
 
-			if (pump.HasValue == false)
+			string pump = facade.Keyboard.GetNumericInput(GertecMessageInFirstLineCode.TypeNumber, GertecMessageInSecondLineCode.GasPump, 5, 15, 10);
+
+			if (pump == null)
 			{
 				Debug.WriteLine("Nao foi possivel ler um valor. Time out ou cancelamento.");
 			}
 			else
 			{
-				Debug.WriteLine("Valor digitado: " + pump.Value);
+				Debug.WriteLine("Valor digitado: " + pump);
 			}
 		}
 
-		//[TestMethod]
+		[TestMethod]
 		public void OPN_test ()
 		{
 			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
@@ -96,6 +105,11 @@ namespace Pinpad.Sdk.Test
 
 			OpnRequest opn = new OpnRequest();
 			OpnResponse opnResp = comm.SendRequestAndReceiveResponse<OpnResponse>(opn);
+
+			DspRequest dsp = new DspRequest();
+			dsp.DSP_MSG.Value = new Core.Properties.SimpleMessage("ola");
+
+			GenericResponse r = comm.SendRequestAndReceiveResponse<GenericResponse>(dsp);
 		}
 	}
 }

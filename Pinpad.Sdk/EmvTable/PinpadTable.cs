@@ -1,4 +1,5 @@
-﻿using Pinpad.Core.Commands;
+﻿using Pinpad.Core;
+using Pinpad.Core.Commands;
 using Pinpad.Core.Pinpad;
 using Pinpad.Core.Tables;
 using Pinpad.Core.TypeCode;
@@ -204,11 +205,13 @@ namespace Pinpad.Sdk.EmvTable
         {
             GtsRequest request = new GtsRequest();
 
-            // Acquirer application ID:
-            request.GTS_ACQIDX.Value = 00;
+			// Acquirer application ID:
+			// flag de acquirer.
+			request.GTS_ACQIDX.Value = 00;
+			//request.GTS_ACQIDX.Value = (int) StoneIndexCode.Application;
 
-            // Sends GTS request and gets it's response:
-            GtsResponse response = this.PinpadCommunication.SendRequestAndReceiveResponse<GtsResponse>(request);
+			// Sends GTS request and gets it's response:
+			GtsResponse response = this.PinpadCommunication.SendRequestAndReceiveResponse<GtsResponse>(request);
 
             // Treats response status:
             if (response == null || response.RSP_STAT.Value != AbecsResponseStatus.ST_OK)
@@ -313,8 +316,9 @@ namespace Pinpad.Sdk.EmvTable
             TliRequest request = new TliRequest();
 
             // Specifying how tables will be stored in pinpad memmory:
-            //request.TLI_ACQIDX.Value = DOWNLOAD_TABLES_FOR_STONE;
-            request.TLI_ACQIDX.Value = DOWNLOAD_TABLES_FOR_ALL;
+			// flag de acquirer
+            //request.TLI_ACQIDX.Value = (int)StoneIndexCode.Application;
+			request.TLI_ACQIDX.Value = DOWNLOAD_TABLES_FOR_ALL;
 
             // Specifying the version of the tables to be injected:
             request.TLI_TABVER.Value = this.ExpectedTableVersion;

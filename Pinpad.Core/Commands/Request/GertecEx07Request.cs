@@ -42,5 +42,28 @@ namespace Pinpad.Core.Commands
 				this.AddProperty(this.TimeIdle);
 			}
 		}
+
+		public static bool IsSupported (string manufacturerName, string model, string manufacturerVersion)
+		{
+			int v1, v2, v3;
+
+			if (manufacturerName.Contains("GERTEC") == false) { return false; }
+
+			if (model.Contains("MOBI PIN 10") == true)
+			{
+				string [] v = manufacturerVersion.Trim().Split('.', ' ');
+
+				if (v.Length != 3) { return false; }
+
+				if (Int32.TryParse(v [0], out v1) == true && Int32.TryParse(v [1], out v2) == true && Int32.TryParse(v [2], out v3) == true)
+				{
+					if (v1 < 1 && v2 < 11 && v3 < 160311) { return false; }
+				}
+				else { return false; }
+			}
+			else { return false; }
+
+			return true;
+		}
 	}
 }

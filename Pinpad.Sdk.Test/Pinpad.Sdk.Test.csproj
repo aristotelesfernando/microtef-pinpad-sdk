@@ -68,7 +68,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="MicroPos.Platform.Desktop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=38ae2303208e40c0, processorArchitecture=MSIL">
-      <HintPath>..\packages\MicroPos.Platform.Desktop.1.2.5\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.Platform.Desktop.dll</HintPath>
+      <HintPath>..\packages\MicroPos.Platform.Desktop.1.2.7\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.Platform.Desktop.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Moq">
@@ -131,6 +131,9 @@
       <Project>{9a69f5e7-6b6b-4bd0-81cb-7f4d59c8290e}</Project>
       <Name>Pinpad.Sdk</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

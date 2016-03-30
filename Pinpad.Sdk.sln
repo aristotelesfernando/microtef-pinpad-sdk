@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinpad.Core.Rebuild", "Pinp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinpad.Core.Rebuild.Test", "Pinpad.Core.Rebuild.Test\Pinpad.Core.Rebuild.Test.csproj", "{6412FC56-25A5-416D-971F-52F5AC935B50}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rebuild", "Rebuild", "{9FF88C7D-6F4C-4BF6-A4F9-78EE1B484C65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3CEEE444-880A-4937-BB03-4E3BE2A81037} = {9FF88C7D-6F4C-4BF6-A4F9-78EE1B484C65}
+		{6412FC56-25A5-416D-971F-52F5AC935B50} = {9FF88C7D-6F4C-4BF6-A4F9-78EE1B484C65}
 	EndGlobalSection
 EndGlobal
