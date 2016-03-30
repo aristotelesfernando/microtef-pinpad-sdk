@@ -197,22 +197,22 @@ namespace Pinpad.Core.Pinpad
 				}
 			}
 
-			//return this.SendRequest(request);
+            //return this.SendRequest(request);
 
-			try
-			{
-				if (this.StoneVersion >= new SecRequest().MinimumStoneVersion)
-				{
-					SecRequest secureRequest = PinpadEncryption.Instance.WrapRequest(request.CommandString);
+            try
+            {
+				//if (this.StoneVersion >= new SecRequest().MinimumStoneVersion)
+				//{
+				//	SecRequest secureRequest = PinpadEncryption.Instance.WrapRequest(request.CommandString);
 
-					string secureRequestString = secureRequest.CommandString;
+				//	string secureRequestString = secureRequest.CommandString;
 
-					return this.InternalSendRequest(secureRequest); // 589
-				}
-				else
-				{
+				//	return this.InternalSendRequest(secureRequest); // 589
+				//}
+				//else
+				//{
 					return this.InternalSendRequest(request); // 589
-				}
+				//}
 			}
 			catch (Exception ex)
 			{
