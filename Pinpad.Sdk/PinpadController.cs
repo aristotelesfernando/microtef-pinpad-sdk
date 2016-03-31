@@ -199,6 +199,11 @@ namespace Pinpad.Sdk
 			{
 				return AbecsResponseStatus.ST_TIMEOUT;
 			}
+			// If it's OK with card reading:
+			else if (response.RSP_STAT.Value != AbecsResponseStatus.ST_OK)
+			{
+				return response.RSP_STAT.Value;
+			}
 			//If the card was removed at the middle of reading process:
 			else if (response.RSP_STAT.Value == AbecsResponseStatus.ST_NOCARD)
 			{
@@ -217,12 +222,7 @@ namespace Pinpad.Sdk
 				throw new ExpiredCardException();
 			}
 
-			// If it's OK with card reading:
-				if (response.RSP_STAT.Value != AbecsResponseStatus.ST_OK)
-			{
-				
-				return response.RSP_STAT.Value;
-			}
+			
 
 			// Saving the transaction type. This is handy if you have initiated the transaction without knowing the transaction type.
 			// In this situation, the user will select transaction type throgh the pinpad.
