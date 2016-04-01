@@ -57,7 +57,7 @@ namespace Pinpad.Core.Commands
 
 				if (Int32.TryParse(v [0], out v1) == true && Int32.TryParse(v [1], out v2) == true && Int32.TryParse(v [2], out v3) == true)
 				{
-					if (v1 < 1 && v2 < 11 && v3 < 160311) { return false; }
+					if (v1 < 1 && v2 < 11 && v3 < 160324) { return false; }
 				}
 				else { return false; }
 			}

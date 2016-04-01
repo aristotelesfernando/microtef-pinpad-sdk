@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Commands\BaseCommand.cs" />
+    <Compile Include="Commands\Request\GduRequest.cs" />
     <Compile Include="Commands\Response\BaseKeyResponse.cs" />
     <Compile Include="Commands\Response\BaseResponse.cs" />
     <Compile Include="Commands\Request\BaseStoneRequest.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Commands\GcrData\GcrIdApp.cs" />
     <Compile Include="Commands\Request\GcrRequest.cs" />
     <Compile Include="Commands\Response\GcrResponse.cs" />
+    <Compile Include="Commands\Response\GduResponse.cs" />
     <Compile Include="Commands\Response\GenericResponse.cs" />
     <Compile Include="Commands\Request\GertecEx07Request.cs" />
     <Compile Include="Commands\GertecData\GertecEx07InputFormatType.cs" />
