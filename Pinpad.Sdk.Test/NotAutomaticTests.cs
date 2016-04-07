@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using MicroPos.CrossPlatform;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Core.Commands;
 using Pinpad.Core.Pinpad;
 using Pinpad.Sdk.Connection;
@@ -23,7 +24,7 @@ namespace Pinpad.Sdk.Test
 			Debug.WriteLine(r.CommandString);
 		}
 
-		[TestMethod]
+		//[TestMethod]
 		public void Gertec_EX07_test ()
 		{
 			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
@@ -64,7 +65,7 @@ namespace Pinpad.Sdk.Test
 			}
 		}
 
-		[TestMethod]
+		//[TestMethod]
 		public void Keyboard_getNumber_test ()
 		{
 			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
@@ -89,7 +90,7 @@ namespace Pinpad.Sdk.Test
 			}
 		}
 
-		[TestMethod]
+		//[TestMethod]
 		public void OPN_test ()
 		{
 			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
@@ -110,6 +111,40 @@ namespace Pinpad.Sdk.Test
 			dsp.DSP_MSG.Value = new Core.Properties.SimpleMessage("ola");
 
 			GenericResponse r = comm.SendRequestAndReceiveResponse<GenericResponse>(dsp);
+		}
+
+		//[TestMethod]
+		public void MultiplePinpads_test ()
+		{
+			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
+
+			IPinpadConnection conn1 = CrossPlatformController.PinpadFinder.Find();
+
+
+			// Opening connection with specifies serial port:
+			//conn1.Open();
+
+			PinpadFacade f1 = new PinpadFacade(conn1);
+			
+			f1.Display.ShowMessage("", "opened 1", DisplayPaddingType.Center);
+
+			// --------
+
+			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
+
+			IPinpadConnection conn2 = CrossPlatformController.PinpadFinder.Find();
+			
+			// Opening connection with specifies serial port:
+			//conn1.Open();
+
+			PinpadFacade f2 = new PinpadFacade(conn2);
+
+			f2.Display.ShowMessage("", "opened 2", DisplayPaddingType.Center);
+
+			// -----------
+
+			f1.Display.ShowMessage("", "f2", DisplayPaddingType.Center);
+			f2.Display.ShowMessage("", "f1", DisplayPaddingType.Center);
 		}
 	}
 }

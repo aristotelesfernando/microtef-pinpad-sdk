@@ -64,12 +64,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MicroPos.CrossPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b64391aecf921c4f, processorArchitecture=MSIL">
-      <HintPath>..\packages\MicroPos.CrossPlatform.1.1.2\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.CrossPlatform.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\micropos-crossplatform\MicroPos.CrossPlatform\bin\Debug\MicroPos.CrossPlatform.dll</HintPath>
     </Reference>
     <Reference Include="MicroPos.Platform.Desktop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=38ae2303208e40c0, processorArchitecture=MSIL">
-      <HintPath>..\packages\MicroPos.Platform.Desktop.1.2.7\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.Platform.Desktop.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\micropos-platform-desktop\MicroPos.Platform.Desktop\bin\Debug\MicroPos.Platform.Desktop.dll</HintPath>
     </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
