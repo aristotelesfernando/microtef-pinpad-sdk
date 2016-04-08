@@ -90,7 +90,7 @@ namespace Pinpad.Sdk.Test
 			}
 		}
 
-		//[TestMethod]
+		[TestMethod]
 		public void OPN_test ()
 		{
 			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();

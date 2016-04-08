@@ -32,11 +32,11 @@ namespace Pinpad.Core.Pinpad
 		/// <summary>
 		/// Timeout for NonBlocking messages
 		/// </summary>
-		public const int NON_BLOCKING_TIMEOUT = 10000;
+		public const int NON_BLOCKING_TIMEOUT = 2000;
 		/// <summary>
 		/// Timeout for Blocking messages
 		/// </summary>
-		public const int BLOCKING_TIMEOUT = 20000;
+		public const int BLOCKING_TIMEOUT = 30000;
 		/// <summary>
 		/// Byte used to cancel the previous operation.
 		/// </summary>
