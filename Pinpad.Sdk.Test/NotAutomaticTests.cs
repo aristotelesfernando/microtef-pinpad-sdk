@@ -5,6 +5,7 @@ using Pinpad.Core.Pinpad;
 using Pinpad.Sdk.Connection;
 using Pinpad.Sdk.EmvTable;
 using Pinpad.Sdk.Model.TypeCode;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Pinpad.Sdk.Test
@@ -90,7 +91,7 @@ namespace Pinpad.Sdk.Test
 			}
 		}
 
-		[TestMethod]
+		//[TestMethod]
 		public void OPN_test ()
 		{
 			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
@@ -113,38 +114,34 @@ namespace Pinpad.Sdk.Test
 			GenericResponse r = comm.SendRequestAndReceiveResponse<GenericResponse>(dsp);
 		}
 
-		//[TestMethod]
+		[TestMethod]
 		public void MultiplePinpads_test ()
 		{
 			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
 
-			IPinpadConnection conn1 = CrossPlatformController.PinpadFinder.Find();
+			// Gets all connections:
+			ICollection<IPinpadConnection> connections = CrossPlatformController.PinpadFinder.FindAllDevices();
 
+			if (connections == null)
+			{
+				Assert.IsTrue(false);
+			}
 
-			// Opening connection with specifies serial port:
-			//conn1.Open();
+			// Gets all pinpads:
+			ICollection<IPinpadFacade> pinpads = new List<IPinpadFacade>();
 
-			PinpadFacade f1 = new PinpadFacade(conn1);
-			
-			f1.Display.ShowMessage("", "opened 1", DisplayPaddingType.Center);
+			foreach (IPinpadConnection conn in connections)
+			{
+				pinpads.Add(new PinpadFacade(conn));
+			}
 
-			// --------
+			// Show corresponding COM port on the pinpad display:
+			foreach (IPinpadFacade pinpad in pinpads)
+			{
+				pinpad.Display.ShowMessage("", pinpad.Communication.PinpadConnection.ConnectionName, DisplayPaddingType.Center);
+			}
 
-			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
-
-			IPinpadConnection conn2 = CrossPlatformController.PinpadFinder.Find();
-			
-			// Opening connection with specifies serial port:
-			//conn1.Open();
-
-			PinpadFacade f2 = new PinpadFacade(conn2);
-
-			f2.Display.ShowMessage("", "opened 2", DisplayPaddingType.Center);
-
-			// -----------
-
-			f1.Display.ShowMessage("", "f2", DisplayPaddingType.Center);
-			f2.Display.ShowMessage("", "f1", DisplayPaddingType.Center);
+			Assert.IsTrue(true);
 		}
 	}
 }

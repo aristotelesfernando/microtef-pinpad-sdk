@@ -36,16 +36,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Pinpad.Sdk.Model.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'HardDebug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\HardDebug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\Release\Pinpad.Sdk.Model.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -97,7 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MicroPos.CrossPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b64391aecf921c4f, processorArchitecture=MSIL">
-      <HintPath>..\packages\MicroPos.CrossPlatform.1.1.2\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.CrossPlatform.dll</HintPath>
+      <HintPath>..\packages\MicroPos.CrossPlatform.1.2.0\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.CrossPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

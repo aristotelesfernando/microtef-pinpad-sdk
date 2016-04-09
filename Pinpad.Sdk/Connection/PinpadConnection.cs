@@ -27,6 +27,13 @@ namespace Pinpad.Sdk.Connection
             }
         }
 
+		// Ctor
+		public PinpadConnection (IPinpadConnection connection)
+		{
+			this.PlatformPinpadConnection = connection;
+		}
+		public PinpadConnection () { }
+
         // Methods
         /// <summary>
         /// Search in all available serial ports for a pinpad connection.
