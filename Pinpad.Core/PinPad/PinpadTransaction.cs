@@ -13,14 +13,26 @@ using System.Linq;
 
 namespace Pinpad.Core.Pinpad
 {
+	/// <summary>
+	/// Responsible for operations used on an authorization operation.
+	/// </summary>
 	public class PinpadTransaction : IPinpadTransaction
 	{
+		/// <summary>
+		/// Responsible for read card password itself, depending on card type.
+		/// </summary>
 		private PinReader pinReader;
+		/// <summary>
+		/// Responsible for sending requests to the pinpad.
+		/// </summary>
 		private PinpadCommunication pinpadCommunication;
 		/// <summary>
 		/// Pinpad Emv table handler, that is, responsible for all operations related to table (CAPK and AID tables) controlling.
 		/// </summary>
 		public PinpadTable EmvTable { get; private set; }
+		/// <summary>
+		/// The status of the last operation made.
+		/// </summary>
 		public ResponseStatus LastCommandStatus { get; private set; }
 
 		// Constructor
@@ -127,6 +139,15 @@ namespace Pinpad.Core.Pinpad
 			return pin;
 		}
 
+		/// <summary>
+		/// Read basic card information, that is, brand id, card type, card primary account number (PAN), cardholder name and expiration date.
+		/// If the card is removed in the middle of the process, returns CANCEL status. 
+		/// </summary>
+		/// <param name="transactionType">Transaction type, that is, debit/credit.</param>
+		/// <param name="amount">Transaction amount.</param>
+		/// <param name="cardRead">Card to be read.</param>
+		/// <param name="newTransactionType">New transaction type read throgh ABECS protocol.</param>
+		/// <returns>Operation status.</returns>
 		private AbecsResponseStatus PerformCardReading (TransactionType transactionType, decimal amount, out CardEntry cardRead, out TransactionType newTransactionType)
 		{
 			cardRead = new CardEntry();
