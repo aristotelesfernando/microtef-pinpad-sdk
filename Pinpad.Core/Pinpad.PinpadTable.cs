@@ -1,29 +1,16 @@
-﻿using Pinpad.Core;
-using Pinpad.Core.Commands;
-using Pinpad.Core.Pinpad;
+﻿using Pinpad.Core.Commands;
 using Pinpad.Core.Tables;
 using Pinpad.Core.TypeCode;
-using Pinpad.Sdk.Connection;
-using Pinpad.Sdk.EmvTable.Mapper;
-using Pinpad.Sdk.Model;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 
-/* WARNING!
- * 
- * MUST BE REFACTORED.
- * 
- */
-
-namespace Pinpad.Sdk.EmvTable
+namespace Pinpad.Core.Pinpad
 {
     /// <summary>
     /// PinpadTable manager. PinpadTable is responsible for all operations related to table (CAPK and AID tables) controlling.
     /// </summary>
-    public class PinpadTable : IPinpadTable
+    public class PinpadTable
     {
         // Constants:
         /// <summary>
@@ -59,48 +46,29 @@ namespace Pinpad.Sdk.EmvTable
         /// <summary>
         /// AID entries.
         /// </summary>
-        public ICollection<PinpadAid> AidTable
+        public ICollection<EmvAidTable> AidTable
         {
             get
             {
-                BaseTable [] baseTableCollection;
-
                 lock (this.tableCollection)
                 {
                     // Get's all AID entries (as raw):
-                    baseTableCollection = tableCollection.Where ((table) =>
-                    {
-                        return table is EmvAidTable;
-                    }).ToArray ();
+					return this.tableCollection.OfType<EmvAidTable>().ToList();
                 }
-
-                // Mapps raw AID entries into pinpad AID entries:
-                ICollection<PinpadAid> emvAidTableCollection = AidMapper.MapToAidCollection(baseTableCollection.Cast<EmvAidTable>().ToArray());
-
-                return emvAidTableCollection;
             }
         }
         /// <summary>
         /// CAPK entries.
         /// </summary>
-        public ICollection<PinpadCapk> CapkTable
+        public ICollection<CapkTable> CapkTable
         {
             get
             {
-                BaseTable [] baseTableCollection;
                 lock (this.tableCollection)
                 {
-                    // Get's all CAPK entries (as raw):
-                    baseTableCollection = tableCollection.Where((table) =>
-                    {
-                        return table is CapkTable;
-                    }).ToArray();
+					// Get's all CAPK entries (as raw):
+					return this.tableCollection.OfType<CapkTable>().ToList();
                 }
-
-                // Mapps raw CAPK entries into pinpad CAPK entries:
-                ICollection<PinpadCapk> capkTableCollection = CapkMapper.MapToPinpadCapkCollection(baseTableCollection.Cast<CapkTable>().ToArray());
-
-                return capkTableCollection;
             }
         }
         /// <summary>
@@ -142,23 +110,11 @@ namespace Pinpad.Sdk.EmvTable
         /// </summary>
         /// <param name="entry">Pinpad AID or CAPK entry.</param>
         /// <returns>If the entry was added or not. In case of false return, verify if the entry is CAPK or AID.</returns>
-        public bool AddEntry (BaseTableEntry entry)
+        public bool AddEntry (BaseTable entry)
         {
-            BaseTable table;
-
-            // Verifies which entry is (AID or CAPK):
-            if (entry is PinpadAid)
-            {
-                table = AidMapper.MapGenericToLegacyAid(entry);
-            }
-            else if (entry is PinpadCapk)
-            {
-                table = CapkMapper.MapGenericToLegacyCapk(entry);
-            }
-            else
-            {
+			if (entry is EmvAidTable == false && entry is CapkTable == false)
+			{
 				throw new NotImplementedException("This sort of entry was not implemented yet. The current supported entries are: CAPK and AID.");
-
 			}
 
             lock (this.tableCollection)
@@ -166,9 +122,9 @@ namespace Pinpad.Sdk.EmvTable
                 // Check for a table entry collision:
                 BaseTable collision = this.tableCollection.FirstOrDefault((tableEntry) =>
                 {
-                    return tableEntry.TAB_ID == table.TAB_ID &&
-                    tableEntry.TAB_ACQ.Value == table.TAB_ACQ.Value &&
-                    tableEntry.TAB_RECIDX.Value == table.TAB_RECIDX.Value;
+                    return tableEntry.TAB_ID == entry.TAB_ID &&
+                    tableEntry.TAB_ACQ.Value == entry.TAB_ACQ.Value &&
+                    tableEntry.TAB_RECIDX.Value == entry.TAB_RECIDX.Value;
                 });
 
                 // If a collision was detected, remove the old entry:
@@ -178,7 +134,7 @@ namespace Pinpad.Sdk.EmvTable
                 }
 
                 // Add raw entry here:
-                this.tableCollection.Add(table);
+                this.tableCollection.Add(entry);
 
                 // Indicates changes (pinpad is not updated):
                 this.tableCollectionModified = true;

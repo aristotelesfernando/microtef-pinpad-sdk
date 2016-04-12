@@ -1,12 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using Pinpad.Sdk.Transaction;
 using Pinpad.Sdk.Model.TypeCode;
-using Pinpad.Sdk.EmvTable;
-using Pinpad.Core.Pinpad;
-using Pinpad.Core.Commands;
-using MicroPos.CrossPlatform;
+using Pinpad.Core.Transaction;
 
 namespace Pinpad.Sdk.Test.Transaction
 {
@@ -18,7 +13,7 @@ namespace Pinpad.Sdk.Test.Transaction
         [TestInitialize]
         public void Setup()
         {
-            this.pinReader = new PinReader(new MockedPinpadFacade());
+            this.pinReader = new PinReader(new MockedPinpadCommunication());
         }
 
         [TestMethod]

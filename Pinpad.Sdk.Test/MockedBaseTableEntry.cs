@@ -1,8 +1,8 @@
-﻿using Pinpad.Sdk.Model;
+﻿using Pinpad.Core.Tables;
 
 namespace Pinpad.Sdk.Test
 {
-	public class MockedBaseTableEntry : BaseTableEntry
+	public class MockedBaseTableEntry : BaseTable
 	{
 
 	}

@@ -122,6 +122,8 @@
     <Compile Include="PinpadProperties\StringReader.cs" />
     <Compile Include="PinpadProperties\VariableLengthCollectionProperty.cs" />
     <Compile Include="PinpadProperties\VariableLengthProperty.cs" />
+    <Compile Include="Pinpad\PinpadTable.cs" />
+    <Compile Include="Pinpad\PinpadTransaction.cs" />
     <Compile Include="Pinpad\PinpadCommunication.cs" />
     <Compile Include="Pinpad\PinpadDisplay.cs" />
     <Compile Include="Pinpad\PinpadEncryption.cs" />
@@ -140,10 +142,16 @@
     <Compile Include="Tracks\BaseTrack.cs" />
     <Compile Include="Tracks\Track1.cs" />
     <Compile Include="Tracks\Track2.cs" />
+    <Compile Include="Transaction\EmvPinReader.cs" />
+    <Compile Include="Transaction\MagneticStripePinReader.cs" />
+    <Compile Include="Transaction\Mapper\CardMapper.cs" />
+    <Compile Include="Transaction\Mapper\EmvTrackMapper.cs" />
+    <Compile Include="Transaction\Mapper\MagneticStripeTrackMapper.cs" />
+    <Compile Include="Transaction\Mapper\ResponseStatusMapper.cs" />
+    <Compile Include="Transaction\PinReader.cs" />
     <Compile Include="TypeCode\ApplicationType.cs" />
     <Compile Include="TypeCode\ContactlessMode.cs" />
     <Compile Include="TypeCode\CryptographyMode.cs" />
-    <Compile Include="TypeCode\EmvTableType.cs" />
     <Compile Include="TypeCode\FallbackStatus.cs" />
     <Compile Include="TypeCode\GkeActionCode.cs" />
     <Compile Include="TypeCode\InterchangeType.cs" />

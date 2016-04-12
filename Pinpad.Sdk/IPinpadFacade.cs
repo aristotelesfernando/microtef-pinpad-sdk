@@ -1,6 +1,6 @@
 ﻿using Pinpad.Core.Pinpad;
 
-namespace Pinpad.Sdk.EmvTable
+namespace Pinpad.Sdk
 {
 	public interface IPinpadFacade
 	{
@@ -32,5 +32,9 @@ namespace Pinpad.Sdk.EmvTable
 		/// Gets the default Infos adapter
 		/// </summary>
 		PinpadInfos Infos { get; set; }
+		/// <summary>
+		/// Responsible for transaction operations.
+		/// </summary>
+		PinpadTransaction TransactionService { get; set; }
 	}
 }

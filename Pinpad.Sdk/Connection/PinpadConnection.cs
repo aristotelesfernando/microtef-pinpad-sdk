@@ -1,5 +1,4 @@
 ﻿using MicroPos.CrossPlatform;
-using Pinpad.Sdk.EmvTable;
 using System;
 
 namespace Pinpad.Sdk.Connection
@@ -34,7 +33,15 @@ namespace Pinpad.Sdk.Connection
 		}
 		public PinpadConnection () { }
 
-        // Methods
+		// Methods
+		/// <summary>
+		/// Finds for one pinpad.
+		/// </summary>
+		/// <returns>Returns the first pinpad found.</returns>
+		public static PinpadConnection GetFirst ()
+		{
+			return new PinpadConnection(CrossPlatformController.PinpadFinder.Find());
+		}
         /// <summary>
         /// Search in all available serial ports for a pinpad connection.
         /// </summary>

@@ -47,9 +47,6 @@
   <ItemGroup>
     <Compile Include="Exceptions\ExpiredCardException.cs" />
     <Compile Include="Pinpad\IPinpadKeyboard.cs" />
-    <Compile Include="Table\PinpadAid.cs" />
-    <Compile Include="Table\BaseTableEntry.cs" />
-    <Compile Include="Table\PinpadCapk.cs" />
     <Compile Include="CardEntry.cs" />
     <Compile Include="Exceptions\CommandNameMismatchException.cs" />
     <Compile Include="Exceptions\InvalidChecksumException.cs" />
@@ -68,10 +65,12 @@
     <Compile Include="Pin.cs" />
     <Compile Include="Pinpad\IPinpadInfos.cs" />
     <Compile Include="Pinpad\IPinpadDisplay.cs" />
+    <Compile Include="Pinpad\IPinpadTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeCode\CardType.cs" />
     <Compile Include="TypeCode\ContactlessMode.cs" />
     <Compile Include="TypeCode\DisplayPaddingType.cs" />
+    <Compile Include="TypeCode\EmvTableType.cs" />
     <Compile Include="TypeCode\EmvTagCode.cs" />
     <Compile Include="TypeCode\GertecMessageCode.cs" />
     <Compile Include="TypeCode\KeyboardMessageCode.cs" />

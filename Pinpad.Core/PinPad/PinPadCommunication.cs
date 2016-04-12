@@ -107,10 +107,15 @@ namespace Pinpad.Core.Pinpad
 		/// Constructor
 		/// </summary>
 		/// <param name="pinPad">Owner Pinpad Facade</param>
-		/// <param name="pinPadConnection">Connection with Pinpad device</param>
-		public PinpadCommunication (IPinpadConnection pinPadConnection)
+		/// <param name="pinpadConnection">Connection with Pinpad device</param>
+		public PinpadCommunication (IPinpadConnection pinpadConnection)
 		{
-			this.PinpadConnection = pinPadConnection;
+			if (pinpadConnection == null)
+			{
+				throw new ArgumentNullException("pinpadConnection cannot be null.");
+			}
+
+			this.PinpadConnection = pinpadConnection;
 
 			// To change pinpad comm timeout
 			this.PinpadConnection.ReadTimeout = NON_BLOCKING_TIMEOUT;

@@ -1,12 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Pinpad.Sdk.Transaction;
-using Moq;
 using Pinpad.Sdk.Model;
-using Pinpad.Sdk.EmvTable;
-using Pinpad.Core.Commands;
-using Pinpad.Core.Pinpad;
-using MicroPos.CrossPlatform;
+using Pinpad.Core.Transaction;
 
 namespace Pinpad.Sdk.Test.Transaction
 {
@@ -15,11 +10,13 @@ namespace Pinpad.Sdk.Test.Transaction
 	{
         EmvPinReader reader;
         MockedPinpadFacade mockedFacade;
+		MockedPinpadCommunication mockedComm;
 		Pin pin;
 
 		[TestInitialize]
 		public void Setup()
 		{
+			this.mockedComm = new MockedPinpadCommunication();
             this.mockedFacade = new MockedPinpadFacade();
             this.reader = new EmvPinReader();
 		}
@@ -45,7 +42,7 @@ namespace Pinpad.Sdk.Test.Transaction
 		public void EmvPinReaderTest_Read_should_throw_exception_if_negative_amount()
 		{
             // Act & Assert
-			reader.Read(mockedFacade, -1, out this.pin);
+			reader.Read(this.mockedComm, -1, out this.pin);
 		}
 
         [TestMethod]
@@ -53,7 +50,7 @@ namespace Pinpad.Sdk.Test.Transaction
         public void EmvPinReaderTest_Read_should_throw_exception_if_amount_is_zero()
         {
             // Act & Assert
-            reader.Read(mockedFacade, 0, out this.pin);
+            reader.Read(this.mockedComm, 0, out this.pin);
         }
 
         [TestMethod]

@@ -2,7 +2,7 @@
 using Pinpad.Core.Pinpad;
 using Pinpad.Sdk.Connection;
 
-namespace Pinpad.Sdk.EmvTable
+namespace Pinpad.Sdk
 {
 	public class PinpadFacade : IPinpadFacade
 	{
@@ -42,6 +42,10 @@ namespace Pinpad.Sdk.EmvTable
 		/// Controller for Stone Secure Command.
 		/// </summary>
 		public PinpadEncryption Encryption { get; set; }
+		/// <summary>
+		/// Responsible for transaction operations.
+		/// </summary>
+		public PinpadTransaction TransactionService { get; set; }
 
 		/// <summary>
 		/// Creates all pinpad adapters.
@@ -59,6 +63,7 @@ namespace Pinpad.Sdk.EmvTable
 			this.Storage = new PinpadStorage(this.Communication);
 			this.Table = new PinpadTable(this.Communication);
 			this.Printer = new PinpadPrinter(this.Communication, this.Infos);
+			this.TransactionService = new PinpadTransaction(this.Communication);
 		}
 	}
 }

@@ -3,7 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Core.Commands;
 using Pinpad.Core.Pinpad;
 using Pinpad.Sdk.Connection;
-using Pinpad.Sdk.EmvTable;
 using Pinpad.Sdk.Model.TypeCode;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -114,7 +113,7 @@ namespace Pinpad.Sdk.Test
 			GenericResponse r = comm.SendRequestAndReceiveResponse<GenericResponse>(dsp);
 		}
 
-		[TestMethod]
+		//[TestMethod]
 		public void MultiplePinpads_test ()
 		{
 			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
@@ -142,6 +141,14 @@ namespace Pinpad.Sdk.Test
 			}
 
 			Assert.IsTrue(true);
+		}
+
+		//[TestMethod]
+		public void OnePinpadFind_test ()
+		{
+			//MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
+			//PinpadFacade facade = new PinpadFacade(PinpadConnection.GetFirst());
+			//facade.Display.ShowMessage("", "wow!", DisplayPaddingType.Center);
 		}
 	}
 }

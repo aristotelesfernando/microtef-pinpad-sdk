@@ -1,4 +1,4 @@
-﻿namespace Pinpad.Core.TypeCode
+﻿namespace Pinpad.Sdk.Model.TypeCode
 {
 	/// <summary>
 	/// Enumerator Emv Tables 

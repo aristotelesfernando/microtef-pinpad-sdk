@@ -80,16 +80,12 @@
   <ItemGroup>
     <Compile Include="Connection\PinpadConnectionTest.cs" />
     <Compile Include="Display\PinpadDisplayTest.cs" />
-    <Compile Include="EmvTable\Entry\AidEntryTest.cs" />
-    <Compile Include="EmvTable\Entry\BaseTableEntryTest.cs" />
-    <Compile Include="EmvTable\Mapper\AidMapperTest.cs" />
-    <Compile Include="EmvTable\Entry\CapkEntryTest.cs" />
-    <Compile Include="EmvTable\Mapper\CapkMapperTest.cs" />
     <Compile Include="EmvTable\PinpadTableTest.cs" />
     <Compile Include="Mapper\CardMapperTest.cs" />
     <Compile Include="Mapper\EmvTrackMapperTest.cs" />
     <Compile Include="Mapper\MagneticStripeTrackMapperTest.cs" />
     <Compile Include="MockedBaseTableEntry.cs" />
+    <Compile Include="MockedPInpadCommunication.cs" />
     <Compile Include="MockedPinpadConnection.cs" />
     <Compile Include="MockedPinpadFacade.cs" />
     <Compile Include="NotAutomaticTests.cs" />

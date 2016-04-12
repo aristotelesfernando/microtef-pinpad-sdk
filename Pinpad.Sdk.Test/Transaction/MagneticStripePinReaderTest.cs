@@ -1,9 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using Pinpad.Sdk.Transaction;
 using Pinpad.Sdk.Model;
-using Pinpad.Sdk.EmvTable;
+using Pinpad.Core.Transaction;
 
 namespace Pinpad.Sdk.Test.Transaction
 {
@@ -45,28 +43,28 @@ namespace Pinpad.Sdk.Test.Transaction
         [ExpectedException(typeof(InvalidOperationException))]
         public void MagneticStripePinReader_should_throw_exception_if_negative_amount()
         {
-            this.reader.Read(this.pinpadFacade, "1234567890123456", -1000, out this.pin);
+            this.reader.Read(this.pinpadFacade.Communication, "1234567890123456", -1000, out this.pin);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void MagneticStripePinReader_should_throw_exception_if_zero_amount()
         {
-            this.reader.Read(this.pinpadFacade, "1234567890123456", 0, out this.pin);
+            this.reader.Read(this.pinpadFacade.Communication, "1234567890123456", 0, out this.pin);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void MagneticStripePinReader_should_throw_exception_if_null_pan()
         {
-            this.reader.Read(this.pinpadFacade, null, 1000, out this.pin);
+            this.reader.Read(this.pinpadFacade.Communication, null, 1000, out this.pin);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void MagneticStripePinReader_should_throw_exception_if_empty_pan()
         {
-            this.reader.Read(this.pinpadFacade, string.Empty, 1000, out this.pin);
+            this.reader.Read(this.pinpadFacade.Communication, string.Empty, 1000, out this.pin);
         }
     }
 }

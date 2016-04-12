@@ -48,21 +48,9 @@
   <ItemGroup>
     <Compile Include="Connection\BasePinpadConnection.cs" />
     <Compile Include="Connection\PinpadConnection.cs" />
-    <Compile Include="EmvTable\Mapper\AidMapper.cs" />
-    <Compile Include="EmvTable\Mapper\CapkMapper.cs" />
-    <Compile Include="EmvTable\IPinpadFacade.cs" />
-    <Compile Include="EmvTable\PinpadFacade.cs" />
-    <Compile Include="EmvTable\PinpadTable.cs" />
-    <Compile Include="EmvTable\IPinpadTable.cs" />
-    <Compile Include="Mapper\CardMapper.cs" />
-    <Compile Include="Mapper\EmvTrackMapper.cs" />
-    <Compile Include="Mapper\MagneticStripeTrackMapper.cs" />
-    <Compile Include="Mapper\ResponseStatusMapper.cs" />
-    <Compile Include="PinpadController.cs" />
+    <Compile Include="IPinpadFacade.cs" />
+    <Compile Include="PinpadFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Transaction\EmvPinReader.cs" />
-    <Compile Include="Transaction\MagneticStripePinReader.cs" />
-    <Compile Include="Transaction\PinReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

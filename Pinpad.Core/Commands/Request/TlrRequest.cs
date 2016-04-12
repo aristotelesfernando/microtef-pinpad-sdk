@@ -1,6 +1,7 @@
 ﻿using Pinpad.Core.Properties;
 using Pinpad.Core.Tables;
 using Pinpad.Core.TypeCode;
+using Pinpad.Sdk.Model.TypeCode;
 using System;
 
 namespace Pinpad.Core.Commands
