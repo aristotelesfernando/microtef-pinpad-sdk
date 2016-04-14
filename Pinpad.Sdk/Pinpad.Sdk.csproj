@@ -139,7 +139,7 @@
     <Compile Include="Tables\BaseAidTable.cs" />
     <Compile Include="Tables\BaseTable.cs" />
     <Compile Include="Tables\CapkTable.cs" />
-    <Compile Include="Tables\EmvAidTable.cs" />
+    <Compile Include="Tables\AidTable.cs" />
     <Compile Include="Tables\RevCerTable.cs" />
     <Compile Include="Tables\UnknownAidTable.cs" />
     <Compile Include="Tracks\BaseTrack.cs" />

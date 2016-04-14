@@ -74,7 +74,7 @@ namespace Pinpad.Sdk.Commands
                     switch (aidTableData.T1_ICCSTD)
                     {
                         case ApplicationType.IccEmv:
-                            value = new EmvAidTable();
+                            value = new AidTable();
                             break;
 
                         //We don't have the pattern, just keep the data received:

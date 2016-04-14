@@ -46,14 +46,14 @@ namespace Pinpad.Sdk.Pinpad
         /// <summary>
         /// AID entries.
         /// </summary>
-        public ICollection<EmvAidTable> AidTable
+        public ICollection<AidTable> AidTable
         {
             get
             {
                 lock (this.tableCollection)
                 {
                     // Get's all AID entries (as raw):
-					return this.tableCollection.OfType<EmvAidTable>().ToList();
+					return this.tableCollection.OfType<AidTable>().ToList();
                 }
             }
         }
@@ -112,7 +112,7 @@ namespace Pinpad.Sdk.Pinpad
         /// <returns>If the entry was added or not. In case of false return, verify if the entry is CAPK or AID.</returns>
         public bool AddEntry (BaseTable entry)
         {
-			if (entry is EmvAidTable == false && entry is CapkTable == false)
+			if (entry is AidTable == false && entry is CapkTable == false)
 			{
 				throw new NotImplementedException("This sort of entry was not implemented yet. The current supported entries are: CAPK and AID.");
 			}

@@ -7,13 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinpad.Sdk.Model", "Pinpad.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinpad.Sdk.Test", "Pinpad.Sdk.Test\Pinpad.Sdk.Test.csproj", "{966FCAB4-3C78-4F93-A653-790DB64B6723}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinpad.Sdk", "Pinpad.Core\Pinpad.Sdk.csproj", "{479287C0-69A0-4E9F-B90F-A8690781FF40}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinpad.Core.Rebuild", "Pinpad.Core.Rebuild\Pinpad.Core.Rebuild.csproj", "{3CEEE444-880A-4937-BB03-4E3BE2A81037}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinpad.Core.Rebuild.Test", "Pinpad.Core.Rebuild.Test\Pinpad.Core.Rebuild.Test.csproj", "{6412FC56-25A5-416D-971F-52F5AC935B50}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rebuild", "Rebuild", "{9FF88C7D-6F4C-4BF6-A4F9-78EE1B484C65}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinpad.Sdk", "Pinpad.Sdk\Pinpad.Sdk.csproj", "{479287C0-69A0-4E9F-B90F-A8690781FF40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,20 +27,8 @@ Global
 		{479287C0-69A0-4E9F-B90F-A8690781FF40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{479287C0-69A0-4E9F-B90F-A8690781FF40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{479287C0-69A0-4E9F-B90F-A8690781FF40}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3CEEE444-880A-4937-BB03-4E3BE2A81037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3CEEE444-880A-4937-BB03-4E3BE2A81037}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3CEEE444-880A-4937-BB03-4E3BE2A81037}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3CEEE444-880A-4937-BB03-4E3BE2A81037}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6412FC56-25A5-416D-971F-52F5AC935B50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6412FC56-25A5-416D-971F-52F5AC935B50}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6412FC56-25A5-416D-971F-52F5AC935B50}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6412FC56-25A5-416D-971F-52F5AC935B50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{3CEEE444-880A-4937-BB03-4E3BE2A81037} = {9FF88C7D-6F4C-4BF6-A4F9-78EE1B484C65}
-		{6412FC56-25A5-416D-971F-52F5AC935B50} = {9FF88C7D-6F4C-4BF6-A4F9-78EE1B484C65}
 	EndGlobalSection
 EndGlobal

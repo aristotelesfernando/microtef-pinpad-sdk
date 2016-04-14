@@ -8,12 +8,17 @@ namespace Pinpad.Sdk.Tables
 	/// <summary>
 	/// EMV Application IDentifier table record
 	/// </summary>
-	public class EmvAidTable : BaseAidTable 
+	public class AidTable : BaseAidTable 
 	{
+		public const string DEFAULT_TCC = "R";
+		public const int TERMINAL_CAPABILITIES_LENGTH = 6;
+		public const int ADDITIONAL_TERMINAL_CAPABILITIES_LENGTH = 10;
+		public const int STONE_ACQUIRER_NUMBER = 8;
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public EmvAidTable() {
+		public AidTable() {
 			this.T1_APPVER1 = new PinpadFixedLengthProperty<HexadecimalData>("T1_APPVER1", 4, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
 			this.T1_APPVER2 = new PinpadFixedLengthProperty<HexadecimalData>("T1_APPVER2", 4, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
 			this.T1_APPVER3 = new PinpadFixedLengthProperty<HexadecimalData>("T1_APPVER3", 4, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
