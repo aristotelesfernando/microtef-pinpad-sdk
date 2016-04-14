@@ -61,11 +61,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Pinpad.Sdk, Version=1.0.0.0, Culture=neutral, PublicKeyToken=99a8ebe3dd424a19, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pinpad.Sdk.2.3.0\lib\portable-net403+sl50+win+wpa81+wp80\Pinpad.Sdk.dll</HintPath>
+      <HintPath>..\packages\Pinpad.Sdk.2.3.1\lib\portable-net403+sl50+win+wpa81+wp80\Pinpad.Sdk.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Pinpad.Sdk.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d3ab5135d4a3f3fd, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pinpad.Sdk.2.3.0\lib\portable-net403+sl50+win+wpa81+wp80\Pinpad.Sdk.Model.dll</HintPath>
+      <HintPath>..\packages\Pinpad.Sdk.2.3.1\lib\portable-net403+sl50+win+wpa81+wp80\Pinpad.Sdk.Model.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
