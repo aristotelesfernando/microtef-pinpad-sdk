@@ -1,4 +1,4 @@
-﻿using Pinpad.Core.Tables;
+﻿using Pinpad.Sdk.Tables;
 
 namespace Pinpad.Sdk.Test
 {

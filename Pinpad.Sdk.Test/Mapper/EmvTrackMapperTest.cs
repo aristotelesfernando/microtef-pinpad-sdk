@@ -2,8 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.TypeCode;
-using Pinpad.Core.Commands;
-using Pinpad.Core.Transaction;
+using Pinpad.Sdk.Commands;
+using Pinpad.Sdk.Transaction;
 
 namespace Pinpad.Sdk.Test.Mapper
 {

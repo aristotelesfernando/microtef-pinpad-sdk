@@ -1,8 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Pinpad.Core.Pinpad;
-using Pinpad.Core.Tables;
-using Pinpad.Core.Utilities;
+using Pinpad.Sdk.Pinpad;
+using Pinpad.Sdk.Tables;
+using Pinpad.Sdk.Utilities;
+using Moq;
+using MicroPos.CrossPlatform;
 
 namespace Pinpad.Sdk.Test.EmvTable
 {
@@ -79,7 +81,8 @@ namespace Pinpad.Sdk.Test.EmvTable
 		[TestMethod]
 		public void PinpadTable_should_not_return_null ()
 		{
-			this.MockedFacade.Communication = new PinpadCommunication(this.MockedConnection);
+			PinpadConnection conn = new PinpadConnection(Mock.Of<IPinpadConnection>());
+			this.MockedFacade.Communication = new PinpadCommunication(conn);
 			PinpadTable table = new PinpadTable(this.MockedFacade.Communication);
 			Assert.IsNotNull(table);
 		}

@@ -1,11 +1,13 @@
-﻿using Pinpad.Core.Pinpad;
+﻿using MicroPos.CrossPlatform;
+using Moq;
+using Pinpad.Sdk.Pinpad;
 
 namespace Pinpad.Sdk.Test
 {
 	public class MockedPinpadCommunication : PinpadCommunication
 	{
 		public MockedPinpadCommunication ()
-			: base (new MockedPinpadConnection())
+			: base (new PinpadConnection(Mock.Of<IPinpadConnection>()))
 		{
 
 		}

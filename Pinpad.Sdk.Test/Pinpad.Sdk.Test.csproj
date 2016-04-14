@@ -53,8 +53,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="MicroPos.Platform.Desktop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=38ae2303208e40c0, processorArchitecture=MSIL">
-      <HintPath>..\packages\MicroPos.Platform.Desktop.1.3.1\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.Platform.Desktop.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\micropos-platform-desktop\MicroPos.Platform.Desktop\bin\Debug\MicroPos.Platform.Desktop.dll</HintPath>
     </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
@@ -103,17 +103,13 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pinpad.Core\Pinpad.Core.csproj">
+    <ProjectReference Include="..\Pinpad.Core\Pinpad.Sdk.csproj">
       <Project>{479287c0-69a0-4e9f-b90f-a8690781ff40}</Project>
-      <Name>Pinpad.Core</Name>
+      <Name>Pinpad.Sdk</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pinpad.Sdk.Model\Pinpad.Sdk.Model.csproj">
       <Project>{8deb5a99-825b-4631-b84c-c2c06bf28c2e}</Project>
       <Name>Pinpad.Sdk.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pinpad.Sdk\Pinpad.Sdk.csproj">
-      <Project>{9a69f5e7-6b6b-4bd0-81cb-7f4d59c8290e}</Project>
-      <Name>Pinpad.Sdk</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

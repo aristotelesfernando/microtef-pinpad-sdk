@@ -1,6 +1,5 @@
 ﻿using MicroPos.CrossPlatform;
-using Pinpad.Core.Pinpad;
-using Pinpad.Sdk.Connection;
+using Pinpad.Sdk.Pinpad;
 
 namespace Pinpad.Sdk
 {
@@ -53,10 +52,26 @@ namespace Pinpad.Sdk
 		/// <param name="pinpadConnection">Pinpad connection.</param>
 		public PinpadFacade(IPinpadConnection pinpadConnection)
 		{
-			this.PinpadConnection = new PinpadConnection();
-			this.PinpadConnection.PlatformPinpadConnection = pinpadConnection;
+			this.PinpadConnection = new PinpadConnection(pinpadConnection);
 
-			this.Communication = new PinpadCommunication(this.PinpadConnection.PlatformPinpadConnection);
+			this.Communication = new PinpadCommunication(this.PinpadConnection);
+			this.Infos = new PinpadInfos(this.Communication);
+			this.Keyboard = new PinpadKeyboard(this.Communication, this.Infos);
+			this.Display = new PinpadDisplay(this.Communication);
+			this.Storage = new PinpadStorage(this.Communication);
+			this.Table = new PinpadTable(this.Communication);
+			this.Printer = new PinpadPrinter(this.Communication, this.Infos);
+			this.TransactionService = new PinpadTransaction(this.Communication);
+		}
+		/// <summary>
+		/// Creates all pinpad adapters.
+		/// </summary>
+		/// <param name="pinpadConnection">Pinpad connection.</param>
+		public PinpadFacade (PinpadConnection pinpadConnection)
+		{
+			this.PinpadConnection = pinpadConnection;
+
+			this.Communication = new PinpadCommunication(this.PinpadConnection);
 			this.Infos = new PinpadInfos(this.Communication);
 			this.Keyboard = new PinpadKeyboard(this.Communication, this.Infos);
 			this.Display = new PinpadDisplay(this.Communication);

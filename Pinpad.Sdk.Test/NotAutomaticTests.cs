@@ -1,11 +1,12 @@
 ﻿using MicroPos.CrossPlatform;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Pinpad.Core.Commands;
-using Pinpad.Core.Pinpad;
-using Pinpad.Sdk.Connection;
+using Pinpad.Sdk;
+using Pinpad.Sdk.Commands;
+using Pinpad.Sdk.Pinpad;
 using Pinpad.Sdk.Model.TypeCode;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Pinpad.Sdk.Properties;
 
 namespace Pinpad.Sdk.Test
 {
@@ -33,11 +34,9 @@ namespace Pinpad.Sdk.Test
 			//this.mockedPinpadConnection = new MockedPinpadConnection();
 
 			// prod:
-			PinpadConnection conn = new PinpadConnection();
-			string portName = PinpadConnection.SearchPinpadPort();
-			conn.Open(portName);
+			PinpadConnection conn = PinpadConnection.GetFirst();
 
-			PinpadCommunication comm = new PinpadCommunication(conn.PlatformPinpadConnection);
+			PinpadCommunication comm = new PinpadCommunication(conn);
 
 			GertecEx07Request request = new GertecEx07Request();
 
@@ -70,11 +69,9 @@ namespace Pinpad.Sdk.Test
 		{
 			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
 
-			PinpadConnection conn = new PinpadConnection();
-			string portName = PinpadConnection.SearchPinpadPort();
-			conn.Open(portName);
-			
-			PinpadFacade facade = new PinpadFacade(conn.PlatformPinpadConnection);
+			PinpadConnection conn = PinpadConnection.GetFirst();
+
+			PinpadFacade facade = new PinpadFacade(conn);
 
 			facade.Display.ShowMessage("ola", "tudo bom?", DisplayPaddingType.Center);
 
@@ -95,20 +92,15 @@ namespace Pinpad.Sdk.Test
 		{
 			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
 
-			PinpadConnection conn = new PinpadConnection();
+			PinpadConnection conn = PinpadConnection.GetFirst();
 
-			string portName = PinpadConnection.SearchPinpadPort();
-
-			// Opening connection with specifies serial port:
-			conn.Open(portName);
-
-			PinpadCommunication comm = new PinpadCommunication(conn.PlatformPinpadConnection);
+			PinpadCommunication comm = new PinpadCommunication(conn);
 
 			OpnRequest opn = new OpnRequest();
 			OpnResponse opnResp = comm.SendRequestAndReceiveResponse<OpnResponse>(opn);
 
 			DspRequest dsp = new DspRequest();
-			dsp.DSP_MSG.Value = new Core.Properties.SimpleMessage("ola");
+			dsp.DSP_MSG.Value = new SimpleMessage("ola");
 
 			GenericResponse r = comm.SendRequestAndReceiveResponse<GenericResponse>(dsp);
 		}
@@ -137,7 +129,7 @@ namespace Pinpad.Sdk.Test
 			// Show corresponding COM port on the pinpad display:
 			foreach (IPinpadFacade pinpad in pinpads)
 			{
-				pinpad.Display.ShowMessage("", pinpad.Communication.PinpadConnection.ConnectionName, DisplayPaddingType.Center);
+				pinpad.Display.ShowMessage("", pinpad.Communication.PinpadConnection.Connection.ConnectionName, DisplayPaddingType.Center);
 			}
 
 			Assert.IsTrue(true);
@@ -146,9 +138,10 @@ namespace Pinpad.Sdk.Test
 		//[TestMethod]
 		public void OnePinpadFind_test ()
 		{
-			//MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
-			//PinpadFacade facade = new PinpadFacade(PinpadConnection.GetFirst());
-			//facade.Display.ShowMessage("", "wow!", DisplayPaddingType.Center);
+			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
+			PinpadConnection conn = PinpadConnection.GetFirst();
+			PinpadFacade facade = new PinpadFacade(conn);
+			facade.Display.ShowMessage("", "wow!", DisplayPaddingType.Center);
 		}
 	}
 }

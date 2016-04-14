@@ -1,4 +1,4 @@
-﻿using Pinpad.Core.Pinpad;
+﻿using Pinpad.Sdk.Pinpad;
 
 namespace Pinpad.Sdk
 {

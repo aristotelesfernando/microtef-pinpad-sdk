@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinpad.Sdk", "Pinpad.Sdk\Pinpad.Sdk.csproj", "{9A69F5E7-6B6B-4BD0-81CB-7F4D59C8290E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinpad.Sdk.Model", "Pinpad.Sdk.Model\Pinpad.Sdk.Model.csproj", "{8DEB5A99-825B-4631-B84C-C2C06BF28C2E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinpad.Sdk.Test", "Pinpad.Sdk.Test\Pinpad.Sdk.Test.csproj", "{966FCAB4-3C78-4F93-A653-790DB64B6723}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinpad.Core", "Pinpad.Core\Pinpad.Core.csproj", "{479287C0-69A0-4E9F-B90F-A8690781FF40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinpad.Sdk", "Pinpad.Core\Pinpad.Sdk.csproj", "{479287C0-69A0-4E9F-B90F-A8690781FF40}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinpad.Core.Rebuild", "Pinpad.Core.Rebuild\Pinpad.Core.Rebuild.csproj", "{3CEEE444-880A-4937-BB03-4E3BE2A81037}"
 EndProject
@@ -23,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9A69F5E7-6B6B-4BD0-81CB-7F4D59C8290E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A69F5E7-6B6B-4BD0-81CB-7F4D59C8290E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A69F5E7-6B6B-4BD0-81CB-7F4D59C8290E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A69F5E7-6B6B-4BD0-81CB-7F4D59C8290E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8DEB5A99-825B-4631-B84C-C2C06BF28C2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8DEB5A99-825B-4631-B84C-C2C06BF28C2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DEB5A99-825B-4631-B84C-C2C06BF28C2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
