@@ -1,4 +1,5 @@
-﻿using MicroPos.CrossPlatform;
+﻿using System;
+using MicroPos.CrossPlatform;
 using Pinpad.Sdk.Pinpad;
 
 namespace Pinpad.Sdk
@@ -8,7 +9,28 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Controller for Stone Connection adapter.
 		/// </summary>
-		private PinpadConnection PinpadConnection;
+		private PinpadConnection pinpadConnection;
+		/// <summary>
+		/// Controller for Stone Connection adapter.
+		/// It's set method updates the pinpad facade properties based on the new connection set.
+		/// </summary>
+		public PinpadConnection PinpadConnection
+		{
+			get { return this.pinpadConnection; }
+			set
+			{
+				this.pinpadConnection = value;
+
+				this.Communication = new PinpadCommunication(this.PinpadConnection);
+				this.Infos = new PinpadInfos(this.Communication);
+				this.Keyboard = new PinpadKeyboard(this.Communication, this.Infos);
+				this.Display = new PinpadDisplay(this.Communication);
+				this.Storage = new PinpadStorage(this.Communication);
+				this.Table = new PinpadTable(this.Communication);
+				this.Printer = new PinpadPrinter(this.Communication, this.Infos);
+				this.TransactionService = new PinpadTransaction(this.Communication);
+			}
+		}
 		/// <summary>
 		/// Gets the default Communication adapter.
 		/// </summary>
@@ -38,10 +60,6 @@ namespace Pinpad.Sdk
 		/// </summary>
 		public PinpadInfos Infos { get; set; }
 		/// <summary>
-		/// Controller for Stone Secure Command.
-		/// </summary>
-		public PinpadEncryption Encryption { get; set; }
-		/// <summary>
 		/// Responsible for transaction operations.
 		/// </summary>
 		public PinpadTransaction TransactionService { get; set; }
@@ -53,15 +71,6 @@ namespace Pinpad.Sdk
 		public PinpadFacade(IPinpadConnection pinpadConnection)
 		{
 			this.PinpadConnection = new PinpadConnection(pinpadConnection);
-
-			this.Communication = new PinpadCommunication(this.PinpadConnection);
-			this.Infos = new PinpadInfos(this.Communication);
-			this.Keyboard = new PinpadKeyboard(this.Communication, this.Infos);
-			this.Display = new PinpadDisplay(this.Communication);
-			this.Storage = new PinpadStorage(this.Communication);
-			this.Table = new PinpadTable(this.Communication);
-			this.Printer = new PinpadPrinter(this.Communication, this.Infos);
-			this.TransactionService = new PinpadTransaction(this.Communication);
 		}
 		/// <summary>
 		/// Creates all pinpad adapters.
@@ -70,15 +79,6 @@ namespace Pinpad.Sdk
 		public PinpadFacade (PinpadConnection pinpadConnection)
 		{
 			this.PinpadConnection = pinpadConnection;
-
-			this.Communication = new PinpadCommunication(this.PinpadConnection);
-			this.Infos = new PinpadInfos(this.Communication);
-			this.Keyboard = new PinpadKeyboard(this.Communication, this.Infos);
-			this.Display = new PinpadDisplay(this.Communication);
-			this.Storage = new PinpadStorage(this.Communication);
-			this.Table = new PinpadTable(this.Communication);
-			this.Printer = new PinpadPrinter(this.Communication, this.Infos);
-			this.TransactionService = new PinpadTransaction(this.Communication);
 		}
 	}
 }

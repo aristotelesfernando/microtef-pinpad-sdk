@@ -1,4 +1,5 @@
-﻿using Pinpad.Sdk.Pinpad;
+﻿using MicroPos.CrossPlatform;
+using Pinpad.Sdk.Pinpad;
 
 namespace Pinpad.Sdk
 {

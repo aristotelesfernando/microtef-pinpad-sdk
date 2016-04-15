@@ -395,20 +395,12 @@ namespace Pinpad.Sdk.Pinpad
 					}
 				}
 
-				string openedResponseString;
-				if (context is AbecsContext && this.IsSecureResponse(responseString) == true)
-				{
-					openedResponseString = this.TranslateSecureResponse(responseString);
-				}
-				else
-				{
-					openedResponseString = responseString;
-				}
-
-				if (string.IsNullOrEmpty(openedResponseString) == true)
+				if (string.IsNullOrEmpty(responseString) == true)
 				{
 					return null;
 				}
+
+				string openedResponseString  = responseString;
 
 				if (context is AbecsContext)
 				{
@@ -572,17 +564,6 @@ namespace Pinpad.Sdk.Pinpad
 
 			return false;
 		}
-		private bool IsSecureResponse (string responseString)
-		{
-			if (String.IsNullOrEmpty(responseString) == true) { return false; }
-
-			GenericResponse response = new GenericResponse();
-			response.CommandString = responseString;
-
-			SecResponse secureResponse = new SecResponse();
-
-			return response.CommandName == secureResponse.CommandName;
-		}
 		private bool InternalSendRequest (BaseCommand request)
 		{
 			Debug.WriteLine("Request: " + request.CommandString);
@@ -600,14 +581,6 @@ namespace Pinpad.Sdk.Pinpad
 				// Send the request:
 				return InternalSendRequest(requestByteCollection.ToArray());
 			}
-		}
-		private string TranslateSecureResponse (string secureResponseString)
-		{
-			SecResponse secureResponse = new SecResponse();
-			secureResponse.CommandString = secureResponseString;
-
-			string responseString = PinpadEncryption.Instance.UnwrapResponse(secureResponse);
-			return responseString;
 		}
 		private string InternalReceiveResponseString (IContext context, int counter = 0)
 		{

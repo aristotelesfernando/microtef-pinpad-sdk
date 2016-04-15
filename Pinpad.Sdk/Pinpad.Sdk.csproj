@@ -99,8 +99,6 @@
     <Compile Include="Commands\PrinterData\PrtStepRequestData.cs" />
     <Compile Include="Commands\PrinterData\PrtStepResponseData.cs" />
     <Compile Include="Commands\Request\RmcRequest.cs" />
-    <Compile Include="Commands\Request\SecRequest.cs" />
-    <Compile Include="Commands\Response\SecResponse.cs" />
     <Compile Include="Commands\Request\TleRequest.cs" />
     <Compile Include="Commands\Request\TliRequest.cs" />
     <Compile Include="Commands\Request\TlrRequest.cs" />
@@ -129,7 +127,6 @@
     <Compile Include="Pinpad\PinpadTransaction.cs" />
     <Compile Include="Pinpad\PinpadCommunication.cs" />
     <Compile Include="Pinpad\PinpadDisplay.cs" />
-    <Compile Include="Pinpad\PinpadEncryption.cs" />
     <Compile Include="Pinpad\PinpadInfos.cs" />
     <Compile Include="Pinpad\PinpadKeyboard.cs" />
     <Compile Include="Pinpad\PinpadPrinter.cs" />
