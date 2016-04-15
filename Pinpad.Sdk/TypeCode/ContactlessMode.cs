@@ -17,11 +17,11 @@
 		/// <summary>
 		/// Visa MSD
 		/// </summary>
-		VisaMSD = 2,
+		VisaMsd = 2,
 		/// <summary>
 		/// Visa qVSDC
 		/// </summary>
-		VisaQVSDC = 3,
+		VisaQvsdc = 3,
 		/// <summary>
 		/// MasterCard PayPass for Magnetic Stripe
 		/// </summary>
@@ -37,6 +37,6 @@
 		/// <summary>
 		/// Amex Expresspay for EMV
 		/// </summary>
-		AmexExpresspayEMV = 7
+		AmexExpresspayEmv = 7
 	}
 }

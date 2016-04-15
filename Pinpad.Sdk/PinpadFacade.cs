@@ -1,9 +1,11 @@
-﻿using System;
-using MicroPos.CrossPlatform;
+﻿using MicroPos.CrossPlatform;
 using Pinpad.Sdk.Pinpad;
 
 namespace Pinpad.Sdk
 {
+	/// <summary>
+	/// Contains the access to each pinpad component, i. e. keyboard, display, terminal information and so forth.
+	/// </summary>
 	public class PinpadFacade : IPinpadFacade
 	{
 		/// <summary>
@@ -12,16 +14,16 @@ namespace Pinpad.Sdk
 		private PinpadConnection pinpadConnection;
 		/// <summary>
 		/// Controller for Stone Connection adapter.
-		/// It's set method updates the pinpad facade properties based on the new connection set.
+		/// It's set method updates the pinpad facade properties based on the new connection.
 		/// </summary>
-		public PinpadConnection PinpadConnection
+		public PinpadConnection Connection
 		{
 			get { return this.pinpadConnection; }
 			set
 			{
 				this.pinpadConnection = value;
 
-				this.Communication = new PinpadCommunication(this.PinpadConnection);
+				this.Communication = new PinpadCommunication(this.Connection);
 				this.Infos = new PinpadInfos(this.Communication);
 				this.Keyboard = new PinpadKeyboard(this.Communication, this.Infos);
 				this.Display = new PinpadDisplay(this.Communication);
@@ -70,7 +72,7 @@ namespace Pinpad.Sdk
 		/// <param name="pinpadConnection">Pinpad connection.</param>
 		public PinpadFacade(IPinpadConnection pinpadConnection)
 		{
-			this.PinpadConnection = new PinpadConnection(pinpadConnection);
+			this.Connection = new PinpadConnection(pinpadConnection);
 		}
 		/// <summary>
 		/// Creates all pinpad adapters.
@@ -78,7 +80,7 @@ namespace Pinpad.Sdk
 		/// <param name="pinpadConnection">Pinpad connection.</param>
 		public PinpadFacade (PinpadConnection pinpadConnection)
 		{
-			this.PinpadConnection = pinpadConnection;
+			this.Connection = pinpadConnection;
 		}
 	}
 }

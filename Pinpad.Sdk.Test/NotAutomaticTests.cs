@@ -13,6 +13,12 @@ namespace Pinpad.Sdk.Test
 	[TestClass]
 	public class NotAutomaticTests
 	{
+		[TestInitialize]
+		public void Setup ()
+		{
+			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
+		}
+
 		//[TestMethod]
 		public void GCD_test ()
 		{
@@ -28,8 +34,6 @@ namespace Pinpad.Sdk.Test
 		//[TestMethod]
 		public void Gertec_EX07_test ()
 		{
-			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
-
 			// testes:
 			//this.mockedPinpadConnection = new MockedPinpadConnection();
 
@@ -67,8 +71,6 @@ namespace Pinpad.Sdk.Test
 		//[TestMethod]
 		public void Keyboard_getNumber_test ()
 		{
-			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
-
 			PinpadConnection conn = PinpadConnection.GetFirst();
 
 			PinpadFacade facade = new PinpadFacade(conn);
@@ -90,8 +92,6 @@ namespace Pinpad.Sdk.Test
 		//[TestMethod]
 		public void OPN_test ()
 		{
-			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
-
 			PinpadConnection conn = PinpadConnection.GetFirst();
 
 			PinpadCommunication comm = new PinpadCommunication(conn);
@@ -108,8 +108,6 @@ namespace Pinpad.Sdk.Test
 		//[TestMethod]
 		public void MultiplePinpads_test ()
 		{
-			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
-
 			// Gets all connections:
 			ICollection<IPinpadConnection> connections = CrossPlatformController.PinpadFinder.FindAllDevices();
 
@@ -138,7 +136,6 @@ namespace Pinpad.Sdk.Test
 		//[TestMethod]
 		public void OnePinpadFind_test ()
 		{
-			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
 			PinpadConnection conn = PinpadConnection.GetFirst();
 			PinpadFacade facade = new PinpadFacade(conn);
 			facade.Display.ShowMessage("", "wow!", DisplayPaddingType.Center);
