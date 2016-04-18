@@ -25,24 +25,8 @@ namespace Pinpad.Sdk
 		/// </summary>
 		PinpadDisplay Display { get; set; }
 		/// <summary>
-		/// Gets the default Printer adapter
-		/// </summary>
-		PinpadPrinter Printer { get; set; }
-		/// <summary>
-		/// Gets the default Storage adapter
-		/// </summary>
-		PinpadStorage Storage { get; set; }
-		/// <summary>
-		/// Gets the default Table adapter
-		/// </summary>
-		PinpadTable Table { get; set; }
-		/// <summary>
 		/// Gets the default Infos adapter
 		/// </summary>
 		PinpadInfos Infos { get; set; }
-		/// <summary>
-		/// Responsible for transaction operations.
-		/// </summary>
-		PinpadTransaction TransactionService { get; set; }
 	}
 }

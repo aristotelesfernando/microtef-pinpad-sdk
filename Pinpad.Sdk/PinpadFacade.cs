@@ -27,10 +27,6 @@ namespace Pinpad.Sdk
 				this.Infos = new PinpadInfos(this.Communication);
 				this.Keyboard = new PinpadKeyboard(this.Communication, this.Infos);
 				this.Display = new PinpadDisplay(this.Communication);
-				this.Storage = new PinpadStorage(this.Communication);
-				this.Table = new PinpadTable(this.Communication);
-				this.Printer = new PinpadPrinter(this.Communication, this.Infos);
-				this.TransactionService = new PinpadTransaction(this.Communication);
 			}
 		}
 		/// <summary>
@@ -46,25 +42,9 @@ namespace Pinpad.Sdk
 		/// </summary>
 		public PinpadDisplay Display { get; set; }
 		/// <summary>
-		/// Gets the default Printer adapter
-		/// </summary>
-		public PinpadPrinter Printer { get; set; }
-		/// <summary>
-		/// Gets the default Storage adapter
-		/// </summary>
-		public PinpadStorage Storage { get; set; }
-		/// <summary>
-		/// Gets the default Table adapter
-		/// </summary>
-		public PinpadTable Table { get; set; }
-		/// <summary>
 		/// Gets the default Infos adapter
 		/// </summary>
 		public PinpadInfos Infos { get; set; }
-		/// <summary>
-		/// Responsible for transaction operations.
-		/// </summary>
-		public PinpadTransaction TransactionService { get; set; }
 
 		/// <summary>
 		/// Creates all pinpad adapters.

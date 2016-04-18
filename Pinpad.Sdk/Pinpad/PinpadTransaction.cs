@@ -85,6 +85,7 @@ namespace Pinpad.Sdk.Pinpad
 		/// If the card is removed in the middle of the process, returns CANCEL status.
 		/// </summary>
 		/// <param name="transactionType">Transaction type, that is, debit/credit.</param>
+		/// <param name="amount">Transaction amount.</param>
 		/// <returns>Card basic info.</returns>
 		/// <exception cref="ExpiredCardException">When an expired card is read.</exception>
 		public CardEntry ReadCard (TransactionType transactionType, decimal amount, out TransactionType newTransactionType)
