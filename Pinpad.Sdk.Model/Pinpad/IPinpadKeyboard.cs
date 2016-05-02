@@ -24,5 +24,6 @@ namespace Pinpad.Sdk.Model
 		/// <param name="timeOut">Time out.</param>
 		/// <returns>Input from the keyboard. Null if nothing was received, whether of timeout or cancellation.</returns>
 		string GetNumericInput (GertecMessageInFirstLineCode firstLine, GertecMessageInSecondLineCode secondLine, int minimumLength, int maximumLength, int timeOut);
+		string GetText (GertecMessageInFirstLineCode firstLine, GertecMessageInSecondLineCode secondLine, int minimumLength, int maximumLength, int timeOut);
 	}
 }

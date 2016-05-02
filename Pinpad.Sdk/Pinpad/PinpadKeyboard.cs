@@ -197,5 +197,42 @@ namespace Pinpad.Sdk.Pinpad
 
 			return null;
 		}
+
+		public string GetText (GertecMessageInFirstLineCode firstLine, GertecMessageInSecondLineCode secondLine, int minimumLength, int maximumLength, int timeOut)
+		{
+			if (GertecEx07Request.IsSupported(this.Informations.ManufacturerName, this.Informations.Model, this.Informations.ManufacturerVersion) == false)
+			{ return null; }
+
+			if (minimumLength < 0)
+			{ minimumLength = 0; }
+
+			if (maximumLength > 35)
+			{
+				throw new InvalidOperationException("Invalid maximumLength. The maximum length is up to 32 characters.");
+			}
+
+			GertecEx07Request request = new GertecEx07Request();
+
+			request.NumericInputType.Value = GertecEx07NumberFormat.Decimal;
+			request.TextInputType.Value = (GertecEx07TextFormat)5;
+			request.LabelFirstLine.Value = firstLine;
+			request.LabelSecondLine.Value = secondLine;
+			request.MaximumCharacterLength.Value = minimumLength;
+			request.MinimumCharacterLength.Value = maximumLength;
+			request.TimeOut.Value = timeOut;
+			request.TimeIdle.Value = 0;
+
+			GertecEx07Response response = this.Communication.SendRequestAndReceiveResponse<GertecEx07Response>(request);
+
+			if (response.RSP_STAT.Value != AbecsResponseStatus.ST_OK)
+			{ return null; }
+
+			if (response.RSP_RESULT.HasValue == true)
+			{
+				return response.RSP_RESULT.Value;
+			}
+
+			return null;
+		}
 	}
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MicroPos.CrossPlatform;
 using MicroPos.CrossPlatform.TypeCode;
 using Pinpad.Sdk.Pinpad;
@@ -20,7 +18,6 @@ namespace Pinpad.Sdk.Commands.Context
 		/// ETX bytes indicates the end of a package, in a Gertec command.
 		/// </summary>
 		public const byte ETX_BYTE = 0x03;
-
 		/// <summary>
 		/// Command name fixed length.
 		/// Names of Gertec commands have 4 characters.

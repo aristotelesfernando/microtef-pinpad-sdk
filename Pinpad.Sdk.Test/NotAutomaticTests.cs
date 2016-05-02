@@ -7,6 +7,7 @@ using Pinpad.Sdk.Model.TypeCode;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Pinpad.Sdk.Properties;
+using Pinpad.Sdk.Commands.Context;
 
 namespace Pinpad.Sdk.Test
 {
@@ -31,7 +32,7 @@ namespace Pinpad.Sdk.Test
 			Debug.WriteLine(r.CommandString);
 		}
 
-		//[TestMethod]
+		[TestMethod]
 		public void Gertec_EX07_test ()
 		{
 			// testes:
@@ -48,9 +49,9 @@ namespace Pinpad.Sdk.Test
 			request.TextInputType.Value = GertecEx07TextFormat.None;
 			request.LabelFirstLine.Value = GertecMessageInFirstLineCode.TypeNumber;
 			request.LabelSecondLine.Value = GertecMessageInSecondLineCode.GasPump;
-			request.MaximumCharacterLength.Value = 5;
-			request.MinimumCharacterLength.Value = 20;
-			request.TimeOut.Value = 30;
+			request.MaximumCharacterLength.Value = 1;
+			request.MinimumCharacterLength.Value = 3;
+			request.TimeOut.Value = 60;
 			request.TimeIdle.Value = 0;
 
 			Debug.WriteLine(request.CommandString);
@@ -68,7 +69,7 @@ namespace Pinpad.Sdk.Test
 			}
 		}
 
-		//[TestMethod]
+		[TestMethod]
 		public void Keyboard_getNumber_test ()
 		{
 			PinpadConnection conn = PinpadConnection.GetFirst();
@@ -78,6 +79,27 @@ namespace Pinpad.Sdk.Test
 			facade.Display.ShowMessage("ola", "tudo bom?", DisplayPaddingType.Center);
 
 			string pump = facade.Keyboard.GetNumericInput(GertecMessageInFirstLineCode.TypeNumber, GertecMessageInSecondLineCode.GasPump, 5, 15, 10);
+
+			if (pump == null)
+			{
+				Debug.WriteLine("Nao foi possivel ler um valor. Time out ou cancelamento.");
+			}
+			else
+			{
+				Debug.WriteLine("Valor digitado: " + pump);
+			}
+		}
+
+		[TestMethod]
+		public void MyTestMethod ()
+		{
+			PinpadConnection conn = PinpadConnection.GetFirst();
+
+			PinpadFacade facade = new PinpadFacade(conn);
+
+			facade.Display.ShowMessage("ola", "tudo bom?", DisplayPaddingType.Center);
+
+			string pump = facade.Keyboard.GetText(GertecMessageInFirstLineCode.TypeNumber, GertecMessageInSecondLineCode.GasPump, 5, 15, 120);
 
 			if (pump == null)
 			{
@@ -133,7 +155,7 @@ namespace Pinpad.Sdk.Test
 			Assert.IsTrue(true);
 		}
 
-		//[TestMethod]
+		[TestMethod]
 		public void OnePinpadFind_test ()
 		{
 			PinpadConnection conn = PinpadConnection.GetFirst();

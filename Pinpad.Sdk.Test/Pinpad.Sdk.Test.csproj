@@ -73,12 +73,15 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
     <Compile Include="Connection\PinpadConnectionTest.cs" />
+    <Compile Include="Context\GertecContextTest.cs" />
     <Compile Include="Display\PinpadDisplayTest.cs" />
     <Compile Include="EmvTable\PinpadTableTest.cs" />
     <Compile Include="Mapper\CardMapperTest.cs" />
