@@ -1,7 +1,4 @@
-﻿using MicroPos.CrossPlatform;
-using Pinpad.Sdk.Pinpad;
-
-namespace Pinpad.Sdk
+﻿namespace Pinpad.Sdk
 {
 	/// <summary>
 	/// Contains the access to each pinpad component, i. e. keyboard, display, terminal information and so forth.

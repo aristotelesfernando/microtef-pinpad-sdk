@@ -1,6 +1,5 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Pinpad.Sdk.Commands.Context;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Pinpad.Sdk.Commands;
 
 namespace Pinpad.Sdk.Test.Context
 {

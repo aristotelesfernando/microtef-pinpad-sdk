@@ -1,7 +1,6 @@
 ﻿using MicroPos.CrossPlatform;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.Commands;
-using Pinpad.Sdk.Pinpad;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Pinpad.Sdk.Properties;

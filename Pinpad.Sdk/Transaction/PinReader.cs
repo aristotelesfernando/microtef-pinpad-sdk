@@ -1,5 +1,4 @@
-﻿using Pinpad.Sdk.Pinpad;
-using Pinpad.Sdk.Model;
+﻿using Pinpad.Sdk.Model;
 using System;
 using System.Diagnostics;
 

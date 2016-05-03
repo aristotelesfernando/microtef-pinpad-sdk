@@ -1,13 +1,11 @@
 ﻿using Pinpad.Sdk.Commands;
-using Pinpad.Sdk.Commands.Gpn;
-using Pinpad.Sdk.Commands.Stone;
 using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.TypeCode;
 using Pinpad.Sdk.Utilities;
 using Pinpad.Sdk.Model;
 using System;
 
-namespace Pinpad.Sdk.Pinpad
+namespace Pinpad.Sdk
 {
 	/// <summary>
 	/// Pinpad keyboard tool
@@ -20,11 +18,6 @@ namespace Pinpad.Sdk.Pinpad
 		/// </summary>
 		public PinpadCommunication Communication { get; private set; }
 		internal PinpadInfos Informations { get; private set; }
-		private Lazy<bool> extendedKeysSupport;
-		/// <summary>
-		/// Are the Extended key and clear buffer functions supported in the Pinpad?
-		/// </summary>
-		public bool ExtendedKeySupported { get { return extendedKeysSupport.Value; } }
 
 		// Constructor:
 		/// <summary>
@@ -35,18 +28,9 @@ namespace Pinpad.Sdk.Pinpad
 		{
 			this.Communication = communication;
 			this.Informations = infos;
-			this.extendedKeysSupport = new Lazy<bool>(this.IsExtendedKeySupported);
 		}
 
 		// Methods:
-		private bool IsExtendedKeySupported()
-		{
-			if (this.Communication.StoneVersion < new GkeRequest( ).MinimumStoneVersion)
-			{
-				return false;
-			}
-			else { return true; }
-		}
 		/// <summary>
 		/// Gets the next Key pressed at the Pinpad with the default, safe, method.
 		/// Does not retrieve Numeric keys.
@@ -62,50 +46,6 @@ namespace Pinpad.Sdk.Pinpad
 
 			// If a key was pressed, returns it's value:
 			else { return response.PressedKey; }
-		}
-		/// <summary>
-		/// Gets the next Key at the Pinpad buffer or the next Key pressed with the Stone proprietary command
-		/// Only works with Pinpads using Stone application
-		/// Retrieves Numeric keys as well.
-		/// </summary>
-		/// <param name="keyboardLightOn">Turn the keyboard lights on if the Pinpad has keyboard lights</param>
-		/// <returns>PinpadKey or Undefined on failure</returns>
-		public PinpadKeyCode GetKeyExtended(bool keyboardLightOn = true)
-		{
-			GkeRequest request = new GkeRequest();
-
-			if (keyboardLightOn == true)
-			{
-				request.GKE_ACTION.Value = GkeActionCode.ReadKey;
-			}
-			else
-			{
-				request.GKE_ACTION.Value = GkeActionCode.ReadKeyNoLight;
-			}
-
-			GkeResponse response = this.Communication.SendRequestAndReceiveResponse<GkeResponse>(request);
-			if (response == null)
-			{
-				return PinpadKeyCode.Undefined;
-			}
-			else
-			{
-				return response.PressedKey;
-			}
-		}
-		/// <summary>
-		/// Clears the Pinpad key buffer from previously pressed keys
-		/// Only works with Pinpads using Stone application
-		/// </summary>
-		/// <returns>true if the buffer was cleared</returns>
-		public bool ClearKeyBuffer()
-		{
-			// Create the reques to clear the buffer:
-			GkeRequest request = new GkeRequest( );
-			request.GKE_ACTION.Value = GkeActionCode.ClearBuffer;
-
-			// Clear pinpad's buffer:
-			return this.Communication.SendRequestAndVerifyResponseCode(request);
 		}
 		/// <summary>
 		/// Gets the PinBlock and KeySerialNumber of a card using DUKPT mode

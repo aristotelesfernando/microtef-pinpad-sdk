@@ -1,5 +1,4 @@
-﻿using Pinpad.Sdk.Commands.Context;
-using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.Properties;
 using System;
 
 namespace Pinpad.Sdk.Commands

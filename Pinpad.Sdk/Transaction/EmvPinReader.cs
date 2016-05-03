@@ -5,7 +5,6 @@ using Pinpad.Sdk.Model;
 using System.Globalization;
 using Pinpad.Sdk.Utilities;
 using Pinpad.Sdk.Properties;
-using Pinpad.Sdk.Pinpad;
 
 namespace Pinpad.Sdk.Transaction
 {

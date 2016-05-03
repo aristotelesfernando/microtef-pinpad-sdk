@@ -1,4 +1,4 @@
-﻿namespace Pinpad.Sdk.TypeCode
+﻿namespace Pinpad.Sdk.Commands
 {
 	/// <summary>
 	/// Enumerator for contactless modes to be used at AID table

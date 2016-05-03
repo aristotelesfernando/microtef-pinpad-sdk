@@ -1,6 +1,6 @@
 ﻿using Pinpad.Sdk.Properties;
 
-namespace Pinpad.Sdk.Commands.Response
+namespace Pinpad.Sdk.Commands
 {
 	public class GertecBaseResponse : BaseResponse
 	{

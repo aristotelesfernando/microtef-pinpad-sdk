@@ -12,7 +12,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// NTM response
 	/// </summary>
-	public class NtmResponse : BaseResponse 
+	internal class NtmResponse : BaseResponse 
 	{
 		// Members
 		/// <summary>

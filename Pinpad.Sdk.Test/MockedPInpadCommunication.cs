@@ -1,6 +1,5 @@
 ﻿using MicroPos.CrossPlatform;
 using Moq;
-using Pinpad.Sdk.Pinpad;
 
 namespace Pinpad.Sdk.Test
 {

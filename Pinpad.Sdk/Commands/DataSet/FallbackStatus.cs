@@ -1,4 +1,4 @@
-﻿namespace Pinpad.Sdk.TypeCode 
+﻿namespace Pinpad.Sdk.Commands
 {
 	/// <summary>
 	/// Fallback status enum

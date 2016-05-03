@@ -1,5 +1,4 @@
-﻿using Pinpad.Sdk.Commands;
-using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.Properties;
 
 /* WARNING!
  * 
@@ -8,12 +7,12 @@ using Pinpad.Sdk.Properties;
  * 
  */
 
-namespace Pinpad.Sdk.Commands 
+namespace Pinpad.Sdk.Commands
 {
 	/// <summary>
 	/// DEX request
 	/// </summary>
-	public class DexRequest : BaseCommand 
+	public class DexRequest : BaseCommand
 	{
 		// Members
 		/// <summary>
@@ -29,12 +28,12 @@ namespace Pinpad.Sdk.Commands
 		/// There is no control of screen height or width
 		/// </summary>
 		public VariableLengthProperty<MultilineMessage> DEX_MSG { get; private set; }
-		
+
 		// Constructor
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public DexRequest() 
+		public DexRequest ()
 		{
 			this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
 			this.DEX_MSG = new VariableLengthProperty<MultilineMessage>("DEX_MSG", 3, 160, 1.0f, false, false, DefaultStringFormatter.PropertyControllerStringFormatter, DefaultStringParser.PropertyControllerStringParser<MultilineMessage>, null, new MultilineMessage());

@@ -5,7 +5,7 @@ using MicroPos.CrossPlatform;
 using MicroPos.CrossPlatform.TypeCode;
 using Pinpad.Sdk.TypeCode;
 
-namespace Pinpad.Sdk.Commands.Context
+namespace Pinpad.Sdk.Commands
 {
 	/// <summary>
 	/// Command context accordingly to abecs.

@@ -3,7 +3,7 @@ using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Model;
 using System;
 
-namespace Pinpad.Sdk.Pinpad 
+namespace Pinpad.Sdk 
 {
 	/// <summary>
 	/// Pinpad display API.
@@ -18,10 +18,6 @@ namespace Pinpad.Sdk.Pinpad
 		/// Pinpad communication.
 		/// </summary>
 		private PinpadCommunication communication;
-		/// <summary>
-		/// If images are supported.
-		/// </summary>
-		private Lazy<bool> imagesSupported { get; set; }
 
 		// Constructor
 		/// <summary>
@@ -36,14 +32,9 @@ namespace Pinpad.Sdk.Pinpad
 			}
 
 			this.communication = communication;
-			this.imagesSupported = new Lazy<bool>(this.AreImagesSupported);
 		}
 
 		// Methods
-		private bool AreImagesSupported () 
-		{
-			return this.communication.StoneVersion >= new DsiRequest().MinimumStoneVersion;
-		}
 		/// <summary>
 		/// Displays a message in the PinPad display with the default, safe, method
 		/// </summary>
@@ -66,18 +57,6 @@ namespace Pinpad.Sdk.Pinpad
 		{
 			DexRequest request = new DexRequest( );
 			request.DEX_MSG.Value = message;
-
-			return this.communication.SendRequestAndVerifyResponseCode(request);
-		}
-		/// <summary>
-		/// Display a previously loaded image
-		/// </summary>
-		/// <param name="imageName">Image name, up to 15 characters</param>
-		/// <returns>true if the message was displayed</returns>
-		public bool DisplayImage(string imageName) 
-		{
-			DsiRequest request = new DsiRequest();
-			request.DSI_IMGNAME.Value = imageName;
 
 			return this.communication.SendRequestAndVerifyResponseCode(request);
 		}

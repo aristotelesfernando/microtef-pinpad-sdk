@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using MicroPos.CrossPlatform;
 using MicroPos.CrossPlatform.TypeCode;
-using Pinpad.Sdk.Pinpad;
 
-namespace Pinpad.Sdk.Commands.Context
+namespace Pinpad.Sdk.Commands
 {
 	/// <summary>
 	/// A command context accordingly to Gertec specification.

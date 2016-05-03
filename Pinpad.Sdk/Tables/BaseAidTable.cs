@@ -1,4 +1,5 @@
-﻿using Pinpad.Sdk.Model;
+﻿using Pinpad.Sdk.Commands;
+using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.TypeCode;
 using Pinpad.Sdk.Utilities;

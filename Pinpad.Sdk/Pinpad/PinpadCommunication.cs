@@ -1,7 +1,6 @@
 ﻿using MicroPos.CrossPlatform;
 using MicroPos.CrossPlatform.TypeCode;
 using Pinpad.Sdk.Commands;
-using Pinpad.Sdk.Commands.Context;
 using Pinpad.Sdk.Events;
 using Pinpad.Sdk.TypeCode;
 using Pinpad.Sdk.Model.Exceptions;
@@ -10,7 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
-namespace Pinpad.Sdk.Pinpad
+namespace Pinpad.Sdk
 {
 	/// <summary>
 	/// Pinpad communication adapter
@@ -186,22 +185,6 @@ namespace Pinpad.Sdk.Pinpad
 		/// <returns>Was the request successfully sent?</returns>
 		public bool SendRequest (BaseCommand request)
 		{
-			BaseStoneRequest stoneRequest = request as BaseStoneRequest;
-
-			if (stoneRequest != null)
-			{
-				if (this.StoneVersion.HasValue == false || this.StoneVersion == 0)
-				{
-					throw new StoneVersionMismatchException("Comando " + request.CommandName + " requer aplicação Stone");
-				}
-				else if (this.StoneVersion < stoneRequest.MinimumStoneVersion)
-				{
-					throw new StoneVersionMismatchException("Comando " + request.CommandName + " requer versão Stone " + stoneRequest.MinimumStoneVersion + " enquanto Pinpad possui versão " + this.StoneVersion);
-				}
-			}
-
-            //return this.SendRequest(request);
-
             try
             {
 					return this.InternalSendRequest(request);

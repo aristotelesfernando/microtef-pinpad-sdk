@@ -1,7 +1,5 @@
-﻿using Pinpad.Sdk.Commands.Context;
-using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Model.Exceptions;
-using Pinpad.Sdk.Pinpad;
 
 /* WARNING!
  * 

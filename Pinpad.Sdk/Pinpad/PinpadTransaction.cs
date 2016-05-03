@@ -9,7 +9,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Pinpad.Sdk.Pinpad
+namespace Pinpad.Sdk
 {
 	/// <summary>
 	/// Responsible for operations used on an authorization operation.

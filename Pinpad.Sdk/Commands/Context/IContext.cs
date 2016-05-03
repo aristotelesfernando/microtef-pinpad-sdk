@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Pinpad.Sdk.Commands.Context
+namespace Pinpad.Sdk.Commands
 {
 	/// <summary>
 	/// Context of a command.

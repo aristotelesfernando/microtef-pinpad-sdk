@@ -1,7 +1,7 @@
 ﻿using MicroPos.CrossPlatform;
 using Pinpad.Sdk.Commands;
 
-namespace Pinpad.Sdk.Pinpad
+namespace Pinpad.Sdk
 {
 	public class PinpadConnection
 	{

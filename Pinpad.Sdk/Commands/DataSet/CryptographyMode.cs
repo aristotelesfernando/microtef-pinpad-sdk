@@ -1,19 +1,18 @@
-﻿namespace Pinpad.Sdk.TypeCode
+﻿namespace Pinpad.Sdk.Commands
 {
     /// <summary>
     /// Enumerator for cryptography methods
     /// </summary>
-    public enum CryptographyMode {
+    public enum CryptographyMode
+	{
         /// <summary>
         /// Null
         /// </summary>
         Undefined = 0,
-        
         /// <summary>
         /// DES
         /// </summary>
         DataEncryptionStandard,
-
         /// <summary>
         /// TDES
         /// </summary>

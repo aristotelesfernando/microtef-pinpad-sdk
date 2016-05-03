@@ -1,6 +1,4 @@
 ﻿using Pinpad.Sdk.Commands;
-using Pinpad.Sdk.Commands.Gpn;
-using Pinpad.Sdk.Pinpad;
 using System;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Utilities;

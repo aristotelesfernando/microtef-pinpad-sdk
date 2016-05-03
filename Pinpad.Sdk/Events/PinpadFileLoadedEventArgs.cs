@@ -1,5 +1,4 @@
-﻿using Pinpad.Sdk.Pinpad;
-using System;
+﻿using System;
 
 namespace Pinpad.Sdk.Events
 {

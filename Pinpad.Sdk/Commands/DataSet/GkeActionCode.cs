@@ -1,4 +1,4 @@
-﻿namespace Pinpad.Sdk.TypeCode
+﻿namespace Pinpad.Sdk.Commands
 {
 	/// <summary>
 	/// Enumerator for GKE Actions
@@ -10,17 +10,14 @@
 		/// Null
 		/// </summary>
 		Undefined = 0,
-
 		/// <summary>
 		/// Reads the next key in the buffer or waits for input
 		/// </summary>
 		ReadKey = 1,
-
 		/// <summary>
 		/// Clears the key buffer
 		/// </summary>
 		ClearBuffer = 2,
-
 		/// <summary>
 		/// Reads the next key in the buffer or waits for input without the keyboard lights
 		/// </summary>

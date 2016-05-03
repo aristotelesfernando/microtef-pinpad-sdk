@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Pinpad.Sdk.Pinpad;
 using Pinpad.Sdk.Tables;
 using Pinpad.Sdk.Utilities;
 using Moq;

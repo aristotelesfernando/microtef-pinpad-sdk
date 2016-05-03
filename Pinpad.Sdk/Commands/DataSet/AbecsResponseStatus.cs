@@ -1,4 +1,4 @@
-﻿namespace Pinpad.Sdk.TypeCode
+﻿namespace Pinpad.Sdk.Commands
 {
 	/// <summary>
 	/// PinPad command response status return codes enum

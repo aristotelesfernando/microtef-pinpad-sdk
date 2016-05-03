@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Pinpad.Sdk.Pinpad;
 using Moq;
 using MicroPos.CrossPlatform;
 

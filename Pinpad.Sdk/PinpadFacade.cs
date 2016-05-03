@@ -1,5 +1,4 @@
 ﻿using MicroPos.CrossPlatform;
-using Pinpad.Sdk.Pinpad;
 
 namespace Pinpad.Sdk
 {

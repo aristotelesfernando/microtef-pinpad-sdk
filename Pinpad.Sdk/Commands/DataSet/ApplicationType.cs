@@ -1,4 +1,4 @@
-﻿namespace Pinpad.Sdk.TypeCode 
+﻿namespace Pinpad.Sdk.Commands
 {
     /// <summary>
     /// Enumerator for the card applications, values are defined from GCR_CARDTYPE and AID's T1_ICCSTD values

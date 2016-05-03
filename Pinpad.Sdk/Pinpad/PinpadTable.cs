@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Pinpad.Sdk.Pinpad
+namespace Pinpad.Sdk
 {
     /// <summary>
     /// PinpadTable manager. PinpadTable is responsible for all operations related to table (CAPK and AID tables) controlling.

@@ -24,7 +24,7 @@ namespace Pinpad.Sdk.Commands
 		public SimpleProperty<CryptographyMethod> GDU_METHOD { get; private set; }
 		/// <summary>
 		/// GDU_METHOD index.
-		/// </summary>
+		/// </summary>Mante
 		public PinpadFixedLengthProperty<Nullable<int>> GDU_IDX { get; private set; }
 
 		/// <summary>

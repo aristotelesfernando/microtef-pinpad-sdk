@@ -1,7 +1,7 @@
 ﻿using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Model;
 
-namespace Pinpad.Sdk.Pinpad 
+namespace Pinpad.Sdk 
 {
 	/// <summary>
 	/// PinPad infos tool

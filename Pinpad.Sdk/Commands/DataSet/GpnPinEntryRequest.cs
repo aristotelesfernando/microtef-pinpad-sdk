@@ -1,7 +1,7 @@
 ﻿using Pinpad.Sdk.Properties;
 using System;
 
-namespace Pinpad.Sdk.Commands.Gpn
+namespace Pinpad.Sdk.Commands
 {
 	/// <summary>
 	/// GPN pin entry record
