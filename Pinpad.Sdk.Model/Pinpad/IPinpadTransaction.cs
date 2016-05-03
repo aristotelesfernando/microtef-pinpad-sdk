@@ -1,6 +1,4 @@
-﻿using Pinpad.Sdk.Model.TypeCode;
-
-namespace Pinpad.Sdk.Model.Pinpad
+﻿namespace Pinpad.Sdk.Model
 {
 	public interface IPinpadTransaction
 	{

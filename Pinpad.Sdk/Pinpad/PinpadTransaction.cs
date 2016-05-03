@@ -5,8 +5,6 @@ using Pinpad.Sdk.TypeCode;
 using Pinpad.Sdk.Exceptions;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.Exceptions;
-using Pinpad.Sdk.Model.Pinpad;
-using Pinpad.Sdk.Model.TypeCode;
 using System;
 using System.Diagnostics;
 using System.Linq;

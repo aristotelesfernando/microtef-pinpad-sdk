@@ -6,7 +6,6 @@ using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Utilities;
 using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.TypeCode;
-using Pinpad.Sdk.Model.TypeCode;
 
 namespace Pinpad.Sdk.Transaction
 {

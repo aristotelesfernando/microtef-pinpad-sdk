@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Pinpad.Sdk.Model.TypeCode;
 using Pinpad.Sdk.Transaction;
+using Pinpad.Sdk.Model;
 
 namespace Pinpad.Sdk.Test.Transaction
 {

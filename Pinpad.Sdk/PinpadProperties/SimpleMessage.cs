@@ -1,5 +1,4 @@
-﻿using Pinpad.Sdk.TypeCode;
-using Pinpad.Sdk.Model.TypeCode;
+﻿using Pinpad.Sdk.Model;
 using System;
 using System.Text;
 

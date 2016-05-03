@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Pinpad.Sdk.Model.TypeCode
+﻿namespace Pinpad.Sdk.Model
 {
     /// <summary>
     /// Enumerator specifying each card type supported by the application.

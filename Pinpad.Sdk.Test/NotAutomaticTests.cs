@@ -1,13 +1,11 @@
 ﻿using MicroPos.CrossPlatform;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Pinpad.Sdk;
 using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Pinpad;
-using Pinpad.Sdk.Model.TypeCode;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Pinpad.Sdk.Properties;
-using Pinpad.Sdk.Commands.Context;
+using Pinpad.Sdk.Model;
 
 namespace Pinpad.Sdk.Test
 {
@@ -19,20 +17,18 @@ namespace Pinpad.Sdk.Test
 		{
 			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
 		}
-
 		//[TestMethod]
 		public void GCD_test ()
 		{
 			GcdRequest r = new GcdRequest();
-			r.SPE_MSGIDX.Value = Model.TypeCode.KeyboardMessageCode.AskForSecurityCode;
+			r.SPE_MSGIDX.Value = KeyboardMessageCode.AskForSecurityCode;
 			r.SPE_MINDIG.Value = 1;
 			r.SPE_MAXDIG.Value = 2;
 
 			Debug.WriteLine((int) r.SPE_MSGIDX.Value);
 			Debug.WriteLine(r.CommandString);
 		}
-
-		[TestMethod]
+		//[TestMethod]
 		public void Gertec_EX07_test ()
 		{
 			// testes:
@@ -45,10 +41,10 @@ namespace Pinpad.Sdk.Test
 
 			GertecEx07Request request = new GertecEx07Request();
 
-			request.NumericInputType.Value = GertecEx07NumberFormat.Decimal;
-			request.TextInputType.Value = GertecEx07TextFormat.None;
-			request.LabelFirstLine.Value = GertecMessageInFirstLineCode.TypeNumber;
-			request.LabelSecondLine.Value = GertecMessageInSecondLineCode.GasPump;
+			request.NumericInputType.Value = KeyboardNumberFormat.Decimal;
+			request.TextInputType.Value = KeyboardTextFormat.None;
+			request.LabelFirstLine.Value = FirstLineLabelCode.TypeNumber;
+			request.LabelSecondLine.Value = SecondLineLabelCode.GasPump;
 			request.MaximumCharacterLength.Value = 1;
 			request.MinimumCharacterLength.Value = 3;
 			request.TimeOut.Value = 60;
@@ -68,8 +64,7 @@ namespace Pinpad.Sdk.Test
 				Debug.WriteLine("Resposta nula. Cancelamento ou timeout.");
 			}
 		}
-
-		[TestMethod]
+		//[TestMethod]
 		public void Keyboard_getNumber_test ()
 		{
 			PinpadConnection conn = PinpadConnection.GetFirst();
@@ -78,7 +73,7 @@ namespace Pinpad.Sdk.Test
 
 			facade.Display.ShowMessage("ola", "tudo bom?", DisplayPaddingType.Center);
 
-			string pump = facade.Keyboard.GetNumericInput(GertecMessageInFirstLineCode.TypeNumber, GertecMessageInSecondLineCode.GasPump, 5, 15, 10);
+			string pump = facade.Keyboard.GetNumericInput(FirstLineLabelCode.TypeNumber, SecondLineLabelCode.GasPump, 5, 15, 10);
 
 			if (pump == null)
 			{
@@ -89,8 +84,7 @@ namespace Pinpad.Sdk.Test
 				Debug.WriteLine("Valor digitado: " + pump);
 			}
 		}
-
-		[TestMethod]
+		//[TestMethod]
 		public void MyTestMethod ()
 		{
 			PinpadConnection conn = PinpadConnection.GetFirst();
@@ -99,7 +93,7 @@ namespace Pinpad.Sdk.Test
 
 			facade.Display.ShowMessage("ola", "tudo bom?", DisplayPaddingType.Center);
 
-			string pump = facade.Keyboard.GetText(GertecMessageInFirstLineCode.TypeNumber, GertecMessageInSecondLineCode.GasPump, 5, 15, 120);
+			string pump = facade.Keyboard.GetText(KeyboardNumberFormat.Decimal, KeyboardTextFormat.Symbols, FirstLineLabelCode.TypeNumber, SecondLineLabelCode.GasPump, 5, 15, 120);
 
 			if (pump == null)
 			{
@@ -110,7 +104,6 @@ namespace Pinpad.Sdk.Test
 				Debug.WriteLine("Valor digitado: " + pump);
 			}
 		}
-
 		//[TestMethod]
 		public void OPN_test ()
 		{
@@ -126,7 +119,6 @@ namespace Pinpad.Sdk.Test
 
 			GenericResponse r = comm.SendRequestAndReceiveResponse<GenericResponse>(dsp);
 		}
-
 		//[TestMethod]
 		public void MultiplePinpads_test ()
 		{
@@ -154,8 +146,7 @@ namespace Pinpad.Sdk.Test
 
 			Assert.IsTrue(true);
 		}
-
-		[TestMethod]
+		//[TestMethod]
 		public void OnePinpadFind_test ()
 		{
 			PinpadConnection conn = PinpadConnection.GetFirst();

@@ -1,4 +1,4 @@
-﻿namespace Pinpad.Sdk.Model.TypeCode
+﻿namespace Pinpad.Sdk.Model
 {
 	/// <summary>
 	/// Represents the message code to be printed when waiting for a numeric input.

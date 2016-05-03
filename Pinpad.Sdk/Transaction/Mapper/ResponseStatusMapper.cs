@@ -1,5 +1,5 @@
-﻿using Pinpad.Sdk.TypeCode;
-using Pinpad.Sdk.Model.TypeCode;
+﻿using Pinpad.Sdk.Model;
+using Pinpad.Sdk.TypeCode;
 
 namespace Pinpad.Sdk.Transaction
 {

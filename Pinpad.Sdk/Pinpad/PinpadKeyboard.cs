@@ -5,7 +5,6 @@ using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.TypeCode;
 using Pinpad.Sdk.Utilities;
 using Pinpad.Sdk.Model;
-using Pinpad.Sdk.Model.TypeCode;
 using System;
 
 namespace Pinpad.Sdk.Pinpad
@@ -164,7 +163,7 @@ namespace Pinpad.Sdk.Pinpad
 		/// <param name="secondLine">Second line label.</param>
 		/// <param name="timeOut">Time out.</param>
 		/// <returns>Input from the keyboard. Null if nothing was received, whether of timeout or cancellation.</returns>
-		public string GetNumericInput (GertecMessageInFirstLineCode firstLine, GertecMessageInSecondLineCode secondLine, int minimumLength, int maximumLength, int timeOut)
+		public string GetNumericInput (FirstLineLabelCode firstLine, SecondLineLabelCode secondLine, int minimumLength, int maximumLength, int timeOut)
 		{
 			if (GertecEx07Request.IsSupported(this.Informations.ManufacturerName, this.Informations.Model, this.Informations.ManufacturerVersion) == false) { return null; }
 
@@ -177,8 +176,8 @@ namespace Pinpad.Sdk.Pinpad
 
 			GertecEx07Request request = new GertecEx07Request();
 
-			request.NumericInputType.Value = GertecEx07NumberFormat.Decimal;
-			request.TextInputType.Value = GertecEx07TextFormat.None;
+			request.NumericInputType.Value = KeyboardNumberFormat.Decimal;
+			request.TextInputType.Value = KeyboardTextFormat.None;
 			request.LabelFirstLine.Value = firstLine;
 			request.LabelSecondLine.Value = secondLine;
 			request.MaximumCharacterLength.Value = minimumLength;
@@ -198,7 +197,7 @@ namespace Pinpad.Sdk.Pinpad
 			return null;
 		}
 
-		public string GetText (GertecMessageInFirstLineCode firstLine, GertecMessageInSecondLineCode secondLine, int minimumLength, int maximumLength, int timeOut)
+		public string GetText (KeyboardNumberFormat numericInput, KeyboardTextFormat textInput, FirstLineLabelCode firstLine, SecondLineLabelCode secondLine, int minimumLength, int maximumLength, int timeOut)
 		{
 			if (GertecEx07Request.IsSupported(this.Informations.ManufacturerName, this.Informations.Model, this.Informations.ManufacturerVersion) == false)
 			{ return null; }
@@ -213,8 +212,8 @@ namespace Pinpad.Sdk.Pinpad
 
 			GertecEx07Request request = new GertecEx07Request();
 
-			request.NumericInputType.Value = GertecEx07NumberFormat.Decimal;
-			request.TextInputType.Value = (GertecEx07TextFormat)5;
+			request.NumericInputType.Value = numericInput;
+			request.TextInputType.Value = textInput;
 			request.LabelFirstLine.Value = firstLine;
 			request.LabelSecondLine.Value = secondLine;
 			request.MaximumCharacterLength.Value = minimumLength;

@@ -1,7 +1,7 @@
-﻿using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.Model;
+using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Tables;
 using Pinpad.Sdk.TypeCode;
-using Pinpad.Sdk.Model.TypeCode;
 using System;
 
 namespace Pinpad.Sdk.Commands

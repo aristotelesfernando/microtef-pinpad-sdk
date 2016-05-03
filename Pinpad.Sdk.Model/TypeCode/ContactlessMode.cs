@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Pinpad.Sdk.Model.TypeCode
+﻿namespace Pinpad.Sdk.Model
 {
     public enum PinpadContactlessMode
     {

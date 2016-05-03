@@ -1,7 +1,6 @@
 ﻿using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Model;
-using Pinpad.Sdk.Model.TypeCode;
 using System;
 
 namespace Pinpad.Sdk.Pinpad 
@@ -84,7 +83,7 @@ namespace Pinpad.Sdk.Pinpad
 		}
 
 		// Interfaced methods
-		public bool ShowMessage(string firstLine, string secondLine = null, Sdk.Model.TypeCode.DisplayPaddingType paddingType = DisplayPaddingType.Left)
+		public bool ShowMessage(string firstLine, string secondLine = null, Sdk.Model.DisplayPaddingType paddingType = DisplayPaddingType.Left)
 		{
 			if (firstLine != null && firstLine.Length > 16) { firstLine = firstLine.Substring(0, 16); }
 			if (secondLine != null && secondLine.Length > 16) { secondLine = secondLine.Substring(0, 16); }

@@ -1,7 +1,4 @@
-﻿using Pinpad.Sdk.Model.TypeCode;
-using System;
-
-namespace Pinpad.Sdk.Model
+﻿namespace Pinpad.Sdk.Model
 {
 	/// <summary>
 	/// Pinpad keyboard interface tool.
@@ -23,7 +20,7 @@ namespace Pinpad.Sdk.Model
 		/// <param name="maximumLength">Maximum input size.</param>
 		/// <param name="timeOut">Time out.</param>
 		/// <returns>Input from the keyboard. Null if nothing was received, whether of timeout or cancellation.</returns>
-		string GetNumericInput (GertecMessageInFirstLineCode firstLine, GertecMessageInSecondLineCode secondLine, int minimumLength, int maximumLength, int timeOut);
-		string GetText (GertecMessageInFirstLineCode firstLine, GertecMessageInSecondLineCode secondLine, int minimumLength, int maximumLength, int timeOut);
+		string GetNumericInput (FirstLineLabelCode firstLine, SecondLineLabelCode secondLine, int minimumLength, int maximumLength, int timeOut);
+		string GetText (KeyboardNumberFormat numericInput, KeyboardTextFormat textInput, FirstLineLabelCode firstLine, SecondLineLabelCode secondLine, int minimumLength, int maximumLength, int timeOut);
 	}
 }

@@ -47,6 +47,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Exceptions\ExpiredCardException.cs" />
+    <Compile Include="Exceptions\PinpadException.cs" />
     <Compile Include="Pinpad\IPinpadKeyboard.cs" />
     <Compile Include="CardEntry.cs" />
     <Compile Include="Exceptions\CommandNameMismatchException.cs" />
@@ -55,11 +56,6 @@
     <Compile Include="Exceptions\InvalidValueException.cs" />
     <Compile Include="Exceptions\LenghtMismatchException.cs" />
     <Compile Include="Exceptions\PinpadDisconnectedException.cs" />
-    <Compile Include="Exceptions\PinpadException.cs" />
-    <Compile Include="Exceptions\PrinterBusyException.cs" />
-    <Compile Include="Exceptions\PrinterException.cs" />
-    <Compile Include="Exceptions\PrinterOutOfPaperException.cs" />
-    <Compile Include="Exceptions\PrinterOverheatingException.cs" />
     <Compile Include="Exceptions\PropertyParseException.cs" />
     <Compile Include="Exceptions\StoneVersionMismatchException.cs" />
     <Compile Include="Exceptions\UnsetPropertyException.cs" />
@@ -73,13 +69,16 @@
     <Compile Include="TypeCode\DisplayPaddingType.cs" />
     <Compile Include="TypeCode\EmvTableType.cs" />
     <Compile Include="TypeCode\EmvTagCode.cs" />
-    <Compile Include="TypeCode\GertecMessageCode.cs" />
+    <Compile Include="TypeCode\FirstLineLabelCode.cs" />
     <Compile Include="TypeCode\KeyboardMessageCode.cs" />
+    <Compile Include="TypeCode\KeyboardNumberFormat.cs" />
+    <Compile Include="TypeCode\KeyboardTextFormat.cs" />
     <Compile Include="TypeCode\PinpadKeyCode.cs" />
     <Compile Include="TypeCode\PinpadPrinterStatus.cs" />
     <Compile Include="TypeCode\PrinterAlignmentCode.cs" />
     <Compile Include="TypeCode\PrinterStringSize.cs" />
     <Compile Include="TypeCode\ResponseStatus.cs" />
+    <Compile Include="TypeCode\SecondLineLabelCode.cs" />
     <Compile Include="TypeCode\TransactionType.cs" />
   </ItemGroup>
   <ItemGroup>

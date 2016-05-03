@@ -1,6 +1,6 @@
 ﻿using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Utilities;
-using Pinpad.Sdk.Model.TypeCode;
+using Pinpad.Sdk.Model;
 
 namespace Pinpad.Sdk.Tables
 {

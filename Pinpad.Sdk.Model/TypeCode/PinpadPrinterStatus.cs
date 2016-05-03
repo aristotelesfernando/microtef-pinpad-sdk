@@ -1,4 +1,4 @@
-﻿namespace Pinpad.Sdk.Model.TypeCode 
+﻿namespace Pinpad.Sdk.Model 
 {
 	/// <summary>
 	/// Enumerator for Printer status

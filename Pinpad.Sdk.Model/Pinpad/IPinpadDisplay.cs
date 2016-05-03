@@ -1,6 +1,4 @@
-﻿using Pinpad.Sdk.Model.TypeCode;
-
-namespace Pinpad.Sdk.Model
+﻿namespace Pinpad.Sdk.Model
 {
     /// <summary>
     /// Responsible for presenting messages in a pinpad device.

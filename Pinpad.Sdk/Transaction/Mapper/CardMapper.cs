@@ -1,11 +1,7 @@
 ﻿using Pinpad.Sdk.Model;
-using Pinpad.Sdk.Model.TypeCode;
 using Pinpad.Sdk.Commands;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using Pinpad.Sdk.TypeCode;
 
 namespace Pinpad.Sdk.Transaction

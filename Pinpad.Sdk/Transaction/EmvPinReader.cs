@@ -1,9 +1,6 @@
-﻿using Pinpad.Sdk.Model.TypeCode;
-using Pinpad.Sdk.Commands;
+﻿using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.TypeCode;
 using System;
-using ResponseStatus = Pinpad.Sdk.Model.TypeCode.ResponseStatus;
-using LegacyResponseStatus = Pinpad.Sdk.TypeCode.AbecsResponseStatus;
 using Pinpad.Sdk.Model;
 using System.Globalization;
 using Pinpad.Sdk.Utilities;
@@ -47,7 +44,7 @@ namespace Pinpad.Sdk.Transaction
 			GocResponse commandResponse = this.SendGoc(communication, amount);
 
 			// Saving command response status:
-			LegacyResponseStatus legacyStatus = commandResponse.RSP_STAT.Value;
+			AbecsResponseStatus legacyStatus = commandResponse.RSP_STAT.Value;
 			ResponseStatus status = ResponseStatusMapper.MapLegacyResponseStatus(legacyStatus);
 			if (status == ResponseStatus.OperationCancelled) { return status; }
 

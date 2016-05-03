@@ -61,7 +61,6 @@
     <Compile Include="Commands\Response\GduResponse.cs" />
     <Compile Include="Commands\Response\GenericResponse.cs" />
     <Compile Include="Commands\Request\GertecEx07Request.cs" />
-    <Compile Include="Commands\GertecData\GertecEx07InputFormatType.cs" />
     <Compile Include="Commands\Response\GertecBaseResponse.cs" />
     <Compile Include="Commands\Response\GertecEx07Response.cs" />
     <Compile Include="Commands\Request\GinRequest.cs" />
@@ -85,20 +84,6 @@
     <Compile Include="Commands\Response\NtmResponse.cs" />
     <Compile Include="Commands\Request\OpnRequest.cs" />
     <Compile Include="Commands\Response\OpnResponse.cs" />
-    <Compile Include="Commands\PrinterData\BasePrtRequestData.cs" />
-    <Compile Include="Commands\PrinterData\BasePrtResponseData.cs" />
-    <Compile Include="Commands\PrinterData\PrtAppendImageRequestData.cs" />
-    <Compile Include="Commands\PrinterData\PrtAppendImageResponseData.cs" />
-    <Compile Include="Commands\PrinterData\PrtAppendStringRequestData.cs" />
-    <Compile Include="Commands\PrinterData\PrtAppendStringResponseData.cs" />
-    <Compile Include="Commands\PrinterData\PrtBeginRequestData.cs" />
-    <Compile Include="Commands\PrinterData\PrtBeginResponseData.cs" />
-    <Compile Include="Commands\PrinterData\PrtEndRequestData.cs" />
-    <Compile Include="Commands\PrinterData\PrtEndResponseData.cs" />
-    <Compile Include="Commands\Request\PrtRequest.cs" />
-    <Compile Include="Commands\Response\PrtResponse.cs" />
-    <Compile Include="Commands\PrinterData\PrtStepRequestData.cs" />
-    <Compile Include="Commands\PrinterData\PrtStepResponseData.cs" />
     <Compile Include="Commands\Request\RmcRequest.cs" />
     <Compile Include="Commands\Request\TleRequest.cs" />
     <Compile Include="Commands\Request\TliRequest.cs" />
@@ -130,7 +115,6 @@
     <Compile Include="Pinpad\PinpadDisplay.cs" />
     <Compile Include="Pinpad\PinpadInfos.cs" />
     <Compile Include="Pinpad\PinpadKeyboard.cs" />
-    <Compile Include="Pinpad\PinpadPrinter.cs" />
     <Compile Include="Pinpad\PinpadStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StoneIndexCode.cs" />
@@ -162,7 +146,6 @@
     <Compile Include="TypeCode\AbecsResponseStatus.cs" />
     <Compile Include="Utilities\HexadecimalController.cs" />
     <Compile Include="Utilities\HexadecimalData.cs" />
-    <Compile Include="Utilities\PrinterExceptionFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,9 +1,7 @@
 ﻿using Pinpad.Sdk.Pinpad;
 using Pinpad.Sdk.Model;
-using Pinpad.Sdk.Model.TypeCode;
 using System;
 using System.Diagnostics;
-using ResponseStatus = Pinpad.Sdk.Model.TypeCode.ResponseStatus;
 
 namespace Pinpad.Sdk.Transaction
 {
