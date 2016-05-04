@@ -103,7 +103,7 @@ namespace Pinpad.Sdk
 		/// <returns>Input from the keyboard. Null if nothing was received, whether of timeout or cancellation.</returns>
 		public string GetNumericInput (FirstLineLabelCode firstLine, SecondLineLabelCode secondLine, int minimumLength, int maximumLength, int timeOut)
 		{
-			if (GertecEx07Request.IsSupported(this.Informations.ManufacturerName, this.Informations.Model, this.Informations.ManufacturerVersion) == false) { return null; }
+			if (GciGertecRequest.IsSupported(this.Informations.ManufacturerName, this.Informations.Model, this.Informations.ManufacturerVersion) == false) { return null; }
 
 			if (minimumLength < 0) { minimumLength = 0; }
 
@@ -112,7 +112,7 @@ namespace Pinpad.Sdk
 				throw new InvalidOperationException("Invalid maximumLength. The maximum length is up to 32 characters.");
 			}
 
-			GertecEx07Request request = new GertecEx07Request();
+			GciGertecRequest request = new GciGertecRequest();
 
 			request.NumericInputType.Value = KeyboardNumberFormat.Decimal;
 			request.TextInputType.Value = KeyboardTextFormat.None;
@@ -137,7 +137,7 @@ namespace Pinpad.Sdk
 
 		public string GetText (KeyboardNumberFormat numericInput, KeyboardTextFormat textInput, FirstLineLabelCode firstLine, SecondLineLabelCode secondLine, int minimumLength, int maximumLength, int timeOut)
 		{
-			if (GertecEx07Request.IsSupported(this.Informations.ManufacturerName, this.Informations.Model, this.Informations.ManufacturerVersion) == false)
+			if (GciGertecRequest.IsSupported(this.Informations.ManufacturerName, this.Informations.Model, this.Informations.ManufacturerVersion) == false)
 			{ return null; }
 
 			if (minimumLength < 0)
@@ -148,7 +148,7 @@ namespace Pinpad.Sdk
 				throw new InvalidOperationException("Invalid maximumLength. The maximum length is up to 32 characters.");
 			}
 
-			GertecEx07Request request = new GertecEx07Request();
+			GciGertecRequest request = new GciGertecRequest();
 
 			request.NumericInputType.Value = numericInput;
 			request.TextInputType.Value = textInput;

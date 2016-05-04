@@ -12,7 +12,7 @@ using System.Linq;
 namespace Pinpad.Sdk
 {
 	/// <summary>
-	/// Responsible for operations used on an authorization operation.
+	/// Responsible for authorization operations.
 	/// </summary>
 	public class PinpadTransaction : IPinpadTransaction
 	{
@@ -137,6 +137,25 @@ namespace Pinpad.Sdk
 
 			return pin;
 		}
+		public void FinishTransaction (IssuerEmvDataEntry issuerEmvData)
+		{
+			FncRequest fnc = new FncRequest();
+			fnc.FNC_COMMST.Value = issuerEmvData.AuthorizationStatus;
+			fnc.FNC_ISSMODE.Value = 0;
+			fnc.FNC_ARC.Value = issuerEmvData.AuthorizationResponseCode;
+			fnc.FNC_ACQPR.Value = "000";
+
+			if (string.IsNullOrEmpty(issuerEmvData.IssuerRelatedData) == false)
+			{
+				fnc.FNC_ISSDAT.Value = new HexadecimalData(issuerEmvData.IssuerRelatedData);
+				fnc.FNC_TAGS.Value = new HexadecimalData(EmvTag.GetEmvTagsRequired());
+			}
+			else
+			{
+				fnc.FNC_ISSDAT.Value = new HexadecimalData("");
+				fnc.FNC_TAGS.Value = new HexadecimalData("");
+			}
+		}
 
 		/// <summary>
 		/// Read basic card information, that is, brand id, card type, card primary account number (PAN), cardholder name and expiration date.
@@ -245,6 +264,15 @@ namespace Pinpad.Sdk
 
 				cardRead.ApplicationId = aidVar.T1_AID.Value.DataString;
 				cardRead.BrandName = EmvTrackMapper.GetBrandByAid(cardRead.ApplicationId);
+
+				// If it is a EMV transaction, then the application SHOULD send a CNG to change EMV parameters:
+				// TODO: Ver como o comando CNG funciona.
+				//if (response.GCR_CARDTYPE.Value == ApplicationType.IccEmv)
+				//{
+				//	CngRequest cng = new CngRequest();
+				//	cng.CNG_EMVDAT.Value = ((...))
+				//	bool stats = this.pinpadCommunication.SendRequestAndVerifyResponseCode(cng);
+				//}
 			}
 
 			return AbecsResponseStatus.ST_OK;

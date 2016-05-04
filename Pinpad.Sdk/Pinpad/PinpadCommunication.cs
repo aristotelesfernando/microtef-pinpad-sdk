@@ -88,6 +88,17 @@ namespace Pinpad.Sdk
 				return this._stoneVersion;
 			}
 		}
+		public bool OpenPinpadConnection ()
+		{
+			OpnResponse response = this.SendRequestAndReceiveResponse<OpnResponse>(new OpnRequest());
+
+			if (response != null && response.RSP_STAT.Value == AbecsResponseStatus.ST_OK)
+			{
+				return true;
+			}
+
+			return false;
+		}
 
 		// Private members
 		private Nullable<int> _stoneVersion;
@@ -119,8 +130,7 @@ namespace Pinpad.Sdk
 			this.PinpadConnection.Connection.WriteTimeout = NON_BLOCKING_TIMEOUT;
 		}
 
-		/* Methods */
-		// Public methods
+		/* Public methods */
 		/// <summary>
 		/// Checks if the connection with the Pinpad is alive
 		/// </summary>
@@ -178,6 +188,8 @@ namespace Pinpad.Sdk
 			}
 			return this._requestCancelled;
 		}
+		
+		/* Used internally */
 		/// <summary>
 		/// Sends a request to the Pinpad
 		/// </summary>
@@ -368,8 +380,6 @@ namespace Pinpad.Sdk
 				return openedResponseString;
 			}
 		}
-
-		// Protected methods
 		/// <summary>
 		/// Verifies if the pinpad has acknowledged the request.
 		/// </summary>

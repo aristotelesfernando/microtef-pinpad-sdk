@@ -5,7 +5,7 @@ namespace Pinpad.Sdk
 	/// <summary>
 	/// Contains utilities for hexadecimal manipulation.
 	/// </summary>
-	internal class HexadecimalController
+	public class HexadecimalController
 	{
 
 		/// <summary>

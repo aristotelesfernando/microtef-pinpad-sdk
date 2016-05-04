@@ -28,7 +28,7 @@ namespace Pinpad.Sdk.Test
 			Debug.WriteLine(r.CommandString);
 		}
 		//[TestMethod]
-		public void Gertec_EX07_test ()
+		public void Gertec_EX07_test () 
 		{
 			// testes:
 			//this.mockedPinpadConnection = new MockedPinpadConnection();
@@ -38,8 +38,8 @@ namespace Pinpad.Sdk.Test
 
 			PinpadCommunication comm = new PinpadCommunication(conn);
 
-			GertecEx07Request request = new GertecEx07Request();
-
+			GciGertecRequest request = new GciGertecRequest();
+			    
 			request.NumericInputType.Value = KeyboardNumberFormat.Decimal;
 			request.TextInputType.Value = KeyboardTextFormat.None;
 			request.LabelFirstLine.Value = FirstLineLabelCode.TypeNumber;
@@ -151,6 +151,19 @@ namespace Pinpad.Sdk.Test
 			PinpadConnection conn = PinpadConnection.GetFirst();
 			PinpadFacade facade = new PinpadFacade(conn);
 			facade.Display.ShowMessage("", "wow!", DisplayPaddingType.Center);
+		}
+
+		[TestMethod]
+		public void MyTestMethod2 ()
+		{
+			PinpadConnection conn = PinpadConnection.GetFirst();
+
+			PinpadFacade facade = new PinpadFacade(conn);
+
+			facade.Display.ShowMessage("obrigada!", "<3", DisplayPaddingType.Center);
+
+			TransactionType ttype;
+			facade.TransactionService.ReadCard(TransactionType.Debit, 1.99m, out ttype);
 		}
 	}
 }

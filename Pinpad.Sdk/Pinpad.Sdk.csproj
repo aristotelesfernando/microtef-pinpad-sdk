@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\DataSet\AcquirerCommunicationStatus.cs" />
+    <Compile Include="Commands\DataSet\FncEntry.cs" />
     <Compile Include="Commands\DataSet\OnlineTransactionStatus.cs" />
     <Compile Include="Commands\Request\CngRequest.cs" />
     <Compile Include="Commands\Request\DexRequest.cs" />
@@ -62,7 +63,7 @@
     <Compile Include="Commands\Response\GcrResponse.cs" />
     <Compile Include="Commands\Response\GduResponse.cs" />
     <Compile Include="Commands\Response\GenericResponse.cs" />
-    <Compile Include="Commands\Request\GertecEx07Request.cs" />
+    <Compile Include="Commands\Request\GciGertecRequest.cs" />
     <Compile Include="Commands\Response\GertecBaseResponse.cs" />
     <Compile Include="Commands\Response\GertecEx07Response.cs" />
     <Compile Include="Commands\Request\GinRequest.cs" />

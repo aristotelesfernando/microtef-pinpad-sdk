@@ -16,7 +16,7 @@ namespace Pinpad.Sdk
 		/// Controller for Stone Connection adapter.
 		/// It's set method updates the pinpad facade properties based on the new connection.
 		/// </summary>
-		public PinpadConnection Connection
+		internal PinpadConnection Connection
 		{
 			get { return this.pinpadConnection; }
 			set
@@ -27,12 +27,17 @@ namespace Pinpad.Sdk
 				this.Infos = new PinpadInfos(this.Communication);
 				this.Keyboard = new PinpadKeyboard(this.Communication, this.Infos);
 				this.Display = new PinpadDisplay(this.Communication);
+				this.TransactionService = new PinpadTransaction(this.Communication);
 			}
 		}
 		/// <summary>
 		/// Gets the default Communication adapter.
 		/// </summary>
 		public PinpadCommunication Communication { get; set; }
+		/// <summary>
+		/// Responsible for authorization operations.
+		/// </summary>
+		public PinpadTransaction TransactionService { get; set; }
 		/// <summary>
 		/// Gets the default Keyboard adapter.
 		/// </summary>

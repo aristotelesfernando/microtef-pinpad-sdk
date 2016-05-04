@@ -4,7 +4,7 @@ using Pinpad.Sdk.Model;
 
 namespace Pinpad.Sdk.Commands
 {
-	internal class GertecEx07Request : BaseCommand
+	internal class GciGertecRequest : BaseCommand
 	{
 		public override string CommandName { get { return "EX07"; } }
 		public PinpadFixedLengthProperty<KeyboardNumberFormat> NumericInputType { get; set; }
@@ -16,7 +16,7 @@ namespace Pinpad.Sdk.Commands
 		public PinpadFixedLengthProperty<Nullable<int>> TimeOut { get; set; }
 		public PinpadFixedLengthProperty<Nullable<int>> TimeIdle { get; set; }
 
-		public GertecEx07Request ()
+		public GciGertecRequest ()
 			: base(new GertecContext())
 		{
 			this.NumericInputType = new PinpadFixedLengthProperty<KeyboardNumberFormat>("NumericInputType", 1, false, DefaultStringFormatter.EnumStringFormatter<KeyboardNumberFormat>, DefaultStringParser.EnumStringParser<KeyboardNumberFormat>);

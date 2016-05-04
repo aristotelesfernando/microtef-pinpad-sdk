@@ -10,11 +10,15 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Controller for Stone Connection adapter.
 		/// </summary>
-		PinpadConnection Connection { get; set; }
+		//PinpadConnection Connection { get; set; }
 		/// <summary>
 		/// Gets the default Communication adapter.
 		/// </summary>
 		PinpadCommunication Communication { get; set; }
+		/// <summary>
+		/// Responsible for authorization operations.
+		/// </summary>
+		PinpadTransaction TransactionService { get; set; }
 		/// <summary>
 		/// Gets the default Keyboard adapter
 		/// </summary>
