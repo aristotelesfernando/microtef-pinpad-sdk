@@ -8,7 +8,7 @@ namespace Pinpad.Sdk.Commands
 	/// The CDU command btains the KSN ("Key Serial Number") of a specific index on acquirer table.
 	/// This operation depends on encryption methods such as: DUKPT/DES/PIN or DUKPT/TDES/PIN.
 	/// </summary>
-	public class GduResponse : BaseResponse
+	internal class GduResponse : BaseResponse
 	{
 		/// <summary>
 		/// Command name. In this case, GDU command response.

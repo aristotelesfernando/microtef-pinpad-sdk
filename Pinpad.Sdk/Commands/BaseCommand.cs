@@ -13,7 +13,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// PinPad command
 	/// </summary>
-	public abstract class BaseCommand : BaseProperty 
+	internal abstract class BaseCommand : BaseProperty 
 	{
 		// Members
 		/// <summary>

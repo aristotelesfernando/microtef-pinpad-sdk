@@ -12,7 +12,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// GTS response
 	/// </summary>
-	public class GtsResponse : BaseResponse 
+	internal class GtsResponse : BaseResponse 
 	{
 		/// <summary>
 		/// Constructor

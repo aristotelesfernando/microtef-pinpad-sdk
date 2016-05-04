@@ -3,7 +3,7 @@
     /// <summary>
     /// TLE request
     /// </summary>
-    public class TleRequest : BaseCommand
+    internal class TleRequest : BaseCommand
     {
         /// <summary>
         /// Constructor

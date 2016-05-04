@@ -12,7 +12,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// DSP request
 	/// </summary>
-	public class DspRequest : BaseCommand 
+	internal class DspRequest : BaseCommand 
 	{
 		// Members
 		/// <summary>

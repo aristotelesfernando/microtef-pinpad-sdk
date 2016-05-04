@@ -6,7 +6,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// GOC request
 	/// </summary>
-	public class GocRequest : BaseCommand 
+	internal class GocRequest : BaseCommand 
 	{
 		/// <summary>
 		/// Constructor

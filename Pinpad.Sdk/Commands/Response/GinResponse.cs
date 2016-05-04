@@ -5,7 +5,7 @@ namespace Pinpad.Sdk.Commands
     /// <summary>
     /// Controller for GIN response for GIN request with ACQIDX 00
     /// </summary>
-    public class GinResponse : BaseResponse
+    internal class GinResponse : BaseResponse
 	{
 		// Members
         /// <summary>

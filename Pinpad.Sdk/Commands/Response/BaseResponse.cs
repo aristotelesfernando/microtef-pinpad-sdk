@@ -13,7 +13,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// PinPad response command
 	/// </summary>
-	public abstract class BaseResponse : BaseCommand 
+	internal abstract class BaseResponse : BaseCommand 
 	{
 		// Members
 		/// <summary>

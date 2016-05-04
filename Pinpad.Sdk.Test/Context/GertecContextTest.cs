@@ -6,7 +6,7 @@ namespace Pinpad.Sdk.Test.Context
 	[TestClass]
 	public class GertecContextTest
 	{
-		public GertecContext Context;
+		internal GertecContext Context;
 
 		[TestInitialize]
 		public void Setup ()

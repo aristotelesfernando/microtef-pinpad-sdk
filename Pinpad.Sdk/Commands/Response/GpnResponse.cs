@@ -5,7 +5,7 @@ namespace Pinpad.Sdk.Commands
     /// <summary>
     /// GPN response
     /// </summary>
-    public class GpnResponse : BaseResponse
+    internal class GpnResponse : BaseResponse
     {
         /// <summary>
         /// Constructor

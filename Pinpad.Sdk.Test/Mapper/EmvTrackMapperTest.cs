@@ -9,7 +9,7 @@ namespace Pinpad.Sdk.Test.Mapper
     [TestClass]
     public class EmvTrackMapperTest
     {
-        public GcrResponse GcrResponse;
+        internal GcrResponse GcrResponse;
 
         [TestInitialize]
         public void Setup()
@@ -17,7 +17,7 @@ namespace Pinpad.Sdk.Test.Mapper
             this.GcrResponse = GcrResponseInitializer();
         }
 
-        public GcrResponse GcrResponseInitializer()
+        internal GcrResponse GcrResponseInitializer()
         {
             GcrResponse response = new GcrResponse();
 

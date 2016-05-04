@@ -5,7 +5,7 @@ namespace Pinpad.Sdk.Commands
     /// <summary>
     /// FNC response
     /// </summary>
-    public class FncResponse : BaseResponse
+    internal class FncResponse : BaseResponse
 	{
         /// <summary>
         /// Constructor

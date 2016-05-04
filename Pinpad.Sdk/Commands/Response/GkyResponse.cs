@@ -7,7 +7,7 @@ namespace Pinpad.Sdk.Commands
     /// <summary>
     /// GKY response
     /// </summary>
-    public class GkyResponse : BaseResponse
+    internal class GkyResponse : BaseResponse
     {
         /// <summary>
         /// Constructor

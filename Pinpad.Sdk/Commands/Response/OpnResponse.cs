@@ -13,7 +13,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// OPN response containing the Stone Application Version
 	/// </summary>
-	public class OpnResponse : BaseResponse 
+	internal class OpnResponse : BaseResponse 
 	{
 		// Members
 		/// <summary>

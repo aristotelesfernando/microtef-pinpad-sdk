@@ -1,6 +1,6 @@
 ﻿namespace Pinpad.Sdk.Commands
 {
-	public class GcdResponse : BaseResponse
+	internal class GcdResponse : BaseResponse
 	{
 		public override bool IsBlockingCommand
 		{

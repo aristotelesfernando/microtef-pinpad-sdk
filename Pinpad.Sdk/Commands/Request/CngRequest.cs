@@ -8,7 +8,7 @@ namespace Pinpad.Sdk.Commands
     /// The parameters may coincide with the ones present in the AID table, which will alter the values only in the current transaction.
     /// May also be used to supply proprietary parameters not listed in the EMV documentation.
     /// </summary>
-    public class CngRequest : BaseCommand
+    internal class CngRequest : BaseCommand
 	{
         /// <summary>
         /// Constructor

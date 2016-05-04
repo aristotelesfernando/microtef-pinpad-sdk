@@ -8,7 +8,7 @@ namespace Pinpad.Sdk.Commands
     /// Controller for TLR command
     /// Table Load Record is used to load one or more table records
     /// </summary>
-    public class TlrRequest : BaseCommand
+    internal class TlrRequest : BaseCommand
     {
         /// <summary>
         /// Constructor

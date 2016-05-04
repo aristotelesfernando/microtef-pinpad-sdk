@@ -10,7 +10,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// Command context accordingly to abecs.
 	/// </summary>
-	public class AbecsContext : IContext
+	internal class AbecsContext : IContext
 	{
 		// Constants
 		/// <summary>

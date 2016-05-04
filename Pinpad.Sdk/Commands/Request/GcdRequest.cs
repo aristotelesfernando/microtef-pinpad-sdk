@@ -4,7 +4,7 @@ using System;
 
 namespace Pinpad.Sdk.Commands
 {
-	public class GcdRequest : BaseCommand
+	internal class GcdRequest : BaseCommand
 	{
 		public override string CommandName
 		{

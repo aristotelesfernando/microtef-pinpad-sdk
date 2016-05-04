@@ -7,7 +7,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// A command context accordingly to Gertec specification.
 	/// </summary>
-	public class GertecContext : IContext
+	internal class GertecContext : IContext
 	{
 		/// <summary>
 		/// STX byte indicates the begining of a package, in a Gertec command.

@@ -3,7 +3,7 @@
     /// <summary>
     /// GKY request
     /// </summary>
-    public class GkyRequest : BaseCommand
+    internal class GkyRequest : BaseCommand
     {
         /// <summary>
         /// Constructor

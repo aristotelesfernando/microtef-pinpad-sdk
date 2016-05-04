@@ -2,7 +2,7 @@
 
 namespace Pinpad.Sdk.Commands
 {
-	public class GertecEx07Response : BaseResponse
+	internal class GertecEx07Response : BaseResponse
 	{
 		/// <summary>
 		/// Name of this command.

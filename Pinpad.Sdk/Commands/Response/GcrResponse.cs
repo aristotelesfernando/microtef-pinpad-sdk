@@ -13,7 +13,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// GCR response
 	/// </summary>
-	public class GcrResponse : BaseResponse 
+	internal class GcrResponse : BaseResponse 
 	{
 		/// <summary>
 		/// Constructor

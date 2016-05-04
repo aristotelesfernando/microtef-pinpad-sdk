@@ -183,7 +183,7 @@ namespace Pinpad.Sdk
 		/// </summary>
 		/// <param name="request">request controller</param>
 		/// <returns>Was the request successfully sent?</returns>
-		public bool SendRequest (BaseCommand request)
+		internal bool SendRequest (BaseCommand request)
 		{
             try
             {
@@ -204,50 +204,12 @@ namespace Pinpad.Sdk
 				}
 			}
 		}
-		///// <summary>
-		///// Sends a command request to the Pinpad
-		///// </summary>
-		///// <param name="request">request string</param>
-		///// <returns>Was the request successfully sent?</returns>
-		//public bool SendRequest(BaseCommand request) 
-		//{
-		//	try 
-		//	{
-		//		if (this.StoneVersion >= new SecRequest().MinimumStoneVersion) 
-		//		{
-		//			SecRequest secureRequest = PinpadEncryption.Instance.WrapRequest(request.CommandString);
-
-		//			string secureRequestString = secureRequest.CommandString;
-
-		//			return this.InternalSendRequest(secureRequestString); // 589
-		//		}
-		//		else 
-		//		{
-		//			return this.InternalSendRequest(request.CommandString); // 589
-		//		}
-		//	}
-		//	catch (Exception ex) 
-		//	{
-		//		if (ex is IOException == false &&
-		//			ex is TimeoutException == false &&
-		//			ex is InvalidOperationException == false) 
-		//		{
-
-		//			//CrossPlatformController.SendMailController.SendReportMailThreaded("PinpadSDK: EXCEPTION AT IsConnectionAlive", ex.ToString());
-		//			throw;
-		//		}
-		//		else 
-		//		{
-		//			return false;
-		//		}
-		//	}
-		//}
 		/// <summary>
 		/// Sends a request, receives the response then verifies if the command is not ERR and response code equals ST_OK
 		/// </summary>
 		/// <param name="request">Request to send</param>
 		/// <returns>true if the request was sent, response was received, command is not ERR and response code equals ST_OK</returns>
-		public bool SendRequestAndVerifyResponseCode (BaseCommand request)
+		internal bool SendRequestAndVerifyResponseCode (BaseCommand request)
 		{
 			lock (this.PinpadConnection)
 			{
@@ -265,7 +227,7 @@ namespace Pinpad.Sdk
 		/// Receives a generic response then verifies if the command is not ERR and response code equals ST_OK
 		/// </summary>
 		/// <returns>true if the response was received, command is not ERR and response code equals ST_OK</returns>
-		public bool ReceiveResponseAndVerifyResponseCode (IContext context)
+		internal bool ReceiveResponseAndVerifyResponseCode (IContext context)
 		{
 			GenericResponse response = this.ReceiveResponse<GenericResponse>(context);
 
@@ -292,7 +254,7 @@ namespace Pinpad.Sdk
 		/// <typeparam name="responseType">PinpadBaseResponseController to use</typeparam>
 		/// <param name="request">Request to send</param>
 		/// <returns>responseType or null on failure</returns>
-		public responseType SendRequestAndReceiveResponse<responseType> (BaseCommand request)
+		internal responseType SendRequestAndReceiveResponse<responseType> (BaseCommand request)
 			where responseType : BaseResponse, new()
 		{
 			lock (this.PinpadConnection)
@@ -312,7 +274,7 @@ namespace Pinpad.Sdk
 		/// </summary>
 		/// <typeparam name="responseType">PinpadBaseResponseController to use</typeparam>
 		/// <returns>response object or null if cancelled</returns>
-		public responseType ReceiveResponse<responseType> (IContext context = null)
+		internal responseType ReceiveResponse<responseType> (IContext context = null)
 			where responseType : BaseResponse, new()
 		{
 			responseType response = new responseType();
@@ -351,7 +313,7 @@ namespace Pinpad.Sdk
 		/// </summary>
 		/// <param name="timeout">Timeout of the message</param>
 		/// <returns>response string or null if cancelled</returns>
-		public string ReceiveResponseString (int timeout, IContext context)
+		internal string ReceiveResponseString (int timeout, IContext context)
 		{
 			lock (this.PinpadConnection)
 			{

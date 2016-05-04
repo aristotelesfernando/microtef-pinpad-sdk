@@ -2,7 +2,7 @@
 
 namespace Pinpad.Sdk.Commands
 {
-	public class GertecBaseResponse : BaseResponse
+	internal class GertecBaseResponse : BaseResponse
 	{
 		public override string CommandName
 		{

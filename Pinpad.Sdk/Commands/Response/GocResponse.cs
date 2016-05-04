@@ -6,7 +6,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// GOC response
 	/// </summary>
-	public class GocResponse : BaseResponse 
+	internal class GocResponse : BaseResponse 
 	{
 		/// <summary>
 		/// Constructor

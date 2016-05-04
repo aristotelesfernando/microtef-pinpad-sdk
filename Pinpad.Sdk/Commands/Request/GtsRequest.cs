@@ -13,7 +13,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// GTS request
 	/// </summary>
-	public class GtsRequest : BaseCommand 
+	internal class GtsRequest : BaseCommand 
 	{
 		// Members
 		/// <summary>

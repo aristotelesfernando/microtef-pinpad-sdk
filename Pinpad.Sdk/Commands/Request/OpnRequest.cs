@@ -3,7 +3,7 @@
 	/// <summary>
 	/// OPN request
 	/// </summary>
-	public class OpnRequest : BaseCommand 
+	internal class OpnRequest : BaseCommand 
 	{
 		/// <summary>
 		/// Name of the command
