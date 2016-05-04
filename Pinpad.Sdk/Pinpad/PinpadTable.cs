@@ -1,6 +1,4 @@
 ﻿using Pinpad.Sdk.Commands;
-using Pinpad.Sdk.Tables;
-using Pinpad.Sdk.TypeCode;
 using System;
 using System.Collections.Generic;
 using System.Linq;

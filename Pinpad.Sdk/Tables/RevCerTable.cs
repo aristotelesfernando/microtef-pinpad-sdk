@@ -1,8 +1,8 @@
 ﻿using Pinpad.Sdk.Properties;
-using Pinpad.Sdk.Utilities;
 using Pinpad.Sdk.Model;
+using Pinpad.Sdk.Commands;
 
-namespace Pinpad.Sdk.Tables
+namespace Pinpad.Sdk
 {
 	/// <summary>
 	/// Controller for CAPK revoked certificates

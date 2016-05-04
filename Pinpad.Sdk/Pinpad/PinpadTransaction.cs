@@ -93,7 +93,7 @@ namespace Pinpad.Sdk
 
 			do
 			{
-				status = PerformCardReading(transactionType, amount, out cardRead, out newTransactionType);
+				status = this.PerformCardReading(transactionType, amount, out cardRead, out newTransactionType);
 				this.LastCommandStatus = ResponseStatusMapper.MapLegacyResponseStatus(status);
 
 				// EMV tables are incompatible. Recharging tables:

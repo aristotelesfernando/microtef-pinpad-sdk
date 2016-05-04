@@ -43,7 +43,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Commands\BaseCommand.cs" />
+    <Compile Include="Commands\DataSet\AcquirerCommunicationStatus.cs" />
+    <Compile Include="Commands\DataSet\OnlineTransactionStatus.cs" />
+    <Compile Include="Commands\Request\CngRequest.cs" />
     <Compile Include="Commands\Request\DexRequest.cs" />
+    <Compile Include="Commands\Request\FncRequest.cs" />
     <Compile Include="Commands\Request\GduRequest.cs" />
     <Compile Include="Commands\Response\BaseResponse.cs" />
     <Compile Include="Commands\Context\AbecsContext.cs" />
@@ -51,6 +55,7 @@
     <Compile Include="Commands\Context\IContext.cs" />
     <Compile Include="Commands\Request\DspRequest.cs" />
     <Compile Include="Commands\Request\GcdRequest.cs" />
+    <Compile Include="Commands\Response\FncResponse.cs" />
     <Compile Include="Commands\Response\GcdResponse.cs" />
     <Compile Include="Commands\DataSet\GcrIdApp.cs" />
     <Compile Include="Commands\Request\GcrRequest.cs" />
@@ -97,7 +102,7 @@
     <Compile Include="PinpadProperties\StringReader.cs" />
     <Compile Include="PinpadProperties\VariableLengthCollectionProperty.cs" />
     <Compile Include="PinpadProperties\VariableLengthProperty.cs" />
-    <Compile Include="PinpadFacade.cs" />
+    <Compile Include="Pinpad\PinpadFacade.cs" />
     <Compile Include="Pinpad\PinpadConnection.cs" />
     <Compile Include="Pinpad\PinpadTable.cs" />
     <Compile Include="Pinpad\PinpadTransaction.cs" />
@@ -113,9 +118,9 @@
     <Compile Include="Tables\AidTable.cs" />
     <Compile Include="Tables\RevCerTable.cs" />
     <Compile Include="Tables\UnknownAidTable.cs" />
-    <Compile Include="Tracks\BaseTrack.cs" />
-    <Compile Include="Tracks\Track1.cs" />
-    <Compile Include="Tracks\Track2.cs" />
+    <Compile Include="Commands\DataSet\Tracks\BaseTrack.cs" />
+    <Compile Include="Commands\DataSet\Tracks\Track1.cs" />
+    <Compile Include="Commands\DataSet\Tracks\Track2.cs" />
     <Compile Include="Transaction\EmvPinReader.cs" />
     <Compile Include="Transaction\MagneticStripePinReader.cs" />
     <Compile Include="Transaction\Mapper\CardMapper.cs" />
@@ -133,7 +138,7 @@
     <Compile Include="Commands\DataSet\OfflineTransactionStatus.cs" />
     <Compile Include="Commands\DataSet\AbecsResponseStatus.cs" />
     <Compile Include="Utilities\HexadecimalController.cs" />
-    <Compile Include="Utilities\HexadecimalData.cs" />
+    <Compile Include="Commands\DataSet\HexadecimalData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

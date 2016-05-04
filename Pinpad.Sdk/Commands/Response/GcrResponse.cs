@@ -1,6 +1,4 @@
 ﻿using Pinpad.Sdk.Properties;
-using Pinpad.Sdk.Tracks;
-using Pinpad.Sdk.TypeCode;
 using System;
 
 /* WARNING!

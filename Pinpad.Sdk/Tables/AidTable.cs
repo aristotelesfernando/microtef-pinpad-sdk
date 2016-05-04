@@ -1,10 +1,8 @@
 ﻿using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Properties;
-using Pinpad.Sdk.TypeCode;
-using Pinpad.Sdk.Utilities;
 using System;
 
-namespace Pinpad.Sdk.Tables 
+namespace Pinpad.Sdk 
 {
 	/// <summary>
 	/// EMV Application IDentifier table record

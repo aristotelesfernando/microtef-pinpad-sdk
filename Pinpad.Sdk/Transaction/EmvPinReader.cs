@@ -1,12 +1,11 @@
 ﻿using Pinpad.Sdk.Commands;
-using Pinpad.Sdk.TypeCode;
 using System;
 using Pinpad.Sdk.Model;
 using System.Globalization;
-using Pinpad.Sdk.Utilities;
 using Pinpad.Sdk.Properties;
+using Pinpad.Sdk.Transaction;
 
-namespace Pinpad.Sdk.Transaction
+namespace Pinpad.Sdk
 {
     /// <summary>
     /// Reads a password from a card which contains EMV chip.
@@ -41,7 +40,7 @@ namespace Pinpad.Sdk.Transaction
 
 			// Using ABECS GOC command to communicate with pinpad.
 			GocResponse commandResponse = this.SendGoc(communication, amount);
-
+			
 			// Saving command response status:
 			AbecsResponseStatus legacyStatus = commandResponse.RSP_STAT.Value;
 			ResponseStatus status = ResponseStatusMapper.MapLegacyResponseStatus(legacyStatus);

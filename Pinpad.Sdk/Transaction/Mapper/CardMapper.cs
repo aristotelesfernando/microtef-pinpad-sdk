@@ -2,7 +2,6 @@
 using Pinpad.Sdk.Commands;
 using System;
 using System.Diagnostics;
-using Pinpad.Sdk.TypeCode;
 
 namespace Pinpad.Sdk.Transaction
 {

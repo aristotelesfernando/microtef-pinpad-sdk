@@ -1,4 +1,6 @@
-﻿namespace Pinpad.Sdk
+﻿using Pinpad.Sdk.Model;
+
+namespace Pinpad.Sdk
 {
 	/// <summary>
 	/// Contains the access to each pinpad component, i. e. keyboard, display, terminal information and so forth.
@@ -16,14 +18,14 @@
 		/// <summary>
 		/// Gets the default Keyboard adapter
 		/// </summary>
-		PinpadKeyboard Keyboard { get; set; }
+		IPinpadKeyboard Keyboard { get; set; }
 		/// <summary>
 		/// Gets the default Display adapter
 		/// </summary>
-		PinpadDisplay Display { get; set; }
+		IPinpadDisplay Display { get; set; }
 		/// <summary>
 		/// Gets the default Infos adapter
 		/// </summary>
-		PinpadInfos Infos { get; set; }
+		IPinpadInfos Infos { get; set; }
 	}
 }

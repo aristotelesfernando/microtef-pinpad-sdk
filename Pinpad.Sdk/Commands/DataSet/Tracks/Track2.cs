@@ -8,7 +8,7 @@ using System;
  * 
  */
 
-namespace Pinpad.Sdk.Tracks 
+namespace Pinpad.Sdk.Commands 
 {
 	/// <summary>
 	/// Controller for Track2 data

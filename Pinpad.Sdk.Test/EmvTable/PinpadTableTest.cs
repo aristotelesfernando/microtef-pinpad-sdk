@@ -1,9 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Pinpad.Sdk.Tables;
-using Pinpad.Sdk.Utilities;
 using Moq;
 using MicroPos.CrossPlatform;
+using Pinpad.Sdk.Commands;
 
 namespace Pinpad.Sdk.Test.EmvTable
 {

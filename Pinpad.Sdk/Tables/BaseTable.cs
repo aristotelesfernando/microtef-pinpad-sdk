@@ -2,7 +2,7 @@
 using Pinpad.Sdk.Properties;
 using System;
 
-namespace Pinpad.Sdk.Tables 
+namespace Pinpad.Sdk 
 {
 	/// <summary>
 	/// Base PinPad table

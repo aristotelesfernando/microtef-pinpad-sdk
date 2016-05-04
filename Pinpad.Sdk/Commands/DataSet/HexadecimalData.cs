@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
  * 
  */
 
-namespace Pinpad.Sdk.Utilities 
+namespace Pinpad.Sdk.Commands 
 {
 	/// <summary>
 	/// Controller for Hexadecimal data

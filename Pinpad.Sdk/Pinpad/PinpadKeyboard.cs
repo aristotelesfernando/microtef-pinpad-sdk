@@ -1,7 +1,5 @@
 ﻿using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Properties;
-using Pinpad.Sdk.TypeCode;
-using Pinpad.Sdk.Utilities;
 using Pinpad.Sdk.Model;
 using System;
 
@@ -17,14 +15,14 @@ namespace Pinpad.Sdk
 		/// Pinpad communication adapter
 		/// </summary>
 		public PinpadCommunication Communication { get; private set; }
-		internal PinpadInfos Informations { get; private set; }
+		internal IPinpadInfos Informations { get; private set; }
 
 		// Constructor:
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="pinPad">Pinpad to use</param>
-		public PinpadKeyboard(PinpadCommunication communication, PinpadInfos infos)
+		public PinpadKeyboard(PinpadCommunication communication, IPinpadInfos infos)
 		{
 			this.Communication = communication;
 			this.Informations = infos;

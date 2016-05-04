@@ -1,10 +1,12 @@
 ﻿using System;
-namespace Pinpad.Sdk.Utilities 
+
+namespace Pinpad.Sdk 
 {
 	/// <summary>
 	/// Contains utilities for hexadecimal manipulation.
 	/// </summary>
-	public class HexadecimalController {
+	internal class HexadecimalController
+	{
 
 		/// <summary>
 		/// Converts a stream of bytes into a hexadecimal representation.

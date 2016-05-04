@@ -1,11 +1,10 @@
 ﻿using Pinpad.Sdk.Commands;
 using System;
 using Pinpad.Sdk.Model;
-using Pinpad.Sdk.Utilities;
 using Pinpad.Sdk.Properties;
-using Pinpad.Sdk.TypeCode;
+using Pinpad.Sdk.Transaction;
 
-namespace Pinpad.Sdk.Transaction
+namespace Pinpad.Sdk
 {
 	internal class MagneticStripePinReader
 	{

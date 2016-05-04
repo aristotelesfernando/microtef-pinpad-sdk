@@ -1,11 +1,9 @@
 ﻿using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Properties;
-using Pinpad.Sdk.TypeCode;
-using Pinpad.Sdk.Utilities;
 using System;
 
-namespace Pinpad.Sdk.Tables
+namespace Pinpad.Sdk
 {
 	/// <summary>
 	/// Application IDentifier table record

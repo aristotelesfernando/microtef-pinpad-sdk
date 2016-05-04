@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Pinpad.Sdk.Transaction
+namespace Pinpad.Sdk
 {
 	/// <summary>
 	/// Responsible for getting pinpad security information (Pin Block and Key Serial Number(KSN)).

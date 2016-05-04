@@ -1,4 +1,5 @@
 ﻿using MicroPos.CrossPlatform;
+using Pinpad.Sdk.Model;
 
 namespace Pinpad.Sdk
 {
@@ -35,15 +36,15 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Gets the default Keyboard adapter.
 		/// </summary>
-		public PinpadKeyboard Keyboard { get; set; }
+		public IPinpadKeyboard Keyboard { get; set; }
 		/// <summary>
 		/// Gets the default Display adapter
 		/// </summary>
-		public PinpadDisplay Display { get; set; }
+		public IPinpadDisplay Display { get; set; }
 		/// <summary>
 		/// Gets the default Infos adapter
 		/// </summary>
-		public PinpadInfos Infos { get; set; }
+		public IPinpadInfos Infos { get; set; }
 
 		/// <summary>
 		/// Creates all pinpad adapters.

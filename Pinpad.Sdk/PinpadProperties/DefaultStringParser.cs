@@ -1,4 +1,4 @@
-﻿using Pinpad.Sdk.Utilities;
+﻿using Pinpad.Sdk.Commands;
 using System;
 using System.Globalization;
 
