@@ -96,6 +96,10 @@ namespace Pinpad.Sdk
         }
 
         // Constructor:
+		/// <summary>
+		/// Creates a pinpad table adapter.
+		/// </summary>
+		/// <param name="pinpadCommunication">Pinpad communication, through which is possible to communicate with the pinpad.</param>
         public PinpadTable (PinpadCommunication pinpadCommunication)
         {
 			if (pinpadCommunication == null) { throw new ArgumentNullException("pinpad communication cannot be null."); }
@@ -182,11 +186,6 @@ namespace Pinpad.Sdk
         public bool IsPinpadUpdated ()
         {
             return (this.tableCollectionModified == false && this.ExpectedTableVersion == this.GetEmvTableVersion());
-        }
-
-        public void RefreshFromPinpad ()
-        {
-            
         }
 
         /// <summary>

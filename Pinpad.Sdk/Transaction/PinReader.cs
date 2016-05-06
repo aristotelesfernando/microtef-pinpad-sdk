@@ -44,7 +44,6 @@ namespace Pinpad.Sdk
 		/// Is up to the user using these infos.
 		/// </summary>
 		/// <param name="pinpadCommunication">PinpadFacade mandatory to this class be able to communicate with the pinpad.</param>
-		/// <param name="readingMode">Card type, that is, the method physical in which the card should be read.</param>
 		/// <exception cref="System.InvalidOperationException">Thrown when one parameter validation fails.</exception>
 		internal PinReader(PinpadCommunication pinpadCommunication)
 		{
@@ -66,6 +65,7 @@ namespace Pinpad.Sdk
 		/// Reads Pin Block and Key Serial Number (KSN) from the card.
 		/// If needed, prompts for cardholder password.
 		/// </summary>
+		/// <param name="readingMode">Card reading mode, depending on card type.</param>
 		/// <param name="pan">Primary Account Number, printed on the card.</param>
 		/// <param name="amount">Transaction amount.</param>
 		/// <returns>Whether is an online transaction or not.</returns>

@@ -33,8 +33,9 @@ namespace Pinpad.Sdk.Commands
 		/// <summary>
 		/// Creates all properties for a basic command.
 		/// </summary>
-		/// <param name="commandNameLength">CommandName property length. The default value is 3.</param>
-		/// <param name="context"></param>
+		/// <param name="context"><see cref="Pinpad.Sdk.Commands.IContext">Pinpad context.</see></param>
+		/// <seealso cref="Pinpad.Sdk.Commands.AbecsContext"/>
+		/// <seealso cref="Pinpad.Sdk.Commands.GertecContext"/>
 		public BaseCommand (IContext context = null)
 		{
 			if (context == null) { context = new AbecsContext(); }

@@ -4,7 +4,7 @@ using Pinpad.Sdk.Model;
 namespace Pinpad.Sdk 
 {
 	/// <summary>
-	/// PinPad infos tool
+	/// Pinpad informations.
 	/// </summary>
 	public class PinpadInfos : IPinpadInfos
 	{
@@ -112,6 +112,10 @@ namespace Pinpad.Sdk
 		}
 
 		// Constructor
+		/// <summary>
+		/// Pinpad information.
+		/// </summary>
+		/// <param name="communication">Pinpad communication.</param>
 		public PinpadInfos(PinpadCommunication communication)
 		{
 			this.communication = communication;
@@ -140,6 +144,9 @@ namespace Pinpad.Sdk
 		}
 
         // Public Methods
+		/// <summary>
+		/// Update pinpad informations.
+		/// </summary>
         public void Update ()
         {
             this._ginResponse = null;

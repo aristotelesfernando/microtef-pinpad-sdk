@@ -1,5 +1,8 @@
 ﻿namespace Pinpad.Sdk.Model
 {
+	/// <summary>
+	/// Pinpad transaction tools.
+	/// </summary>
 	public interface IPinpadTransaction
 	{
 		/// <summary>
@@ -14,8 +17,10 @@
 		/// If the card is removed in the middle of the process, returns CANCEL status.
 		/// </summary>
 		/// <param name="transactionType">Transaction type, that is, debit/credit.</param>
+		/// <param name="amount">Transaction amount.</param>
+		/// <param name="newTransactionType">If this method is called without knowing transaction type, pinpad will prompt for this information and return the value choosed by the cardholder.</param>
 		/// <returns>Card basic info.</returns>
-		/// <exception cref="ExpiredCardException">When an expired card is read.</exception>
+		/// <exception cref="Pinpad.Sdk.Model.Exceptions.ExpiredCardException">When an expired card is read.</exception>
 		CardEntry ReadCard (TransactionType transactionType, decimal amount, out TransactionType newTransactionType);
 		/// <summary>
 		/// If cardholder card needs password, than prompts it. Otherwise, nothing is done. 

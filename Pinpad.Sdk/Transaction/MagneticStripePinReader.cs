@@ -26,8 +26,10 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Read security information when card has no chip - magnetic stripe only.
 		/// </summary>
+		/// <param name="pinpadCommunication">Pinpad communication, through which c</param>
 		/// <param name="pan">Primary Account Number printed on the card.</param>
 		/// <param name="amount">Transaction amount.</param>
+		/// <param name="pin">Pin read.</param>
 		/// <returns>Wheter is an online transaction or not.</returns>
 		/// <exception cref="System.InvalidOperationException">Thrown when parameter validation fails.</exception>
 		internal ResponseStatus Read(PinpadCommunication pinpadCommunication, string pan, decimal amount, out Pin pin)
@@ -64,6 +66,7 @@ namespace Pinpad.Sdk
 		/// Sends reading command using ABECS in case of a magnetic stripe card.
 		/// Unexpected behavior if amount is too large (over quadrillion).
 		/// </summary>
+		/// <param name="pinpadCommunication"></param>
 		/// <param name="pan">Primary Account Number printed on the card.</param>
 		/// <param name="amount">Transaction amount.</param>
 		/// <returns>ABECS GPN command response.</returns>

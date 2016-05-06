@@ -1,5 +1,8 @@
 ﻿namespace Pinpad.Sdk.Model
 {
+	/// <summary>
+	/// Card contactless mode.
+	/// </summary>
     public enum PinpadContactlessMode
     {
         /// <summary>

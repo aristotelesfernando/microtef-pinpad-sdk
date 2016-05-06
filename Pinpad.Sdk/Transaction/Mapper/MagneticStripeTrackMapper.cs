@@ -6,7 +6,7 @@ namespace Pinpad.Sdk.Transaction
 {
     internal class MagneticStripeTrackMapper
     {
-        /* CONSTANTS */
+        // Constants
         /// <summary>
         /// Track1, separator between different information. Based on ISO 7810/7811.
         /// </summary>
@@ -16,28 +16,27 @@ namespace Pinpad.Sdk.Transaction
         /// </summary>
         internal const char TRACK2_FIELD_SEPARATOR = '=';
         /// <summary>
-        /// Track 1 is made of several information divided by a <see cref="Pinpad.Sdk.Mapper.MagneticStripeTrackMapper.TRACK1_FIELD_SEPARATOR">separator</see>. This is the index of card expiration date on track 1.
+        /// Track 1 is made of several information divided by a <see cref="TRACK1_FIELD_SEPARATOR">separator</see>. This is the index of card expiration date on track 1.
         /// </summary>
         internal const short EXPIRATIONDATE_INDEX_ON_TRACK1 = 2;
         /// <summary>
-        /// Track 2 is made of several information divided by a <see cref="Pinpad.Sdk.Mapper.MagneticStripeTrackMapper.TRACK2_FIELD_SEPARATOR">separator</see>. This is the index of card expiration date on track 2.
+        /// Track 2 is made of several information divided by a <see cref="TRACK2_FIELD_SEPARATOR">separator</see>. This is the index of card expiration date on track 2.
         /// </summary>
         internal const short EXPIRATIONDATE_INDEX_ON_TRACK2 = 1;
         /// <summary>
         /// Card expiration date string length.
         /// </summary>
         internal const short EXPIRATIONDATE_LENGTH = 4;
-
+		/// <summary>
+		/// Track 2 is made of several information divided by a <see cref="TRACK2_FIELD_SEPARATOR">separator</see>. This is the index of the Primary Account Number (PAN) on track 1.
+		/// </summary>
+		internal const short PAN_INDEX = 0;
         /// <summary>
-        /// Track 2 is made of several information divided by a <see cref="Pinpad.Sdk.Mapper.MagneticStripeTrackMapper.TRACK2_SEPARATOR">separator</see>. This is the index of the Primary Account Number (PAN) on track 1.
-        /// </summary>
-        internal const short PAN_INDEX = 0;
-        /// <summary>
-        /// Track 1 is made of several information divided by a <see cref="Pinpad.Sdk.Mapper.MagneticStripeTrackMapper.TRACK1_FIELD_SEPARATOR">separator</see>. This is the index of cardholder name on track 1.
+        /// Track 1 is made of several information divided by a <see cref="TRACK1_FIELD_SEPARATOR">separator</see>. This is the index of cardholder name on track 1.
         /// </summary>
         internal const short CARDHOLDERNAME_INDEX = 1;
 
-        /* METHODS */
+        // Methods
         /// <summary>
         /// Translates card track data into information.
         /// </summary>

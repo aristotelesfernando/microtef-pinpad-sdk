@@ -79,8 +79,15 @@ namespace Pinpad.Sdk.Model
         CardholderVerificationMethodResults = 0x9F34
     }
 
+	/// <summary>
+	/// Responsible for know all EMV tags this application supports.
+	/// </summary>
     public class EmvTag
     {
+		/// <summary>
+		/// Get's all EMV tags supported and needed to perform EMV operations.
+		/// </summary>
+		/// <returns>EMV tags concatenated.</returns>
         public static string GetEmvTagsRequired()
         {
             StringBuilder strCodes = new StringBuilder();

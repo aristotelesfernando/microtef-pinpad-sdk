@@ -17,7 +17,6 @@ namespace Pinpad.Sdk.Commands
         public CngRequest()
 		{
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
-			//this.CNG_EMVDTLEN = new RegionProperty("CNG_EMVDTLEN", 2);
 
 			this.CNG_EMVDAT = new VariableLengthProperty<HexadecimalData>("CNG_EMVDAT", 2, 198, 1.0f / 2, false, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
 
@@ -26,11 +25,6 @@ namespace Pinpad.Sdk.Commands
 				this.AddProperty(this.CNG_EMVDAT);
             }
             this.EndLastRegion();
-
-			//this.StartRegion(this.CNG_EMVDTLEN);
-			//{
-			//}
-			//this.EndLastRegion();
         }
 
         /// <summary>
@@ -42,11 +36,6 @@ namespace Pinpad.Sdk.Commands
         /// Length of the first region of the command
         /// </summary>
         public RegionProperty CMD_LEN1 { get; private set; }
-
-		/// <summary>
-		/// Length of the first region of the command
-		/// </summary>
-		//public RegionProperty CNG_EMVDTLEN { get; private set; }
 
 		/// <summary>
 		/// EMV data to be supplied in Tag/Length/Value format

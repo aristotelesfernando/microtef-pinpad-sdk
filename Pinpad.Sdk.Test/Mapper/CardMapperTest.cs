@@ -3,7 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Transaction;
-using Pinpad.Sdk.TypeCode;
 
 namespace Pinpad.Sdk.Test.Mapper
 {

@@ -6,11 +6,15 @@ namespace Pinpad.Sdk.Model.Exceptions
 	/// </summary>
 	public class StoneVersionMismatchException : PinpadException 
 	{
+		/// <summary>
+		/// Error reason.
+		/// </summary>
 		public string Reason { get; set; }
 
 		/// <summary>
-		/// Constructor
+		/// Creates the exception.
 		/// </summary>
+		/// <param name="reason">Exception reason.</param>
 		/// <param name="message">Exception Message</param>
 		/// <param name="inner">Inner Exception</param>
 		public StoneVersionMismatchException(string reason = null, string message = null, Exception inner = null) : base(null, null, message, inner) 

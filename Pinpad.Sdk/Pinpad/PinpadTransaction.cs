@@ -84,6 +84,7 @@ namespace Pinpad.Sdk
 		/// </summary>
 		/// <param name="transactionType">Transaction type, that is, debit/credit.</param>
 		/// <param name="amount">Transaction amount.</param>
+		/// <param name="newTransactionType">New transaction type read throgh ABECS protocol.</param>
 		/// <returns>Card basic info.</returns>
 		/// <exception cref="ExpiredCardException">When an expired card is read.</exception>
 		public CardEntry ReadCard (TransactionType transactionType, decimal amount, out TransactionType newTransactionType)
@@ -258,8 +259,6 @@ namespace Pinpad.Sdk
 
 			if (cardRead.Type == CardType.Emv)
 			{
-				this.EmvTable.RefreshFromPinpad();
-
 				if (this.EmvTable.AidTable.Count <= 0)
 				{
 					throw new InvalidTableException("AID table is empty.");

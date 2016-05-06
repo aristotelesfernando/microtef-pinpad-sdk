@@ -69,6 +69,7 @@ namespace Pinpad.Sdk.Properties
 				}
 			}
 		}
+		/// <summary>
 		/// Is the pin mandatory?
 		/// Some cases are not required to get the Pin if a Pin Entry Device is not present
 		/// </summary>

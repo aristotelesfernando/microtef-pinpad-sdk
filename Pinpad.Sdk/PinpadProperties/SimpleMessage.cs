@@ -165,6 +165,7 @@ namespace Pinpad.Sdk.Properties
 		/// Constructor with values. Initialize SimpleMessages with specified values.
 		/// </summary>
 		/// <param name="fullValue">32 characters message, 16 characters each line.</param>
+		/// <param name="padding">Alignment to the message to be present on pinpad display.</param>
 		public SimpleMessage(string fullValue, DisplayPaddingType padding = DisplayPaddingType.Undefined)
 			: this() 
 		{

@@ -33,9 +33,9 @@ namespace Pinpad.Sdk.Events
 		public int TotalToLoad { get; private set; }
 
 		/// <summary>
-		/// Constructor
+		/// Creates the object based on parameters.
 		/// </summary>
-		/// <param name="pinPad">Communidation interface of the Pinpad used</param>
+		/// <param name="communication">Communidation interface of the Pinpad used</param>
 		/// <param name="name">File Name</param>
 		/// <param name="path">File Path</param>
 		/// <param name="sucessfullyLoaded">Was the file successfully loaded?</param>

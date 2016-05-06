@@ -5,6 +5,9 @@
 	/// </summary>
 	public enum GertecResponseCode
 	{
+		/// <summary>
+		/// Undefined/invalid type code.
+		/// </summary>
 		Undefined = 0,
 		/// <summary>
 		/// Operation succeed.

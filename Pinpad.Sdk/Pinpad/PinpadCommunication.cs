@@ -88,6 +88,10 @@ namespace Pinpad.Sdk
 				return this._stoneVersion;
 			}
 		}
+		/// <summary>
+		/// Sends an OPN to the pinpad and do not close it.
+		/// </summary>
+		/// <returns>If the OPN was received, that is, if a pinpad was detected.</returns>
 		public bool OpenPinpadConnection ()
 		{
 			OpnResponse response = this.SendRequestAndReceiveResponse<OpnResponse>(new OpnRequest());
@@ -114,7 +118,6 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="pinPad">Owner Pinpad Facade</param>
 		/// <param name="pinpadConnection">Connection with Pinpad device</param>
 		public PinpadCommunication (PinpadConnection pinpadConnection)
 		{
@@ -324,6 +327,7 @@ namespace Pinpad.Sdk
 		/// Receives a response from a command from the Pinpad
 		/// </summary>
 		/// <param name="timeout">Timeout of the message</param>
+		/// <param name="context">Pinpad context.</param>
 		/// <returns>response string or null if cancelled</returns>
 		internal string ReceiveResponseString (int timeout, IContext context)
 		{

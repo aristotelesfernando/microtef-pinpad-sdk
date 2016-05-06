@@ -3,6 +3,9 @@ using Pinpad.Sdk.Commands;
 
 namespace Pinpad.Sdk
 {
+	/// <summary>
+	/// Pinpad connection handler.
+	/// </summary>
 	public class PinpadConnection
 	{
 		// Members
@@ -26,6 +29,10 @@ namespace Pinpad.Sdk
 		}
 
 		// Constructor
+		/// <summary>
+		/// Creates the object based on the <see cref="IPinpadConnection">connection provided</see> by the platform (Desktop, UWP...).
+		/// </summary>
+		/// <param name="connection">Connection provided by the platform (Desktop, UWP...).</param>
 		public PinpadConnection (IPinpadConnection connection)
 		{
 			this.Connection = connection;

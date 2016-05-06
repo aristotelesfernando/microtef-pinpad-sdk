@@ -19,9 +19,10 @@ namespace Pinpad.Sdk
 
 		// Constructor:
 		/// <summary>
-		/// Constructor
+		/// Default constructor.
 		/// </summary>
-		/// <param name="pinPad">Pinpad to use</param>
+		/// <param name="communication">Pinpad communication, through which is possible to communicate with the pinpad.</param>
+		/// <param name="infos">Pinpad informations.</param>
 		public PinpadKeyboard(PinpadCommunication communication, IPinpadInfos infos)
 		{
 			this.Communication = communication;
@@ -99,6 +100,8 @@ namespace Pinpad.Sdk
 		/// </summary>
 		/// <param name="firstLine">First line label.</param>
 		/// <param name="secondLine">Second line label.</param>
+		/// <param name="minimumLength">Minimum number of characters typed.</param>
+		/// <param name="maximumLength">Maximum number of characters typed.</param>
 		/// <param name="timeOut">Time out.</param>
 		/// <returns>Input from the keyboard. Null if nothing was received, whether of timeout or cancellation.</returns>
 		public string GetNumericInput (FirstLineLabelCode firstLine, SecondLineLabelCode secondLine, int minimumLength, int maximumLength, int timeOut)
@@ -134,8 +137,18 @@ namespace Pinpad.Sdk
 
 			return null;
 		}
-
-		public string GetText (KeyboardNumberFormat numericInput, KeyboardTextFormat textInput, FirstLineLabelCode firstLine, SecondLineLabelCode secondLine, int minimumLength, int maximumLength, int timeOut)
+		/// <summary>
+		/// Get's a generic input.
+		/// </summary>
+		/// <param name="numericInput">Numeric input code.</param>
+		/// <param name="textInput">Text input code.</param>
+		/// <param name="firstLine">First line label.</param>
+		/// <param name="secondLine">Second line label.</param>
+		/// <param name="minimumLength">Minimum number of characters typed.</param>
+		/// <param name="maximumLength">Maximum number of characters typed (up to 32 chars).</param>
+		/// <param name="timeOut">Time out.</param>
+		/// <returns>Text typed.</returns>
+		public string GetInput (KeyboardNumberFormat numericInput, KeyboardTextFormat textInput, FirstLineLabelCode firstLine, SecondLineLabelCode secondLine, int minimumLength, int maximumLength, int timeOut)
 		{
 			if (GciGertecRequest.IsSupported(this.Informations.ManufacturerName, this.Informations.Model, this.Informations.ManufacturerVersion) == false)
 			{ return null; }
@@ -143,7 +156,7 @@ namespace Pinpad.Sdk
 			if (minimumLength < 0)
 			{ minimumLength = 0; }
 
-			if (maximumLength > 35)
+			if (maximumLength > 32)
 			{
 				throw new InvalidOperationException("Invalid maximumLength. The maximum length is up to 32 characters.");
 			}

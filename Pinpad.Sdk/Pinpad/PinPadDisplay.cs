@@ -11,6 +11,9 @@ namespace Pinpad.Sdk
 	public class PinpadDisplay : IPinpadDisplay
 	{
 		// Constants
+		/// <summary>
+		/// Maximum number of characters that fit in one line of pinpad display.
+		/// </summary>
 		public const int DISPLAY_LINE_WIDTH = 16;
 
 		// Members
@@ -21,9 +24,9 @@ namespace Pinpad.Sdk
 
 		// Constructor
 		/// <summary>
-		/// Constructor
+		/// Default constructor. Creates pinpad display facade.
 		/// </summary>
-		/// <param name="pinPad">PinPad to use</param>
+		/// <param name="communication"></param>
 		public PinpadDisplay (PinpadCommunication communication) 
 		{
 			if (communication == null)
@@ -62,6 +65,14 @@ namespace Pinpad.Sdk
 		}
 
 		// Interfaced methods
+		/// <summary>
+		/// Show message on pinpad screen.
+		/// </summary>
+		/// <param name="firstLine">The first line of the message, shown at the first screen line. Must have 16 characters or less.</param>
+		/// <param name="secondLine">The second line of the message, shown at the second screen line. Must have 16 characters or less.</param>
+		/// <param name="paddingType">At what alignment the message is present. It default value is left alignment.</param>
+		/// <returns>Whether the message could be shown with success or not.</returns>
+		/// <exception cref="System.ArgumentOutOfRangeException">This exception is thrown only if one (or both) of the messages exceed the limit of 16 characters.</exception>
 		public bool ShowMessage(string firstLine, string secondLine = null, Sdk.Model.DisplayPaddingType paddingType = DisplayPaddingType.Left)
 		{
 			if (firstLine != null && firstLine.Length > 16) { firstLine = firstLine.Substring(0, 16); }

@@ -78,6 +78,7 @@ namespace Pinpad.Sdk
         /// <summary>
 		/// Sends reading command using ABECS when card have a chip.
 		/// </summary>
+		/// <param name="pinpadCommunication">Pinpad communication, through which the communication with the pinpad is made.</param>
 		/// <param name="amount">Transaction amount.</param>
 		/// <returns>ABECS GOC command response.</returns>
 		private GocResponse SendGoc(PinpadCommunication pinpadCommunication, decimal amount)
