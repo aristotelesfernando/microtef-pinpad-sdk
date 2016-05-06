@@ -137,15 +137,19 @@ namespace Pinpad.Sdk
 
 			return pin;
 		}
-		public void FinishTransaction (IssuerEmvDataEntry issuerEmvData)
+		/// <summary>
+		/// Creates and sends a FNC to the pinpad. This command ends an authorization process on EMV module.
+		/// </summary>
+		/// <param name="issuerEmvData">EMV script to be send to the card.</param>
+		/// <returns>FNC command status.</returns>
+		public AbecsResponseStatus FinishTransaction (IssuerEmvDataEntry issuerEmvData)
 		{
 			FncRequest fnc = new FncRequest();
 			fnc.FNC_COMMST.Value = issuerEmvData.AuthorizationStatus;
 			fnc.FNC_ISSMODE.Value = 0;
 			fnc.FNC_ARC.Value = issuerEmvData.AuthorizationResponseCode;
-			fnc.FNC_ACQPR.Value = "000";
 
-			if (string.IsNullOrEmpty(issuerEmvData.IssuerRelatedData) == false)
+			if (string.IsNullOrEmpty(issuerEmvData.IssuerRelatedData) == false && issuerEmvData.AuthorizationStatus != AcquirerCommunicationStatus.ConnectionError)
 			{
 				fnc.FNC_ISSDAT.Value = new HexadecimalData(issuerEmvData.IssuerRelatedData);
 				fnc.FNC_TAGS.Value = new HexadecimalData(EmvTag.GetEmvTagsRequired());
@@ -155,6 +159,8 @@ namespace Pinpad.Sdk
 				fnc.FNC_ISSDAT.Value = new HexadecimalData("");
 				fnc.FNC_TAGS.Value = new HexadecimalData("");
 			}
+
+			return this.pinpadCommunication.SendRequestAndReceiveResponse<FncResponse>(fnc).RSP_STAT.Value;
 		}
 
 		/// <summary>
