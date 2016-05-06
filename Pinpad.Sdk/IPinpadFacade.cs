@@ -10,7 +10,7 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Controller for Stone Connection adapter.
 		/// </summary>
-		//PinpadConnection Connection { get; set; }
+		PinpadConnection Connection { get; set; }
 		/// <summary>
 		/// Gets the default Communication adapter.
 		/// </summary>
