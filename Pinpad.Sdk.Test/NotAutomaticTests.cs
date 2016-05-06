@@ -152,18 +152,5 @@ namespace Pinpad.Sdk.Test
 			PinpadFacade facade = new PinpadFacade(conn);
 			facade.Display.ShowMessage("", "wow!", DisplayPaddingType.Center);
 		}
-
-		[TestMethod]
-		public void MyTestMethod2 ()
-		{
-			PinpadConnection conn = PinpadConnection.GetFirst();
-
-			PinpadFacade facade = new PinpadFacade(conn);
-
-			facade.Display.ShowMessage("obrigada!", "<3", DisplayPaddingType.Center);
-
-			TransactionType ttype;
-			facade.TransactionService.ReadCard(TransactionType.Debit, 1.99m, out ttype);
-		}
 	}
 }
