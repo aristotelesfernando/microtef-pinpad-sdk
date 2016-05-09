@@ -9,7 +9,7 @@
 
 Emoji | Code | Commit Type
 ------------ | ------------- | -------------
-:tada: | `:constrution:` | initial commit
+:tada: | `:tada:` | initial commit
 :art: | `:art:` | quando melhorar a estrutura/formato do código
 :racehorse: | `:racehorse:` | quando melhorar a performance
 :memo: | `:memo:` | quando escrever alguma documentação
