@@ -1,5 +1,6 @@
 ﻿using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Model;
+using Pinpad.Sdk.Properties;
 
 namespace Pinpad.Sdk 
 {
@@ -14,11 +15,11 @@ namespace Pinpad.Sdk
 		/// </summary>
 		private PinpadCommunication communication;
 		/// <summary>
-		/// Response from GIN command.
+		/// Response from GIN command. GIN command returns pinpad information.
 		/// </summary>
 		private GinResponse _ginResponse;
 		/// <summary>
-		/// Response from GIN command.
+		/// Response from GIN command. GIN command returns pinpad information.
 		/// </summary>
 		private GinResponse ginResponse 
 		{
@@ -29,6 +30,24 @@ namespace Pinpad.Sdk
 					_ginResponse = this.GetGin();
 				}
 				return _ginResponse;
+			}
+		}
+		/// <summary>
+		/// Response from GDU command. GDU command searches for a specified acquirer encryption key, and can be used to verify if Stone is supported in this pinpad.
+		/// </summary>
+		private GduResponse _gduResponse;
+		/// <summary>
+		/// Response from GDU command. GDU command searches for a specified acquirer encryption key, and can be used to verify if Stone is supported in this pinpad.
+		/// </summary>
+		private GduResponse gduResponse
+		{
+			get
+			{
+				if (this._gduResponse == null)
+				{
+					this._gduResponse = this.GetGdu();
+				}
+				return this._gduResponse;
 			}
 		}
 
@@ -106,8 +125,19 @@ namespace Pinpad.Sdk
 		{
 			get 
 			{
-				if (ginResponse == null) { return null; }
+				if (this.ginResponse == null) { return null; }
 				else { return ginResponse.GIN_SERNUM.Value; }
+			}
+		}
+		/// <summary>
+		/// If stone is supported on this pinpad.
+		/// </summary>
+		public bool IsStoneSupported
+		{
+			get
+			{
+				if (this.gduResponse == null) { return false; }
+				else { return this.gduResponse.IsStoneSupported; }
 			}
 		}
 
@@ -120,6 +150,15 @@ namespace Pinpad.Sdk
 		{
 			this.communication = communication;
 		}
+        
+		// Public Methods
+		/// <summary>
+		/// Update pinpad informations.
+		/// </summary>
+        public void Update ()
+        {
+            this._ginResponse = null;
+        }
 
 		// Private Methods
 		/// <summary>
@@ -142,14 +181,23 @@ namespace Pinpad.Sdk
 			// Returns the response:
 			return response;
 		}
-
-        // Public Methods
 		/// <summary>
-		/// Update pinpad informations.
+		/// Searches for Stone encryption DUKPT:TDES key, on pinpad index 16.
 		/// </summary>
-        public void Update ()
-        {
-            this._ginResponse = null;
-        }
+		/// <returns>GDU response.</returns>
+		private GduResponse GetGdu ()
+		{
+			// Creates GDU request:
+			GduRequest request = new GduRequest();
+
+			// Sets GDU to search for Stone encryption index (16):
+			request.GDU_IDX.Value = (int)StoneIndexCode.EncryptionKey;
+
+			// Sets GDU to search for a DUKPT:TDES key:
+			request.GDU_METHOD.Value = new CryptographyMethod(KeyManagementMode.DerivedUniqueKeyPerTransaction, CryptographyMode.TripleDataEncryptionStandard);
+
+			// Sends the request to pinpad, gets and returns it's response:
+			return this.communication.SendRequestAndReceiveResponse<GduResponse>(request);
+		}
 	}
 }
