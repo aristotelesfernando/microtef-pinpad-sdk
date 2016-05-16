@@ -84,26 +84,6 @@ namespace Pinpad.Sdk.Test
 			}
 		}
 		//[TestMethod]
-		//public void MyTestMethod ()
-		//{
-		//	PinpadConnection conn = PinpadConnection.GetFirst();
-
-		//	PinpadFacade facade = new PinpadFacade(conn);
-
-		//	facade.Display.ShowMessage("ola", "tudo bom?", DisplayPaddingType.Center);
-
-		//	string pump = facade.Keyboard.GetText(KeyboardNumberFormat.Decimal, KeyboardTextFormat.Symbols, FirstLineLabelCode.TypeNumber, SecondLineLabelCode.GasPump, 5, 15, 120);
-
-		//	if (pump == null)
-		//	{
-		//		Debug.WriteLine("Nao foi possivel ler um valor. Time out ou cancelamento.");
-		//	}
-		//	else
-		//	{
-		//		Debug.WriteLine("Valor digitado: " + pump);
-		//	}
-		//}
-		//[TestMethod]
 		public void OPN_test ()
 		{
 			PinpadConnection conn = PinpadConnection.GetFirst();
