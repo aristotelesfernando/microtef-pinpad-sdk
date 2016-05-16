@@ -158,6 +158,7 @@ namespace Pinpad.Sdk
         public void Update ()
         {
             this._ginResponse = null;
+			this._gduResponse = null;
         }
 
 		// Private Methods
