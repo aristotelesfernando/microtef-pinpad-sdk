@@ -104,8 +104,9 @@ namespace Pinpad.Sdk
 					// TODO: FAZER UM TRATAMENTO DESCENTE
 					return null;
 				}
-				else if (status == AbecsResponseStatus.ST_TIMEOUT)
+				else if (status == AbecsResponseStatus.ST_TIMEOUT && this.pinpadCommunication.OpenPinpadConnection() == false)
 				{
+					// Conection loss
 					throw new PinpadDisconnectedException();
 				}
 				else if (status == AbecsResponseStatus.ST_TABERR)
