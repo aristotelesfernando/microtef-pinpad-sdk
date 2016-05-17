@@ -34,7 +34,7 @@ namespace Pinpad.Sdk
 		/// <exception cref="System.InvalidOperationException">Thrown when parameter validation fails.</exception>
 		internal ResponseStatus Read(PinpadCommunication pinpadCommunication, string pan, decimal amount, out Pin pin)
 		{
-			pin = new Pin();
+			pin = null;
 
 			// Validating data
 			try { this.Validate(pinpadCommunication, amount, pan); }

@@ -91,30 +91,26 @@ namespace Pinpad.Sdk
 		{
 			AbecsResponseStatus status;
 			CardEntry cardRead;
+			
+			status = this.PerformCardReading(transactionType, amount, out cardRead, out newTransactionType);
+			this.LastCommandStatus = ResponseStatusMapper.MapLegacyResponseStatus(status);
 
-			do
+			// EMV tables are incompatible. Recharging tables:
+			if (status == AbecsResponseStatus.ST_TABVERDIF ||
+				status == AbecsResponseStatus.ST_CARDAPPNAV)
 			{
-				status = this.PerformCardReading(transactionType, amount, out cardRead, out newTransactionType);
-				this.LastCommandStatus = ResponseStatusMapper.MapLegacyResponseStatus(status);
-
-				// EMV tables are incompatible. Recharging tables:
-				if (status == AbecsResponseStatus.ST_TABVERDIF ||
-					status == AbecsResponseStatus.ST_CARDAPPNAV)
-				{
-					// TODO: FAZER UM TRATAMENTO DESCENTE
-					return null;
-				}
-				else if (status == AbecsResponseStatus.ST_TIMEOUT && this.pinpadCommunication.OpenPinpadConnection() == false)
-				{
-					// Conection loss
-					throw new PinpadDisconnectedException();
-				}
-				else if (status == AbecsResponseStatus.ST_TABERR)
-				{
-					throw new InvalidTableException("EMV table version could not be found.");
-				}
-
-			} while (status != AbecsResponseStatus.ST_OK && status != AbecsResponseStatus.ST_CANCEL);
+				// TODO: FAZER UM TRATAMENTO DESCENTE
+				return null;
+			}
+			else if (status == AbecsResponseStatus.ST_TIMEOUT && this.pinpadCommunication.OpenPinpadConnection() == false)
+			{
+				// Conection loss
+				throw new PinpadDisconnectedException();
+			}
+			else if (status == AbecsResponseStatus.ST_TABERR)
+			{
+				throw new InvalidTableException("EMV table version could not be found.");
+			}
 
 			return cardRead;
 		}
@@ -176,7 +172,7 @@ namespace Pinpad.Sdk
 		/// <returns>Operation status.</returns>
 		private AbecsResponseStatus PerformCardReading (TransactionType transactionType, decimal amount, out CardEntry cardRead, out TransactionType newTransactionType)
 		{
-			cardRead = new CardEntry();
+			cardRead = null;
 
 			newTransactionType = transactionType;
 

@@ -33,7 +33,7 @@ namespace Pinpad.Sdk
         /// <returns>Operation status.</returns>
 		internal ResponseStatus Read(PinpadCommunication communication, decimal amount, out Pin pin)
 		{
-			pin = new Pin();
+			pin = null;
 
 			// Validating data
 			this.Validate(communication, amount);
