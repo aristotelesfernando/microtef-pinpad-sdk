@@ -24,6 +24,10 @@ namespace Pinpad.Sdk.Model
         /// </summary>
         public string PrimaryAccountNumber { get; set; }
         /// <summary>
+        /// Application PAN Sequencial number for joint banck account.
+        /// </summary>
+        public Nullable<int> PrimaryAccountNumberSequenceNumber { get; set; }
+        /// <summary>
         /// Card expiration date, printed in the original physical card.
         /// </summary>
         public DateTime ExpirationDate { get; set; }

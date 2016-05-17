@@ -41,6 +41,12 @@ namespace Pinpad.Sdk.Transaction
 			}
 			else { Debug.WriteLine("GCR_PAN null."); }
 
+            if (response.GCR_PANSEQNO.HasValue ==  true)
+            {
+                mappedCard.PrimaryAccountNumberSequenceNumber = response.GCR_PANSEQNO.Value;
+                Debug.WriteLine(mappedCard.PrimaryAccountNumberSequenceNumber);
+            }
+
             if (response.GCR_TRK1.HasValue == true)
             {
                 mappedCard.Track1 = response.GCR_TRK1.Value.CommandString;
