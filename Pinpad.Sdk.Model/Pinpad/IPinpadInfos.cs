@@ -33,5 +33,9 @@
 		/// Manufactured Version at format "VVV.VV YYMMDD"
 		/// </summary>
 		string ManufacturerVersion { get; }
+		/// <summary>
+		/// If stone is supported on this pinpad. If this value is false, none financial operation can be performed.
+		/// </summary>
+		bool IsStoneSupported { get; }
 	}
 }

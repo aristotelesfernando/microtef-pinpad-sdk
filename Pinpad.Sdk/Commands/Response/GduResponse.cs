@@ -27,6 +27,23 @@ namespace Pinpad.Sdk.Commands
 		/// KSN obtained.
 		/// </summary>
 		public PinpadFixedLengthProperty<string> GDU_KSN { get; private set; }
+		/// <summary>
+		/// If stone is supported on this pinpad.
+		/// </summary>
+		public bool IsStoneSupported
+		{
+			get
+			{
+				if (this.RSP_STAT.Value == AbecsResponseStatus.ST_OK && this.GDU_KSN.HasValue && string.IsNullOrEmpty(this.GDU_KSN.Value) == false)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
 
 		/// <summary>
 		/// Creates GDU response command with all properties and regions.
