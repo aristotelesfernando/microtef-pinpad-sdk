@@ -4,6 +4,7 @@ using Pinpad.Sdk.Model;
 using System.Globalization;
 using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Transaction;
+using Pinpad.Sdk.Exceptions;
 
 namespace Pinpad.Sdk
 {
@@ -40,12 +41,32 @@ namespace Pinpad.Sdk
 
 			// Using ABECS GOC command to communicate with pinpad.
 			GocResponse commandResponse = this.SendGoc(communication, amount);
-			
+
+			if (commandResponse == null)
+			{
+				if (communication.OpenPinpadConnection() == true)
+				{
+					// Pinpad is connected. Time out.
+					return ResponseStatus.TimeOut;
+				}
+				else
+				{
+					// Pinpad loss conection.
+					throw new PinpadDisconnectedException("Não foi possível ler a senha.\nVerifique a conexão com o pinpad.");
+				}
+			}
+
 			// Saving command response status:
 			AbecsResponseStatus legacyStatus = commandResponse.RSP_STAT.Value;
 			ResponseStatus status = ResponseStatusMapper.MapLegacyResponseStatus(legacyStatus);
-			if (status == ResponseStatus.OperationCancelled) { return status; }
 
+			if (status != ResponseStatus.Ok)
+			{
+				return status;
+			}
+			//if (status == ResponseStatus.OperationCancelled) { return status; }
+
+			pin = new Pin();
 			pin.ApplicationCryptogram = this.MapApplicationCryptogram(commandResponse.GOC_EMVDAT.Value.DataString);
 
 			// Whether is a pin online authentication or not.

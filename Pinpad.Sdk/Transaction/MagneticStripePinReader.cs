@@ -53,6 +53,7 @@ namespace Pinpad.Sdk
 			if (status == ResponseStatus.Ok)
 			{
 				// Magnetic stripe always validates pin online.
+				pin = new Pin();
 				pin.PinBlock = response.GPN_PINBLK.Value.DataString;
 				pin.KeySerialNumber = response.GPN_KSN.Value.DataString;
 				pin.IsOnline = true;
