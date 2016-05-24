@@ -2,6 +2,7 @@
 using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Model;
 using System;
+using System.Globalization;
 
 namespace Pinpad.Sdk
 {
@@ -128,7 +129,7 @@ namespace Pinpad.Sdk
 
 			GertecEx07Response response = this.Communication.SendRequestAndReceiveResponse<GertecEx07Response>(request);
 
-			if (response.RSP_STAT.Value != AbecsResponseStatus.ST_OK) { return null; }
+			if (response == null || response.RSP_STAT.Value != AbecsResponseStatus.ST_OK) { return null; }
 
 			if (response.RSP_RESULT.HasValue == true)
 			{
@@ -174,12 +175,65 @@ namespace Pinpad.Sdk
 
 			GertecEx07Response response = this.Communication.SendRequestAndReceiveResponse<GertecEx07Response>(request);
 
-			if (response.RSP_STAT.Value != AbecsResponseStatus.ST_OK)
-			{ return null; }
+			if (response == null || response.RSP_STAT.Value != AbecsResponseStatus.ST_OK) { return null; }
 
 			if (response.RSP_RESULT.HasValue == true)
 			{
 				return response.RSP_RESULT.Value;
+			}
+
+			return null;
+		}
+		/// <summary>
+		/// Gets a decimal amount.
+		/// The amount shall be typed in the followed format: 
+		///    - "1,99"
+		///    - "0,00"
+		/// Containing always at least 4 chars.
+		/// </summary>
+		/// <param name="currency">Amount currency, i. e. R$, US$.</param>
+		/// <returns>The amount if a valid amount was typed. Null if: timeout, user cancelled, amount was typed on an invalid format (example: 1.7,2).</returns>
+		public Nullable<decimal> GetAmount (AmountCurrencyCode currency)
+		{
+			if (GciGertecRequest.IsSupported(this.Informations.ManufacturerName, this.Informations.Model, this.Informations.ManufacturerVersion) == false) { return null; }
+
+			if (currency == AmountCurrencyCode.Undefined || Enum.IsDefined(typeof(AmountCurrencyCode), (int) currency) == false)
+			{
+				throw new ArgumentException("currency has an invalid value.");
+			}
+
+			GciGertecRequest request = new GciGertecRequest();
+
+			request.NumericInputType.Value = KeyboardNumberFormat.Decimal;
+			request.TextInputType.Value = KeyboardTextFormat.Symbols;
+			request.LabelFirstLine.Value = FirstLineLabelCode.Type;
+			request.LabelSecondLine.Value = (SecondLineLabelCode) (currency + 30);
+			request.MaximumCharacterLength.Value = 4;
+			request.MinimumCharacterLength.Value = 10;
+			request.TimeOut.Value = 120;
+			request.TimeIdle.Value = 0;
+
+			GertecEx07Response response = this.Communication.SendRequestAndReceiveResponse<GertecEx07Response>(request);
+
+			if (response == null || response.RSP_STAT.Value != AbecsResponseStatus.ST_OK) { return null; }
+
+			if (response.RSP_RESULT.HasValue == true)
+			{
+				return this.GetAmount(response.RSP_RESULT.Value);
+			}
+
+			return null;
+		}
+
+		private Nullable<decimal> GetAmount (string amountValue)
+		{
+			CultureInfo c = new CultureInfo("en-US");
+			amountValue = amountValue.Replace(',', '.');
+			decimal amount;
+
+			if (Decimal.TryParse(amountValue, NumberStyles.Currency, c, out amount) == true)
+			{
+				return amount;
 			}
 
 			return null;

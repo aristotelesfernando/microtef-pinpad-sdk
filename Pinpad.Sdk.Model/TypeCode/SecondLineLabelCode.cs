@@ -62,6 +62,34 @@
 		/// </summary>
 		CardSecurityCode = 22,
 		/// <summary>
+		/// Presents "Valor (R$)".
+		/// </summary>
+		AmountInReais = 31,
+		/// <summary>
+		/// Presents "Valor (US$)"
+		/// </summary>
+		AmountInDollars = 32,
+		/// <summary>
+		/// Presents "Valor (€)"
+		/// </summary>
+		AmountInEuros = 33,
+		/// <summary>
+		/// Presents "Valor (£)"
+		/// </summary>
+		AmountInPounds = 34,
+		/// <summary>
+		/// Presents "Valor (¥)"
+		/// </summary>
+		AmountInYen = 35,
+		/// <summary>
+		/// Presents "Ingresso".
+		/// </summary>
+		Ticket = 71,
+		/// <summary>
+		/// Presents "Entrada".
+		/// </summary>
+		Entrance = 72,
+		/// <summary>
 		/// Presents "Bomba gasolina".
 		/// </summary>
 		GasPump = 81,
@@ -84,6 +112,14 @@
 		/// <summary>
 		/// Presents "Terminal".
 		/// </summary>
-		Terminal = 94
+		Terminal = 94,
+		/// <summary>
+		/// Presents "Mesa".
+		/// </summary>
+		Board = 95,
+		/// <summary>
+		/// Presents "Seção".
+		/// </summary>
+		Section = 96
 	}
 }

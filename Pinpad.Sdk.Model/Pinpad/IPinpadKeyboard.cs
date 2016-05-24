@@ -1,4 +1,6 @@
-﻿namespace Pinpad.Sdk.Model
+﻿using System;
+
+namespace Pinpad.Sdk.Model
 {
 	/// <summary>
 	/// Pinpad keyboard interface tool.
@@ -21,6 +23,15 @@
 		/// <param name="timeOut">Time out.</param>
 		/// <returns>Input from the keyboard. Null if nothing was received, whether of timeout or cancellation.</returns>
 		string GetNumericInput (FirstLineLabelCode firstLine, SecondLineLabelCode secondLine, int minimumLength, int maximumLength, int timeOut);
-		//string GetText (KeyboardNumberFormat numericInput, KeyboardTextFormat textInput, FirstLineLabelCode firstLine, SecondLineLabelCode secondLine, int minimumLength, int maximumLength, int timeOut);
+		/// <summary>
+		/// Gets a decimal amount.
+		/// The amount shall be typed in the followed format: 
+		///    - "1,99"
+		///    - "0,00"
+		/// Containing always at least 4 chars.
+		/// </summary>
+		/// <param name="currency">Amount currency, i. e. R$, US$.</param>
+		/// <returns>The amount if a valid amount was typed. Null if: timeout, user cancelled, amount was typed on an invalid format (example: 1.7,2).</returns>
+		Nullable<decimal> GetAmount (AmountCurrencyCode currency);
 	}
 }

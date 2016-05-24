@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Model;
+using System;
 
 namespace Pinpad.Sdk.Test
 {
@@ -39,13 +40,13 @@ namespace Pinpad.Sdk.Test
 			PinpadCommunication comm = new PinpadCommunication(conn);
 
 			GciGertecRequest request = new GciGertecRequest();
-			    
+			
 			request.NumericInputType.Value = KeyboardNumberFormat.Decimal;
 			request.TextInputType.Value = KeyboardTextFormat.None;
 			request.LabelFirstLine.Value = FirstLineLabelCode.TypeNumber;
 			request.LabelSecondLine.Value = SecondLineLabelCode.GasPump;
 			request.MaximumCharacterLength.Value = 1;
-			request.MinimumCharacterLength.Value = 3;
+			request.MinimumCharacterLength.Value = 10;
 			request.TimeOut.Value = 60;
 			request.TimeIdle.Value = 0;
 
@@ -72,7 +73,7 @@ namespace Pinpad.Sdk.Test
 
 			facade.Display.ShowMessage("ola", "tudo bom?", DisplayPaddingType.Center);
 
-			string pump = facade.Keyboard.GetNumericInput(FirstLineLabelCode.TypeNumber, SecondLineLabelCode.GasPump, 5, 15, 10);
+			string pump = facade.Keyboard.GetNumericInput(FirstLineLabelCode.TypeNumber, SecondLineLabelCode.GasPump, 1, 15, 15);
 
 			if (pump == null)
 			{
@@ -81,6 +82,23 @@ namespace Pinpad.Sdk.Test
 			else
 			{
 				Debug.WriteLine("Valor digitado: " + pump);
+			}
+		}
+		//[TestMethod]
+		public void Keyboard_GetAmount_test ()
+		{
+			PinpadConnection conn = PinpadConnection.GetFirst();
+
+			PinpadFacade pinpad = new PinpadFacade(conn);
+			Nullable<decimal> amount = pinpad.Keyboard.GetAmount(AmountCurrencyCode.Yen);
+
+			if (amount.HasValue)
+			{
+				Debug.WriteLine("Valor digitado: " + amount.Value);
+			}
+			else
+			{
+				Debug.WriteLine("Não foi possível ler o valor.");
 			}
 		}
 		//[TestMethod]

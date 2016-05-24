@@ -24,6 +24,6 @@
 		/// <summary>
 		/// The command will ask for symbols to be typed.
 		/// </summary>
-		Symbols = 4
+		Symbols = 5
 	}
 }

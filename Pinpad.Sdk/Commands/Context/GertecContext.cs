@@ -96,11 +96,13 @@ namespace Pinpad.Sdk.Commands
 			// 5 = command name + ETX
 			int length = response.Count - 5;
 
-			if (length <= 0)
+			if (length <= 2)
 			{
 				// Removes status byte and puts a 2 (ascii) in its place. 
 				// That means that something went wrong (user cancellation, timeout).
-				response.RemoveAt(4);
+				// On a cancellation scenario, it returns <'U', '0', '0'>;  on a timeout 
+				// scenario it returns <'T', '0', '0'>, so the line below removes these chars. 
+				response.RemoveRange(4, 3);
 				response.AddRange(new byte [] { 0x32 });
 			}
 		}
