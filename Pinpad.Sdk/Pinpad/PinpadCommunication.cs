@@ -88,21 +88,6 @@ namespace Pinpad.Sdk
 				return this._stoneVersion;
 			}
 		}
-		/// <summary>
-		/// Sends an OPN to the pinpad and do not close it.
-		/// </summary>
-		/// <returns>If the OPN was received, that is, if a pinpad was detected.</returns>
-		public bool OpenPinpadConnection ()
-		{
-			OpnResponse response = this.SendRequestAndReceiveResponse<OpnResponse>(new OpnRequest());
-
-			if (response != null && response.RSP_STAT.Value == AbecsResponseStatus.ST_OK)
-			{
-				return true;
-			}
-
-			return false;
-		}
 
 		// Private members
 		private Nullable<int> _stoneVersion;
@@ -134,6 +119,27 @@ namespace Pinpad.Sdk
 		}
 
 		/* Public methods */
+		/// <summary>
+		/// Sends an OPN to the pinpad and do not close it.
+		/// </summary>
+		/// <returns>If the OPN was received, that is, if a pinpad was detected.</returns>
+		public bool OpenPinpadConnection ()
+		{
+			OpnResponse response = this.SendRequestAndReceiveResponse<OpnResponse>(new OpnRequest());
+
+			if (response != null && response.RSP_STAT.Value == AbecsResponseStatus.ST_OK)
+			{
+				return true;
+			}
+
+			return false;
+		}
+		public bool ClosePinpadConnection (string message)
+		{
+			CloRequest request = new CloRequest();
+			request.CLO_MSG.Value = new Properties.SimpleMessage(message, Model.DisplayPaddingType.Center);
+			return this.SendRequestAndVerifyResponseCode(request);
+		}
 		/// <summary>
 		/// Checks if the connection with the Pinpad is alive
 		/// </summary>
