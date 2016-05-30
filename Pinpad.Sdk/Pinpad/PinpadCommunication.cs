@@ -73,24 +73,9 @@ namespace Pinpad.Sdk
 		/// Last response string received from the Pinpad
 		/// </summary>
 		public string LastReceivedResponse { get; private set; }
-		/// <summary>
-		/// Stone version of the Pinpad, 0 for no stone application or null for failure
-		/// </summary>
-		public Nullable<int> StoneVersion
-		{
-			get
-			{
-				if (this._stoneVersion.HasValue == false)
-				{
-					this.InternalIsConnectionAlive();
-				}
-
-				return this._stoneVersion;
-			}
-		}
+		public string PortName { get { return this.PinpadConnection.Connection.ConnectionName; } }
 
 		// Private members
-		private Nullable<int> _stoneVersion;
 		private bool _requestCancelled { get; set; }
 
 		// Event handlers:
@@ -125,35 +110,88 @@ namespace Pinpad.Sdk
 		/// <returns>If the OPN was received, that is, if a pinpad was detected.</returns>
 		public bool OpenPinpadConnection ()
 		{
-			OpnResponse response = this.SendRequestAndReceiveResponse<OpnResponse>(new OpnRequest());
-
-			if (response != null && response.RSP_STAT.Value == AbecsResponseStatus.ST_OK)
+			try
 			{
-				return true;
+				// Verifies if serial port is opened:
+				if (this.PinpadConnection.IsOpen == false)
+				{
+					this.PinpadConnection.Open(this.PinpadConnection.Connection.ConnectionName);
+				}
+				
+				// Closes pinpad connection:
+				this.ClosePinpadConnection(string.Empty);
+
+				// Open pinpad connection:
+				OpnResponse response = this.SendRequestAndReceiveResponse<OpnResponse>(new OpnRequest());
+
+				if (response != null && response.RSP_STAT.Value == AbecsResponseStatus.ST_OK)
+				{
+					return true;
+				}
+			}
+			catch (IOException)
+			{
+				return false;
+			}
+			catch (PropertyParseException)
+			{
+				this.ReceiveResponse<GenericResponse>(new AbecsContext());
+				return this.OpenPinpadConnection();
 			}
 
 			return false;
 		}
+		/// <summary>
+		/// Sends a CLO to the pinpad and closes the connection.
+		/// </summary>
+		/// <param name="message">Message to be present on pinpad display after the connection is closed.</param>
+		/// <returns>If was closed or not.</returns>
 		public bool ClosePinpadConnection (string message)
 		{
-			CloRequest request = new CloRequest();
-			request.CLO_MSG.Value = new Properties.SimpleMessage(message, Model.DisplayPaddingType.Center);
-			return this.SendRequestAndVerifyResponseCode(request);
+			try
+			{
+				// Create CLO request:
+				CloRequest request = new CloRequest();
+				request.CLO_MSG.Value = new Properties.SimpleMessage(message, Model.DisplayPaddingType.Left);
+
+				// Gets it's reponse
+				CloResponse response = this.SendRequestAndReceiveResponse<CloResponse>(request);
+
+				if (response == null)
+				{
+
+					return false;
+				}
+
+				if (response.RSP_STAT.Value == AbecsResponseStatus.ST_OK
+					|| (response.RSP_STAT.Value != AbecsResponseStatus.ST_OK && response.RSP_STAT.Value == AbecsResponseStatus.ST_NOTOPEN))
+				{
+					return true;
+				}
+			}
+			catch (PropertyParseException)
+			{
+				this.ReceiveResponse<GenericResponse>(new AbecsContext());
+				return this.ClosePinpadConnection(message);
+			}
+
+			return false;
 		}
 		/// <summary>
 		/// Checks if the connection with the Pinpad is alive
 		/// </summary>
 		/// <returns>true if the connection is alive</returns>
-		public bool IsConnectionAlive ()
+		public bool Ping ()
 		{
-			if (this._stoneVersion.HasValue == true && this._stoneVersion.Value > 0)
-			{
-				return InternalStoneIsConnectionAlive();
-			}
-			else
-			{
-				return InternalIsConnectionAlive();
-			}
+			// Closes the pinpad connetion:
+			bool status = this.ClosePinpadConnection(string.Empty);
+
+			// If could not close pinpad connection, then the connection has been lost:
+			if (status == false) { return false; }
+			
+			status = this.OpenPinpadConnection();
+
+			return status;
 		}
 		/// <summary>
 		/// Was the request accepted by the Pinpad?
@@ -437,6 +475,8 @@ namespace Pinpad.Sdk
 			Nullable<bool> requestAccepted = this.WasRequestAccepted();
 			if (requestAccepted == true)
 			{
+				Debug.WriteLine(this.LastSentRequest + " was accepted.");
+
 				this._requestCancelled = false;
 
 				// Pinpad acknowdledged the request:_
@@ -445,6 +485,7 @@ namespace Pinpad.Sdk
 			// Try to remand up to 3 times:
 			else if (requestAccepted == false && counter < TIMES_TO_REMAND_PACKAGE_ON_FAILURE)
 			{
+				Debug.WriteLine(this.LastSentRequest + " was denied.");
 				return InternalSendRequest(data, counter + 1);
 			}
 			// Failed to send:
@@ -452,82 +493,6 @@ namespace Pinpad.Sdk
 			{
 				return false;
 			}
-		}
-		private bool InternalStoneIsConnectionAlive ()
-		{
-			try
-			{
-				// Set operation timeout:
-				this.PinpadConnection.Connection.ReadTimeout = PinpadCommunication.ACKNOWLEDGE_TIMEOUT;
-
-				// Send a null byte (if the pinpad is connected and alive, it'll return a null byte):
-				this.PinpadConnection.Connection.WriteByte(NULL_BYTE);
-
-				byte b;
-
-				// Reads a byte while a null byte is not received:
-				do
-				{
-					b = this.PinpadConnection.Connection.ReadByte();
-				}
-				while (b != NULL_BYTE);
-
-				return true;
-			}
-			catch (Exception ex)
-			{
-				if (ex is IOException == false &&
-					ex is TimeoutException == false &&
-					ex is InvalidOperationException == false)
-				{
-
-					//CrossPlatformController.SendMailController.SendReportMailThreaded("PinpadSDK: EXCEPTION AT IsConnectionAlive", ex.ToString());
-					throw;
-				}
-			}
-
-			return false;
-		}
-		private bool InternalIsConnectionAlive ()
-		{
-			try
-			{
-				OpnRequest request = new OpnRequest();
-
-				// Tries to send an OPN request.
-				// Verifies if the request was sent an replied:
-				if (this.InternalSendRequest(request) == false)
-				{
-					return false;
-				}
-
-				// If there was any reply, read it:
-				OpnResponse response = this.ReceiveResponse<OpnResponse>();
-
-				// If the response is null, returns failure:
-				if (response == null) { return false; }
-
-				// If there is Stone Version in the reply:
-				else if (response.OPN_STONEVER.HasValue == true)
-				{
-					this._stoneVersion = response.OPN_STONEVER.Value;
-				}
-				else { this._stoneVersion = 0; }
-
-				return true;
-			}
-			catch (Exception ex)
-			{
-				if (ex is IOException == false &&
-					ex is TimeoutException == false &&
-					ex is InvalidOperationException == false)
-				{
-					//CrossPlatformController.SendMailController.SendReportMailThreaded("PinpadSDK: EXCEPTION AT IsConnectionAlive", ex.ToString());
-					throw;
-				}
-			}
-
-			return false;
 		}
 		private bool InternalSendRequest (BaseCommand request)
 		{

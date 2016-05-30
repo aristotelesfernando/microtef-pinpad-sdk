@@ -116,7 +116,7 @@ namespace Pinpad.Sdk.Test
 
 			GenericResponse r = comm.SendRequestAndReceiveResponse<GenericResponse>(dsp);
 		}
-		[TestMethod]
+		//[TestMethod]
 		public void MultiplePinpads_test ()
 		{
 			// Gets all connections:
@@ -149,7 +149,7 @@ namespace Pinpad.Sdk.Test
 
 			Assert.IsTrue(true);
 		}
-		[TestMethod]
+		//[TestMethod]
 		public void OnePinpadFind_test ()
 		{
 			for (int i = 0; i < 5; i++)
@@ -161,6 +161,17 @@ namespace Pinpad.Sdk.Test
 
 				facade.Communication.ClosePinpadConnection("Fechando conexao (" + (i+1).ToString() + ")");
 			}
+		}
+		//[TestMethod]
+		public void Ping_test ()
+		{
+			PinpadConnection conn = PinpadConnection.GetFirst();
+			PinpadFacade facade = new PinpadFacade(conn);
+
+			facade.Display.ShowMessage("yay!", null, DisplayPaddingType.Center);
+			facade.Communication.ClosePinpadConnection("adios");
+
+			bool status = facade.Communication.Ping();
 		}
 	}
 }

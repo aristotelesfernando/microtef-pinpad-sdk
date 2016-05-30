@@ -57,6 +57,7 @@
     <Compile Include="Commands\Context\IContext.cs" />
     <Compile Include="Commands\Request\DspRequest.cs" />
     <Compile Include="Commands\Request\GcdRequest.cs" />
+    <Compile Include="Commands\Response\CloResponse.cs" />
     <Compile Include="Commands\Response\FncResponse.cs" />
     <Compile Include="Commands\Response\GcdResponse.cs" />
     <Compile Include="Commands\DataSet\GcrIdApp.cs" />
