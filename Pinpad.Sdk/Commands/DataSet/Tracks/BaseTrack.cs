@@ -49,7 +49,9 @@ namespace Pinpad.Sdk.Commands
 			else 
 			{
 				string substring = reader.ReadString(4);
-				DateTime value = DateTime.ParseExact(substring, "yyMM", CultureInfo.InvariantCulture);
+
+				DateTime value;
+				DateTime.TryParseExact(substring, "yyMM", CultureInfo.InvariantCulture, DateTimeStyles.None, out value);
 				
 				return value;
 			}

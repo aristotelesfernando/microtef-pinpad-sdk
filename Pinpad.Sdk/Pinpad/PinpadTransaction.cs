@@ -111,6 +111,10 @@ namespace Pinpad.Sdk
 			{
 				throw new InvalidTableException("EMV table version could not be found.");
 			}
+			else if (status == (AbecsResponseStatus) 23)
+			{
+				this.LastCommandStatus = ResponseStatus.InvalidEmvTable;
+			}
 
 			return cardRead;
 		}
@@ -180,8 +184,7 @@ namespace Pinpad.Sdk
 			GcrRequest request = new GcrRequest();
 
 			// TODO: flag de acquirer.
-			//request.GCR_ACQIDXREQ.Value = (int)StoneIndexCode.Application;
-			request.GCR_ACQIDXREQ.Value = 00;
+			request.GCR_ACQIDXREQ.Value = (int)StoneIndexCode.Application;
 
 			if (transactionType != TransactionType.Undefined)
 			{
@@ -217,15 +220,10 @@ namespace Pinpad.Sdk
 			{
 				return AbecsResponseStatus.ST_TIMEOUT;
 			}
-			// If it's OK with card reading:
+			// If an error occurred:
 			else if (response.RSP_STAT.Value != AbecsResponseStatus.ST_OK)
 			{
 				return response.RSP_STAT.Value;
-			}
-			//If the card was removed at the middle of reading process:
-			else if (response.RSP_STAT.Value == AbecsResponseStatus.ST_NOCARD)
-			{
-				return AbecsResponseStatus.ST_CANCEL;
 			}
 			// If the card has expired:
 			else if (response.GCR_CARDTYPE.Value == ApplicationType.MagneticStripe)

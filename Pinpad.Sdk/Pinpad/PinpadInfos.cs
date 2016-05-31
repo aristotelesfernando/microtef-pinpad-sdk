@@ -173,8 +173,8 @@ namespace Pinpad.Sdk
 
 			// Sets it to refer to all acquirers:
 			// flag de acquirer
-			request.GIN_ACQIDX.Value = (int)StoneIndexCode.Generic;
-			//request.GIN_ACQIDX.Value = (int) StoneIndexCode.Application;
+			request.GIN_ACQIDX.Value = (int) StoneIndexCode.Generic;
+
 
 			// Sends the request and gets the response:
 			GinResponse response = this.communication.SendRequestAndReceiveResponse<GinResponse>(request);

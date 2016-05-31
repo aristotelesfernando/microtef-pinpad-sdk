@@ -165,8 +165,8 @@ namespace Pinpad.Sdk
 
 			// Acquirer application ID:
 			// flag de acquirer.
-			request.GTS_ACQIDX.Value = 00;
-			//request.GTS_ACQIDX.Value = (int) StoneIndexCode.Application;
+			request.GTS_ACQIDX.Value = (int) StoneIndexCode.Generic;
+			//request.GTS_ACQIDX.Value = 00;
 
 			// Sends GTS request and gets it's response:
 			GtsResponse response = this.PinpadCommunication.SendRequestAndReceiveResponse<GtsResponse>(request);
@@ -270,8 +270,8 @@ namespace Pinpad.Sdk
 
             // Specifying how tables will be stored in pinpad memmory:
 			// flag de acquirer
-            //request.TLI_ACQIDX.Value = (int)StoneIndexCode.Application;
-			request.TLI_ACQIDX.Value = DOWNLOAD_TABLES_FOR_ALL;
+            request.TLI_ACQIDX.Value = (int)StoneIndexCode.Generic;
+			//request.TLI_ACQIDX.Value = DOWNLOAD_TABLES_FOR_ALL;
 
             // Specifying the version of the tables to be injected:
             request.TLI_TABVER.Value = this.ExpectedTableVersion;
