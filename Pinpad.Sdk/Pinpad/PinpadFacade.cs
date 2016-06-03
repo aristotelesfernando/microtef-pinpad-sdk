@@ -16,7 +16,7 @@ namespace Pinpad.Sdk
 		/// Controller for Stone Connection adapter.
 		/// It's set method updates the pinpad facade properties based on the new connection.
 		/// </summary>
-		public PinpadConnection Connection
+		internal PinpadConnection Connection
 		{
 			get { return this.pinpadConnection; }
 			set

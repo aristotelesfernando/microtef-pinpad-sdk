@@ -141,14 +141,37 @@ namespace Pinpad.Sdk.Test
 				pinpad.Display.ShowMessage("", pinpad.Communication.PinpadConnection.Connection.ConnectionName, DisplayPaddingType.Center);
 			}
 
+			// Closing conections...
+			foreach (IPinpadFacade pinpad in pinpads)
+			{
+				pinpad.Communication.ClosePinpadConnection("Close " + pinpad.Communication.PinpadConnection.Connection.ConnectionName);
+			}
+
 			Assert.IsTrue(true);
 		}
 		//[TestMethod]
 		public void OnePinpadFind_test ()
 		{
+			for (int i = 0; i < 5; i++)
+			{
+				PinpadConnection conn = PinpadConnection.GetFirst();
+				PinpadFacade facade = new PinpadFacade(conn);
+
+				facade.Display.ShowMessage("YAY! ^-^", (i+1).ToString(), DisplayPaddingType.Center);
+
+				facade.Communication.ClosePinpadConnection("Fechando conexao (" + (i+1).ToString() + ")");
+			}
+		}
+		//[TestMethod]
+		public void Ping_test ()
+		{
 			PinpadConnection conn = PinpadConnection.GetFirst();
 			PinpadFacade facade = new PinpadFacade(conn);
-			facade.Display.ShowMessage("", "wow!", DisplayPaddingType.Center);
+
+			facade.Display.ShowMessage("yay!", null, DisplayPaddingType.Center);
+			facade.Communication.ClosePinpadConnection("adios");
+
+			bool status = facade.Communication.Ping();
 		}
 	}
 }

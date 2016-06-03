@@ -51,7 +51,7 @@ namespace Pinpad.Sdk.Transaction
                 case AbecsResponseStatus.ST_MFERRFMT: return ResponseStatus.FileFormatError;
                 case AbecsResponseStatus.ST_MFERR: return ResponseStatus.FileLoadingError;
 
-                default: return ResponseStatus.Undefined;
+                default: return (ResponseStatus) status;
             }
         }
     }

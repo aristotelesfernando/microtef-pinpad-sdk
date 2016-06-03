@@ -46,6 +46,7 @@
     <Compile Include="Commands\DataSet\AcquirerCommunicationStatus.cs" />
     <Compile Include="Commands\DataSet\FncEntry.cs" />
     <Compile Include="Commands\DataSet\OnlineTransactionStatus.cs" />
+    <Compile Include="Commands\Request\CloRequest.cs" />
     <Compile Include="Commands\Request\CngRequest.cs" />
     <Compile Include="Commands\Request\DexRequest.cs" />
     <Compile Include="Commands\Request\FncRequest.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Commands\Context\IContext.cs" />
     <Compile Include="Commands\Request\DspRequest.cs" />
     <Compile Include="Commands\Request\GcdRequest.cs" />
+    <Compile Include="Commands\Response\CloResponse.cs" />
     <Compile Include="Commands\Response\FncResponse.cs" />
     <Compile Include="Commands\Response\GcdResponse.cs" />
     <Compile Include="Commands\DataSet\GcrIdApp.cs" />

@@ -80,43 +80,22 @@ namespace Pinpad.Sdk
 			// Search for a pinpad in the specified serial port:
 			this.Connection = PinpadConnectionManager.GetPinpadConnection(portName);
 
-			if (this.Connection.IsOpen == false)
+			if (this.IsOpen == false)
 			{
+				// Open SerialPort connection:
 				this.Connection.Open();
 			}
 		}
 		/// <summary>
 		/// Disconnect from the attached serial port.
 		/// </summary>
-		/// <param name="portName">The serial port name.</param>
-		public void Close (string portName)
+		public void Close ()
 		{
 			// Verify if the connection is valid/open:
 			if (this.IsOpen == true) { return; }
 
-			// Closes the connection:
+			// Closes SerialPort connection:
 			this.Connection.Close();
-		}
-		/// <summary>
-		/// Sends a symbolic stream of bytes, to verify if the connection is OK.
-		/// </summary>
-		/// <returns>Whether the connection is alive or not.</returns>
-		public bool Ping ()
-		{
-			if (this.IsOpen == false) { return false; }
-
-			return this.IsConnectionAlive();
-		}
-
-		// Internals
-		/// <summary>
-		/// Sends an OPN to verify if the connection is alive.
-		/// </summary>
-		/// <returns></returns>
-		internal bool IsConnectionAlive ()
-		{
-			PinpadCommunication comm = new PinpadCommunication(this);
-			return comm.SendRequestAndVerifyResponseCode(new OpnRequest());
 		}
 	}
 }

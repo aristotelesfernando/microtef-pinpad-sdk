@@ -111,7 +111,7 @@ namespace Pinpad.Sdk.Properties
 			string substring = reader.ReadString(6);
 
 			// Validation:
-			if (substring == "000000") { return null; }
+			if (substring == "000000" || substring == "      ") { return null; }
 
 			return DateTime.ParseExact(substring, "yyMMdd", CultureInfo.InvariantCulture);
 		}
