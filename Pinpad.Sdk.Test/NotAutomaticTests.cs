@@ -122,7 +122,7 @@ namespace Pinpad.Sdk.Test
 			// Gets all connections:
 			ICollection<IPinpadConnection> connections = CrossPlatformController.PinpadFinder.FindAllDevices();
 
-			if (connections == null)
+			if (connections == null || connections.Count <= 0)
 			{
 				Assert.IsTrue(false);
 			}
