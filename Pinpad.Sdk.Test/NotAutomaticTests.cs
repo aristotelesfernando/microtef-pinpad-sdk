@@ -149,7 +149,7 @@ namespace Pinpad.Sdk.Test
 
 			Assert.IsTrue(true);
 		}
-		//[TestMethod]
+		[TestMethod]
 		public void OnePinpadFind_test ()
 		{
 			for (int i = 0; i < 5; i++)
@@ -160,6 +160,19 @@ namespace Pinpad.Sdk.Test
 				facade.Display.ShowMessage("YAY! ^-^", (i+1).ToString(), DisplayPaddingType.Center);
 
 				facade.Communication.ClosePinpadConnection("Fechando conexao (" + (i+1).ToString() + ")");
+			}
+		}
+		[TestMethod]
+		public void OnePinpadFind_with_portName_test ()
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				PinpadConnection conn = PinpadConnection.GetAt("COM19");
+				PinpadFacade facade = new PinpadFacade(conn);
+
+				facade.Display.ShowMessage("YAY! ^-^", (i + 1).ToString(), DisplayPaddingType.Center);
+
+				facade.Communication.ClosePinpadConnection("Fechando conexao (" + (i + 1).ToString() + ")");
 			}
 		}
 		//[TestMethod]
