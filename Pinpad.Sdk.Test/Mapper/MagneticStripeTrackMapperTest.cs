@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Transaction;
+using Pinpad.Sdk.Properties;
 
 namespace Pinpad.Sdk.Test.Mapper
 {
@@ -23,23 +24,23 @@ namespace Pinpad.Sdk.Test.Mapper
         [TestMethod]
         public void MagneticStripeTrackMapper_CardholderName_should_match()
         {
-            string cardholderName = this.Track1.Split(MagneticStripeTrackMapper.TRACK1_FIELD_SEPARATOR)[MagneticStripeTrackMapper.CARDHOLDERNAME_INDEX];
+            string cardholderName = this.Track1.Split(MagneticStripeTrackMapper.Track1FieldSeparator)[MagneticStripeTrackMapper.CardholderNameIndex];
             
-            Assert.AreEqual(cardholderName, MagneticStripeTrackMapper.MapCardholderName(this.Track1, MagneticStripeTrackMapper.TRACK1_FIELD_SEPARATOR));
+            Assert.AreEqual(cardholderName, MagneticStripeTrackMapper.MapCardholderName(this.Track1, MagneticStripeTrackMapper.Track1FieldSeparator));
         }
 
         [TestMethod]
         public void MagneticStripeTrackMapper_Pan_should_match()
         {
-            string pan = this.Track2.Split(MagneticStripeTrackMapper.TRACK2_FIELD_SEPARATOR)[MagneticStripeTrackMapper.PAN_INDEX];
+            string pan = this.Track2.Split(MagneticStripeTrackMapper.Track2FieldSeparator)[MagneticStripeTrackMapper.PanIndex];
             
-            Assert.AreEqual(pan, MagneticStripeTrackMapper.MapPan(this.Track2, MagneticStripeTrackMapper.TRACK2_FIELD_SEPARATOR));
+            Assert.AreEqual(pan, MagneticStripeTrackMapper.MapPan(this.Track2, MagneticStripeTrackMapper.Track2FieldSeparator));
         }
 
         [TestMethod]
         public void MagneticStripeTrackMapper_ExpirationDate_should_match()
         {
-            Assert.AreEqual(this.ExpirationDate, MagneticStripeTrackMapper.MapExpirationDate(this.Track2, MagneticStripeTrackMapper.TRACK2_FIELD_SEPARATOR));
+            Assert.AreEqual(this.ExpirationDate, MagneticStripeTrackMapper.MapExpirationDate(this.Track2, MagneticStripeTrackMapper.Track2FieldSeparator));
         }
 
         [TestMethod]
@@ -61,28 +62,28 @@ namespace Pinpad.Sdk.Test.Mapper
         [TestMethod]
         public void MagneticStripeTrackMapper_GetFieldSeparator_should_return_TRACK1_FIELD_SEPARATOR()
         {
-            char separator = MagneticStripeTrackMapper.GetFieldSeparator(MagneticStripeTrackMapper.TRACK1_FIELD_SEPARATOR.ToString());
-            Assert.AreEqual(separator, MagneticStripeTrackMapper.TRACK1_FIELD_SEPARATOR);
+            char separator = MagneticStripeTrackMapper.GetFieldSeparator(MagneticStripeTrackMapper.Track1FieldSeparator.ToString());
+            Assert.AreEqual(separator, MagneticStripeTrackMapper.Track1FieldSeparator);
         }
 
         [TestMethod]
         public void MagneticStripeTrackMapper_GetFieldSeparator_should_return_TRACK2_FIELD_SEPARATOR()
         {
-            char separator = MagneticStripeTrackMapper.GetFieldSeparator(MagneticStripeTrackMapper.TRACK2_FIELD_SEPARATOR.ToString());
-            Assert.AreEqual(separator, MagneticStripeTrackMapper.TRACK2_FIELD_SEPARATOR);
+            char separator = MagneticStripeTrackMapper.GetFieldSeparator(MagneticStripeTrackMapper.Track2FieldSeparator.ToString());
+            Assert.AreEqual(separator, MagneticStripeTrackMapper.Track2FieldSeparator);
         }
 
         [TestMethod]
         public void MagneticStripeTrackMapper_MapCardholderName_should_return_empty_string_if_not_track1()
         {
-            string chName = MagneticStripeTrackMapper.MapCardholderName(this.Track2, MagneticStripeTrackMapper.TRACK2_FIELD_SEPARATOR);
+            string chName = MagneticStripeTrackMapper.MapCardholderName(this.Track2, MagneticStripeTrackMapper.Track2FieldSeparator);
             Assert.AreEqual(chName, string.Empty);
         }
 
         [TestMethod]
         public void MagneticStripeTrackMapper_MapCardholderName_should_not_return_empty_string_if_track1()
         {
-            string chName = MagneticStripeTrackMapper.MapCardholderName(this.Track1, MagneticStripeTrackMapper.TRACK1_FIELD_SEPARATOR);
+            string chName = MagneticStripeTrackMapper.MapCardholderName(this.Track1, MagneticStripeTrackMapper.Track1FieldSeparator);
             Assert.AreNotEqual(chName, string.Empty);
         }
 
@@ -92,5 +93,25 @@ namespace Pinpad.Sdk.Test.Mapper
         {
             DateTime expDate = MagneticStripeTrackMapper.MapExpirationDate(this.Track1, '.');
         }
-    }
+
+		[TestMethod]
+		public void MagneticStripeTrackMapper_MapServiceCode_should_succeed ()
+		{
+			string track1 = "B4205932010016391^ /^2309121000000000000000225000000";
+			ServiceCode serviceCode = MagneticStripeTrackMapper.MapServiceCode(track1, MagneticStripeTrackMapper.Track1FieldSeparator);
+
+			Assert.AreEqual(serviceCode.Code, "121");
+			Assert.IsFalse(serviceCode.IsEmv);
+			Assert.IsFalse(serviceCode.IsPinMandatory);
+			Assert.IsFalse(serviceCode.IsPinRequired);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentException))]
+		public void MagneticStripeTrackMapper_MapServiceCode_should_throw_exception_if_invalid_separator ()
+		{
+			string track1 = "B4205932010016391^ /^2309121000000000000000225000000";
+			ServiceCode serviceCode = MagneticStripeTrackMapper.MapServiceCode(track1, '~');
+		}
+	}
 }
