@@ -56,6 +56,8 @@ namespace Pinpad.Sdk.Transaction
                 mappedCard.Track2 = response.GCR_TRK2.Value.CommandString;
             }
 
+			mappedCard.NeedsPassword = true;
+
             return mappedCard;
         }
 		/// <summary>

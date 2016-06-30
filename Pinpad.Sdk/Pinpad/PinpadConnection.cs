@@ -1,5 +1,7 @@
 ﻿using MicroPos.CrossPlatform;
 using Pinpad.Sdk.Commands;
+using Pinpad.Sdk.Model.Exceptions;
+using System.IO;
 
 namespace Pinpad.Sdk
 {
@@ -47,9 +49,32 @@ namespace Pinpad.Sdk
 		{
 			IPinpadConnection conn = CrossPlatformController.PinpadFinder.Find();
 
-			if (conn == null) { return null; }
+			if (conn == null)
+			{
+				throw new PinpadNotFoundException();
+			}
 
 			return new PinpadConnection(conn);
+		}
+		/// <summary>
+		/// Search for a pinpad attached to <param name="portName"/>.
+		/// </summary>
+		/// <returns>Returns the pinpad found.</returns>
+		/// <exception cref="PinpadNotFoundException">If none pinpad were found at the port specified.</exception>
+		public static PinpadConnection GetAt (string portName)
+		{
+			IPinpadConnection connection = PinpadConnectionManager.PinpadConnectionController.CreatePinpadConnection(portName);
+
+			try
+			{
+				connection.Open();
+			}
+			catch (IOException)
+			{
+				throw new PinpadNotFoundException(string.Format("None pinpad found at {0}.", portName), portName);
+			}
+
+			return new PinpadConnection(connection);
 		}
 		/// <summary>
 		/// Search in all available serial ports for a pinpad connection.

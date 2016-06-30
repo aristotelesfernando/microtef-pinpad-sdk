@@ -44,7 +44,7 @@ namespace Pinpad.Sdk
 
 			if (commandResponse == null)
 			{
-				if (communication.OpenPinpadConnection() == true)
+				if (communication.Ping() == true)
 				{
 					// Pinpad is connected. Time out.
 					return ResponseStatus.TimeOut;

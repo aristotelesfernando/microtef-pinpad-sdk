@@ -48,6 +48,10 @@ namespace Pinpad.Sdk.Model
         /// </summary>
         public string Track3 { get; set; }
 		/// <summary>
+		/// Defines whether the card needs password or not.
+		/// </summary>
+		public bool NeedsPassword { get; set; }
+		/// <summary>
 		/// AID.
 		/// </summary>
 		public string ApplicationId { get; set; }

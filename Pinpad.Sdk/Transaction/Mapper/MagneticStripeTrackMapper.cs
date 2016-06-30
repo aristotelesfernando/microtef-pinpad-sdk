@@ -72,7 +72,16 @@ namespace Pinpad.Sdk.Transaction
 			mappedCard.BrandName = MagneticStripeTrackMapper.GetBrandByPan(mappedCard.PrimaryAccountNumber);
             mappedCard.CardholderName = MagneticStripeTrackMapper.MapCardholderName(selectedTrack, fieldSeparator);
             mappedCard.ExpirationDate = MagneticStripeTrackMapper.MapExpirationDate(selectedTrack, fieldSeparator);
-            
+
+			if (rawResponse.GCR_SRVCODE.HasValue == true)
+			{
+				mappedCard.NeedsPassword = rawResponse.GCR_SRVCODE.Value.IsPinRequired;
+			}
+			else
+			{
+				mappedCard.NeedsPassword = false;
+			}
+
             return mappedCard;
         }
         /// <summary>

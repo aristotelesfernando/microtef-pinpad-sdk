@@ -11,14 +11,14 @@ Unica dependência:
 
 A classe principal do pinpad é a **IPinpadFacade**. Ela possui adapters para todos os "componentes" do pinpad, que são:
 
-Componente | Função
---- | ---
-PinpadConnection | Controlar a conexão física da porta serial. Consequentemente, ela conhece a [MicroPos.CrossPlatform](https://bitbucket.org/stonepayments/micropos-crossplatform), que possui classes de acesso a plataforma em si.
-PinpadCommunication | Conhecer os comandos que serão enviados ao pinpad.
-PinpadTransaction | Utilizar a PinpadCommunication para performar os comandos necessários em um fluxo transacional (fazer o download de tabelas, ler o cartão e a senha).
-IPinpadKeyboard | Dar acesso ao teclado do pinpad.
-IPinpadDisplay | Dar acesso ao display do pinpad.
-IPinpadInfos | Dar acesso às informações do pinpad.
+Componente | Descrição | Funcionalidade
+--- | --- | ---
+PinpadConnection | Controlar a conexão física da porta serial. Consequentemente, ela conhece a [MicroPos.CrossPlatform](https://bitbucket.org/stonepayments/micropos-crossplatform), que possui classes de acesso a plataforma em si. | Abrir conexão, fechar conexão, verificar se a conexão está ativa.
+PinpadCommunication | Conhecer os comandos que serão enviados ao pinpad. | Enviar comandos ao pinpad, receber comandos do pinpad.
+PinpadTransaction | Utilizar a PinpadCommunication para performar os comandos necessários em um fluxo transacional (fazer o download de tabelas, ler o cartão e a senha). | Atualizar tabelas do pinpad, ler o cartão, ler a senha, pedir para remover o cartão, finalizar transação EMV.
+IPinpadKeyboard | Dar acesso ao teclado do pinpad. | Ler uma tecla de controle, ler um input (apenas MobiPin10).
+IPinpadDisplay | Dar acesso ao display do pinpad. | Mostrar uma frase na tela do pinpad.
+IPinpadInfos | Dar acesso às informações do pinpad. | Retornar todas as informações relativas ao pinpad e à fabricante do pinpad.
 
 ### Contextos
 
@@ -103,12 +103,10 @@ short maxDigits = 16;
 short timeOut = 120;
 
 // Lê um numero de telefone com no mínimo 8 caracteres e 16 no máximo, com timeout de 2 minutos.
-string telephoneNumber = facade.Keyboard.GetNumericInput(FirstLineLabelCode.Type, SecondLineLabelCode.TelephoneNumber, 
+string telephoneNumber = facade.Keyboard.GetNumericInput(FirstLineLabelCode.Type, SecondLineLabelCode.TelephoneNumber,
     minimumDigits, maxDigits, timeOut);
 ```
 
-## Duvidas? Entre em contato: [devmicrotef@stone.com.br](mailto:devmicrotef@stone.com.br) :octopus:
+# Dúvidas? :octopus:
 
-> ## Responsáveis imediatos
-- Ceres Rohana: [ccarvalho@stone.com.br](mailto:ccarvalho@stone.com.br)
-- Cristina Silva: [ccsilva@stone.com.br](mailto:ccsilva@stone.com.br)
+Fala com a gente! [:green_heart: DEV MicroTef](mailto:devmicrotef@stone.com.br)
