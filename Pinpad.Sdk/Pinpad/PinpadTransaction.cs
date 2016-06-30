@@ -228,14 +228,15 @@ namespace Pinpad.Sdk
 			// If the card has expired:
 			else if (response.GCR_CARDTYPE.Value == ApplicationType.MagneticStripe)
 			{
-				if (CardMapper.MapCardFromTracks(response).ExpirationDate < DateTime.Now)
+				DateTime expirationDate = CardMapper.MapCardFromTracks(response).ExpirationDate;
+				if (expirationDate < DateTime.Now)
 				{
-					throw new ExpiredCardException();
+					throw new ExpiredCardException(expirationDate);
 				}
 			}
 			else if (response.GCR_CARDEXP.HasValue == false)
 			{
-				throw new ExpiredCardException();
+				throw new ExpiredCardException(DateTime.MinValue);
 			}
 
 			// Saving the transaction type. This is handy if you have initiated the transaction without knowing the transaction type.
