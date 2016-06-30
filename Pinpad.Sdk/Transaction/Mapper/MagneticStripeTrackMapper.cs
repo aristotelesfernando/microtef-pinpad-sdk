@@ -1,6 +1,7 @@
 ﻿using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Commands;
 using System;
+using Pinpad.Sdk.Properties;
 
 namespace Pinpad.Sdk.Transaction
 {
@@ -10,31 +11,35 @@ namespace Pinpad.Sdk.Transaction
         /// <summary>
         /// Track1, separator between different information. Based on ISO 7810/7811.
         /// </summary>
-        internal const char TRACK1_FIELD_SEPARATOR = '^';
+        internal const char Track1FieldSeparator = '^';
         /// <summary>
         /// Track2, separator between different information. Based on ISO 7810/7811.
         /// </summary>
-        internal const char TRACK2_FIELD_SEPARATOR = '=';
+        internal const char Track2FieldSeparator = '=';
         /// <summary>
-        /// Track 1 is made of several information divided by a <see cref="TRACK1_FIELD_SEPARATOR">separator</see>. This is the index of card expiration date on track 1.
+        /// Track 1 is made of several information divided by a <see cref="Track1FieldSeparator">separator</see>. This is the index of card expiration date on track 1.
         /// </summary>
-        internal const short EXPIRATIONDATE_INDEX_ON_TRACK1 = 2;
+        internal const short ExpirationDateIndexOnTrack1 = 2;
         /// <summary>
-        /// Track 2 is made of several information divided by a <see cref="TRACK2_FIELD_SEPARATOR">separator</see>. This is the index of card expiration date on track 2.
+        /// Track 2 is made of several information divided by a <see cref="Track2FieldSeparator">separator</see>. This is the index of card expiration date on track 2.
         /// </summary>
-        internal const short EXPIRATIONDATE_INDEX_ON_TRACK2 = 1;
+        internal const short ExpirationDateIndexOnTrack2 = 1;
         /// <summary>
         /// Card expiration date string length.
         /// </summary>
-        internal const short EXPIRATIONDATE_LENGTH = 4;
+        internal const short ExpirationDateLength = 4;
 		/// <summary>
-		/// Track 2 is made of several information divided by a <see cref="TRACK2_FIELD_SEPARATOR">separator</see>. This is the index of the Primary Account Number (PAN) on track 1.
+		/// Card service code string length.
 		/// </summary>
-		internal const short PAN_INDEX = 0;
+		internal const short ServiceCodeLength = 3;
+		/// <summary>
+		/// Track 2 is made of several information divided by a <see cref="Track2FieldSeparator">separator</see>. This is the index of the Primary Account Number (PAN) on track 1.
+		/// </summary>
+		internal const short PanIndex = 0;
         /// <summary>
-        /// Track 1 is made of several information divided by a <see cref="TRACK1_FIELD_SEPARATOR">separator</see>. This is the index of cardholder name on track 1.
+        /// Track 1 is made of several information divided by a <see cref="Track1FieldSeparator">separator</see>. This is the index of cardholder name on track 1.
         /// </summary>
-        internal const short CARDHOLDERNAME_INDEX = 1;
+        internal const short CardholderNameIndex = 1;
 
         // Methods
         /// <summary>
@@ -72,18 +77,11 @@ namespace Pinpad.Sdk.Transaction
 			mappedCard.BrandName = MagneticStripeTrackMapper.GetBrandByPan(mappedCard.PrimaryAccountNumber);
             mappedCard.CardholderName = MagneticStripeTrackMapper.MapCardholderName(selectedTrack, fieldSeparator);
             mappedCard.ExpirationDate = MagneticStripeTrackMapper.MapExpirationDate(selectedTrack, fieldSeparator);
-
-			if (rawResponse.GCR_SRVCODE.HasValue == true)
-			{
-				mappedCard.NeedsPassword = rawResponse.GCR_SRVCODE.Value.IsPinRequired;
-			}
-			else
-			{
-				mappedCard.NeedsPassword = false;
-			}
-
-            return mappedCard;
+			mappedCard.NeedsPassword = MagneticStripeTrackMapper.MapServiceCode(selectedTrack, fieldSeparator).IsPinRequired;
+			
+			return mappedCard;
         }
+
         /// <summary>
         /// Selects a valid track (between track 1 and 2), giving priority to Track 1.
         /// </summary>
@@ -109,13 +107,13 @@ namespace Pinpad.Sdk.Transaction
         /// <returns>Corresponding separator os the track received as parameter.</returns>
         internal static char GetFieldSeparator(string track)
         {
-            if (track.Contains(TRACK1_FIELD_SEPARATOR.ToString()) == true)
+            if (track.Contains(Track1FieldSeparator.ToString()) == true)
             {
-                return TRACK1_FIELD_SEPARATOR;
+                return Track1FieldSeparator;
             }
-            if (track.Contains(TRACK2_FIELD_SEPARATOR.ToString()) == true)
+            if (track.Contains(Track2FieldSeparator.ToString()) == true)
             {
-                return TRACK2_FIELD_SEPARATOR;
+                return Track2FieldSeparator;
             }
 
             throw new InvalidOperationException("Invalid track received. Verify if data sent are according to ISO 7810/7811.");
@@ -128,7 +126,7 @@ namespace Pinpad.Sdk.Transaction
         /// <returns>Primary Account Number (PAN).</returns>
         internal static string MapPan(string track, char separator)
         {
-            string pan = track.Split(separator)[PAN_INDEX];
+            string pan = track.Split(separator)[PanIndex];
             
             // TODO: redo! For gods sake!
             if (pan[0] == 'B') { pan = pan.Substring(1, pan.Length - 1); }
@@ -145,9 +143,9 @@ namespace Pinpad.Sdk.Transaction
         {
             string cardholderName = string.Empty;
 
-            if (separator == TRACK1_FIELD_SEPARATOR)
+            if (separator == Track1FieldSeparator)
             {
-                cardholderName = track.Split(separator)[CARDHOLDERNAME_INDEX];
+                cardholderName = track.Split(separator)[CardholderNameIndex];
             }
 
             return cardholderName;
@@ -163,13 +161,13 @@ namespace Pinpad.Sdk.Transaction
             string date = string.Empty;
             int month, year;
 
-            if (separator == TRACK1_FIELD_SEPARATOR)
+            if (separator == Track1FieldSeparator)
             {
-                date = track.Split(separator)[EXPIRATIONDATE_INDEX_ON_TRACK1].Substring(0, EXPIRATIONDATE_LENGTH);
+                date = track.Split(separator)[ExpirationDateIndexOnTrack1].Substring(0, ExpirationDateLength);
             }
-            else if (separator == TRACK2_FIELD_SEPARATOR)
+            else if (separator == Track2FieldSeparator)
             {
-                date = track.Split(separator)[EXPIRATIONDATE_INDEX_ON_TRACK2].Substring(0, EXPIRATIONDATE_LENGTH);
+                date = track.Split(separator)[ExpirationDateIndexOnTrack2].Substring(0, ExpirationDateLength);
             }
             else
             {
@@ -228,6 +226,31 @@ namespace Pinpad.Sdk.Transaction
 			}
 
 			return CardMapper.UNKNOWN_LABEL;
+		}
+		/// <summary>
+		/// Get card service code from a selected track
+		/// </summary>
+		/// <param name="track">Selected track.</param>
+		/// <param name="separator">Track separator.</param>
+		/// <returns></returns>
+		internal static ServiceCode MapServiceCode (string track, char separator)
+		{
+			string serviceCode;
+
+			if (separator == Track1FieldSeparator)
+			{
+				serviceCode = track.Split(separator) [ExpirationDateIndexOnTrack1].Substring(ExpirationDateLength, ServiceCodeLength);
+			}
+			else if (separator == Track2FieldSeparator)
+			{
+				serviceCode = track.Split(separator) [ExpirationDateIndexOnTrack2].Substring(ExpirationDateLength, ServiceCodeLength);
+			}
+			else
+			{
+				throw new ArgumentException(string.Format("Parameter <track> does not have a \"{0}\" separator.", separator));
+			}
+
+			return new ServiceCode(serviceCode);
 		}
     }
 }

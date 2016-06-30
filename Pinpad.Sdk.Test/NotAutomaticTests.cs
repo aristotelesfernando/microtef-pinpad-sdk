@@ -149,7 +149,7 @@ namespace Pinpad.Sdk.Test
 
 			Assert.IsTrue(true);
 		}
-		[TestMethod]
+		//[TestMethod]
 		public void OnePinpadFind_test ()
 		{
 			for (int i = 0; i < 5; i++)
@@ -162,7 +162,7 @@ namespace Pinpad.Sdk.Test
 				facade.Communication.ClosePinpadConnection("Fechando conexao (" + (i+1).ToString() + ")");
 			}
 		}
-		[TestMethod]
+		//[TestMethod]
 		public void OnePinpadFind_with_portName_test ()
 		{
 			for (int i = 0; i < 5; i++)
