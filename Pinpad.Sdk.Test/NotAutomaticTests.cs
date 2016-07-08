@@ -6,6 +6,7 @@ using System.Diagnostics;
 using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Model;
 using System;
+using System.Text;
 
 namespace Pinpad.Sdk.Test
 {
@@ -185,6 +186,40 @@ namespace Pinpad.Sdk.Test
 			facade.Communication.ClosePinpadConnection("adios");
 
 			bool status = facade.Communication.Ping();
+		}
+		//[TestMethod]
+		public void get_installment_number_prototype ()
+		{
+			PinpadConnection conn = PinpadConnection.GetFirst();
+			PinpadFacade facade = new PinpadFacade(conn);
+			int min = 1, installmentCount = min, max = 12;
+			PinpadKeyCode code = PinpadKeyCode.Undefined;
+			StringBuilder label = new StringBuilder(16);
+
+
+			do
+			{
+				label.Clear();
+				label.AppendFormat("Parcelas: {0}", installmentCount);
+
+				facade.Display.ShowMessage(label.ToString(), null, DisplayPaddingType.Center);
+				code = facade.Keyboard.GetKey();
+
+				if (code == PinpadKeyCode.Function2 && installmentCount > min)
+				{
+					// Down key
+					installmentCount--;
+				}
+				else if (code == PinpadKeyCode.Function3 && installmentCount < max)
+				{
+					// Up key
+					installmentCount++;
+				}
+			} while (code != PinpadKeyCode.Return);
+
+			Debug.WriteLine(installmentCount);
+			
+			facade.Keyboard.GetKey();
 		}
 	}
 }
