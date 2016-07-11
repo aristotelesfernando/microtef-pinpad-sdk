@@ -3,6 +3,8 @@ using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Model;
 using System;
 using System.Globalization;
+using Pinpad.Sdk.Utilities;
+using Pinpad.Sdk.Model.Utilities;
 
 namespace Pinpad.Sdk
 {
@@ -11,32 +13,40 @@ namespace Pinpad.Sdk
 	/// </summary>
 	public class PinpadKeyboard : IPinpadKeyboard
 	{
-		// Members:
-		/// <summary>
-		/// Pinpad communication adapter
-		/// </summary>
-		public PinpadCommunication Communication { get; private set; }
+        // Properties
+        /// <summary>
+        /// It contains methods to select data through the pinpad.
+        /// </summary>
+        public IDataPicker DataPicker { get; set; }
+
+        // Members:
+        /// <summary>
+        /// Pinpad communication adapter
+        /// </summary>
+        public PinpadCommunication Communication { get; private set; }
 		internal IPinpadInfos Informations { get; private set; }
 
-		// Constructor:
-		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		/// <param name="communication">Pinpad communication, through which is possible to communicate with the pinpad.</param>
-		/// <param name="infos">Pinpad informations.</param>
-		public PinpadKeyboard(PinpadCommunication communication, IPinpadInfos infos)
-		{
-			this.Communication = communication;
-			this.Informations = infos;
-		}
+        // Constructor:
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        /// <param name="communication">Pinpad communication, through which is possible to communicate with the pinpad.</param>
+        /// <param name="infos">Pinpad informations.</param>
+        /// <param name="display">Pinpad display, through which is possible to use with the display operations in data picker.</param>
+        public PinpadKeyboard(PinpadCommunication communication, IPinpadInfos infos, IPinpadDisplay display)
+        {
+            this.Communication = communication;
+            this.Informations = infos;
+            this.DataPicker = new DataPicker(this, display);
+        }
 
-		// Methods:
-		/// <summary>
-		/// Gets the next Key pressed at the Pinpad with the default, safe, method.
-		/// Does not retrieve Numeric keys.
-		/// </summary>
-		/// <returns>PinpadKey or Undefined on failure</returns>
-		public PinpadKeyCode GetKey()
+        // Methods:
+        /// <summary>
+        /// Gets the next Key pressed at the Pinpad with the default, safe, method.
+        /// Does not retrieve Numeric keys.
+        /// </summary>
+        /// <returns>PinpadKey or Undefined on failure</returns>
+        public PinpadKeyCode GetKey()
 		{
 			// Tries to read a key from the keyboard:
 			GkyResponse response = this.Communication.SendRequestAndReceiveResponse<GkyResponse>(new GkyRequest());
@@ -238,5 +248,5 @@ namespace Pinpad.Sdk
 
 			return null;
 		}
-	}
+    }
 }

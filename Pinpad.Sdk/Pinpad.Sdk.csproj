@@ -140,6 +140,7 @@
     <Compile Include="Commands\DataSet\KeyManagementMode.cs" />
     <Compile Include="Commands\DataSet\OfflineTransactionStatus.cs" />
     <Compile Include="Commands\DataSet\AbecsResponseStatus.cs" />
+    <Compile Include="Utilities\DataPicker.cs" />
     <Compile Include="Utilities\HexadecimalController.cs" />
     <Compile Include="Commands\DataSet\HexadecimalData.cs" />
   </ItemGroup>

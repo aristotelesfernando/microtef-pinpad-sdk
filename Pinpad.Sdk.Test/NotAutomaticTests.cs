@@ -187,39 +187,35 @@ namespace Pinpad.Sdk.Test
 
 			bool status = facade.Communication.Ping();
 		}
-		//[TestMethod]
-		public void get_installment_number_prototype ()
+        //[TestMethod]
+        public void GetShortValue_test()
 		{
 			PinpadConnection conn = PinpadConnection.GetFirst();
 			PinpadFacade facade = new PinpadFacade(conn);
-			int min = 1, installmentCount = min, max = 12;
-			PinpadKeyCode code = PinpadKeyCode.Undefined;
-			StringBuilder label = new StringBuilder(16);
 
+            int? value = facade.Keyboard.DataPicker.GetNumericValue("Data Picker", 0, 5);
 
-			do
-			{
-				label.Clear();
-				label.AppendFormat("Parcelas: {0}", installmentCount);
-
-				facade.Display.ShowMessage(label.ToString(), null, DisplayPaddingType.Center);
-				code = facade.Keyboard.GetKey();
-
-				if (code == PinpadKeyCode.Function2 && installmentCount > min)
-				{
-					// Down key
-					installmentCount--;
-				}
-				else if (code == PinpadKeyCode.Function3 && installmentCount < max)
-				{
-					// Up key
-					installmentCount++;
-				}
-			} while (code != PinpadKeyCode.Return);
-
-			Debug.WriteLine(installmentCount);
-			
-			facade.Keyboard.GetKey();
+            Debug.WriteLine(value.Value);
 		}
-	}
+        //[TestMethod]
+        public void GetNumericValueInList_test()
+        {
+            PinpadConnection conn = PinpadConnection.GetFirst();
+            PinpadFacade facade = new PinpadFacade(conn);
+
+            int? value = facade.Keyboard.DataPicker.GetNumericValueInArray("Data Picker", 2, 4, 8, 16, 32, 64, 128);
+
+            Debug.WriteLine(value.Value);
+        }
+        [TestMethod]
+        public void GetTextValueInList_test()
+        {
+            PinpadConnection conn = PinpadConnection.GetFirst();
+            PinpadFacade facade = new PinpadFacade(conn);
+
+            string value = facade.Keyboard.DataPicker.GetTextValueInArray("Data Picker", "Bulbasaur", "Charmander", "Squirtle");
+
+            Debug.WriteLine(value);
+        }
+    }
 }
