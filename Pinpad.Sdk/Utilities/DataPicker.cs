@@ -7,7 +7,7 @@ namespace Pinpad.Sdk.Utilities
     /// <summary>
     /// It contains methods to select data through the pinpad.
     /// </summary>
-    public class DataPicker : IDataPicker
+    internal class DataPicker : IDataPicker
     {
         // Members
         /// <summary>
