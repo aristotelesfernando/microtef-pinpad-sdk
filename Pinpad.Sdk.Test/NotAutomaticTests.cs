@@ -188,7 +188,7 @@ namespace Pinpad.Sdk.Test
 			bool status = facade.Communication.Ping();
 		}
         //[TestMethod]
-        public void GetShortValue_test()
+        public void GetNumericValue_test()
 		{
 			PinpadConnection conn = PinpadConnection.GetFirst();
 			PinpadFacade facade = new PinpadFacade(conn);
@@ -198,7 +198,7 @@ namespace Pinpad.Sdk.Test
             Debug.WriteLine(value.Value);
 		}
         //[TestMethod]
-        public void GetNumericValueInList_test()
+        public void GetNumericValueInArray_test()
         {
             PinpadConnection conn = PinpadConnection.GetFirst();
             PinpadFacade facade = new PinpadFacade(conn);
@@ -207,8 +207,8 @@ namespace Pinpad.Sdk.Test
 
             Debug.WriteLine(value.Value);
         }
-        [TestMethod]
-        public void GetTextValueInList_test()
+        //[TestMethod]
+        public void GetTextValueInArray_test()
         {
             PinpadConnection conn = PinpadConnection.GetFirst();
             PinpadFacade facade = new PinpadFacade(conn);
