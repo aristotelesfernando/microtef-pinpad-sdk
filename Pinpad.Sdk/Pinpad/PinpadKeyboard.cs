@@ -37,7 +37,7 @@ namespace Pinpad.Sdk
         {
             this.Communication = communication;
             this.Informations = infos;
-            this.DataPicker = new DataPicker(this, display);
+            this.DataPicker = new DataPicker(this, infos, display);
         }
 
         // Methods:

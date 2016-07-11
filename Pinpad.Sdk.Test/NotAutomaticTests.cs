@@ -213,7 +213,7 @@ namespace Pinpad.Sdk.Test
             PinpadConnection conn = PinpadConnection.GetFirst();
             PinpadFacade facade = new PinpadFacade(conn);
 
-            string value = facade.Keyboard.DataPicker.GetTextValueInArray("Data Picker", "Bulbasaur", "Charmander", "Squirtle");
+            string value = facade.Keyboard.DataPicker.GetTextValueInArray("Pokemon", "Bulbasaur", "Charmander", "Squirtle");
 
             Debug.WriteLine(value);
         }

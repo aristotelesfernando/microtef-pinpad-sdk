@@ -1,6 +1,7 @@
 ﻿using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.Utilities;
 using System;
+using System.Diagnostics;
 
 namespace Pinpad.Sdk.Utilities
 {
@@ -9,6 +10,12 @@ namespace Pinpad.Sdk.Utilities
     /// </summary>
     internal class DataPicker : IDataPicker
     {
+        // Constant
+        /// <summary>
+        /// Manufacturer name of pinpad with different down and up keys.
+        /// </summary>
+        private const string ManufacturerName = "VERIFONE";
+
         // Members
         /// <summary>
         /// Reference to display operations.
@@ -18,17 +25,28 @@ namespace Pinpad.Sdk.Utilities
         /// Reference to keyboard operations.
         /// </summary>
         private IPinpadKeyboard _keyboard = null;
+        /// <summary>
+        /// Keys of Down and Up in pinpad.
+        /// </summary>
+        private DataPickerKeys _keys = new DataPickerKeys();
 
         // Constructor
         /// <summary>
         /// Build a data picker with a reference to keyboard and display.
         /// </summary>
         /// <param name="keyboard">IPinpadKeyboard implementation.</param>
+        /// <param name="infos">IPinpadInfos implementation.</param>
         /// <param name="display">IPinpadDisplay implementation.</param>
-        public DataPicker(IPinpadKeyboard keyboard, IPinpadDisplay display)
+        public DataPicker(IPinpadKeyboard keyboard, IPinpadInfos infos, IPinpadDisplay display)
         {
             this._keyboard = keyboard;
             this._display = display;
+
+            // Verifone utiliza Function1 como Up e Function3 como Down.
+            if (infos.ManufacturerName?.Contains(ManufacturerName) == true)
+            {
+                this._keys = new DataPickerKeys(PinpadKeyCode.Function1, PinpadKeyCode.Function3);
+            }
         }
 
         // Public methods
@@ -63,12 +81,12 @@ namespace Pinpad.Sdk.Utilities
                     // Restart counter
                     index = minimunValue;
                 }
-                else if (code == PinpadKeyCode.Function2 && index > minimunValue)
+                else if (code == this._keys.Down && index > minimunValue)
                 {
                     // Down key
                     index--;
                 }
-                else if (code == PinpadKeyCode.Function3 && index < maximumValue)
+                else if (code == this._keys.Up && index < maximumValue)
                 {
                     // Up key
                     index++;
@@ -112,12 +130,12 @@ namespace Pinpad.Sdk.Utilities
                     // Restart counter
                     index = 0;
                 }
-                else if (code == PinpadKeyCode.Function2 && index > 0)
+                else if (code == this._keys.Down && index > 0)
                 {
                     // Down key
                     index--;
                 }
-                else if (code == PinpadKeyCode.Function3 && index < options.Length - 1)
+                else if (code == this._keys.Up && index < options.Length - 1)
                 {
                     // Up key
                     index++;
@@ -129,10 +147,7 @@ namespace Pinpad.Sdk.Utilities
             {
                 return options[index];
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
         /// <summary>
         /// Get text value in array options.
@@ -164,12 +179,12 @@ namespace Pinpad.Sdk.Utilities
                     // Restart counter
                     index = 0;
                 }
-                else if (code == PinpadKeyCode.Function2 && index > 0)
+                else if (code == this._keys.Down && index > 0)
                 {
                     // Down key
                     index--;
                 }
-                else if (code == PinpadKeyCode.Function3 && index < options.Length - 1)
+                else if (code == this._keys.Up && index < options.Length - 1)
                 {
                     // Up key
                     index++;
@@ -181,10 +196,7 @@ namespace Pinpad.Sdk.Utilities
             {
                 return options[index];
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
     }
 }

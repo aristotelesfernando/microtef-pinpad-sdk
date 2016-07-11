@@ -143,6 +143,7 @@
     <Compile Include="Utilities\DataPicker.cs" />
     <Compile Include="Utilities\HexadecimalController.cs" />
     <Compile Include="Commands\DataSet\HexadecimalData.cs" />
+    <Compile Include="Utilities\DataPickerKeys.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
