@@ -54,8 +54,8 @@ namespace Pinpad.Sdk.Utilities
         /// Get numeric value in range informed.
         /// </summary>
         /// <param name="label">Text to display on the first line of pinpad display.</param>
-        /// <param name="minimunLimit">Minimum numeric value for pick.</param>
-        /// <param name="maximumLimit">Maximum numeric value for pick.</param>
+        /// <param name="minimunLimit">Minimum numeric value for pick. Limit: -32.768.</param>
+        /// <param name="maximumLimit">Maximum numeric value for pick. Limit: 32.767.</param>
         /// <returns>Number picked or null if no one was picked.</returns>
         public Nullable<short> GetNumericValue(string label, short minimunLimit, short maximumLimit)
         {
@@ -106,7 +106,7 @@ namespace Pinpad.Sdk.Utilities
         /// <param name="label">Text to display on the first line of pinpad display.</param>
         /// <param name="options">Array with options.</param>
         /// <returns>Option picked or null if no one was picked.</returns>
-        public Nullable<int> GetNumericValueInArray(string label, params int[] options)
+        public Nullable<short> GetNumericValueInArray(string label, params short?[] options)
         {
             if (string.IsNullOrEmpty(label) == true)
             {
@@ -116,45 +116,15 @@ namespace Pinpad.Sdk.Utilities
             {
                 throw new ArgumentException("options");
             }
-            
-            PinpadKeyCode code = PinpadKeyCode.Undefined;
-            int index = 0;
 
-            do
-            {
-                this._display.ShowMessage(label + ":", options[index].ToString(), DisplayPaddingType.Left);
-                code = this._keyboard.GetKey();
-
-                if (code == PinpadKeyCode.Backspace)
-                {
-                    // Restart counter
-                    index = 0;
-                }
-                else if (code == this._keys.Down && index > 0)
-                {
-                    // Down key
-                    index--;
-                }
-                else if (code == this._keys.Up && index < options.Length - 1)
-                {
-                    // Up key
-                    index++;
-                }
-
-            } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel);
-
-            if (code == PinpadKeyCode.Return)
-            {
-                return options[index];
-            }
-            return null;
+            return this.PickObjectInArray<Nullable<short>>(label, options);
         }
         /// <summary>
         /// Get text value in array options.
         /// </summary>
         /// <param name="label">Text to display on the first line of pinpad display.</param>
         /// <param name="options">Array with options.</param>
-        /// <returns>Option picked or null if no one was picked.</returns>
+        /// <returns>Option picked or null/empty if no one was picked.</returns>
         public string GetTextValueInArray(string label, params string[] options)
         {
             if (string.IsNullOrEmpty(label) == true)
@@ -166,6 +136,19 @@ namespace Pinpad.Sdk.Utilities
                 throw new ArgumentException("options");
             }
 
+            return this.PickObjectInArray<string>(label, options);
+        }
+
+        // Private methods
+        /// <summary>
+        /// Base method to picked options.
+        /// </summary>
+        /// <typeparam name="T">Options type.</typeparam>
+        /// <param name="label">Text to display on the first line of pinpad display.</param>
+        /// <param name="options">Array with options.</param>
+        /// <returns>Option picker or null if no one was picked.</returns>
+        private T PickObjectInArray<T>(string label, params T[] options)
+        {
             PinpadKeyCode code = PinpadKeyCode.Undefined;
             int index = 0;
 
@@ -196,7 +179,7 @@ namespace Pinpad.Sdk.Utilities
             {
                 return options[index];
             }
-            return null;
+            return default(T);
         }
     }
 }
