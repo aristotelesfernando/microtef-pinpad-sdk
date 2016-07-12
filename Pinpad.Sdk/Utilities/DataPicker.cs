@@ -1,7 +1,6 @@
 ﻿using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.Utilities;
 using System;
-using System.Diagnostics;
 
 namespace Pinpad.Sdk.Utilities
 {
@@ -45,7 +44,6 @@ namespace Pinpad.Sdk.Utilities
             // Verifone utiliza Function1 como Up e Function3 como Down.
             if (infos.ManufacturerName != null)
             {
-                Debug.WriteLine("\"" + infos.ManufacturerName + "\"");
                 if (infos.ManufacturerName.ToUpper().Contains(ManufacturerName) == true)
                 {
                     this._keys = new DataPickerKeys(PinpadKeyCode.Function1, PinpadKeyCode.Function3);
