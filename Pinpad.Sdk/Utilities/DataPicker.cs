@@ -45,7 +45,8 @@ namespace Pinpad.Sdk.Utilities
             // Verifone utiliza Function1 como Up e Function3 como Down.
             if (infos.ManufacturerName != null)
             {
-                if (infos.ManufacturerName.Contains(ManufacturerName) == true)
+                Debug.WriteLine("\"" + infos.ManufacturerName + "\"");
+                if (infos.ManufacturerName.ToUpper().Contains(ManufacturerName) == true)
                 {
                     this._keys = new DataPickerKeys(PinpadKeyCode.Function1, PinpadKeyCode.Function3);
                 }
