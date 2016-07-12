@@ -54,12 +54,12 @@ namespace Pinpad.Sdk.Utilities
         /// Get numeric value in range informed.
         /// </summary>
         /// <param name="label">Text to display on the first line of pinpad display.</param>
-        /// <param name="minimunValue">Minimum numeric value for pick.</param>
-        /// <param name="maximumValue">Maximum numeric value for pick.</param>
+        /// <param name="minimunLimit">Minimum numeric value for pick.</param>
+        /// <param name="maximumLimit">Maximum numeric value for pick.</param>
         /// <returns>Number picked or null if no one was picked.</returns>
-        public Nullable<int> GetNumericValue(string label, int minimunValue, int maximumValue)
+        public Nullable<short> GetNumericValue(string label, short minimunLimit, short maximumLimit)
         {
-            if (minimunValue > maximumValue)
+            if (minimunLimit > maximumLimit)
             {
                 throw new ArgumentException("minimunValue");
             }
@@ -69,7 +69,7 @@ namespace Pinpad.Sdk.Utilities
             }
 
             PinpadKeyCode code = PinpadKeyCode.Undefined;
-            int index = minimunValue;
+            short index = minimunLimit;
 
             do
             {
@@ -79,14 +79,14 @@ namespace Pinpad.Sdk.Utilities
                 if (code == PinpadKeyCode.Backspace)
                 {
                     // Restart counter
-                    index = minimunValue;
+                    index = minimunLimit;
                 }
-                else if (code == this._keys.Down && index > minimunValue)
+                else if (code == this._keys.Down && index > minimunLimit)
                 {
                     // Down key
                     index--;
                 }
-                else if (code == this._keys.Up && index < maximumValue)
+                else if (code == this._keys.Up && index < maximumLimit)
                 {
                     // Up key
                     index++;
