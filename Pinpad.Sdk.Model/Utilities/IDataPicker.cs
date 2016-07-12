@@ -11,10 +11,10 @@ namespace Pinpad.Sdk.Model.Utilities
         /// Get numeric value in range informed.
         /// </summary>
         /// <param name="label">Text to display on the first line of pinpad display.</param>
-        /// <param name="minimunValue">Minimum numeric value for pick.</param>
-        /// <param name="maximumValue">Maximum numeric value for pick.</param>
+        /// <param name="minimunLimit">Minimum numeric value for pick. Limit: -32.768.</param>
+        /// <param name="maximumLimit">Maximum numeric value for pick. Limit: 32.767.</param>
         /// <returns>Number picked or null if no one was picked.</returns>
-        Nullable<short> GetNumericValue(string label, short minimunValue, short maximumValue);
+        Nullable<short> GetNumericValue(string label, short minimunLimit, short maximumLimit);
         /// <summary>
         /// Get numeric value in array options.
         /// </summary>
@@ -27,7 +27,7 @@ namespace Pinpad.Sdk.Model.Utilities
         /// </summary>
         /// <param name="label">Text to display on the first line of pinpad display.</param>
         /// <param name="options">Array with options.</param>
-        /// <returns>Option picked or null if no one was picked.</returns>
+        /// <returns>Option picked or null/empty if no one was picked.</returns>
         string GetTextValueInNumericArray(string label, params string[] options);
     }
 }
