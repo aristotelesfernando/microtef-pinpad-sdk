@@ -198,22 +198,22 @@ namespace Pinpad.Sdk.Test
             Debug.WriteLine(value.Value);
 		}
         //[TestMethod]
-        public void GetNumericValueInArray_test()
+        public void GetValueInOptionsShort_test()
         {
             PinpadConnection conn = PinpadConnection.GetFirst();
             PinpadFacade facade = new PinpadFacade(conn);
 
-            short? value = facade.Keyboard.DataPicker.GetNumericValueInNumericArray("Data Picker", 2, 4, 8, 16, 32, 64, 128);
+            short? value = facade.Keyboard.DataPicker.GetValueInOptions("Data Picker", 2, 4, 8, 16, 32, 64, 128);
 
             Debug.WriteLine(value.Value);
         }
         //[TestMethod]
-        public void GetTextValueInArray_test()
+        public void GetValueInOptionsString_test()
         {
             PinpadConnection conn = PinpadConnection.GetFirst();
             PinpadFacade facade = new PinpadFacade(conn);
 
-            string value = facade.Keyboard.DataPicker.GetTextValueInNumericArray("Pokemon", "Bulbasaur", "Charmander", "Squirtle");
+            string value = facade.Keyboard.DataPicker.GetValueInOptions("Pokemon", "Bulbasaur", "Charmander", "Squirtle");
 
             Debug.WriteLine(value);
         }
