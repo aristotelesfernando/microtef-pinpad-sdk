@@ -34,18 +34,21 @@ namespace Pinpad.Sdk.Utilities
         /// <summary>
         /// Build a data picker with a reference to keyboard and display.
         /// </summary>
-        /// <param name="keyboard">IPinpadKeyboard implementation.</param>
-        /// <param name="infos">IPinpadInfos implementation.</param>
-        /// <param name="display">IPinpadDisplay implementation.</param>
+        /// <param name="keyboard"><seealso cref="IPinpadKeyboard"/> implementation.</param>
+        /// <param name="infos"><seealso cref="IPinpadInfos"/> implementation.</param>
+        /// <param name="display"><seealso cref="IPinpadDisplay"/> implementation.</param>
         public DataPicker(IPinpadKeyboard keyboard, IPinpadInfos infos, IPinpadDisplay display)
         {
             this._keyboard = keyboard;
             this._display = display;
 
             // Verifone utiliza Function1 como Up e Function3 como Down.
-            if (infos.ManufacturerName?.Contains(ManufacturerName) == true)
+            if (infos.ManufacturerName != null)
             {
-                this._keys = new DataPickerKeys(PinpadKeyCode.Function1, PinpadKeyCode.Function3);
+                if (infos.ManufacturerName.Contains(ManufacturerName) == true)
+                {
+                    this._keys = new DataPickerKeys(PinpadKeyCode.Function1, PinpadKeyCode.Function3);
+                }
             }
         }
 
