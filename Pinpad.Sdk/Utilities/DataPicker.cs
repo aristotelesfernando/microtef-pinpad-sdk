@@ -108,7 +108,7 @@ namespace Pinpad.Sdk.Utilities
         /// <param name="label">Text to display on the first line of pinpad display.</param>
         /// <param name="options">Array with options.</param>
         /// <returns>Option picked or null if no one was picked.</returns>
-        public Nullable<short> GetNumericValueInNumericArray(string label, params short?[] options)
+        public Nullable<short> GetValueInOptions(string label, params short[] options)
         {
             if (string.IsNullOrEmpty(label) == true)
             {
@@ -119,7 +119,7 @@ namespace Pinpad.Sdk.Utilities
                 throw new ArgumentException("options");
             }
 
-            return this.PickObjectInArray<Nullable<short>>(label, options);
+            return this.PickObjectInArray<Nullable<short>, short>(label, options);
         }
         /// <summary>
         /// Get text value in array options.
@@ -127,7 +127,7 @@ namespace Pinpad.Sdk.Utilities
         /// <param name="label">Text to display on the first line of pinpad display.</param>
         /// <param name="options">Array with options.</param>
         /// <returns>Option picked or null/empty if no one was picked.</returns>
-        public string GetTextValueInNumericArray(string label, params string[] options)
+        public string GetValueInOptions(string label, params string[] options)
         {
             if (string.IsNullOrEmpty(label) == true)
             {
@@ -138,18 +138,19 @@ namespace Pinpad.Sdk.Utilities
                 throw new ArgumentException("options");
             }
 
-            return this.PickObjectInArray<string>(label, options);
+            return this.PickObjectInArray<string,string>(label, options);
         }
 
         // Private methods
         /// <summary>
         /// Base method to picked options.
         /// </summary>
-        /// <typeparam name="T">Options type.</typeparam>
+        /// <typeparam name="T">Return type.</typeparam>
+        /// <typeparam name="V">Options type.</typeparam>
         /// <param name="label">Text to display on the first line of pinpad display.</param>
         /// <param name="options">Array with options.</param>
         /// <returns>Option picker or null if no one was picked.</returns>
-        private T PickObjectInArray<T>(string label, params T[] options)
+        private T PickObjectInArray<T, V>(string label, params V[] options)
         {
             PinpadKeyCode code = PinpadKeyCode.Undefined;
             int index = 0;
@@ -179,7 +180,7 @@ namespace Pinpad.Sdk.Utilities
 
             if (code == PinpadKeyCode.Return)
             {
-                return options[index];
+                return (T)(object)options[index];
             }
             return default(T);
         }
