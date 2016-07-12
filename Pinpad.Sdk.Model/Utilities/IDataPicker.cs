@@ -21,13 +21,13 @@ namespace Pinpad.Sdk.Model.Utilities
         /// <param name="label">Text to display on the first line of pinpad display.</param>
         /// <param name="options">Array with options.</param>
         /// <returns>Option picked or null if no one was picked.</returns>
-        Nullable<short> GetNumericValueInArray(string label, params short?[] options);
+        Nullable<short> GetNumericValueInNumericArray(string label, params short?[] options);
         /// <summary>
         /// Get text value in array options.
         /// </summary>
         /// <param name="label">Text to display on the first line of pinpad display.</param>
         /// <param name="options">Array with options.</param>
         /// <returns>Option picked or null if no one was picked.</returns>
-        string GetTextValueInArray(string label, params string[] options);
+        string GetTextValueInNumericArray(string label, params string[] options);
     }
 }

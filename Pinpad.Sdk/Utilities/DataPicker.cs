@@ -106,7 +106,7 @@ namespace Pinpad.Sdk.Utilities
         /// <param name="label">Text to display on the first line of pinpad display.</param>
         /// <param name="options">Array with options.</param>
         /// <returns>Option picked or null if no one was picked.</returns>
-        public Nullable<short> GetNumericValueInArray(string label, params short?[] options)
+        public Nullable<short> GetNumericValueInNumericArray(string label, params short?[] options)
         {
             if (string.IsNullOrEmpty(label) == true)
             {
@@ -125,7 +125,7 @@ namespace Pinpad.Sdk.Utilities
         /// <param name="label">Text to display on the first line of pinpad display.</param>
         /// <param name="options">Array with options.</param>
         /// <returns>Option picked or null/empty if no one was picked.</returns>
-        public string GetTextValueInArray(string label, params string[] options)
+        public string GetTextValueInNumericArray(string label, params string[] options)
         {
             if (string.IsNullOrEmpty(label) == true)
             {
