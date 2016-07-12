@@ -6,6 +6,7 @@ using System.Diagnostics;
 using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Model;
 using System;
+using System.Text;
 
 namespace Pinpad.Sdk.Test
 {
@@ -186,5 +187,35 @@ namespace Pinpad.Sdk.Test
 
 			bool status = facade.Communication.Ping();
 		}
-	}
+        //[TestMethod]
+        public void GetNumericValue_test()
+		{
+			PinpadConnection conn = PinpadConnection.GetFirst();
+			PinpadFacade facade = new PinpadFacade(conn);
+
+            int? value = facade.Keyboard.DataPicker.GetNumericValue("Data Picker", 0, 5);
+
+            Debug.WriteLine(value.Value);
+		}
+        //[TestMethod]
+        public void GetValueInOptionsShort_test()
+        {
+            PinpadConnection conn = PinpadConnection.GetFirst();
+            PinpadFacade facade = new PinpadFacade(conn);
+
+            short? value = facade.Keyboard.DataPicker.GetValueInOptions("Data Picker", 2, 4, 8, 16, 32, 64, 128);
+
+            Debug.WriteLine(value.Value);
+        }
+        //[TestMethod]
+        public void GetValueInOptionsString_test()
+        {
+            PinpadConnection conn = PinpadConnection.GetFirst();
+            PinpadFacade facade = new PinpadFacade(conn);
+
+            string value = facade.Keyboard.DataPicker.GetValueInOptions("Pokemon", "Bulbasaur", "Charmander", "Squirtle");
+
+            Debug.WriteLine(value);
+        }
+    }
 }
