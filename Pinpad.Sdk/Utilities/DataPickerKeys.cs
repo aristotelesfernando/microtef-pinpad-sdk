@@ -22,8 +22,8 @@ namespace Pinpad.Sdk.Utilities
         /// Class constructor containing keys up and down.
         /// </summary>
         /// <param name="up">Up key. Function3 as default.</param>
-        /// <param name="down">Down key. Functuion2 as default.</param>
-        internal DataPickerKeys(PinpadKeyCode up = PinpadKeyCode.Function3, PinpadKeyCode down = PinpadKeyCode.Function2)
+        /// <param name="down">Down key. Functuion4 as default.</param>
+        internal DataPickerKeys(PinpadKeyCode up = PinpadKeyCode.Function3, PinpadKeyCode down = PinpadKeyCode.Function4)
         {
             this.Up = up;
             this.Down = down;

@@ -11,9 +11,17 @@ namespace Pinpad.Sdk.Utilities
     {
         // Constant
         /// <summary>
-        /// Manufacturer name of pinpad with different down and up keys.
+        /// Manufacturer name of pinpad with different down and up keys. Verifone touchscreen models.
         /// </summary>
-        private const string ManufacturerName = "VERIFONE";
+        private const string Verifone = "VERIFONE";
+        /// <summary>
+        /// Manufacturer name of pinpad with different down and up keys. (Gertec PPC320)
+        /// </summary>
+        private const string Gertec = "GERTEC";
+        /// <summary>
+        /// Model name of pinpad with different down and up keys. (Gertec PPC320)
+        /// </summary>
+        private const string Ppc920 = "PPC920";
 
         // Members
         /// <summary>
@@ -40,18 +48,29 @@ namespace Pinpad.Sdk.Utilities
         {
             this._keyboard = keyboard;
             this._display = display;
-
-            // Verifone utiliza Function1 como Up e Function3 como Down.
-            if (infos.ManufacturerName != null)
-            {
-                if (infos.ManufacturerName.ToUpper().Contains(ManufacturerName) == true)
-                {
-                    this._keys = new DataPickerKeys(PinpadKeyCode.Function1, PinpadKeyCode.Function3);
-                }
-            }
+            this._keys = DataPickerKeysFactory.Create(infos);
         }
 
         // Public methods
+        /// <summary>
+        /// Sets key set for operations on the picker.
+        /// <seealso cref="PinpadKeyCode"/>
+        /// </summary>
+        /// <param name="up">Key code to up. Default: Function2.</param>
+        /// <param name="down">Key code to up. Default: Function3.</param>
+        public void SetUpAndDownKey(PinpadKeyCode up, PinpadKeyCode down)
+        {
+            if (up == PinpadKeyCode.Undefined)
+            {
+                throw new ArgumentException("up");
+            }
+            if (up == PinpadKeyCode.Undefined)
+            {
+                throw new ArgumentException("down");
+            }
+
+            this._keys = DataPickerKeysFactory.Create(up, down);
+        }
         /// <summary>
         /// Get numeric value in range informed.
         /// </summary>
