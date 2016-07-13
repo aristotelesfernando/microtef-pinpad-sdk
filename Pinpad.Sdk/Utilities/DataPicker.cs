@@ -9,20 +9,6 @@ namespace Pinpad.Sdk.Utilities
     /// </summary>
     internal class DataPicker : IDataPicker
     {
-        // Constant
-        /// <summary>
-        /// Manufacturer name of pinpad with different down and up keys. Verifone touchscreen models.
-        /// </summary>
-        private const string Verifone = "VERIFONE";
-        /// <summary>
-        /// Manufacturer name of pinpad with different down and up keys. (Gertec PPC320)
-        /// </summary>
-        private const string Gertec = "GERTEC";
-        /// <summary>
-        /// Model name of pinpad with different down and up keys. (Gertec PPC320)
-        /// </summary>
-        private const string Ppc920 = "PPC920";
-
         // Members
         /// <summary>
         /// Reference to display operations.
