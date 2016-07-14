@@ -97,6 +97,9 @@
     <Compile Include="Transaction\PinReaderTest.cs" />
     <Compile Include="Transaction\CardEntryTest.cs" />
     <Compile Include="Transaction\EmvPinReaderTest.cs" />
+    <Compile Include="Utilities\DataPickerKeysFactoryTest.cs" />
+    <Compile Include="Utilities\DataPickerKeysTest.cs" />
+    <Compile Include="Utilities\DataPickerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
