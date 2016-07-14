@@ -181,7 +181,7 @@ namespace Pinpad.Sdk.Test.Utilities
             var infos = new Mock<IPinpadInfos>();
             IDataPicker picker = new DataPicker(keyboard.Object, infos.Object, display.Object);
             // Act
-            string value = picker.GetValueInOptions(string.Empty, string.Empty, string.Empty);
+            string value = picker.GetValueInOptions(null, string.Empty, string.Empty);
             // Assert
         }
         [TestMethod]
