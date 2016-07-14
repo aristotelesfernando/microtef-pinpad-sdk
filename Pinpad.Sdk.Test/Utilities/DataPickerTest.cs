@@ -32,7 +32,7 @@ namespace Pinpad.Sdk.Test.Utilities
             var display = new Mock<IPinpadDisplay>();
             IDataPicker picker = new DataPicker(keyboard.Object, infos.Object, display.Object);
             // Act
-            picker.DataPickerKeys = new DataPickerKeys { Up = PinpadKeyCode.Undefined, Down = PinpadKeyCode.Function1 };
+            picker.DataPickerKeys = new DataPickerKeys { UpKey = PinpadKeyCode.Undefined, DownKey = PinpadKeyCode.Function1 };
             // Assert
         }
         [TestMethod]
@@ -45,7 +45,7 @@ namespace Pinpad.Sdk.Test.Utilities
             var display = new Mock<IPinpadDisplay>();
             IDataPicker picker = new DataPicker(keyboard.Object, infos.Object, display.Object);
             // Act
-            picker.DataPickerKeys = new DataPickerKeys { Up = PinpadKeyCode.Function1, Down = PinpadKeyCode.Undefined };
+            picker.DataPickerKeys = new DataPickerKeys { UpKey = PinpadKeyCode.Function1, DownKey = PinpadKeyCode.Undefined };
             // Assert
         }
         [TestMethod]

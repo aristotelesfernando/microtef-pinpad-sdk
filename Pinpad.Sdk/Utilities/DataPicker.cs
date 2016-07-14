@@ -70,12 +70,12 @@ namespace Pinpad.Sdk.Utilities
                     // Restart counter
                     index = minimunLimit;
                 }
-                else if (code == this.DataPickerKeys.Down && index > minimunLimit)
+                else if (code == this.DataPickerKeys.DownKey && index > minimunLimit)
                 {
                     // Down key
                     index--;
                 }
-                else if (code == this.DataPickerKeys.Up && index < maximumLimit)
+                else if (code == this.DataPickerKeys.UpKey && index < maximumLimit)
                 {
                     // Up key
                     index++;
@@ -152,12 +152,12 @@ namespace Pinpad.Sdk.Utilities
                     // Restart counter
                     index = 0;
                 }
-                else if (code == this.DataPickerKeys.Down && index > 0)
+                else if (code == this.DataPickerKeys.DownKey && index > 0)
                 {
                     // Down key
                     index--;
                 }
-                else if (code == this.DataPickerKeys.Up && index < options.Length - 1)
+                else if (code == this.DataPickerKeys.UpKey && index < options.Length - 1)
                 {
                     // Up key
                     index++;

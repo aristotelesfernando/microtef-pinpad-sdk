@@ -11,21 +11,21 @@ namespace Pinpad.Sdk.Model.Utilities
         /// <summary>
         /// Up key property.
         /// </summary>
-        public PinpadKeyCode Up
+        public PinpadKeyCode UpKey
         {
             get { return _up; }
             set
             {
                 if (value == this._down)
                 {
-                    throw new ArgumentException("up = down");
+                    throw new ArgumentException("Up and Down keys have the same value.");
                 }
                 if ((value == PinpadKeyCode.Undefined) ||
                     (value == PinpadKeyCode.Return) ||
                     (value == PinpadKeyCode.Cancel) ||
                     (value == PinpadKeyCode.Backspace))
                 {
-                    throw new ArgumentException("up");
+                    throw new ArgumentException("Invalid value to up key.");
                 }
                 this._up = value;
             }
@@ -33,21 +33,21 @@ namespace Pinpad.Sdk.Model.Utilities
         /// <summary>
         /// Down key property.
         /// </summary>
-        public PinpadKeyCode Down
+        public PinpadKeyCode DownKey
         {
             get { return _down; }
             set
             {
                 if (value == this._up)
                 {
-                    throw new ArgumentException("up = down");
+                    throw new ArgumentException("Up and Down keys have the same value.");
                 }
                 if ((value == PinpadKeyCode.Undefined) ||
                     (value == PinpadKeyCode.Return) ||
                     (value == PinpadKeyCode.Cancel) ||
                     (value == PinpadKeyCode.Backspace))
                 {
-                    throw new ArgumentException("down");
+                    throw new ArgumentException("Invalid value to down key.");
                 }
                 this._down = value;
             }

@@ -25,17 +25,17 @@ namespace Pinpad.Sdk.Utilities
                 // Gertec PPC920
                 if (infos.ManufacturerName.ToUpper().Contains(gertec) && infos.Model.ToUpper().Contains(ppc920))
                 {
-                    return new DataPickerKeys { Up = PinpadKeyCode.Function3, Down = PinpadKeyCode.Function4 };
+                    return new DataPickerKeys { UpKey = PinpadKeyCode.Function3, DownKey = PinpadKeyCode.Function4 };
                 }
                 // Verifone Vx 820
                 else if (infos.ManufacturerName.ToUpper().Contains(verifone) && infos.Model.ToUpper().Contains(vx820))
                 {
-                    return new DataPickerKeys { Up = PinpadKeyCode.Function1, Down = PinpadKeyCode.Function3 };
+                    return new DataPickerKeys { UpKey = PinpadKeyCode.Function1, DownKey = PinpadKeyCode.Function3 };
                 }
                 // Ingenico iPP320
                 else if (infos.ManufacturerName.ToUpper().Contains(ingenico) && infos.Model.ToUpper().Contains(ipp320))
                 {
-                    return new DataPickerKeys { Up = PinpadKeyCode.Function3, Down = PinpadKeyCode.Function2 };
+                    return new DataPickerKeys { UpKey = PinpadKeyCode.Function3, DownKey = PinpadKeyCode.Function2 };
                 }
             }
 

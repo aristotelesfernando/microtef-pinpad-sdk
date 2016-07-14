@@ -13,14 +13,13 @@ namespace Pinpad.Sdk.Test.Utilities
         public void Create_should_return_gertec_keys_when_null_infos_was_passed()
         {
             // Arrange
-            var mock = new Mock<IPinpadInfos>();
-            IPinpadInfos infos = mock.Object;
+            IPinpadInfos infos = new Mock<IPinpadInfos>().Object;
             // Act
             DataPickerKeys keys = DataPickerKeysFactory.Create(infos);
             // Assert
             Assert.IsNotNull(keys);
-            Assert.AreEqual(PinpadKeyCode.Function3, keys.Up);
-            Assert.AreEqual(PinpadKeyCode.Function4, keys.Down);
+            Assert.AreEqual(PinpadKeyCode.Function3, keys.UpKey);
+            Assert.AreEqual(PinpadKeyCode.Function4, keys.DownKey);
         }
         [TestMethod]
         public void Create_should_return_gertec_keys_when_gertec_infos_was_passed()
@@ -34,8 +33,8 @@ namespace Pinpad.Sdk.Test.Utilities
             DataPickerKeys keys = DataPickerKeysFactory.Create(infos);
             // Assert
             Assert.IsNotNull(keys);
-            Assert.AreEqual(PinpadKeyCode.Function3, keys.Up);
-            Assert.AreEqual(PinpadKeyCode.Function4, keys.Down);
+            Assert.AreEqual(PinpadKeyCode.Function3, keys.UpKey);
+            Assert.AreEqual(PinpadKeyCode.Function4, keys.DownKey);
         }
         [TestMethod]
         public void Create_should_return_ingenico_keys_when_ingenco_infos_was_passed()
@@ -49,8 +48,8 @@ namespace Pinpad.Sdk.Test.Utilities
             DataPickerKeys keys = DataPickerKeysFactory.Create(infos);
             // Assert
             Assert.IsNotNull(keys);
-            Assert.AreEqual(PinpadKeyCode.Function3, keys.Up);
-            Assert.AreEqual(PinpadKeyCode.Function2, keys.Down);
+            Assert.AreEqual(PinpadKeyCode.Function3, keys.UpKey);
+            Assert.AreEqual(PinpadKeyCode.Function2, keys.DownKey);
         }
         [TestMethod]
         public void Create_should_return_verifone_keys_when_verifone_infos_was_passed()
@@ -64,19 +63,8 @@ namespace Pinpad.Sdk.Test.Utilities
             DataPickerKeys keys = DataPickerKeysFactory.Create(infos);
             // Assert
             Assert.IsNotNull(keys);
-            Assert.AreEqual(PinpadKeyCode.Function1, keys.Up);
-            Assert.AreEqual(PinpadKeyCode.Function3, keys.Down);
-        }
-
-        [TestMethod]
-        public void Create_should_not_return_null()
-        {
-            // Arrange
-            DataPickerKeys keys = null;
-            // Act
-            keys = new DataPickerKeys();
-            // Assert
-            Assert.IsNotNull(keys);
+            Assert.AreEqual(PinpadKeyCode.Function1, keys.UpKey);
+            Assert.AreEqual(PinpadKeyCode.Function3, keys.DownKey);
         }
     }
 }

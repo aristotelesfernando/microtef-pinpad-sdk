@@ -17,8 +17,8 @@ namespace Pinpad.Sdk.Test.Utilities
             keys = new DataPickerKeys();
             // Assert
             Assert.IsNotNull(keys);
-            Assert.AreEqual(PinpadKeyCode.Function3, keys.Up);
-            Assert.AreEqual(PinpadKeyCode.Function4, keys.Down);
+            Assert.AreEqual(PinpadKeyCode.Function3, keys.UpKey);
+            Assert.AreEqual(PinpadKeyCode.Function4, keys.DownKey);
         }
         [TestMethod]
         public void DataPickerKeys_should_not_return_null_when_parameters_was_passed()
@@ -26,11 +26,11 @@ namespace Pinpad.Sdk.Test.Utilities
             // Arrange
             DataPickerKeys keys = null;
             // Act
-            keys = new DataPickerKeys { Up = PinpadKeyCode.Function3, Down = PinpadKeyCode.Function2 };
+            keys = new DataPickerKeys { UpKey = PinpadKeyCode.Function3, DownKey = PinpadKeyCode.Function2 };
             // Assert
             Assert.IsNotNull(keys);
-            Assert.AreEqual(PinpadKeyCode.Function3, keys.Up);
-            Assert.AreEqual(PinpadKeyCode.Function2, keys.Down);
+            Assert.AreEqual(PinpadKeyCode.Function3, keys.UpKey);
+            Assert.AreEqual(PinpadKeyCode.Function2, keys.DownKey);
         }
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
@@ -39,7 +39,7 @@ namespace Pinpad.Sdk.Test.Utilities
             // Arrange
             DataPickerKeys keys = null;
             // Act
-            keys = new DataPickerKeys { Up = PinpadKeyCode.Function1, Down = PinpadKeyCode.Function1 };
+            keys = new DataPickerKeys { UpKey = PinpadKeyCode.Function1, DownKey = PinpadKeyCode.Function1 };
             // Assert
         }
         [TestMethod]
@@ -49,7 +49,7 @@ namespace Pinpad.Sdk.Test.Utilities
             // Arrange
             DataPickerKeys keys = null;
             // Act
-            keys = new DataPickerKeys { Up = PinpadKeyCode.Undefined };
+            keys = new DataPickerKeys { UpKey = PinpadKeyCode.Undefined };
             // Assert
         }
         [TestMethod]
@@ -59,7 +59,7 @@ namespace Pinpad.Sdk.Test.Utilities
             // Arrange
             DataPickerKeys keys = null;
             // Act
-            keys = new DataPickerKeys { Down = PinpadKeyCode.Undefined };
+            keys = new DataPickerKeys { DownKey = PinpadKeyCode.Undefined };
             // Assert
         }
         [TestMethod]
@@ -69,7 +69,7 @@ namespace Pinpad.Sdk.Test.Utilities
             // Arrange
             DataPickerKeys keys = null;
             // Act
-            keys = new DataPickerKeys { Up = PinpadKeyCode.Cancel };
+            keys = new DataPickerKeys { UpKey = PinpadKeyCode.Cancel };
             // Assert
         }
         [TestMethod]
@@ -79,7 +79,7 @@ namespace Pinpad.Sdk.Test.Utilities
             // Arrange
             DataPickerKeys keys = null;
             // Act
-            keys = new DataPickerKeys { Down = PinpadKeyCode.Cancel };
+            keys = new DataPickerKeys { DownKey = PinpadKeyCode.Cancel };
             // Assert
         }
         [TestMethod]
@@ -89,7 +89,7 @@ namespace Pinpad.Sdk.Test.Utilities
             // Arrange
             DataPickerKeys keys = null;
             // Act
-            keys = new DataPickerKeys { Up = PinpadKeyCode.Return };
+            keys = new DataPickerKeys { UpKey = PinpadKeyCode.Return };
             // Assert
         }
         [TestMethod]
@@ -99,7 +99,7 @@ namespace Pinpad.Sdk.Test.Utilities
             // Arrange
             DataPickerKeys keys = null;
             // Act
-            keys = new DataPickerKeys { Down = PinpadKeyCode.Return };
+            keys = new DataPickerKeys { DownKey = PinpadKeyCode.Return };
             // Assert
         }
         [TestMethod]
@@ -109,7 +109,7 @@ namespace Pinpad.Sdk.Test.Utilities
             // Arrange
             DataPickerKeys keys = null;
             // Act
-            keys = new DataPickerKeys { Up = PinpadKeyCode.Backspace };
+            keys = new DataPickerKeys { UpKey = PinpadKeyCode.Backspace };
             // Assert
         }
         [TestMethod]
@@ -119,7 +119,7 @@ namespace Pinpad.Sdk.Test.Utilities
             // Arrange
             DataPickerKeys keys = null;
             // Act
-            keys = new DataPickerKeys { Down = PinpadKeyCode.Backspace };
+            keys = new DataPickerKeys { DownKey = PinpadKeyCode.Backspace };
             // Assert
         }
     }
