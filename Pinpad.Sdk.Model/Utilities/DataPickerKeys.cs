@@ -16,7 +16,7 @@ namespace Pinpad.Sdk.Model.Utilities
             get { return _up; }
             set
             {
-                if (this._up == this._down)
+                if (value == this._down)
                 {
                     throw new ArgumentException("up = down");
                 }
@@ -38,7 +38,7 @@ namespace Pinpad.Sdk.Model.Utilities
             get { return _down; }
             set
             {
-                if (this._down == this._up)
+                if (value == this._up)
                 {
                     throw new ArgumentException("up = down");
                 }

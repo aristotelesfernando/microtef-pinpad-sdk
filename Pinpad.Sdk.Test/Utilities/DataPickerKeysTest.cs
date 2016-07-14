@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.Utilities;
-using Pinpad.Sdk.Utilities;
+using System;
 
 namespace Pinpad.Sdk.Test.Utilities
 {
@@ -31,6 +31,96 @@ namespace Pinpad.Sdk.Test.Utilities
             Assert.IsNotNull(keys);
             Assert.AreEqual(PinpadKeyCode.Function3, keys.Up);
             Assert.AreEqual(PinpadKeyCode.Function2, keys.Down);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DataPickerKeys_should_throws_exception_when_up_and_down_key_are_equal()
+        {
+            // Arrange
+            DataPickerKeys keys = null;
+            // Act
+            keys = new DataPickerKeys { Up = PinpadKeyCode.Function1, Down = PinpadKeyCode.Function1 };
+            // Assert
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DataPickerKeys_should_throws_exception_when_undefied_key_is_set_as_up_key()
+        {
+            // Arrange
+            DataPickerKeys keys = null;
+            // Act
+            keys = new DataPickerKeys { Up = PinpadKeyCode.Undefined };
+            // Assert
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DataPickerKeys_should_throws_exception_when_undefied_key_is_set_as_down_key()
+        {
+            // Arrange
+            DataPickerKeys keys = null;
+            // Act
+            keys = new DataPickerKeys { Down = PinpadKeyCode.Undefined };
+            // Assert
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DataPickerKeys_should_throws_exception_when_cancel_key_is_set_as_up_key()
+        {
+            // Arrange
+            DataPickerKeys keys = null;
+            // Act
+            keys = new DataPickerKeys { Up = PinpadKeyCode.Cancel };
+            // Assert
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DataPickerKeys_should_throws_exception_when_cancel_key_is_set_as_down_key()
+        {
+            // Arrange
+            DataPickerKeys keys = null;
+            // Act
+            keys = new DataPickerKeys { Down = PinpadKeyCode.Cancel };
+            // Assert
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DataPickerKeys_should_throws_exception_when_return_key_is_set_as_up_key()
+        {
+            // Arrange
+            DataPickerKeys keys = null;
+            // Act
+            keys = new DataPickerKeys { Up = PinpadKeyCode.Return };
+            // Assert
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DataPickerKeys_should_throws_exception_when_return_key_is_set_as_down_key()
+        {
+            // Arrange
+            DataPickerKeys keys = null;
+            // Act
+            keys = new DataPickerKeys { Down = PinpadKeyCode.Return };
+            // Assert
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DataPickerKeys_should_throws_exception_when_backspace_key_is_set_as_up_key()
+        {
+            // Arrange
+            DataPickerKeys keys = null;
+            // Act
+            keys = new DataPickerKeys { Up = PinpadKeyCode.Backspace };
+            // Assert
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DataPickerKeys_should_throws_exception_when_backspace_key_is_set_as_down_key()
+        {
+            // Arrange
+            DataPickerKeys keys = null;
+            // Act
+            keys = new DataPickerKeys { Down = PinpadKeyCode.Backspace };
+            // Assert
         }
     }
 }
