@@ -88,19 +88,6 @@ namespace Pinpad.Sdk.Test.Utilities
             // Assert
         }
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void GetNumericValue_should_throw_exception_when_maximum_value_is_greater_than_minumum()
-        {
-            // Arrange
-            var keyboard = new Mock<IPinpadKeyboard>();
-            var infos = new Mock<IPinpadInfos>();
-            var display = new Mock<IPinpadDisplay>();
-            IDataPicker picker = new DataPicker(keyboard.Object, infos.Object, display.Object);
-            // Act
-            picker.GetNumericValue("label", 1, 0);
-            // Assert
-        }
-        [TestMethod]
         public void GetNumericValue_should_return_a_value_when_return_was_pressed()
         {
             // Arrange
