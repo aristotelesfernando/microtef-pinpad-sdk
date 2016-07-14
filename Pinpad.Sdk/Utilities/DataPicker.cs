@@ -18,10 +18,12 @@ namespace Pinpad.Sdk.Utilities
         /// Reference to keyboard operations.
         /// </summary>
         private IPinpadKeyboard _keyboard = null;
+
+        // Properties
         /// <summary>
         /// Keys of Down and Up in pinpad.
         /// </summary>
-        private DataPickerKeys _keys = new DataPickerKeys();
+        public DataPickerKeys DataPickerKeys { get; set; }
 
         // Constructor
         /// <summary>
@@ -34,29 +36,9 @@ namespace Pinpad.Sdk.Utilities
         {
             this._keyboard = keyboard;
             this._display = display;
-            this._keys = DataPickerKeysFactory.Create(infos);
+            this.DataPickerKeys = DataPickerKeysFactory.Create(infos);
         }
 
-        // Public methods
-        /// <summary>
-        /// Sets key set for operations on the picker.
-        /// <seealso cref="PinpadKeyCode"/>
-        /// </summary>
-        /// <param name="up">Key code to up. Default: Function2.</param>
-        /// <param name="down">Key code to up. Default: Function3.</param>
-        public void SetUpAndDownKey(PinpadKeyCode up, PinpadKeyCode down)
-        {
-            if (up == PinpadKeyCode.Undefined)
-            {
-                throw new ArgumentException("up");
-            }
-            if (up == PinpadKeyCode.Undefined)
-            {
-                throw new ArgumentException("down");
-            }
-
-            this._keys = DataPickerKeysFactory.Create(up, down);
-        }
         /// <summary>
         /// Get numeric value in range informed.
         /// </summary>
@@ -88,12 +70,12 @@ namespace Pinpad.Sdk.Utilities
                     // Restart counter
                     index = minimunLimit;
                 }
-                else if (code == this._keys.Down && index > minimunLimit)
+                else if (code == this.DataPickerKeys.Down && index > minimunLimit)
                 {
                     // Down key
                     index--;
                 }
-                else if (code == this._keys.Up && index < maximumLimit)
+                else if (code == this.DataPickerKeys.Up && index < maximumLimit)
                 {
                     // Up key
                     index++;
@@ -170,12 +152,12 @@ namespace Pinpad.Sdk.Utilities
                     // Restart counter
                     index = 0;
                 }
-                else if (code == this._keys.Down && index > 0)
+                else if (code == this.DataPickerKeys.Down && index > 0)
                 {
                     // Down key
                     index--;
                 }
-                else if (code == this._keys.Up && index < options.Length - 1)
+                else if (code == this.DataPickerKeys.Up && index < options.Length - 1)
                 {
                     // Up key
                     index++;

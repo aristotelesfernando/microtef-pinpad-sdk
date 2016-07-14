@@ -7,13 +7,13 @@ namespace Pinpad.Sdk.Model.Utilities
     /// </summary>
     public interface IDataPicker
     {
+        // Properties
         /// <summary>
-        /// Sets key set for operations on the picker.
-        /// <seealso cref="PinpadKeyCode"/>
+        /// Keys of Down and Up in pinpad.
         /// </summary>
-        /// <param name="up">Key code to up. Default: Function2.</param>
-        /// <param name="down">Key code to up. Default: Function3.</param>
-        void SetUpAndDownKey(PinpadKeyCode up, PinpadKeyCode down);
+        DataPickerKeys DataPickerKeys { get; set; }
+
+        // Public methods
         /// <summary>
         /// Get numeric value in range informed.
         /// </summary>
