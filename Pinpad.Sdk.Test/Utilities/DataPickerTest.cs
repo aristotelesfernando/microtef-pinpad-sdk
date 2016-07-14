@@ -24,19 +24,6 @@ namespace Pinpad.Sdk.Test.Utilities
         }
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void SetUpAndDownKey_should_throws_argumentexception_when_key_up_is_undefined()
-        {
-            // Arrange
-            var keyboard = new Mock<IPinpadKeyboard>();
-            var infos = new Mock<IPinpadInfos>();
-            var display = new Mock<IPinpadDisplay>();
-            IDataPicker picker = new DataPicker(keyboard.Object, infos.Object, display.Object);
-            // Act
-            picker.DataPickerKeys = new DataPickerKeys { UpKey = PinpadKeyCode.Undefined, DownKey = PinpadKeyCode.Function1 };
-            // Assert
-        }
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void SetUpAndDownKey_should_throws_argumentexception_when_key_down_is_undefined()
         {
             // Arrange
