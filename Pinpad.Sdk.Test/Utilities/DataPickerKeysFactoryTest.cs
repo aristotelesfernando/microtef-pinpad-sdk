@@ -15,7 +15,7 @@ namespace Pinpad.Sdk.Test.Utilities
             // Arrange
             IPinpadInfos infos = new Mock<IPinpadInfos>().Object;
             // Act
-            DataPickerKeys keys = DataPickerKeysFactory.Create(infos);
+            DataPickerKeys keys = infos.GetUpAndDownKeys();
             // Assert
             Assert.IsNotNull(keys);
             Assert.AreEqual(PinpadKeyCode.Function3, keys.UpKey);
@@ -30,7 +30,7 @@ namespace Pinpad.Sdk.Test.Utilities
             mock.SetupGet(x => x.Model).Returns("PPC920");
             IPinpadInfos infos = mock.Object;
             // Act
-            DataPickerKeys keys = DataPickerKeysFactory.Create(infos);
+            DataPickerKeys keys = infos.GetUpAndDownKeys();
             // Assert
             Assert.IsNotNull(keys);
             Assert.AreEqual(PinpadKeyCode.Function3, keys.UpKey);
@@ -45,7 +45,7 @@ namespace Pinpad.Sdk.Test.Utilities
             mock.SetupGet(x => x.Model).Returns("IPP320");
             IPinpadInfos infos = mock.Object;
             // Act
-            DataPickerKeys keys = DataPickerKeysFactory.Create(infos);
+            DataPickerKeys keys = infos.GetUpAndDownKeys();
             // Assert
             Assert.IsNotNull(keys);
             Assert.AreEqual(PinpadKeyCode.Function3, keys.UpKey);
@@ -60,7 +60,7 @@ namespace Pinpad.Sdk.Test.Utilities
             mock.SetupGet(x => x.Model).Returns("VX820");
             IPinpadInfos infos = mock.Object;
             // Act
-            DataPickerKeys keys = DataPickerKeysFactory.Create(infos);
+            DataPickerKeys keys = infos.GetUpAndDownKeys();
             // Assert
             Assert.IsNotNull(keys);
             Assert.AreEqual(PinpadKeyCode.Function1, keys.UpKey);

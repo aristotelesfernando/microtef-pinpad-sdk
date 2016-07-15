@@ -14,7 +14,7 @@ namespace Pinpad.Sdk.Utilities
         /// </summary>
         /// <param name="infos">Pinpad informarions.</param>
         /// <returns>Corresponding <see cref="DataPickerKeys"/> to pinpad.</returns>
-        internal static DataPickerKeys Create(IPinpadInfos infos)
+        internal static DataPickerKeys GetUpAndDownKeys (this IPinpadInfos infos)
         {
             string verifone = "VERIFONE", vx820 = "VX820";
             string gertec = "GERTEC", ppc920 = "PPC920";

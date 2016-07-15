@@ -36,7 +36,7 @@ namespace Pinpad.Sdk.Utilities
         {
             this._keyboard = keyboard;
             this._display = display;
-            this.DataPickerKeys = DataPickerKeysFactory.Create(infos);
+            this.DataPickerKeys = infos.GetUpAndDownKeys();
         }
 
         /// <summary>
