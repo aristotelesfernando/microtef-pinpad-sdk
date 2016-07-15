@@ -203,7 +203,7 @@ namespace Pinpad.Sdk.Test
             PinpadConnection conn = PinpadConnection.GetFirst();
             PinpadFacade facade = new PinpadFacade(conn);
 
-            short? value = facade.Keyboard.DataPicker.GetValueInOptions("Data Picker", 2, 4, 8, 16, 32, 64, 128);
+            short? value = facade.Keyboard.DataPicker.GetValueInOptions("Parcelas", 2, 3, 4, 5, 6);
 
             Debug.WriteLine(value.Value);
         }

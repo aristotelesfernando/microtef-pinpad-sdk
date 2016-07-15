@@ -82,6 +82,7 @@
     <Compile Include="TypeCode\ResponseStatus.cs" />
     <Compile Include="TypeCode\SecondLineLabelCode.cs" />
     <Compile Include="TypeCode\TransactionType.cs" />
+    <Compile Include="Utilities\DataPickerKeys.cs" />
     <Compile Include="Utilities\IDataPicker.cs" />
   </ItemGroup>
   <ItemGroup>
