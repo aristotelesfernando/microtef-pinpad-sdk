@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pinpad.Sdk.Model.Utilities;
+using System;
 
 namespace Pinpad.Sdk.Model
 {
@@ -7,12 +8,19 @@ namespace Pinpad.Sdk.Model
 	/// </summary>
 	public interface IPinpadKeyboard
 	{
-		/// <summary>
-		/// Gets the next Key pressed at the Pinpad with the default, safe, method.
-		/// Does not retrieve numeric keys.
-		/// </summary>
-		/// <returns>PinpadKey or Undefined on failure.</returns>
-		PinpadKeyCode GetKey();
+        // Properties
+        /// <summary>
+        /// It contains methods to select data through the pinpad.
+        /// </summary>
+        IDataPicker DataPicker { get; set; }
+
+        // Methods
+        /// <summary>
+        /// Gets the next Key pressed at the Pinpad with the default, safe, method.
+        /// Does not retrieve numeric keys.
+        /// </summary>
+        /// <returns>PinpadKey or Undefined on failure.</returns>
+        PinpadKeyCode GetKey();
 		/// <summary>
 		/// Gets a numeric input from pinpad keyboard.
 		/// </summary>

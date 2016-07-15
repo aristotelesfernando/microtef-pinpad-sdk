@@ -81,9 +81,18 @@
     <Compile Include="TypeCode\ResponseStatus.cs" />
     <Compile Include="TypeCode\SecondLineLabelCode.cs" />
     <Compile Include="TypeCode\TransactionType.cs" />
+    <Compile Include="Utilities\DataPickerKeys.cs" />
+    <Compile Include="Utilities\IDataPicker.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="PinpadSdkModel_key.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MicroPos.Platform.Desktop, Version=1.4.7.0, Culture=neutral, PublicKeyToken=38ae2303208e40c0, processorArchitecture=MSIL">
+      <HintPath>..\packages\MicroPos.Platform.Desktop.1.4.7\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.Platform.Desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

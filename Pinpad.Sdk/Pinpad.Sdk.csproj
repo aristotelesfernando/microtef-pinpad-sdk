@@ -139,6 +139,8 @@
     <Compile Include="Commands\DataSet\KeyManagementMode.cs" />
     <Compile Include="Commands\DataSet\OfflineTransactionStatus.cs" />
     <Compile Include="Commands\DataSet\AbecsResponseStatus.cs" />
+    <Compile Include="Utilities\DataPicker.cs" />
+    <Compile Include="Utilities\DataPickerKeysFactory.cs" />
     <Compile Include="Utilities\HexadecimalController.cs" />
     <Compile Include="Commands\DataSet\HexadecimalData.cs" />
   </ItemGroup>
@@ -155,6 +157,10 @@
   <ItemGroup>
     <Reference Include="MicroPos.CrossPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b64391aecf921c4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MicroPos.CrossPlatform.1.2.0\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.CrossPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MicroPos.Platform.Desktop, Version=1.4.7.0, Culture=neutral, PublicKeyToken=38ae2303208e40c0, processorArchitecture=MSIL">
+      <HintPath>..\packages\MicroPos.Platform.Desktop.1.4.7\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.Platform.Desktop.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

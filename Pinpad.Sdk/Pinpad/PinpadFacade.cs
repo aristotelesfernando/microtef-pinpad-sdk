@@ -25,9 +25,9 @@ namespace Pinpad.Sdk
 
 				this.Communication = new PinpadCommunication(this.Connection);
 				this.Infos = new PinpadInfos(this.Communication);
-				this.Keyboard = new PinpadKeyboard(this.Communication, this.Infos);
 				this.Display = new PinpadDisplay(this.Communication);
-				this.TransactionService = new PinpadTransaction(this.Communication);
+                this.Keyboard = new PinpadKeyboard(this.Communication, this.Infos, this.Display);
+                this.TransactionService = new PinpadTransaction(this.Communication);
 			}
 		}
 		/// <summary>
@@ -51,11 +51,11 @@ namespace Pinpad.Sdk
 		/// </summary>
 		public IPinpadInfos Infos { get; set; }
 
-		/// <summary>
-		/// Creates all pinpad adapters.
-		/// </summary>
-		/// <param name="pinpadConnection">Pinpad connection.</param>
-		public PinpadFacade(IPinpadConnection pinpadConnection)
+        /// <summary>
+        /// Creates all pinpad adapters.
+        /// </summary>
+        /// <param name="pinpadConnection">Pinpad connection.</param>
+        public PinpadFacade(IPinpadConnection pinpadConnection)
 		{
 			this.Connection = new PinpadConnection(pinpadConnection);
 		}
