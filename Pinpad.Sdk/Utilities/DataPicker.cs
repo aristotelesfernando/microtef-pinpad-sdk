@@ -81,7 +81,7 @@ namespace Pinpad.Sdk.Utilities
                     index++;
                 }
 
-            } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel);
+            } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel && code != PinpadKeyCode.Undefined);
 
             if (code == PinpadKeyCode.Return)
             {
@@ -163,7 +163,7 @@ namespace Pinpad.Sdk.Utilities
                     index++;
                 }
 
-            } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel);
+            } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel && code != PinpadKeyCode.Undefined);
 
             if (code == PinpadKeyCode.Return)
             {
