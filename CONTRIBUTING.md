@@ -25,6 +25,7 @@ Emoji | Code | Commit Type
 :rocket: | `:rocket:` | nova feature
 :see_no_evil: | `:see_no_evil:` | gambiarra
 :gift: | `:gift:` | nova versão
+:wrench: | `:whench:` | Mudança nos arquivos de configuração do git/arquivos de configuração particulares do projeto.
 
 ### Exemplo
 ```bash
