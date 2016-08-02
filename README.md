@@ -77,7 +77,7 @@ try
 {
     // Não conhece o tipo da transação. Nesse caso, o tipo da transação selecionado pelo pinpad
     // será atribuído à variável transactionType.
-    facade.TransactionService.ReadCard(TransactionType.Undefined, 1.99m, out transactionType);
+    CardEntry myCard = facade.TransactionService.ReadCard(TransactionType.Undefined, 1.99m, out transactionType);
 }
 catch (CardHasChipException chce)
 {
