@@ -125,6 +125,7 @@
     <Compile Include="Commands\DataSet\Tracks\Track2.cs" />
     <Compile Include="Transaction\EmvPinReader.cs" />
     <Compile Include="Transaction\MagneticStripePinReader.cs" />
+    <Compile Include="Transaction\Mapper\ApplicationTypeMapper.cs" />
     <Compile Include="Transaction\Mapper\CardMapper.cs" />
     <Compile Include="Transaction\Mapper\EmvTrackMapper.cs" />
     <Compile Include="Transaction\Mapper\MagneticStripeTrackMapper.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Commands\DataSet\HexadecimalData.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="PinpadSdk_key.snk" />
   </ItemGroup>
@@ -155,8 +157,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MicroPos.CrossPlatform, Version=1.3.0.0, Culture=neutral, PublicKeyToken=b64391aecf921c4f, processorArchitecture=MSIL">
-      <HintPath>..\packages\MicroPos.CrossPlatform.1.3.0\lib\portable40-net45+sl5+win8+wp8+wpa81\MicroPos.CrossPlatform.dll</HintPath>
+    <Reference Include="MicroPos.CrossPlatform, Version=1.3.5.0, Culture=neutral, PublicKeyToken=b64391aecf921c4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MicroPos.CrossPlatform.1.3.5\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.CrossPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

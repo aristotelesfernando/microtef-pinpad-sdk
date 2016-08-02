@@ -68,8 +68,10 @@ namespace Pinpad.Sdk.Transaction
             // Selecting corresponding track field separator:
             char fieldSeparator = MagneticStripeTrackMapper.GetFieldSeparator(selectedTrack);
 
+			// Get Service code:
+			ServiceCode sc = MagneticStripeTrackMapper.MapServiceCode(selectedTrack, fieldSeparator);
+
             // Values that don't need to be mapped:
-            mappedCard.Type = CardType.MagneticStripe;
             mappedCard.BrandId = rawResponse.GCR_RECIDX.Value.Value;
 
             // Mapping PAN, cardholder name and card expiration date:
@@ -77,8 +79,9 @@ namespace Pinpad.Sdk.Transaction
 			mappedCard.BrandName = MagneticStripeTrackMapper.GetBrandByPan(mappedCard.PrimaryAccountNumber);
             mappedCard.CardholderName = MagneticStripeTrackMapper.MapCardholderName(selectedTrack, fieldSeparator);
             mappedCard.ExpirationDate = MagneticStripeTrackMapper.MapExpirationDate(selectedTrack, fieldSeparator);
-			mappedCard.NeedsPassword = MagneticStripeTrackMapper.MapServiceCode(selectedTrack, fieldSeparator).IsPinRequired;
-			
+			mappedCard.NeedsPassword = sc.IsPinRequired;
+			mappedCard.Type = (sc.IsEmv == true) ? CardType.Emv : CardType.MagneticStripe;
+
 			return mappedCard;
         }
 
