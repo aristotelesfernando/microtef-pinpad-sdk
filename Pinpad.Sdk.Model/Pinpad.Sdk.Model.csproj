@@ -86,7 +86,14 @@
     <Compile Include="Utilities\IDataPicker.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="PinpadSdkModel_key.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MicroPos.CrossPlatform, Version=1.3.5.0, Culture=neutral, PublicKeyToken=b64391aecf921c4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MicroPos.CrossPlatform.1.3.5\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.CrossPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

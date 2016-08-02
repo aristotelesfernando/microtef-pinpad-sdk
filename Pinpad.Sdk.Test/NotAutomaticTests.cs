@@ -217,7 +217,7 @@ namespace Pinpad.Sdk.Test
 
 			Debug.WriteLine(value);
 		}
-		[TestMethod]
+		//[TestMethod]
 		public void PinpadTransaction_ReadCard_test ()
 		{
 			PinpadConnection conn = PinpadConnection.GetFirst();
