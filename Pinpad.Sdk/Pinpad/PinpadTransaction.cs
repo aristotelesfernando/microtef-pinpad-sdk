@@ -1,7 +1,7 @@
 ﻿using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Transaction;
-using Pinpad.Sdk.TypeCode;
+using Pinpad.Sdk.Transaction.Mapper;
 using Pinpad.Sdk.Exceptions;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.Exceptions;
@@ -180,36 +180,10 @@ namespace Pinpad.Sdk
 
 			newTransactionType = transactionType;
 
-			// Assembling GCR command request:
-			GcrRequest request = new GcrRequest();
+			GcrRequest request = this.CreateGcrRequest(transactionType, amount);
 
-			// TODO: flag de acquirer.
-			request.GCR_ACQIDXREQ.Value = (int)StoneIndexCode.Application;
-
-			if (transactionType != TransactionType.Undefined)
-			{
-				request.GCR_APPTYPREQ.Value = (int) transactionType;
-			}
-			else
-			{
-				request.GCR_APPTYPREQ.Value = 99;
-			}
-
-			request.GCR_AMOUNT.Value = Convert.ToInt64(amount * 100);
-			request.GCR_DATE_TIME.Value = DateTime.Now;
-
-			// Retieving current EMV table version from pinpad:
-			string emvTableVersion = this.EmvTable.GetEmvTableVersion();
-			Debug.WriteLine("EMV table version: <{0}>", emvTableVersion);
-
-			if (emvTableVersion == null)
-			{
-				// There's no table version, therefore tables cannot be reached.
-				return AbecsResponseStatus.ST_TABERR;
-			}
-
-			// If it's a valid EMV table version, then adds it to the command:
-			request.GCR_TABVER.Value = emvTableVersion;
+			// There's no table version, therefore tables cannot be reached.
+			if (request == null) { return AbecsResponseStatus.ST_TABERR; }
 
 			// Sending and receiving response.
 			Debug.WriteLine("Sending GCR command <{0}>", request.CommandString);
@@ -228,7 +202,21 @@ namespace Pinpad.Sdk
 			// If the card has expired:
 			else if (response.GCR_CARDTYPE.Value == ApplicationType.MagneticStripe)
 			{
-				DateTime expirationDate = CardMapper.MapCardFromTracks(response).ExpirationDate;
+				CardEntry tempCard;
+
+				// Verify if it is really a magnetic stripe card:
+				tempCard = MagneticStripeTrackMapper.MapCardFromTrack(response);
+				Debug.WriteLine("Tipo do cartão: " + tempCard.Type);
+
+				// TODO: Incluir o fallback nessa condição.
+				if (tempCard.Type != response.GCR_CARDTYPE.Value.ToCardType())
+				{
+					throw new CardHasChipException();
+				}
+
+				// Validate expired cards:
+				DateTime expirationDate = tempCard.ExpirationDate;
+
 				if (expirationDate < DateTime.Now)
 				{
 					throw new ExpiredCardException(expirationDate);
@@ -267,7 +255,7 @@ namespace Pinpad.Sdk
 				cardRead.BrandName = EmvTrackMapper.GetBrandByAid(cardRead.ApplicationId);
 
 				// If it is a EMV transaction, then the application SHOULD send a CNG to change EMV parameters:
-				// TODO: Ver como o comando CNG funciona.
+				// TODO: Ver como o comando CNG funciona. Não retirar.
 				//if (response.GCR_CARDTYPE.Value == ApplicationType.IccEmv)
 				//{
 				//	CngRequest cng = new CngRequest();
@@ -277,6 +265,47 @@ namespace Pinpad.Sdk
 			}
 
 			return AbecsResponseStatus.ST_OK;
+		}
+		/// <summary>
+		/// Create a request for GCR. <seealso cref="GcrRequest"/>
+		/// </summary>
+		/// <param name="transactionType">Transaction type, e. g. credit/debit</param>
+		/// <param name="amount">Transaction amount</param>
+		/// <returns>A corresponding <see cref="GcrRequest"/></returns>
+		private GcrRequest CreateGcrRequest (TransactionType transactionType, decimal amount)
+		{
+			// Assembling GCR command request:
+			GcrRequest request = new GcrRequest();
+
+			// TODO: flag de acquirer.
+			request.GCR_ACQIDXREQ.Value = (int) StoneIndexCode.Application;
+
+			if (transactionType != TransactionType.Undefined)
+			{
+				request.GCR_APPTYPREQ.Value = (int) transactionType;
+			}
+			else
+			{
+				request.GCR_APPTYPREQ.Value = 99;
+			}
+
+			request.GCR_AMOUNT.Value = Convert.ToInt64(amount * 100);
+			request.GCR_DATE_TIME.Value = DateTime.Now;
+
+			// Retieving current EMV table version from pinpad:
+			string emvTableVersion = this.EmvTable.GetEmvTableVersion();
+			Debug.WriteLine("EMV table version: <{0}>", emvTableVersion);
+
+			if (emvTableVersion == null)
+			{
+				// There's no table version, therefore tables cannot be reached.
+				return null;
+			}
+
+			// If it's a valid EMV table version, then adds it to the command:
+			request.GCR_TABVER.Value = emvTableVersion;
+
+			return request;
 		}
 	}
 }
