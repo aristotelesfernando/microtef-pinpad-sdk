@@ -30,7 +30,7 @@ namespace Pinpad.Sdk.Test
 			Debug.WriteLine(r.CommandString);
 		}
 		//[TestMethod]
-		public void Gertec_EX07_test () 
+		public void Gertec_EX07_test ()
 		{
 			// testes:
 			//this.mockedPinpadConnection = new MockedPinpadConnection();
@@ -41,7 +41,7 @@ namespace Pinpad.Sdk.Test
 			PinpadCommunication comm = new PinpadCommunication(conn);
 
 			GciGertecRequest request = new GciGertecRequest();
-			
+
 			request.NumericInputType.Value = KeyboardNumberFormat.Decimal;
 			request.TextInputType.Value = KeyboardTextFormat.None;
 			request.LabelFirstLine.Value = FirstLineLabelCode.TypeNumber;
@@ -158,9 +158,9 @@ namespace Pinpad.Sdk.Test
 				PinpadConnection conn = PinpadConnection.GetFirst();
 				PinpadFacade facade = new PinpadFacade(conn);
 
-				facade.Display.ShowMessage("YAY! ^-^", (i+1).ToString(), DisplayPaddingType.Center);
+				facade.Display.ShowMessage("YAY! ^-^", (i + 1).ToString(), DisplayPaddingType.Center);
 
-				facade.Communication.ClosePinpadConnection("Fechando conexao (" + (i+1).ToString() + ")");
+				facade.Communication.ClosePinpadConnection("Fechando conexao (" + (i + 1).ToString() + ")");
 			}
 		}
 		//[TestMethod]
@@ -187,35 +187,44 @@ namespace Pinpad.Sdk.Test
 
 			bool status = facade.Communication.Ping();
 		}
-        //[TestMethod]
-        public void GetNumericValue_test()
+		//[TestMethod]
+		public void GetNumericValue_test ()
 		{
 			PinpadConnection conn = PinpadConnection.GetFirst();
 			PinpadFacade facade = new PinpadFacade(conn);
 
-            int? value = facade.Keyboard.DataPicker.GetNumericValue("Data Picker", 0, 5);
+			int? value = facade.Keyboard.DataPicker.GetNumericValue("Data Picker", 0, 5);
 
-            Debug.WriteLine(value.Value);
+			Debug.WriteLine(value.Value);
 		}
-        //[TestMethod]
-        public void GetValueInOptionsShort_test()
-        {
-            PinpadConnection conn = PinpadConnection.GetFirst();
-            PinpadFacade facade = new PinpadFacade(conn);
+		//[TestMethod]
+		public void GetValueInOptionsShort_test ()
+		{
+			PinpadConnection conn = PinpadConnection.GetFirst();
+			PinpadFacade facade = new PinpadFacade(conn);
 
-            short? value = facade.Keyboard.DataPicker.GetValueInOptions("Parcelas", 2, 3, 4, 5, 6);
+			short? value = facade.Keyboard.DataPicker.GetValueInOptions("Parcelas", 2, 3, 4, 5, 6);
 
-            Debug.WriteLine(value.Value);
-        }
-        //[TestMethod]
-        public void GetValueInOptionsString_test()
-        {
-            PinpadConnection conn = PinpadConnection.GetFirst();
-            PinpadFacade facade = new PinpadFacade(conn);
+			Debug.WriteLine(value.Value);
+		}
+		//[TestMethod]
+		public void GetValueInOptionsString_test ()
+		{
+			PinpadConnection conn = PinpadConnection.GetFirst();
+			PinpadFacade facade = new PinpadFacade(conn);
 
-            string value = facade.Keyboard.DataPicker.GetValueInOptions("Pokemon", "Bulbasaur", "Charmander", "Squirtle");
+			string value = facade.Keyboard.DataPicker.GetValueInOptions("Pokemon", "Bulbasaur", "Charmander", "Squirtle");
 
-            Debug.WriteLine(value);
-        }
+			Debug.WriteLine(value);
+		}
+		[TestMethod]
+		public void PinpadTransaction_ReadCard_test ()
+		{
+			PinpadConnection conn = PinpadConnection.GetFirst();
+			PinpadFacade facade = new PinpadFacade(conn);
+			TransactionType trnxType = TransactionType.Undefined;
+
+			facade.TransactionService.ReadCard(TransactionType.Undefined, 0.1m, out trnxType);
+		}
     }
 }

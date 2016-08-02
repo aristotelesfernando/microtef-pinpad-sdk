@@ -125,6 +125,7 @@
     <Compile Include="Commands\DataSet\Tracks\Track2.cs" />
     <Compile Include="Transaction\EmvPinReader.cs" />
     <Compile Include="Transaction\MagneticStripePinReader.cs" />
+    <Compile Include="Transaction\Mapper\ApplicationTypeMapper.cs" />
     <Compile Include="Transaction\Mapper\CardMapper.cs" />
     <Compile Include="Transaction\Mapper\EmvTrackMapper.cs" />
     <Compile Include="Transaction\Mapper\MagneticStripeTrackMapper.cs" />

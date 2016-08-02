@@ -25,7 +25,6 @@ namespace Pinpad.Sdk.Transaction
 
 			Debug.WriteLine(rawResponse.GCR_CARDTYPE.Value);
 
-
             if (readingMode == CardType.Emv) 
 			{ 
 				return EmvTrackMapper.MapCardFromEmvTrack(rawResponse); 
