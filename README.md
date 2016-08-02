@@ -68,6 +68,27 @@ if (facade.Connection.Ping() == true)
 }
 ```
 
+### Ler um cartão
+
+```
+TransactionType transactionType = TransactionType.Undefined;
+
+try 
+{
+    // Não conhece o tipo da transação. Nesse caso, o tipo da transação selecionado pelo pinpad
+    // será atribuído à variável transactionType.
+    facade.TransactionService.ReadCard(TransactionType.Undefined, 1.99m, out transactionType);
+}
+catch (CardHasChipException chce)
+{
+    // Um cartão de chip foi passado como tarja
+}
+catch (ExpiredCardException ece)
+{
+    // Um cartão com data de validade expirada foi passado
+}
+```
+
 ### Mostrar mensagem na tela do pinpad
 
 ```
