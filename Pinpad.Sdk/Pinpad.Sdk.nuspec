@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Pinpad.Sdk</id>
+    <version>$version$</version>
+    <title>Pinpad.Sdk</title>
+     <authors>MicroPos Team</authors>
+     <owners>Buy4</owners>    
+    <projectUrl>https://github.com/stone-pagamentos</projectUrl>
+    <iconUrl>http://www.stone.com.br/img/simbolo-stone.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Stone</description>    	
+    <copyright>Copyright 2016</copyright>    
+    <tags>Stone Pagamentos TEF MicroTef MicroPos POS Point Of Sale</tags>  
+  </metadata>
+</package>

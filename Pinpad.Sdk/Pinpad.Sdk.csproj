@@ -146,6 +146,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Pinpad.Sdk.nuspec">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="PinpadSdk_key.snk" />
   </ItemGroup>
   <ItemGroup>
