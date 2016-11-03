@@ -11,7 +11,6 @@ namespace Pinpad.Sdk.Test.Context
 		[TestInitialize]
 		public void Setup ()
 		{
-			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
 			this.Context = new GertecContext();
 		}
 

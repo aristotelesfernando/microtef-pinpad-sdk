@@ -10,13 +10,13 @@ using System.Text;
 
 namespace Pinpad.Sdk.Test
 {
-	[TestClass]
+	//[TestClass]
 	public class NotAutomaticTests
 	{
-		[TestInitialize]
+		//[TestInitialize]
 		public void Setup ()
 		{
-			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
+			//MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
 		}
 		//[TestMethod]
 		public void GCD_test ()
