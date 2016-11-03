@@ -168,10 +168,10 @@ namespace Pinpad.Sdk.Test
 		{
 			for (int i = 0; i < 5; i++)
 			{
-				PinpadConnection conn = PinpadConnection.GetAt("COM19");
-				PinpadFacade facade = new PinpadFacade(conn);
+				PinpadConnection conn = PinpadConnection.GetAt("COM27");
+                PinpadFacade facade = new PinpadFacade(conn);
 
-				facade.Display.ShowMessage("YAY! ^-^", (i + 1).ToString(), DisplayPaddingType.Center);
+				bool displayStatus = facade.Display.ShowMessage("YAY! ^-^", (i + 1).ToString(), DisplayPaddingType.Center);
 
 				facade.Communication.ClosePinpadConnection("Fechando conexao (" + (i + 1).ToString() + ")");
 			}

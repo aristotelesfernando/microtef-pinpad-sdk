@@ -90,8 +90,8 @@
     <None Include="PinpadSdkModel_key.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MicroPos.CrossPlatform, Version=1.3.5.0, Culture=neutral, PublicKeyToken=b64391aecf921c4f, processorArchitecture=MSIL">
-      <HintPath>..\packages\MicroPos.CrossPlatform.1.3.5\lib\portable-net403+sl50+win+wpa81+wp80\MicroPos.CrossPlatform.dll</HintPath>
+    <Reference Include="MicroPos.CrossPlatform, Version=1.4.0.0, Culture=neutral, PublicKeyToken=b64391aecf921c4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MicroPos.CrossPlatform.1.4.0\lib\portable40-net45+sl5+win8+wp8+wpa81\MicroPos.CrossPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

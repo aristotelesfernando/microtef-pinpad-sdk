@@ -63,11 +63,12 @@ namespace Pinpad.Sdk
 		/// <exception cref="PinpadNotFoundException">If none pinpad were found at the port specified.</exception>
 		public static PinpadConnection GetAt (string portName)
 		{
-			IPinpadConnection connection = PinpadConnectionManager.PinpadConnectionController.CreatePinpadConnection(portName);
+            IPinpadConnection connection = null;
 
-			try
+            try
 			{
-				connection.Open();
+                // Open connection with serial port:
+                connection = CrossPlatformController.PinpadFinder.Find(portName);
 			}
 			catch (IOException)
 			{
