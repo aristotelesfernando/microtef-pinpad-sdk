@@ -102,9 +102,21 @@ namespace Pinpad.Sdk
 		/// <param name="pinpadCommunication">Pinpad communication, through which is possible to communicate with the pinpad.</param>
         public PinpadTable (PinpadCommunication pinpadCommunication)
         {
-			if (pinpadCommunication == null) { throw new ArgumentNullException("pinpad communication cannot be null."); }
+			if (pinpadCommunication == null)
+            {
+                throw new ArgumentNullException("pinpad communication cannot be null.");
+            }
+
             this.PinpadCommunication = pinpadCommunication;
             this.tableCollection = new List<BaseTable>();
+
+            // Retrieve EMV table version, if any:
+            string tableVersionCandidate = this.GetEmvTableVersion();
+
+            if (string.IsNullOrEmpty(tableVersionCandidate) == false)
+            {
+                this.ExpectedTableVersion = tableVersionCandidate;
+            }
         }
 
         /// <summary>
@@ -185,7 +197,10 @@ namespace Pinpad.Sdk
         /// <returns>If the pinpad tables are up to dated or not.</returns>
         public bool IsPinpadUpdated ()
         {
-            return (this.tableCollectionModified == false && this.ExpectedTableVersion == this.GetEmvTableVersion());
+            bool status = this.tableCollectionModified == false
+                && this.ExpectedTableVersion == this.GetEmvTableVersion();
+
+            return status;
         }
 
         /// <summary>
@@ -201,7 +216,7 @@ namespace Pinpad.Sdk
             if (expectedTableVersion == null) { return false; }
 
             // Pinpad is already updated and it's not a forced update:
-            if (expectedTableVersion == this.expectedTableVersion && forceUpdate == false)
+            if (expectedTableVersion == this.ExpectedTableVersion && forceUpdate == false)
             {
                 return true;
             }
@@ -221,7 +236,7 @@ namespace Pinpad.Sdk
             // Load tables into the pinpad:
             lock (this.tableCollection)
             {
-				this.expectedTableVersion = expectedTableVersion;
+				this.ExpectedTableVersion = expectedTableVersion;
 
                 // Sends a command to the pinpad, indicating that a table injection is about to happen:
                 if (this.StartLoadingTables() == false) { return false; }
@@ -264,7 +279,7 @@ namespace Pinpad.Sdk
         /// Sends a command to the pinpad, indicating that a table injection is about to happen.
         /// </summary>
         /// <returns>If the operation succeed.</returns>
-        private bool StartLoadingTables ()
+        internal bool StartLoadingTables ()
         {
             TliRequest request = new TliRequest();
 
@@ -292,7 +307,7 @@ namespace Pinpad.Sdk
         /// </summary>
         /// <param name="table">Table (entry) to be loaded.</param>
         /// <returns>If the operation succeed.</returns>
-        private bool LoadTableEntry (BaseTable table)
+        internal bool LoadTableEntry (BaseTable table)
         {
             TlrRequest request = new TlrRequest();
             request.TLR_REC.Value.Add(table);
@@ -303,7 +318,7 @@ namespace Pinpad.Sdk
         /// Sends a command to the pinpad, indicating that there's no more tables to be injected.
         /// </summary>
         /// <returns>If the operation succeed.</returns>
-        private bool FinishLoadingTables ()
+        internal bool FinishLoadingTables ()
         {
             TleRequest request = new TleRequest();
 
