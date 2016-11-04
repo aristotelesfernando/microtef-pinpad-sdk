@@ -10,10 +10,10 @@ using System.Text;
 
 namespace Pinpad.Sdk.Test
 {
-	//[TestClass]
+	[TestClass]
 	public class NotAutomaticTests
 	{
-		//[TestInitialize]
+		[TestInitialize]
 		public void Setup ()
 		{
 			//MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
@@ -220,11 +220,15 @@ namespace Pinpad.Sdk.Test
 		//[TestMethod]
 		public void PinpadTransaction_ReadCard_test ()
 		{
-			PinpadConnection conn = PinpadConnection.GetFirst();
+            PinpadConnection conn = PinpadConnection.GetAt("COM28");
 			PinpadFacade facade = new PinpadFacade(conn);
 			TransactionType trnxType = TransactionType.Undefined;
 
-			facade.TransactionService.ReadCard(TransactionType.Undefined, 0.1m, out trnxType);
+            //facade.TransactionService.EmvTable.StartLoadingTables();
+            //facade.TransactionService.EmvTable.FinishLoadingTables();
+
+
+            facade.TransactionService.ReadCard(TransactionType.Undefined, 0.1m, out trnxType);
 		}
     }
 }
