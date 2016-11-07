@@ -80,6 +80,17 @@ namespace Pinpad.Sdk
         {
             get
             {
+                if (this.expectedTableVersion == null)
+                {
+                    // Retrieve EMV table version, if any:
+                    string tableVersionCandidate = this.GetEmvTableVersion();
+
+                    if (string.IsNullOrEmpty(tableVersionCandidate) == false)
+                    {
+                        this.expectedTableVersion = tableVersionCandidate;
+                    }
+                }
+
                 return this.expectedTableVersion;
             }
             set
@@ -109,14 +120,6 @@ namespace Pinpad.Sdk
 
             this.PinpadCommunication = pinpadCommunication;
             this.tableCollection = new List<BaseTable>();
-
-            // Retrieve EMV table version, if any:
-            string tableVersionCandidate = this.GetEmvTableVersion();
-
-            if (string.IsNullOrEmpty(tableVersionCandidate) == false)
-            {
-                this.ExpectedTableVersion = tableVersionCandidate;
-            }
         }
 
         /// <summary>
