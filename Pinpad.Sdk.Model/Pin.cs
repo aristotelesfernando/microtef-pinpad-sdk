@@ -30,5 +30,10 @@ namespace Pinpad.Sdk.Model
 		/// ARQC.
 		/// </summary>
 		public string ApplicationCryptogram { get; set; }
+        /// <summary>
+        /// Indicates the whole cardholder name when greater than 26 characters using the same 
+        /// coding convention as in ISO 7813.
+        /// </summary>
+        public string CardholderNameExtended { get; set; }
     }
 }

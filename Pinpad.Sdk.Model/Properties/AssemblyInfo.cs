@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: InternalsVisibleTo("Pinpad.Sdk, PublicKey=0024000004800000940000000602000000240000525341310004000001000100dd65dd78fa13555f6f972d5fd3fe5f9a4abb82e800447c25aa0b39d91236396f56c31d85ee4fa51446db21b6b76ee9c2380c251a897607e053b0719259937b04abd28e4b98c628f06bc9321a52463f53d2b49d3c8189deb9303a755fc645ce91b560a38aea6cacf060381e52078d34c7cdedb76ab0ebafbf447a41d3df791fc4")]
 
 // Version information for an assembly consists of the following four values:
 //

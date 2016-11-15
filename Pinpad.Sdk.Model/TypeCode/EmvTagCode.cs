@@ -76,7 +76,12 @@ namespace Pinpad.Sdk.Model
         /// Cardholder Verification Method (CVM) Results:
         /// Indicates the results of the last CVM performed.
         /// </summary>
-        CardholderVerificationMethodResults = 0x9F34
+        CardholderVerificationMethodResults = 0x9F34,
+        /// <summary>
+        /// Indicates the whole cardholder name when greater than 26 characters using the same 
+        /// coding convention as in ISO 7813.
+        /// </summary>
+        CardholderNameExtended = 0x9F0B
     }
 
 	/// <summary>
@@ -91,7 +96,9 @@ namespace Pinpad.Sdk.Model
         public static string GetEmvTagsRequired()
         {
             StringBuilder strCodes = new StringBuilder();
-            EmvTagCode[] codes = (from EmvTagCode tag in Enum.GetValues(typeof(EmvTagCode)) select tag).ToArray();
+            EmvTagCode[] codes = Enum.GetValues(typeof(EmvTagCode))
+                                     .Cast<EmvTagCode>()
+                                     .ToArray();
 
             foreach (EmvTagCode currCode in codes)
             {

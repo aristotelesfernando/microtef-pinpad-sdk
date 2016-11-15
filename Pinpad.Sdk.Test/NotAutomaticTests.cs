@@ -15,7 +15,7 @@ namespace Pinpad.Sdk.Test
 		[TestInitialize]
 		public void Setup ()
 		{
-			//MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
+			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
 		}
 		//[TestMethod]
 		public void GCD_test ()
@@ -216,17 +216,21 @@ namespace Pinpad.Sdk.Test
 
 			Debug.WriteLine(value);
 		}
-		//[TestMethod]
+		[TestMethod]
 		public void PinpadTransaction_ReadCard_test ()
 		{
-            PinpadConnection conn = PinpadConnection.GetAt("COM27");
+            PinpadConnection conn = PinpadConnection.GetFirst();
 			PinpadFacade facade = new PinpadFacade(conn);
 			TransactionType trnxType = TransactionType.Undefined;
 
             //facade.TransactionService.EmvTable.StartLoadingTables();
             //facade.TransactionService.EmvTable.FinishLoadingTables();
 
-            CardEntry card = facade.TransactionService.ReadCard(TransactionType.Debit, 0.1m, out trnxType);
+            facade.TransactionService.EmvTable.UpdatePinpad(false);
+            CardEntry card = facade.TransactionService.ReadCard(TransactionType.Debit, 0.1m, 
+                out trnxType);
+
+            facade.TransactionService.ReadPassword(0.1m, card.PrimaryAccountNumber, CardType.Emv);
 
             Assert.IsNotNull(card);
 		}

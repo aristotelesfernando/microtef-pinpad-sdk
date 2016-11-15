@@ -252,7 +252,6 @@ namespace Pinpad.Sdk
 				var aidVar = this.EmvTable.AidTable.First(a => a.TAB_RECIDX.Value.Value == brandId);
 
 				cardRead.ApplicationId = aidVar.T1_AID.Value.DataString;
-				cardRead.BrandName = EmvTrackMapper.GetBrandByAid(cardRead.ApplicationId);
 
 				// If it is a EMV transaction, then the application SHOULD send a CNG to change EMV parameters:
 				// TODO: Ver como o comando CNG funciona. Não retirar.
