@@ -76,7 +76,6 @@ namespace Pinpad.Sdk.Transaction
 
             // Mapping PAN, cardholder name and card expiration date:
             mappedCard.PrimaryAccountNumber = MagneticStripeTrackMapper.MapPan(selectedTrack, fieldSeparator);
-			mappedCard.BrandName = MagneticStripeTrackMapper.GetBrandByPan(mappedCard.PrimaryAccountNumber);
             mappedCard.CardholderName = MagneticStripeTrackMapper.MapCardholderName(selectedTrack, fieldSeparator);
             mappedCard.ExpirationDate = MagneticStripeTrackMapper.MapExpirationDate(selectedTrack, fieldSeparator);
 			mappedCard.NeedsPassword = sc.IsPinRequired;
@@ -187,49 +186,6 @@ namespace Pinpad.Sdk.Transaction
             DateTime expirationDate = new DateTime(year, month, day: 1); 
             return expirationDate;
         }
-		/// <summary>
-		/// Get brand name by primary account number first 4 digits.
-		/// </summary>
-		/// <returns>Brand name.</returns>
-		internal static string GetBrandByPan(string pan)
-		{
-			// Verificar através dos dígitos do PAN
-			
-			// TODO: adicionar bin length
-			int bin = Int32.Parse(pan.Substring(0, 4));
-
-			// TODO: adicionar todos os valores mágicos a um arquivo de recursos, com descrição!!!!!!!!!!!!
-			if (bin >= 4000 && bin < 5000)
-			{
-				return CardMapper.VISA_LABEL;
-			}
-			if (bin >= 5000 && bin < 5600)
-			{
-				return CardMapper.MASTERCARD_LABEL;
-			}
-			
-			// Outliers:
-			switch (bin)
-			{
-				case 5018:
-				case 5020:
-				case 5038:
-				case 5612:
-				case 5893:
-				case 5899:
-				case 6304:
-				case 6759:
-				case 6761:
-				case 6762:
-				case 6763:
-				case 0604:
-				case 6036:
-				case 6390:
-					return CardMapper.MASTERCARD_LABEL;
-			}
-
-			return CardMapper.UNKNOWN_LABEL;
-		}
 		/// <summary>
 		/// Get card service code from a selected track
 		/// </summary>
