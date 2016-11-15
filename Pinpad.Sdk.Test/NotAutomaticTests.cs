@@ -15,7 +15,7 @@ namespace Pinpad.Sdk.Test
 		[TestInitialize]
 		public void Setup ()
 		{
-			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
+			//MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
 		}
 		//[TestMethod]
 		public void GCD_test ()
@@ -216,7 +216,7 @@ namespace Pinpad.Sdk.Test
 
 			Debug.WriteLine(value);
 		}
-		[TestMethod]
+		//[TestMethod]
 		public void PinpadTransaction_ReadCard_test ()
 		{
             PinpadConnection conn = PinpadConnection.GetFirst();
