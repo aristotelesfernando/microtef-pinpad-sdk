@@ -1,4 +1,6 @@
-﻿namespace Pinpad.Sdk.Model
+﻿using System.Collections.Generic;
+
+namespace Pinpad.Sdk.Model
 {
 	/// <summary>
 	/// Pinpad transaction tools.
@@ -21,7 +23,8 @@
 		/// <param name="newTransactionType">If this method is called without knowing transaction type, pinpad will prompt for this information and return the value choosed by the cardholder.</param>
 		/// <returns>Card basic info.</returns>
 		/// <exception cref="Pinpad.Sdk.Model.Exceptions.ExpiredCardException">When an expired card is read.</exception>
-		CardEntry ReadCard (TransactionType transactionType, decimal amount, out TransactionType newTransactionType);
+		CardEntry ReadCard (TransactionType transactionType, decimal amount, 
+            out TransactionType newTransactionType, IList<PinpadCardBrand> brandTable);
 		/// <summary>
 		/// If cardholder card needs password, than prompts it. Otherwise, nothing is done. 
 		/// </summary>

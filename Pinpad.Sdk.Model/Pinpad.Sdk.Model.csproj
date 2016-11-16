@@ -50,7 +50,7 @@
     <Compile Include="Exceptions\PinpadException.cs" />
     <Compile Include="Exceptions\PinpadNotFoundException.cs" />
     <Compile Include="Pinpad\IPinpadKeyboard.cs" />
-    <Compile Include="CardEntry.cs" />
+    <Compile Include="Transaction\CardEntry.cs" />
     <Compile Include="Exceptions\CommandNameMismatchException.cs" />
     <Compile Include="Exceptions\InvalidChecksumException.cs" />
     <Compile Include="Exceptions\InvalidTableException.cs" />
@@ -60,11 +60,13 @@
     <Compile Include="Exceptions\PropertyParseException.cs" />
     <Compile Include="Exceptions\StoneVersionMismatchException.cs" />
     <Compile Include="Exceptions\UnsetPropertyException.cs" />
-    <Compile Include="Pin.cs" />
+    <Compile Include="Transaction\Pin.cs" />
     <Compile Include="Pinpad\IPinpadInfos.cs" />
     <Compile Include="Pinpad\IPinpadDisplay.cs" />
     <Compile Include="Pinpad\IPinpadTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transaction\PinpadBinRange.cs" />
+    <Compile Include="Transaction\PinpadCardBrand.cs" />
     <Compile Include="TypeCode\AmountCurrencyCode.cs" />
     <Compile Include="TypeCode\CardType.cs" />
     <Compile Include="TypeCode\ContactlessMode.cs" />

@@ -49,11 +49,11 @@ namespace Pinpad.Sdk.Transaction
 
             if (response.GCR_TRK1.HasValue == true)
             {
-                mappedCard.Track1 = response.GCR_TRK1.Value.CommandString;
+                mappedCard.Track1 = response.GCR_TRK1.Value;
             }
             if (response.GCR_TRK2.HasValue == true)
             {
-                mappedCard.Track2 = response.GCR_TRK2.Value.CommandString;
+                mappedCard.Track2 = response.GCR_TRK2.Value;
             }
 
 			mappedCard.NeedsPassword = true;

@@ -2,6 +2,7 @@
 using Pinpad.Sdk.Commands;
 using System;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace Pinpad.Sdk.Transaction
 {
@@ -10,16 +11,13 @@ namespace Pinpad.Sdk.Transaction
     /// </summary>
     internal class CardMapper
     {
-		internal static string MASTERCARD_LABEL = "MASTERCARD";
-		internal static string VISA_LABEL = "VISA";
-		internal static string UNKNOWN_LABEL = "UNKNOWN";
-
         /// <summary>
         /// Takes a GCR Response from Pinpad and translates it into Card information.
         /// </summary>
         /// <param name="rawResponse">GCR original response from Pinpad.</param>
         /// <returns>CardEntry containing basic information about the card.</returns>
-        internal static CardEntry MapCardFromTracks(GcrResponse rawResponse)
+        internal static CardEntry MapCardFromTracks(GcrResponse rawResponse, 
+            IList<PinpadCardBrand> cardBrands)
         {
             CardType readingMode = CardMapper.MapCardType(rawResponse.GCR_CARDTYPE.Value);
 
@@ -31,7 +29,7 @@ namespace Pinpad.Sdk.Transaction
 			}
             if (readingMode == CardType.MagneticStripe) 
 			{ 
-				return MagneticStripeTrackMapper.GetCard(rawResponse); 
+				return MagneticStripeTrackMapper.GetCard(rawResponse, cardBrands); 
 			}
 
             // Unknown card type:
@@ -56,7 +54,8 @@ namespace Pinpad.Sdk.Transaction
                     return CardType.MagneticStripe;
 
                 default:
-					throw new NotImplementedException("Invalid Card ApplicationType or ApplicationType not implemented yet.");
+					throw new NotImplementedException(
+                        "Invalid Card ApplicationType or ApplicationType not implemented yet.");
             }
         }
     }

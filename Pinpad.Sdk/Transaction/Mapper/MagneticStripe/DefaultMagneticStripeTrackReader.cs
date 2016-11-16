@@ -6,44 +6,44 @@ using Pinpad.Sdk.Properties;
 namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
 {
     // TODO: Doc.
-    internal class DefaultMagneticStripeTrackReader : IMagneticStripeTrackReader
+    internal class DefaultMagneticStripeTrackReader : AbstractMagneticStripeTrackReader
     {
         /// <summary>
         /// Start sentinel for track 2.
         /// </summary>
-        public char Track2StartSentinel { get { return 'B'; } }
+        protected override char Track2StartSentinel { get { return 'B'; } }
         /// <summary>
         /// Track1, separator between different information. Based on ISO 7810/7811.
         /// </summary>
-        public char Track1FieldSeparator { get { return '^'; } }
+        protected override char Track1FieldSeparator { get { return '^'; } }
         /// <summary>
         /// Track2, separator between different information. Based on ISO 7810/7811.
         /// </summary>
-        public char Track2FieldSeparator { get { return '='; } }
+        protected override char Track2FieldSeparator { get { return '='; } }
         /// <summary>
         /// Track 1 is made of several information divided by a <see cref="Track1FieldSeparator">separator</see>. This is the index of card expiration date on track 1.
         /// </summary>
-        public short ExpirationDateIndexOnTrack1 { get { return 2; } }
+        protected override short ExpirationDateIndexOnTrack1 { get { return 2; } }
         /// <summary>
         /// Track 2 is made of several information divided by a <see cref="Track2FieldSeparator">separator</see>. This is the index of card expiration date on track 2.
         /// </summary>
-        public short ExpirationDateIndexOnTrack2 { get { return 1; } }
+        protected override short ExpirationDateIndexOnTrack2 { get { return 1; } }
         /// <summary>
         /// Card expiration date string length.
         /// </summary>
-        public short ExpirationDateLength { get { return 4; } }
+        protected override short ExpirationDateLength { get { return 4; } }
         /// <summary>
         /// Card service code string length.
         /// </summary>
-        public short ServiceCodeLength { get { return 3; } }
+        protected override short ServiceCodeLength { get { return 3; } }
         /// <summary>
         /// Track 2 is made of several information divided by a <see cref="Track2FieldSeparator">separator</see>. This is the index of the Primary Account Number (PAN) on track 1.
         /// </summary>
-        public short PanIndex { get { return 0; } }
+        protected override short PanIndex { get { return 0; } }
         /// <summary>
         /// Track 1 is made of several information divided by a <see cref="Track1FieldSeparator">separator</see>. This is the index of cardholder name on track 1.
         /// </summary>
-        public short CardholderNameIndex { get { return 1; } }
+        protected override short CardholderNameIndex { get { return 1; } }
 
         /// <summary>
         /// Translates card track data into information.
@@ -51,18 +51,18 @@ namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
         /// <param name="rawResponse">Raw response from pinpad GCR command.</param>
         /// <returns>Card information.</returns>
         /// <exception cref="System.InvalidOperationException">Thrown when womething went wrong internally.</exception>
-        public CardEntry MapCardFromTrack(GcrResponse rawResponse)
+        protected override CardEntry MapCardFromTrack(GcrResponse rawResponse)
         {
             CardEntry mappedCard = new CardEntry();
 
             // Save all tracks:
             if (rawResponse.GCR_TRK1.HasValue == true)
             {
-                mappedCard.Track1 = rawResponse.GCR_TRK1.Value.CommandString;
+                mappedCard.Track1 = rawResponse.GCR_TRK1.Value;
             }
             if (rawResponse.GCR_TRK2.HasValue == true)
             {
-                mappedCard.Track2 = rawResponse.GCR_TRK2.Value.CommandString;
+                mappedCard.Track2 = rawResponse.GCR_TRK2.Value;
             }
 
             // Selecting existing track:
@@ -77,7 +77,7 @@ namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
             // Values that don't need to be mapped:
             mappedCard.BrandId = rawResponse.GCR_RECIDX.Value.Value;
 
-            // Mapping PAN, cardholder name and card expiration date:
+            // Mapping PAN, cardholder name, card expiration date and Service Code:
             mappedCard.PrimaryAccountNumber = this.MapPan(selectedTrack, fieldSeparator);
             mappedCard.CardholderName = this.MapCardholderName(selectedTrack, fieldSeparator);
             mappedCard.ExpirationDate = this.MapExpirationDate(selectedTrack, fieldSeparator);
@@ -96,11 +96,11 @@ namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
         {
             if (rawResponse.GCR_TRK1.HasValue == true)
             {
-                return rawResponse.GCR_TRK1.Value.CommandString;
+                return rawResponse.GCR_TRK1.Value;
             }
             if (rawResponse.GCR_TRK2.HasValue == true)
             {
-                return rawResponse.GCR_TRK2.Value.CommandString;
+                return rawResponse.GCR_TRK2.Value;
             }
 
             throw new InvalidOperationException("Invalid track received. Verify if data sent are according to ISO 7810/7811.");

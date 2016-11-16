@@ -130,7 +130,7 @@
     <Compile Include="Transaction\Mapper\EmvTrackMapper.cs" />
     <Compile Include="Transaction\Mapper\MagneticStripeTrackMapper.cs" />
     <Compile Include="Transaction\Mapper\MagneticStripe\DefaultMagneticStripeTrackReader.cs" />
-    <Compile Include="Transaction\Mapper\MagneticStripe\IMagneticStripeTrackReader.cs" />
+    <Compile Include="Transaction\Mapper\MagneticStripe\AbstractMagneticStripeTrackReader.cs" />
     <Compile Include="Transaction\Mapper\MagneticStripe\TicketMagneticStripeTrackReader.cs" />
     <Compile Include="Transaction\Mapper\ResponseStatusMapper.cs" />
     <Compile Include="Transaction\PinReader.cs" />

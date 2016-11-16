@@ -219,20 +219,27 @@ namespace Pinpad.Sdk.Test
 		//[TestMethod]
 		public void PinpadTransaction_ReadCard_test ()
 		{
-            PinpadConnection conn = PinpadConnection.GetFirst();
-			PinpadFacade facade = new PinpadFacade(conn);
-			TransactionType trnxType = TransactionType.Undefined;
+   //         PinpadConnection conn = PinpadConnection.GetFirst();
+			//PinpadFacade facade = new PinpadFacade(conn);
+			//TransactionType trnxType = TransactionType.Undefined;
 
-            //facade.TransactionService.EmvTable.StartLoadingTables();
-            //facade.TransactionService.EmvTable.FinishLoadingTables();
+   //         //facade.TransactionService.EmvTable.StartLoadingTables();
+   //         //facade.TransactionService.EmvTable.FinishLoadingTables();
 
-            facade.TransactionService.EmvTable.UpdatePinpad(false);
-            CardEntry card = facade.TransactionService.ReadCard(TransactionType.Debit, 0.1m, 
-                out trnxType);
+   //         facade.TransactionService.EmvTable.UpdatePinpad(false);
+   //         CardEntry card = facade.TransactionService.ReadCard(TransactionType.Debit, 0.1m, 
+   //             out trnxType);
 
-            facade.TransactionService.ReadPassword(0.1m, card.PrimaryAccountNumber, CardType.Emv);
+   //         facade.TransactionService.ReadPassword(0.1m, card.PrimaryAccountNumber, CardType.Emv);
 
-            Assert.IsNotNull(card);
+   //         Assert.IsNotNull(card);
 		}
+        [TestMethod]
+        public void MyTestMethod()
+        {
+            GcrResponse response = new GcrResponse();
+            response.CommandString = @"GCR00034200000000061AITAMIR RODRIGUES        =CARVAJAL INFORMACAO LTDA=00000=0000               376026513670145118000=15120000000530651000                                                                                                        00                   00                000                          00000000                   00000000000000";
+            
+        }
     }
 }
