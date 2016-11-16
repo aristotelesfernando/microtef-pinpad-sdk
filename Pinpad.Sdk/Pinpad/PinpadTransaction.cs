@@ -205,7 +205,7 @@ namespace Pinpad.Sdk
 				CardEntry tempCard;
 
 				// Verify if it is really a magnetic stripe card:
-				tempCard = MagneticStripeTrackMapper.MapCardFromTrack(response);
+				tempCard = MagneticStripeTrackMapper.GetCard(response);
 				Debug.WriteLine("Tipo do cartão: " + tempCard.Type);
 
 				// TODO: Incluir o fallback nessa condição.

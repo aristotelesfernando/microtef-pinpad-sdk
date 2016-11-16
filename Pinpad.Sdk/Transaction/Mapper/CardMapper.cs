@@ -31,7 +31,7 @@ namespace Pinpad.Sdk.Transaction
 			}
             if (readingMode == CardType.MagneticStripe) 
 			{ 
-				return MagneticStripeTrackMapper.MapCardFromTrack(rawResponse); 
+				return MagneticStripeTrackMapper.GetCard(rawResponse); 
 			}
 
             // Unknown card type:
