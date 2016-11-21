@@ -49,7 +49,7 @@ namespace Pinpad.Sdk.Test.Mapper
         public void CardMapper_CardType_should_be_MagneticStripe_if_AplicationType_is_MagneticStripe()
         {
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.MagneticStripe;
-            CardType cardType = CardMapper.MapCardType(this.GcrResponse.GCR_CARDTYPE.Value);
+            CardType cardType = CardMapper.GetCardType(this.GcrResponse.GCR_CARDTYPE.Value);
             Assert.IsTrue(cardType == CardType.MagneticStripe);
         }
 
@@ -57,7 +57,7 @@ namespace Pinpad.Sdk.Test.Mapper
         public void CardMapper_CardType_should_be_MagneticStripe_if_AplicationType_is_ContactlessMagneticStripe()
         {
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.ContactlessMagneticStripe;
-            CardType cardType = CardMapper.MapCardType(this.GcrResponse.GCR_CARDTYPE.Value);
+            CardType cardType = CardMapper.GetCardType(this.GcrResponse.GCR_CARDTYPE.Value);
             Assert.IsTrue(cardType == CardType.MagneticStripe);
         }
 
@@ -65,7 +65,7 @@ namespace Pinpad.Sdk.Test.Mapper
         public void CardMapper_CardType_should_be_Emv_if_AplicationType_is_IccEmv()
         {
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.IccEmv;
-            CardType cardType = CardMapper.MapCardType(this.GcrResponse.GCR_CARDTYPE.Value);
+            CardType cardType = CardMapper.GetCardType(this.GcrResponse.GCR_CARDTYPE.Value);
             Assert.IsTrue(cardType == CardType.Emv);
         }
 
@@ -73,7 +73,7 @@ namespace Pinpad.Sdk.Test.Mapper
         public void CardMapper_CardType_should_be_Emv_if_AplicationType_is_ContactlessEmv()
         {
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.ContactlessEmv;
-            CardType cardType = CardMapper.MapCardType(this.GcrResponse.GCR_CARDTYPE.Value);
+            CardType cardType = CardMapper.GetCardType(this.GcrResponse.GCR_CARDTYPE.Value);
             Assert.IsTrue(cardType == CardType.Emv);
         }
 

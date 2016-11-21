@@ -1,7 +1,6 @@
 ﻿using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Commands;
 using System;
-using System.Diagnostics;
 using System.Collections.Generic;
 
 namespace Pinpad.Sdk.Transaction
@@ -20,28 +19,30 @@ namespace Pinpad.Sdk.Transaction
         internal static CardEntry MapCardFromTracks(GcrResponse rawResponse, 
             IList<PinpadCardBrand> cardBrands)
         {
-            CardType readingMode = CardMapper.MapCardType(rawResponse.GCR_CARDTYPE.Value);
-
-			Debug.WriteLine(rawResponse.GCR_CARDTYPE.Value);
+            CardType readingMode = CardMapper.GetCardType(rawResponse.GCR_CARDTYPE.Value);
+            CardEntry card = null;
 
             if (readingMode == CardType.Emv) 
 			{ 
-				return EmvTrackMapper.MapCardFromEmvTrack(rawResponse); 
+				card = EmvTrackMapper.MapCardFromEmvTrack(rawResponse);
 			}
-            if (readingMode == CardType.MagneticStripe) 
+            else 
 			{ 
-				return MagneticStripeTrackMapper.ReadCard(rawResponse, cardBrands); 
+				card = MagneticStripeTrackMapper.MapCardFromTrack(rawResponse);
 			}
 
+            card.BrandName = CardMapper.GetBrandName(card.PrimaryAccountNumber,
+                cardBrands);
+
             // Unknown card type:
-            return null;
+            return card;
         }
         /// <summary>
         /// Translates ApplicationType from a GCR original (raw) response into CardType.
         /// </summary>
         /// <param name="appType">ApplicationType get from Pinpad GCR response.</param>
         /// <returns>Type of the card.</returns>
-        internal static CardType MapCardType(ApplicationType appType)
+        internal static CardType GetCardType(ApplicationType appType)
         {
             // Verifies which type of card is being read.
             switch (appType)
@@ -58,6 +59,52 @@ namespace Pinpad.Sdk.Transaction
 					throw new NotImplementedException(
                         "Invalid Card ApplicationType or ApplicationType not implemented yet.");
             }
+        }
+        /// <summary>
+        /// Based on the Primary Account Number and the list of brands supported, 
+        /// determines the name of the card brand.
+        /// </summary>
+        /// <param name="pan">Card Primary Account Number.</param>
+        /// <param name="cardBrands">List of supported brands.</param>
+        /// <returns>Name of the card brand.</returns>
+        internal static string GetBrandName(string pan,
+                                               IList<PinpadCardBrand> cardBrands)
+        {
+            if (cardBrands != null)
+            {
+                // Get PAN as decimal:
+                decimal decimalPan = CardMapper.PanToDecimal(pan);
+
+                // Iterate through each brad to find the corresponding card read brand:
+                foreach (PinpadCardBrand currentBrand in cardBrands)
+                {
+                    foreach (PinpadBinRange currentRange in currentBrand.Ranges)
+                    {
+                        // If PAN of read card is within the range, return it's brand name:
+                        if (currentRange.IsWithin(decimalPan) == true)
+                        {
+                            return currentBrand.Description;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+        /// <summary>
+        /// Parse a <see cref="string"/> into a <see cref="decimal"/>.
+        /// </summary>
+        /// <param name="panString">PAN as string.</param>
+        /// <returns>PAN as decimal.</returns>
+        private static decimal PanToDecimal(string panString)
+        {
+            // Does not allow string if different length from 19 chars:
+            panString = panString.PadRight(19, '0');
+
+            // Get decimal PAN:
+            decimal decimalPan;
+            Decimal.TryParse(panString, out decimalPan);
+
+            return decimalPan;
         }
     }
 }

@@ -8,51 +8,51 @@ namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
     /// <summary>
     /// Magnetic Stripe reader for Ticket cards.
     /// </summary>
-    internal class TicketMagneticStripeTrackReader : AbstractMagneticStripeTrackReader
+    internal class TicketMagneticStripeTrackReader : IMagneticStripeTrackReader
     {
         /// <summary>
         /// Start sentinel for track 2.
         /// </summary>
-        protected override char StartSentinel { get { return 'A'; } }
+        public char StartSentinel { get { return 'A'; } }
         /// <summary>
         /// Track1, separator between different information. Based on ISO 7810/7811.
         /// </summary>
-        protected override char Track1FieldSeparator { get { return '='; } }
+        public char Track1FieldSeparator { get { return '='; } }
         /// <summary>
         /// Track2, separator between different information. Based on ISO 7810/7811.
         /// </summary>
-        protected override char Track2FieldSeparator { get { return '='; } }
+        public char Track2FieldSeparator { get { return '='; } }
         /// <summary>
         /// Track 1 is made of several information divided by a <see cref="Track1FieldSeparator">separator</see>. This is the index of card expiration date on track 1.
         /// </summary>
-        protected override short ExpirationDateIndexOnTrack1 { get { return -1; } }
+        public short ExpirationDateIndexOnTrack1 { get { return -1; } }
         /// <summary>
         /// Track 2 is made of several information divided by a <see cref="Track2FieldSeparator">separator</see>. This is the index of card expiration date on track 2.
         /// </summary>
-        protected override short ExpirationDateIndexOnTrack2 { get { return 1; } }
+        public short ExpirationDateIndexOnTrack2 { get { return 1; } }
         /// <summary>
         /// Card expiration date string length.
         /// </summary>
-        protected override short ExpirationDateLength { get { return 4; } }
+        public short ExpirationDateLength { get { return 4; } }
         /// <summary>
         /// Card service code string length.
         /// </summary>
-        protected override short ServiceCodeLength { get { return 3; } }
+        public short ServiceCodeLength { get { return 3; } }
         /// <summary>
         /// Track 2 is made of several information divided by a <see cref="Track2FieldSeparator">separator</see>. This is the index of the Primary Account Number (PAN) on track 1.
         /// </summary>
-        protected override short PanIndex { get { return 0; } }
+        public short PanIndex { get { return 0; } }
         /// <summary>
         /// Track 1 is made of several information divided by a <see cref="Track1FieldSeparator">separator</see>. This is the index of cardholder name on track 1.
         /// </summary>
-        protected override short CardholderNameIndex { get { return 0; } }
+        public short CardholderNameIndex { get { return 0; } }
 
         /// <summary>
         /// Map all card properties from it's magnetic stripe tracks.
         /// </summary>
         /// <param name="rawResponse">Response from GCR.</param>
         /// <returns>The card read.</returns>
-        protected override CardEntry MapCardFromTrack(GcrResponse rawResponse)
+        public CardEntry Read(GcrResponse rawResponse)
         {
             // Save tracks:
             CardEntry mappedCard = new CardEntry();

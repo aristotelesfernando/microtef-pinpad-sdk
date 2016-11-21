@@ -1,7 +1,6 @@
 ﻿using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Transaction.Mapper.MagneticStripe;
-using System.Collections.Generic;
 using System;
 
 namespace Pinpad.Sdk.Transaction
@@ -19,22 +18,21 @@ namespace Pinpad.Sdk.Transaction
         /// Reads a magnetic stripe card.
         /// </summary>
         /// <param name="rawResponse">Response from GCR.</param>
-        /// <param name="cardBrands">List of supported brands.</param>
         /// <returns>The card read.</returns>
-        internal static CardEntry ReadCard(GcrResponse rawResponse, IList<PinpadCardBrand> cardBrands)
+        internal static CardEntry MapCardFromTrack(GcrResponse rawResponse)
         {
-            AbstractMagneticStripeTrackReader reader;
+            IMagneticStripeTrackReader reader;
             CardEntry card = null;
 
             try
             {
                 reader = new DefaultMagneticStripeTrackReader();
-                card = reader.GetCard(rawResponse, cardBrands);
+                card = reader.Read(rawResponse);
             }
             catch (Exception)
             {
                 reader = new TicketMagneticStripeTrackReader();
-                card = reader.GetCard(rawResponse, cardBrands);
+                card = reader.Read(rawResponse);
             }
 
             return card;
