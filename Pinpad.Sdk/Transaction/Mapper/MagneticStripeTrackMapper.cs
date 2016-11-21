@@ -6,10 +6,22 @@ using System;
 
 namespace Pinpad.Sdk.Transaction
 {
-    // TODO: Documentar.
+    /// <summary>
+    /// Basic reader for magnetic stripe cards.
+    /// Creates an instance for the actual card reader, e. g. 
+    /// <see cref="DefaultMagneticStripeTrackReader"/> or 
+    /// <see cref="TicketMagneticStripeTrackReader"/>, and reads it's information in the 
+    /// correct manner.
+    /// </summary>
     internal class MagneticStripeTrackMapper
     {
-        internal static CardEntry GetCard(GcrResponse rawResponse, IList<PinpadCardBrand> cardBrands)
+        /// <summary>
+        /// Reads a magnetic stripe card.
+        /// </summary>
+        /// <param name="rawResponse">Response from GCR.</param>
+        /// <param name="cardBrands">List of supported brands.</param>
+        /// <returns>The card read.</returns>
+        internal static CardEntry ReadCard(GcrResponse rawResponse, IList<PinpadCardBrand> cardBrands)
         {
             AbstractMagneticStripeTrackReader reader;
             CardEntry card = null;

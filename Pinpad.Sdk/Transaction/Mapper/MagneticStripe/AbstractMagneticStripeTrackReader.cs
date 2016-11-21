@@ -13,7 +13,7 @@ namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
         /// <summary>
         /// Start sentinel for track 2.
         /// </summary>
-        abstract protected char Track2StartSentinel { get; }
+        abstract protected char StartSentinel { get; }
         /// <summary>
         /// Track1, separator between different information. Based on ISO 7810/7811.
         /// </summary>
@@ -51,13 +51,28 @@ namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
         /// </summary>
         abstract protected short CardholderNameIndex { get; }
 
-        public CardEntry GetCard (GcrResponse rawResponse, IList<PinpadCardBrand> cardBrands)
+        /// <summary>
+        /// Returns the specified card.
+        /// </summary>
+        /// <param name="rawResponse">Response from GCR.</param>
+        /// <param name="cardBrands">List of supported brands.</param>
+        /// <returns>The card read.</returns>
+        public CardEntry GetCard (GcrResponse rawResponse, 
+                                  IList<PinpadCardBrand> cardBrands)
         {
             CardEntry card = this.MapCardFromTrack(rawResponse);
             card.BrandName = this.GetBrandName(card.PrimaryAccountNumber, cardBrands);
             return card;
         }
-        protected virtual string GetBrandName (string pan, IList<PinpadCardBrand> cardBrands)
+        /// <summary>
+        /// Based on the Primary Account Number and the list of brands supported, 
+        /// determines the name of the card brand.
+        /// </summary>
+        /// <param name="pan">Card Primary Account Number.</param>
+        /// <param name="cardBrands">List of supported brands.</param>
+        /// <returns>Name of the card brand.</returns>
+        protected virtual string GetBrandName (string pan, 
+                                               IList<PinpadCardBrand> cardBrands)
         {
             if (cardBrands != null)
             {
@@ -98,7 +113,11 @@ namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
             return decimalPan;
         }
 
-        // TODO: Documentar.
+        /// <summary>
+        /// Map card from tracks in a specific manner.
+        /// </summary>
+        /// <param name="rawResponse">Response from GCR.</param>
+        /// <returns>The card read.</returns>
         protected abstract CardEntry MapCardFromTrack(GcrResponse rawResponse);
     }
 }

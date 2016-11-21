@@ -15,6 +15,7 @@ namespace Pinpad.Sdk.Transaction
         /// Takes a GCR Response from Pinpad and translates it into Card information.
         /// </summary>
         /// <param name="rawResponse">GCR original response from Pinpad.</param>
+        /// <param name="cardBrands">List of supported brands.</param>
         /// <returns>CardEntry containing basic information about the card.</returns>
         internal static CardEntry MapCardFromTracks(GcrResponse rawResponse, 
             IList<PinpadCardBrand> cardBrands)
@@ -29,7 +30,7 @@ namespace Pinpad.Sdk.Transaction
 			}
             if (readingMode == CardType.MagneticStripe) 
 			{ 
-				return MagneticStripeTrackMapper.GetCard(rawResponse, cardBrands); 
+				return MagneticStripeTrackMapper.ReadCard(rawResponse, cardBrands); 
 			}
 
             // Unknown card type:

@@ -5,13 +5,15 @@ using Pinpad.Sdk.Properties;
 
 namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
 {
-    // TODO: Doc.
+    /// <summary>
+    /// Magnetic Stripe reader for regular cards.
+    /// </summary>
     internal class DefaultMagneticStripeTrackReader : AbstractMagneticStripeTrackReader
     {
         /// <summary>
         /// Start sentinel for track 2.
         /// </summary>
-        protected override char Track2StartSentinel { get { return 'B'; } }
+        protected override char StartSentinel { get { return 'B'; } }
         /// <summary>
         /// Track1, separator between different information. Based on ISO 7810/7811.
         /// </summary>
@@ -133,7 +135,7 @@ namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
         {
             string pan = track.Split(separator)[PanIndex];
 
-            if (pan[0] == this.Track2StartSentinel) { pan = pan.Substring(1, pan.Length - 1); }
+            if (pan[0] == this.StartSentinel) { pan = pan.Substring(1, pan.Length - 1); }
 
             return pan;
         }

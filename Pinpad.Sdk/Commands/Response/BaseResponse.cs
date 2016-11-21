@@ -49,7 +49,6 @@ namespace Pinpad.Sdk.Commands
 		/// <returns>boolean</returns>
 		protected override bool IsPropertyFinal(IProperty property) 
 		{
-			// TODO: entender funcionamento.
 			//If the RSP_STAT is not ST_OK, there is no response data
 			if (property == this.RSP_STAT)
 			{

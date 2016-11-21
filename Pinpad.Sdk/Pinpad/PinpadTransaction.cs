@@ -88,6 +88,7 @@ namespace Pinpad.Sdk
 		/// <param name="amount">Transaction amount.</param>
 		/// <param name="newTransactionType">New transaction type read throgh ABECS protocol.</param>
 		/// <returns>Card basic info.</returns>
+        /// <param name="cardBrands">Collection of supported brands.</param>
 		/// <exception cref="ExpiredCardException">When an expired card is read.</exception>
 		public CardEntry ReadCard (TransactionType transactionType, decimal amount, 
             out TransactionType newTransactionType, IList<PinpadCardBrand> cardBrands)
@@ -212,7 +213,7 @@ namespace Pinpad.Sdk
 				CardEntry tempCard;
 
                 // Verify if it is really a magnetic stripe card:
-                tempCard = MagneticStripeTrackMapper.GetCard(response, cardBrands);
+                tempCard = MagneticStripeTrackMapper.ReadCard(response, cardBrands);
 
 				// TODO: Incluir o fallback nessa condição.
 				if (tempCard.Type != response.GCR_CARDTYPE.Value.ToCardType())

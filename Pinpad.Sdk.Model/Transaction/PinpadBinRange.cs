@@ -1,6 +1,8 @@
 ﻿namespace Pinpad.Sdk.Model
 {
-    // TODO: Documentar.
+    /// <summary>
+    /// Primary Account Number BIN range.
+    /// </summary>
     public class PinpadBinRange
     {
         /// <summary>
@@ -11,6 +13,9 @@
         /// Final BIN of the range.
         /// </summary>
         public decimal FinalRange { get; set; }
+        /// <summary>
+        /// Card brand identifier.
+        /// </summary>
         public int TefBrandId { get; set; }
         /// <summary>
         /// DataSet version.

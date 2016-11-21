@@ -205,7 +205,7 @@ namespace Pinpad.Sdk.Properties
 		/// <returns>PinPadSimpleMessageController</returns>
 		public static SimpleMessage StringParser(StringReader reader)
 		{
-			//TODO: refatorar logica de calcular length
+			// TODO: Refatorar logica de calcular length.
 
 			if (reader.Remaining < FULL_MESSAGE_LENGTH)
 			{

@@ -5,13 +5,16 @@ using Pinpad.Sdk.Properties;
 
 namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
 {
+    /// <summary>
+    /// Magnetic Stripe reader for Ticket cards.
+    /// </summary>
     internal class TicketMagneticStripeTrackReader : AbstractMagneticStripeTrackReader
     {
         // TODO: Trocar o nome desse cara.
         /// <summary>
         /// Start sentinel for track 2.
         /// </summary>
-        protected override char Track2StartSentinel { get { return 'A'; } }
+        protected override char StartSentinel { get { return 'A'; } }
         /// <summary>
         /// Track1, separator between different information. Based on ISO 7810/7811.
         /// </summary>
@@ -80,7 +83,7 @@ namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
         {
             string cardholderName = track1.Split(this.Track1FieldSeparator)[this.CardholderNameIndex];
 
-            if (cardholderName[0] == this.Track2StartSentinel)
+            if (cardholderName[0] == this.StartSentinel)
             {
                 cardholderName = cardholderName.Substring(1, cardholderName.Length - 1);
             }
