@@ -36,7 +36,7 @@ namespace Pinpad.Sdk.Model
         /// <summary>
         /// Authorised (Numeric), Authorised amount of the transaction (excluding adjustments).
         /// </summary>
-        Amount = 0x9F02,
+        AmountAuthorized = 0x9F02,
         /// <summary>
         /// Issuer Application Data:
         /// Contains proprietary application data for transmission to the issuer in an online transaction. 
@@ -46,10 +46,6 @@ namespace Pinpad.Sdk.Model
         /// Terminal Country Code.
         /// </summary>
         TerminalCountryCode = 0x9F1A,
-        /// <summary>
-        /// Interface Device (IFD) Serial Number. Component serial number set by provider.
-        /// </summary>
-        SerialNumber = 0x9F1E,
         /// <summary>
         /// Application Cryptogram.
         /// </summary>
@@ -81,7 +77,7 @@ namespace Pinpad.Sdk.Model
         /// Indicates the whole cardholder name when greater than 26 characters using the same 
         /// coding convention as in ISO 7813.
         /// </summary>
-        CardholderNameExtended = 0x9F0B
+        CardholderNameExtended = 0x9F0B,
     }
 
 	/// <summary>

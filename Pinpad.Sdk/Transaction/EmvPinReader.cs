@@ -15,10 +15,6 @@ namespace Pinpad.Sdk
 	{
         // Constants
         /// <summary>
-        /// Application Cryptogram (ARQC) EMV tag. All tags can be verified on EMV lab or EMV book.
-        /// </summary>
-        internal const string ARQC_EMV_TAG = "9F26";
-        /// <summary>
         /// This value is used on bit operation, to verifie if all bits from a byte are on.
         /// In this case, the value corresponds to 0xF1, which corresponds to the ASCII value of 1, which corresponds to the logical value of true.
         /// </summary>
