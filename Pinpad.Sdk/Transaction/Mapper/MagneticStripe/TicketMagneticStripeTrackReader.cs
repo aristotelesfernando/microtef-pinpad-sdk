@@ -10,7 +10,6 @@ namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
     /// </summary>
     internal class TicketMagneticStripeTrackReader : AbstractMagneticStripeTrackReader
     {
-        // TODO: Trocar o nome desse cara.
         /// <summary>
         /// Start sentinel for track 2.
         /// </summary>
@@ -48,6 +47,11 @@ namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
         /// </summary>
         protected override short CardholderNameIndex { get { return 0; } }
 
+        /// <summary>
+        /// Map all card properties from it's magnetic stripe tracks.
+        /// </summary>
+        /// <param name="rawResponse">Response from GCR.</param>
+        /// <returns>The card read.</returns>
         protected override CardEntry MapCardFromTrack(GcrResponse rawResponse)
         {
             // Save tracks:
@@ -71,14 +75,22 @@ namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
             return mappedCard;
         }
 
-        // TODO: Documentar.
+        /// <summary>
+        /// Map Primary Account Number from second magnetic stripe track.
+        /// </summary>
+        /// <param name="track2">Second magnetic stripe track.</param>
+        /// <returns>Primary Account Number (PAN).</returns>
         internal string MapPan (string track2)
         {
             string pan = track2.Split(this.Track2FieldSeparator)[PanIndex];
             
             return pan;
         }
-        // TODO: Documentar.
+        /// <summary>
+        /// Map Cardholder Name from first magnetic stripe track.
+        /// </summary>
+        /// <param name="track1">First magnetic stripe track.</param>
+        /// <returns>Cardholder name.</returns>
         internal string MapCardholderName(string track1)
         {
             string cardholderName = track1.Split(this.Track1FieldSeparator)[this.CardholderNameIndex];
@@ -90,7 +102,11 @@ namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
 
             return cardholderName;
         }
-        // TODO: Documentar.
+        /// <summary>
+        /// Map card expiration date from second magnetic stripe track.
+        /// </summary>
+        /// <param name="track2">Second magnetic stripe track.</param>
+        /// <returns>Card expiration date.</returns>
         internal DateTime MapExpirationDate(string track2)
         {
             string date = string.Empty;
@@ -109,7 +125,13 @@ namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
             DateTime expirationDate = new DateTime(year, month, day: 1);
             return expirationDate;
         }
-        // TODO: Documentar.
+        /// <summary>
+        /// Map Service Code from second magnetic stripe track. Service Code is a mandatory
+        /// information within the authorization process, because defines whether the pinpad
+        /// should read card password.
+        /// </summary>
+        /// <param name="track2">Second magnetic stripe track.</param>
+        /// <returns>Card Service Code.</returns>
         internal ServiceCode MapServiceCode(string track2)
         {
             string serviceCode;

@@ -102,7 +102,6 @@ namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
         /// <returns>PAN as decimal.</returns>
         private decimal PanToDecimal (string panString)
         {
-            // TODO: Melhorar valores mágicos.
             // Does not allow string if different length from 19 chars:
             panString = panString.PadRight(19, '0');
 
