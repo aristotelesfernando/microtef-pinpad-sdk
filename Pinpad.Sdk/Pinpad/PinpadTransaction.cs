@@ -8,15 +8,14 @@ using Pinpad.Sdk.Model.Exceptions;
 using System;
 using System.Diagnostics;
 using System.Linq;
-using Pinpad.Sdk.Transaction.Mapper.MagneticStripe;
 using System.Collections.Generic;
 
 namespace Pinpad.Sdk
 {
-	/// <summary>
-	/// Responsible for authorization operations.
-	/// </summary>
-	public class PinpadTransaction : IPinpadTransaction
+    /// <summary>
+    /// Responsible for authorization operations.
+    /// </summary>
+    public class PinpadTransaction : IPinpadTransaction
 	{
 		/// <summary>
 		/// Responsible for read card password itself, depending on card type.
