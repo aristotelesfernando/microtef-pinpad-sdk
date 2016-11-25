@@ -15,11 +15,6 @@ namespace Pinpad.Sdk.Test.Mapper.MagneticStripe
         public void Setup()
         {
             this.defaultReader = new DefaultMagneticStripeTrackReader();
-            //this.Track1 = "4761739001010036^TESTING CARD MAPPER^123456789987456321";
-            //this.Track2 = "4761739001010036=23032011184404889";
-            //this.originalPan = "4761739001010036";
-            //this.originalPan = "";
-            //this.ExpirationDate = new DateTime(year: 2023, month: 3, day: 1);
         }
 
         [TestMethod]
