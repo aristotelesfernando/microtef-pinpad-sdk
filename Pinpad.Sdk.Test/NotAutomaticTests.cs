@@ -6,6 +6,8 @@ using System.Diagnostics;
 using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Model;
 using System;
+using System.Globalization;
+using Pinpad.Sdk.Test.Mockings;
 
 namespace Pinpad.Sdk.Test
 {
@@ -219,16 +221,17 @@ namespace Pinpad.Sdk.Test
 		//[TestMethod]
 		public void PinpadTransaction_ReadCard_test ()
 		{
-            PinpadConnection conn = PinpadConnection.GetAt("COM27");
-			PinpadFacade facade = new PinpadFacade(conn);
-			TransactionType trnxType = TransactionType.Undefined;
+            PinpadConnection conn = PinpadConnection.GetFirst();
+            PinpadFacade facade = new PinpadFacade(conn);
+            TransactionType trnxType = TransactionType.Undefined;
 
-            //facade.TransactionService.EmvTable.StartLoadingTables();
-            //facade.TransactionService.EmvTable.FinishLoadingTables();
+            facade.TransactionService.EmvTable.UpdatePinpad(false);
+            CardEntry card = facade.TransactionService.ReadCard(TransactionType.Debit, 
+                0.1m, out trnxType, CardBrandMocker.GetMock());
 
-            CardEntry card = facade.TransactionService.ReadCard(TransactionType.Debit, 0.1m, out trnxType);
+            facade.TransactionService.ReadPassword(0.1m, card.PrimaryAccountNumber, CardType.Emv);
 
             Assert.IsNotNull(card);
-		}
+        }
     }
 }

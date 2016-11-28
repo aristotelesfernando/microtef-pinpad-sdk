@@ -49,36 +49,16 @@ namespace Pinpad.Sdk.Transaction
 
             if (response.GCR_TRK1.HasValue == true)
             {
-                mappedCard.Track1 = response.GCR_TRK1.Value.CommandString;
+                mappedCard.Track1 = response.GCR_TRK1.Value;
             }
             if (response.GCR_TRK2.HasValue == true)
             {
-                mappedCard.Track2 = response.GCR_TRK2.Value.CommandString;
+                mappedCard.Track2 = response.GCR_TRK2.Value;
             }
 
 			mappedCard.NeedsPassword = true;
 
             return mappedCard;
         }
-		/// <summary>
-		/// Get brand name by Application ID.
-		/// </summary>
-		/// <param name="aid">Application ID.</param>
-		/// <returns>Brand name</returns>
-		internal static string GetBrandByAid(string aid)
-		{
-			// TODO: adicionar RID a algum arquivo de recursos
-			// TODO: adicionar RID length ao arquivo de recursos
-			if (aid.Substring(0, 10) == "A000000003")
-			{
-				return CardMapper.VISA_LABEL;
-			}
-			if (aid.Substring(0, 10) == "A000000004")
-			{
-				return CardMapper.MASTERCARD_LABEL;
-			}
-
-			return CardMapper.UNKNOWN_LABEL;
-		}
     }
 }

@@ -26,11 +26,11 @@ namespace Pinpad.Sdk.Commands
 			this.GCR_APPTYPE = new PinpadFixedLengthProperty<int?>("GCR_APPTYPE", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
 			this.GCR_ACQIDX = new PinpadFixedLengthProperty<int?>("GCR_ACQIDX", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
 			this.GCR_RECIDX = new PinpadFixedLengthProperty<int?>("GCR_RECIDX", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
-			this.GCR_TRK1 = new VariableLengthProperty<Track1>("GCR_TRK1", 2, 76, 1.0f, true, true, DefaultStringFormatter.PropertyControllerStringFormatter, DefaultStringParser.PropertyControllerStringParser<Track1>, String.Empty.PadLeft(76));
-			this.GCR_TRK2 = new VariableLengthProperty<Track2>("GCR_TRK2", 2, 37, 1.0f, true, true, DefaultStringFormatter.PropertyControllerStringFormatter, DefaultStringParser.PropertyControllerStringParser<Track2>, String.Empty.PadLeft(37));
+			this.GCR_TRK1 = new VariableLengthProperty<string>("GCR_TRK1", 2, 76, 1.0f, true, true, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser, String.Empty.PadLeft(76));
+			this.GCR_TRK2 = new VariableLengthProperty<string>("GCR_TRK2", 2, 37, 1.0f, true, true, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser, String.Empty.PadLeft(37));
 			this.GCR_TRK3 = new VariableLengthProperty<string>("GCR_TRK3", 3, 104, 1.0f, true, true, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser, String.Empty.PadLeft(104));
 			this.GCR_PAN = new VariableLengthProperty<string>("GCR_PAN", 2, 19, 1.0f, true, true, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser,"");
-			this.GCR_PANSEQNO = new PinpadFixedLengthProperty<int?>("GCR_PANSEQNO", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
+			this.GCR_PANSEQNO = new PinpadFixedLengthProperty<int?>("GCR_PANSEQNO", 2, true, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
 			this.GCR_APPLABEL = new PinpadFixedLengthProperty<string>("GCR_APPLABEL", 16, false, DefaultStringFormatter.LeftPaddingWithSpacesStringFormatter, DefaultStringParser.StringStringParser);
 			this.GCR_SRVCODE = new SimpleProperty<ServiceCode>("GCR_SRVCODE", false, ServiceCode.StringFormatter, ServiceCode.StringParser, String.Empty.PadLeft(3));
 			this.GCR_CHNAME = new PinpadFixedLengthProperty<string>("GCR_CHNAME", 26, false, DefaultStringFormatter.LeftPaddingWithSpacesStringFormatter, DefaultStringParser.StringStringParser);
@@ -109,12 +109,12 @@ namespace Pinpad.Sdk.Commands
 		/// <summary>
 		/// Card Track 1
 		/// </summary>
-		public VariableLengthProperty<Track1> GCR_TRK1 { get; private set; }
+		public VariableLengthProperty<string> GCR_TRK1 { get; private set; }
 
 		/// <summary>
 		/// Card Track 2
 		/// </summary>
-		public VariableLengthProperty<Track2> GCR_TRK2 { get; private set; }
+		public VariableLengthProperty<string> GCR_TRK2 { get; private set; }
 
 		/// <summary>
 		/// Card Track 3

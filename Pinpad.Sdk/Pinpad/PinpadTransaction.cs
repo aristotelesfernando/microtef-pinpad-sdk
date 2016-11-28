@@ -8,13 +8,14 @@ using Pinpad.Sdk.Model.Exceptions;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Pinpad.Sdk
 {
-	/// <summary>
-	/// Responsible for authorization operations.
-	/// </summary>
-	public class PinpadTransaction : IPinpadTransaction
+    /// <summary>
+    /// Responsible for authorization operations.
+    /// </summary>
+    public class PinpadTransaction : IPinpadTransaction
 	{
 		/// <summary>
 		/// Responsible for read card password itself, depending on card type.
@@ -86,13 +87,16 @@ namespace Pinpad.Sdk
 		/// <param name="amount">Transaction amount.</param>
 		/// <param name="newTransactionType">New transaction type read throgh ABECS protocol.</param>
 		/// <returns>Card basic info.</returns>
+        /// <param name="cardBrands">Collection of supported brands.</param>
 		/// <exception cref="ExpiredCardException">When an expired card is read.</exception>
-		public CardEntry ReadCard (TransactionType transactionType, decimal amount, out TransactionType newTransactionType)
+		public CardEntry ReadCard (TransactionType transactionType, decimal amount, 
+            out TransactionType newTransactionType, IList<PinpadCardBrand> cardBrands)
 		{
 			AbecsResponseStatus status;
 			CardEntry cardRead;
 			
-				status = this.PerformCardReading(transactionType, amount, out cardRead, out newTransactionType);
+		    status = this.PerformCardReading(transactionType, amount, out cardRead, 
+                out newTransactionType, cardBrands);
 			this.LastCommandStatus = ResponseStatusMapper.MapLegacyResponseStatus(status);
 
 			// EMV tables are incompatible. Recharging tables:
@@ -173,8 +177,11 @@ namespace Pinpad.Sdk
 		/// <param name="amount">Transaction amount.</param>
 		/// <param name="cardRead">Card to be read.</param>
 		/// <param name="newTransactionType">New transaction type read throgh ABECS protocol.</param>
+        /// <param name="cardBrands">List of brands supported.</param>
 		/// <returns>Operation status.</returns>
-		private AbecsResponseStatus PerformCardReading (TransactionType transactionType, decimal amount, out CardEntry cardRead, out TransactionType newTransactionType)
+		private AbecsResponseStatus PerformCardReading (TransactionType transactionType, 
+            decimal amount, out CardEntry cardRead, out TransactionType newTransactionType, 
+            IList<PinpadCardBrand> cardBrands)
 		{
 			cardRead = null;
 
@@ -204,9 +211,8 @@ namespace Pinpad.Sdk
 			{
 				CardEntry tempCard;
 
-				// Verify if it is really a magnetic stripe card:
-				tempCard = MagneticStripeTrackMapper.MapCardFromTrack(response);
-				Debug.WriteLine("Tipo do cartão: " + tempCard.Type);
+                // Verify if it is really a magnetic stripe card:
+                tempCard = CardMapper.MapCardFromTracks(response, cardBrands);
 
 				// TODO: Incluir o fallback nessa condição.
 				if (tempCard.Type != response.GCR_CARDTYPE.Value.ToCardType())
@@ -239,7 +245,7 @@ namespace Pinpad.Sdk
 			this.LastCommandStatus = ResponseStatusMapper.MapLegacyResponseStatus(legacyStatus);
 
 			// Get card information and return it:
-			cardRead = CardMapper.MapCardFromTracks(response);
+			cardRead = CardMapper.MapCardFromTracks(response, cardBrands);
 
 			if (cardRead.Type == CardType.Emv)
 			{
@@ -252,7 +258,6 @@ namespace Pinpad.Sdk
 				var aidVar = this.EmvTable.AidTable.First(a => a.TAB_RECIDX.Value.Value == brandId);
 
 				cardRead.ApplicationId = aidVar.T1_AID.Value.DataString;
-				cardRead.BrandName = EmvTrackMapper.GetBrandByAid(cardRead.ApplicationId);
 
 				// If it is a EMV transaction, then the application SHOULD send a CNG to change EMV parameters:
 				// TODO: Ver como o comando CNG funciona. Não retirar.

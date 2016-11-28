@@ -24,7 +24,7 @@ namespace Pinpad.Sdk.Model
         /// </summary>
         public string PrimaryAccountNumber { get; set; }
         /// <summary>
-        /// Application PAN Sequencial number for joint banck account.
+        /// Application PAN Sequencial number for joint bank account.
         /// </summary>
         public Nullable<int> PrimaryAccountNumberSequenceNumber { get; set; }
         /// <summary>

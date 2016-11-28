@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Transaction;
+using Pinpad.Sdk.Test.Mockings;
 
 namespace Pinpad.Sdk.Test.Mapper
 {
@@ -40,7 +41,7 @@ namespace Pinpad.Sdk.Test.Mapper
         public void CardMapper_should_not_return_null()
         {
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.ContactlessEmv;
-            CardEntry mappedCard = CardMapper.MapCardFromTracks(this.GcrResponse);
+            CardEntry mappedCard = CardMapper.MapCardFromTracks(this.GcrResponse, CardBrandMocker.GetMock());
             Assert.IsNotNull(mappedCard);
         }
 
@@ -48,7 +49,7 @@ namespace Pinpad.Sdk.Test.Mapper
         public void CardMapper_CardType_should_be_MagneticStripe_if_AplicationType_is_MagneticStripe()
         {
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.MagneticStripe;
-            CardType cardType = CardMapper.MapCardType(this.GcrResponse.GCR_CARDTYPE.Value);
+            CardType cardType = CardMapper.GetCardType(this.GcrResponse.GCR_CARDTYPE.Value);
             Assert.IsTrue(cardType == CardType.MagneticStripe);
         }
 
@@ -56,7 +57,7 @@ namespace Pinpad.Sdk.Test.Mapper
         public void CardMapper_CardType_should_be_MagneticStripe_if_AplicationType_is_ContactlessMagneticStripe()
         {
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.ContactlessMagneticStripe;
-            CardType cardType = CardMapper.MapCardType(this.GcrResponse.GCR_CARDTYPE.Value);
+            CardType cardType = CardMapper.GetCardType(this.GcrResponse.GCR_CARDTYPE.Value);
             Assert.IsTrue(cardType == CardType.MagneticStripe);
         }
 
@@ -64,7 +65,7 @@ namespace Pinpad.Sdk.Test.Mapper
         public void CardMapper_CardType_should_be_Emv_if_AplicationType_is_IccEmv()
         {
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.IccEmv;
-            CardType cardType = CardMapper.MapCardType(this.GcrResponse.GCR_CARDTYPE.Value);
+            CardType cardType = CardMapper.GetCardType(this.GcrResponse.GCR_CARDTYPE.Value);
             Assert.IsTrue(cardType == CardType.Emv);
         }
 
@@ -72,7 +73,7 @@ namespace Pinpad.Sdk.Test.Mapper
         public void CardMapper_CardType_should_be_Emv_if_AplicationType_is_ContactlessEmv()
         {
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.ContactlessEmv;
-            CardType cardType = CardMapper.MapCardType(this.GcrResponse.GCR_CARDTYPE.Value);
+            CardType cardType = CardMapper.GetCardType(this.GcrResponse.GCR_CARDTYPE.Value);
             Assert.IsTrue(cardType == CardType.Emv);
         }
 
@@ -81,7 +82,7 @@ namespace Pinpad.Sdk.Test.Mapper
         public void CardMapper_should_throw_exception_if_ApplicationType_is_VisaCashOverTIBCv1()
         {
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.VisaCashOverTIBCv1;
-            CardEntry mappedCard = CardMapper.MapCardFromTracks(this.GcrResponse);
+            CardEntry mappedCard = CardMapper.MapCardFromTracks(this.GcrResponse, CardBrandMocker.GetMock());
         }
 
         [TestMethod]
@@ -89,7 +90,7 @@ namespace Pinpad.Sdk.Test.Mapper
         public void CardMapper_should_throw_exception_if_ApplicationType_is_VisaCashOverTIBCv3()
         {
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.VisaCashOverTIBCv3;
-            CardEntry mappedCard = CardMapper.MapCardFromTracks(this.GcrResponse);
+            CardEntry mappedCard = CardMapper.MapCardFromTracks(this.GcrResponse, CardBrandMocker.GetMock());
         }
 
         [TestMethod]
@@ -97,7 +98,7 @@ namespace Pinpad.Sdk.Test.Mapper
         public void CardMapper_should_throw_exception_if_ApplicationType_is_EasyEntryOverTIBCv1()
         {
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.EasyEntryOverTIBCv1;
-            CardEntry mappedCard = CardMapper.MapCardFromTracks(this.GcrResponse);
+            CardEntry mappedCard = CardMapper.MapCardFromTracks(this.GcrResponse, CardBrandMocker.GetMock());
         }
     }
 }

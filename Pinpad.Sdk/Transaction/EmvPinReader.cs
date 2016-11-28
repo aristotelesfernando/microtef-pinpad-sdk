@@ -15,10 +15,6 @@ namespace Pinpad.Sdk
 	{
         // Constants
         /// <summary>
-        /// Application Cryptogram (ARQC) EMV tag. All tags can be verified on EMV lab or EMV book.
-        /// </summary>
-        internal const string ARQC_EMV_TAG = "9F26";
-        /// <summary>
         /// This value is used on bit operation, to verifie if all bits from a byte are on.
         /// In this case, the value corresponds to 0xF1, which corresponds to the ASCII value of 1, which corresponds to the logical value of true.
         /// </summary>
@@ -67,7 +63,10 @@ namespace Pinpad.Sdk
 			//if (status == ResponseStatus.OperationCancelled) { return status; }
 
 			pin = new Pin();
-			pin.ApplicationCryptogram = this.MapApplicationCryptogram(commandResponse.GOC_EMVDAT.Value.DataString);
+			pin.ApplicationCryptogram = this.GetValueFromEmvData(
+                commandResponse.GOC_EMVDAT.Value.DataString, EmvTagCode.ApplicationCryptogram);
+            pin.CardholderNameExtended = this.GetValueFromEmvData(
+                commandResponse.GOC_EMVDAT.Value.DataString, EmvTagCode.CardholderNameExtended);
 
 			// Whether is a pin online authentication or not.
 			if (commandResponse.GOC_PINONL.Value.HasValue == true)
@@ -119,20 +118,28 @@ namespace Pinpad.Sdk
             request.GOC_TVBRS.Value = new HexadecimalData("00000000");
             request.GOC_MTPBRS.Value = 0;
             request.GOC_TAGS1.Value = new HexadecimalData(EmvTag.GetEmvTagsRequired());
-            request.GOC_TAGS2.Value = new HexadecimalData("");
+            request.GOC_TAGS2.Value = new HexadecimalData(string.Empty);
 
             GocResponse response = pinpadCommunication.SendRequestAndReceiveResponse<GocResponse>(request);
 
             return response;
         }
         /// <summary>
-        /// Gets the Application Cryptogram (ARQC) from EMV data (string with all EMV tags and values concatenated).
+        /// Gets a specified tag from the whole EMV tag field.
+        /// concatenated).
         /// </summary>
         /// <param name="emvData">EMV data (string with all EMV tags and values concatenated).</param>
-        /// <returns>Application Cryptogram (ARQC).</returns>
-		private string MapApplicationCryptogram(string emvData)
+        /// <param name="emvKey">EMV key to be extracted from EMV Data.</param>
+        /// <returns>
+        ///     The value of the specified tag or null if the tag searched was not found.
+        /// </returns>
+        /// <exception cref="IndexOutOfRangeException">
+        ///     If an error occurred while processing the EMV Data.
+        /// </exception>
+		private string GetValueFromEmvData(string emvData, EmvTagCode emvKey)
         {
             string data = emvData;
+            string searchedKeyName = ((int)emvKey).ToString("X");
 
             for (int i = 0; i < data.Length; /*nothing here, the increment is dynamic*/)
             {
@@ -167,7 +174,7 @@ namespace Pinpad.Sdk
 
                     length *= 2;
 
-                    if (key == ARQC_EMV_TAG)
+                    if (key == searchedKeyName)
                     {
                         return data.Substring(i, length);
                     }

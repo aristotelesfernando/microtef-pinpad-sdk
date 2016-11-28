@@ -52,9 +52,9 @@ namespace Pinpad.Sdk.Commands
         /// Serial number
         /// </summary>
         public PinpadFixedLengthProperty<string> GIN_SERNUM { get; private set; }
-        
-		// Constructor
-		/// <summary>
+
+        // Constructor
+        /// <summary>
         /// Constructor
         /// </summary>
         public GinResponse() 
