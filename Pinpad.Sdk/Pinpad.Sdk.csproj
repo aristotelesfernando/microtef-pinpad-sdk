@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Commands\BaseCommand.cs" />
+    <Compile Include="Commands\Context\IngenicoContext.cs" />
     <Compile Include="Commands\DataSet\AcquirerCommunicationStatus.cs" />
     <Compile Include="Commands\DataSet\FncEntry.cs" />
     <Compile Include="Commands\DataSet\OnlineTransactionStatus.cs" />

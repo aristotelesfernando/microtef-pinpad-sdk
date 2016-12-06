@@ -17,7 +17,7 @@ namespace Pinpad.Sdk.Test
 		[TestInitialize]
 		public void Setup ()
 		{
-			//MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
+			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
 		}
 		//[TestMethod]
 		public void GCD_test ()
@@ -151,7 +151,7 @@ namespace Pinpad.Sdk.Test
 
 			Assert.IsTrue(true);
 		}
-		//[TestMethod]
+		[TestMethod]
 		public void OnePinpadFind_test ()
 		{
 			for (int i = 0; i < 5; i++)
