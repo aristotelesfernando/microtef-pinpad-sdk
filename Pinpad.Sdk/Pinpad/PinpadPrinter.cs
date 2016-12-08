@@ -23,9 +23,18 @@ namespace Pinpad.Sdk.Pinpad
             // TODO: Adicionar imagem ao buffer!
             return this;
         }
-        public IPinpadPrinter AddQrCode(string imagePath)
+        public IPinpadPrinter AddQrCode(PrinterAlignmentCode alignment, string qrCodeMessage)
         {
-            // TODO: Adicionar QR code ao buffer!
+            PrinterItem newQrCode = new PrinterItem
+            {
+                Type = IngenicoPrinterAction.PrintQrCode,
+                FontSize = PrinterFontSize.Big,
+                Alignment = alignment,
+                QrCodeMessage = qrCodeMessage
+            };
+
+            this.ItemsToPrint.Add(newQrCode);
+
             return this;
         }
         public IPinpadPrinter AppendLine (PrinterAlignmentCode alignment, 
@@ -72,6 +81,12 @@ namespace Pinpad.Sdk.Pinpad
                         break;
                     case IngenicoPrinterAction.PrintQrCode:
                         // TODO: Falta implementar.
+                        request.PRT_Action.Value = IngenicoPrinterAction.PrintQrCode;
+                        request.PRT_Size.Value = item.FontSize;
+                        request.PRT_Alignment.Value = item.Alignment;
+                        request.PRT_Horizontal.Value = 1;
+                        request.PRT_DATA.Value = item.QrCodeMessage;
+                        request.PRT_DATA.Value = request.PRT_DATA.Value.PadRight(512, ' ');
                         break;
                     case IngenicoPrinterAction.PrintText:
                         request.PRT_Action.Value = IngenicoPrinterAction.PrintText;

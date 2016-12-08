@@ -16,6 +16,7 @@ namespace Pinpad.Sdk.Commands.Request
         public RegionProperty PRT_DATALEN { get; private set; }
         public SimpleProperty<string> PRT_DATA { get; private set; }
         public PinpadFixedLengthProperty<Nullable<int>> PRT_Steps { get; private set; }
+        public PinpadFixedLengthProperty<Nullable<int>> PRT_Horizontal { get; private set; }
 
         public PrtRequest()
         {
@@ -40,15 +41,20 @@ namespace Pinpad.Sdk.Commands.Request
                 4, true,
                 DefaultStringFormatter.IntegerStringFormatter,
                 DefaultStringParser.IntegerStringParser);
+            this.PRT_Horizontal = new PinpadFixedLengthProperty<Nullable<int>>(
+                "PRT_Horizontal", 4, true,
+                DefaultStringFormatter.IntegerStringFormatter,
+                DefaultStringParser.IntegerStringParser);
 
             this.StartRegion(this.CMD_LEN1);
             {
                 this.AddProperty(this.PRT_Action);
                 this.AddProperty(this.PRT_Size);
                 this.AddProperty(this.PRT_Alignment);
+                this.AddProperty(this.PRT_Steps);
+                this.AddProperty(this.PRT_Horizontal);
                 this.AddProperty(this.PRT_DATALEN);
                 this.AddProperty(this.PRT_DATA);
-                this.AddProperty(this.PRT_Steps);
             }
             this.EndLastRegion();
 

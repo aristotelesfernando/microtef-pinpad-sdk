@@ -10,7 +10,7 @@ namespace Pinpad.Sdk.Commands.DataSet
         public string Text { get; set; }
         public PrinterAlignmentCode Alignment { get; set; }
         public PrinterFontSize FontSize { get; set; }
-        public byte [] QrCode { get; set; }
+        public string QrCodeMessage { get; set; }
         public byte [] Image { get; set; }
         public int StepsToSkip { get; set; }
     }
