@@ -6,7 +6,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// TLI request
 	/// </summary>
-	internal class TliRequest : BaseCommand
+	internal sealed class TliRequest : BaseCommand
 	{
 		/// <summary>
 		/// Constructor

@@ -1,5 +1,4 @@
 ﻿using Pinpad.Sdk.Model;
-
 namespace Pinpad.Sdk
 {
 	/// <summary>
@@ -10,22 +9,23 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Gets the default Communication adapter.
 		/// </summary>
-		PinpadCommunication Communication { get; set; }
+		PinpadCommunication Communication { get; }
 		/// <summary>
 		/// Responsible for authorization operations.
 		/// </summary>
-		PinpadTransaction TransactionService { get; set; }
+		PinpadTransaction TransactionService { get; }
 		/// <summary>
 		/// Gets the default Keyboard adapter
 		/// </summary>
-		IPinpadKeyboard Keyboard { get; set; }
+		IPinpadKeyboard Keyboard { get; }
 		/// <summary>
 		/// Gets the default Display adapter
 		/// </summary>
-		IPinpadDisplay Display { get; set; }
+		IPinpadDisplay Display { get; }
 		/// <summary>
 		/// Gets the default Infos adapter
 		/// </summary>
-		IPinpadInfos Infos { get; set; }
+		IPinpadInfos Infos { get; }
+        IPinpadPrinter Printer { get; }
 	}
 }

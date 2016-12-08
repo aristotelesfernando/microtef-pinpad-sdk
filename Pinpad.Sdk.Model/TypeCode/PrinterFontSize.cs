@@ -1,26 +1,26 @@
-﻿namespace Pinpad.Sdk.Model
+﻿namespace Pinpad.Sdk.Model 
 {
 	/// <summary>
-	/// Enumerator for PRT string alignment
+	/// Enumerator for PRT string font sizes
 	/// Since undefined is 0 every value will be the actual code plus 1
 	/// </summary>
-	public enum PrinterAlignmentCode
+	public enum PrinterFontSize 
 	{
 		/// <summary>
 		/// Null
 		/// </summary>
 		Undefined = 0,
 		/// <summary>
-		/// Left alignment
+		/// Small string
 		/// </summary>
-		Left = 1,
+		Small = 2,
 		/// <summary>
-		/// Center alignment
+		/// Medium string
 		/// </summary>
-		Center = 2,
+		Medium = 3,
 		/// <summary>
-		/// Right alignment
+		/// Big string
 		/// </summary>
-		Right = 3
+		Big = 4
 	}
 }

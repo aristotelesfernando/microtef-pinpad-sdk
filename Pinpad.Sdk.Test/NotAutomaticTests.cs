@@ -6,12 +6,12 @@ using System.Diagnostics;
 using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Model;
 using System;
-using System.Globalization;
 using Pinpad.Sdk.Test.Mockings;
+using Pinpad.Sdk.Pinpad;
 
 namespace Pinpad.Sdk.Test
 {
-	[TestClass]
+    [TestClass]
 	public class NotAutomaticTests
 	{
 		[TestInitialize]
@@ -232,6 +232,22 @@ namespace Pinpad.Sdk.Test
             facade.TransactionService.ReadPassword(0.1m, card.PrimaryAccountNumber, CardType.Emv);
 
             Assert.IsNotNull(card);
+        }
+
+        [TestMethod]
+        public void MyTestMethod()
+        {
+            //IPinpadPrinter printer = Mock.Of<IPinpadPrinter>();
+
+            PinpadConnection conn = PinpadConnection.GetFirst();
+            PinpadFacade facade = new PinpadFacade(conn);
+
+            facade.Printer.AddImage("stoneLogo.png")
+                          .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Big, "Testando {0}", "Ceres")
+                          .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Medium, "Valor: {0}", 10m)
+                          .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Small, "Volte sempre!")
+                          .AddQrCode("qrcode")
+                          .Print();
         }
     }
 }

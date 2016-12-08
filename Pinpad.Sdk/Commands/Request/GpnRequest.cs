@@ -6,7 +6,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// GPN request
 	/// </summary>
-	internal class GpnRequest : BaseCommand {
+	internal sealed class GpnRequest : BaseCommand {
 		/// <summary>
 		/// Contructor
 		/// </summary>

@@ -46,11 +46,13 @@
     <Compile Include="Commands\DataSet\AcquirerCommunicationStatus.cs" />
     <Compile Include="Commands\DataSet\FncEntry.cs" />
     <Compile Include="Commands\DataSet\OnlineTransactionStatus.cs" />
+    <Compile Include="Commands\DataSet\PrinterItem.cs" />
     <Compile Include="Commands\Request\CloRequest.cs" />
     <Compile Include="Commands\Request\CngRequest.cs" />
     <Compile Include="Commands\Request\DexRequest.cs" />
     <Compile Include="Commands\Request\FncRequest.cs" />
     <Compile Include="Commands\Request\GduRequest.cs" />
+    <Compile Include="Commands\Request\PrtRequest.cs" />
     <Compile Include="Commands\Response\BaseResponse.cs" />
     <Compile Include="Commands\Context\AbecsContext.cs" />
     <Compile Include="Commands\Context\GertecContext.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="Commands\Request\TleRequest.cs" />
     <Compile Include="Commands\Request\TliRequest.cs" />
     <Compile Include="Commands\Request\TlrRequest.cs" />
+    <Compile Include="Commands\TypeCode\IngenicoPrinterAction.cs" />
     <Compile Include="Events\PinpadFileLoadedEventArgs.cs" />
     <Compile Include="Events\PinpadNotificationEventArgs.cs" />
     <Compile Include="Commands\DataSet\GertecResponseCode.cs" />
@@ -107,6 +110,7 @@
     <Compile Include="PinpadProperties\VariableLengthProperty.cs" />
     <Compile Include="Pinpad\PinpadFacade.cs" />
     <Compile Include="Pinpad\PinpadConnection.cs" />
+    <Compile Include="Pinpad\PinpadPrinter.cs" />
     <Compile Include="Pinpad\PinpadTable.cs" />
     <Compile Include="Pinpad\PinpadTransaction.cs" />
     <Compile Include="Pinpad\PinpadCommunication.cs" />

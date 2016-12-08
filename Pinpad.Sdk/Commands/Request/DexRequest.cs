@@ -12,7 +12,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// DEX request
 	/// </summary>
-	internal class DexRequest : BaseCommand
+	internal sealed class DexRequest : BaseCommand
 	{
 		// Members
 		/// <summary>

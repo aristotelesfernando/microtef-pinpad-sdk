@@ -6,7 +6,7 @@ namespace Pinpad.Sdk.Commands
     /// <summary>
     /// FNC request
     /// </summary>
-    internal class FncRequest : BaseCommand
+    internal sealed class FncRequest : BaseCommand
 	{
         /// <summary>
         /// Constructor
