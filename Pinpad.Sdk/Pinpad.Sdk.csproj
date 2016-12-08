@@ -52,6 +52,7 @@
     <Compile Include="Commands\Request\DexRequest.cs" />
     <Compile Include="Commands\Request\FncRequest.cs" />
     <Compile Include="Commands\Request\GduRequest.cs" />
+    <Compile Include="Commands\Request\LfiRequest.cs" />
     <Compile Include="Commands\Request\PrtRequest.cs" />
     <Compile Include="Commands\Response\BaseResponse.cs" />
     <Compile Include="Commands\Context\AbecsContext.cs" />

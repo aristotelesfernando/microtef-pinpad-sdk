@@ -16,7 +16,10 @@ namespace Pinpad.Sdk.Commands
         public TlrRequest()
         {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
-            this.TLR_REC = new VariableLengthCollectionProperty<BaseTable>("TLR_REC", 2, 1, 999, DefaultStringFormatter.PropertyControllerStringFormatter, TlrRequest.TableStringParser);
+            this.TLR_REC = new VariableLengthCollectionProperty<BaseTable>("TLR_REC", 
+                2, 1, 999, 
+                DefaultStringFormatter.PropertyControllerStringFormatter, 
+                TlrRequest.TableStringParser);
 
             this.StartRegion(this.CMD_LEN1);
             {

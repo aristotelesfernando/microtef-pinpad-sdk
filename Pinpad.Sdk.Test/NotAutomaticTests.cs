@@ -235,10 +235,8 @@ namespace Pinpad.Sdk.Test
         }
 
         [TestMethod]
-        public void MyTestMethod()
+        public void PrintText_test()
         {
-            //IPinpadPrinter printer = Mock.Of<IPinpadPrinter>();
-
             PinpadConnection conn = PinpadConnection.GetFirst();
             PinpadFacade facade = new PinpadFacade(conn);
 
@@ -247,6 +245,15 @@ namespace Pinpad.Sdk.Test
                           .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Medium, "Valor: {0}", 10m)
                           .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Small, "Volte sempre!")
                           .AddQrCode(PrinterAlignmentCode.Center, "GUILA NAO TRABALHA")
+                          .Print();
+        }
+        [TestMethod]
+        public void PrintImage_test()
+        {
+            PinpadConnection conn = PinpadConnection.GetFirst();
+            PinpadFacade facade = new PinpadFacade(conn);
+
+            facade.Printer.AddImage("stoneLogo.bin")
                           .Print();
         }
     }

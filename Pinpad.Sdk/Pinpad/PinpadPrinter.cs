@@ -21,6 +21,11 @@ namespace Pinpad.Sdk.Pinpad
         public IPinpadPrinter AddImage (string imagePath)
         {
             // TODO: Adicionar imagem ao buffer!
+            LfiRequest request = new LfiRequest();
+            request.LFI_FILENAME.Value = imagePath;
+
+            bool status = this.Communication.SendRequestAndVerifyResponseCode(request);
+
             return this;
         }
         public IPinpadPrinter AddQrCode(PrinterAlignmentCode alignment, string qrCodeMessage)
