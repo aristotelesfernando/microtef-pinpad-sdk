@@ -81,6 +81,5 @@ namespace Pinpad.Sdk.Commands
 		{
 			this.Data = data;
 		}
-
 	}
 }

@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using Pinpad.Sdk.Commands.DataSet;
 using Pinpad.Sdk.Commands.Request;
 using Pinpad.Sdk.Commands.TypeCode;
+using Pinpad.Sdk.Commands;
+using System.Diagnostics;
 
 namespace Pinpad.Sdk.Pinpad
 {
@@ -20,11 +22,28 @@ namespace Pinpad.Sdk.Pinpad
 
         public IPinpadPrinter AddImage (string imagePath)
         {
-            // TODO: Adicionar imagem ao buffer!
-            LfiRequest request = new LfiRequest();
-            request.LFI_FILENAME.Value = imagePath;
+            LfcRequest lfc = new LfcRequest();
+            lfc.LFC_FILENAME.Value = "stoneLogo.bin";
 
-            bool status = this.Communication.SendRequestAndVerifyResponseCode(request);
+            bool status = this.Communication.SendRequestAndVerifyResponseCode(lfc);
+
+            // TODO: Adicionar imagem ao buffer!
+
+            // Init
+            LfiRequest request = new LfiRequest();
+            request.LFI_FILENAME.Value   = imagePath;
+
+            status = this.Communication.SendRequestAndVerifyResponseCode(request);
+
+            // Reload:
+            string[] imageLines = PrinterLogo.Ingenico.Split('-');
+
+            foreach (string imageLine in imageLines)
+            {
+                LfrRequest lfr = new LfrRequest();
+                lfr.LFR_Data.Value.Add(new HexadecimalData(imageLine));
+                status = this.Communication.SendRequestAndVerifyResponseCode(lfr);
+            }
 
             return this;
         }
