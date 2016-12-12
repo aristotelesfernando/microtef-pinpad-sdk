@@ -3,23 +3,39 @@ using System.Collections.ObjectModel;
 using Pinpad.Sdk.Commands.DataSet;
 using Pinpad.Sdk.Commands.Request;
 using Pinpad.Sdk.Commands.TypeCode;
-using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Commands.Response;
 
 namespace Pinpad.Sdk.Pinpad
 {
-    // TODO: Documentar.
+    /// <summary>
+    /// Responsible for representate pinpad thermal printer.
+    /// Only available for Ingenico iWL250 pinpad.
+    /// </summary>
     public sealed class PinpadPrinter : IPinpadPrinter
     {
+        /// <summary>
+        /// Responsible for logical communication with pinpad.
+        /// </summary>
         private PinpadCommunication Communication { get; set; }
+        /// <summary>
+        /// Printer buffer.
+        /// </summary>
         private Collection<PrinterItem> ItemsToPrint { get; set; }
 
+        /// <summary>
+        /// Creates an instance of <see cref="PinpadPrinter"/> with all it's properties.
+        /// </summary>
+        /// <param name="communication"></param>
         public PinpadPrinter(PinpadCommunication communication)
         {
             this.Communication = communication;
             this.ItemsToPrint = new Collection<PrinterItem>();
         }
 
+        /// <summary>
+        /// Add Stone logotype to the printer buffer.
+        /// </summary>
+        /// <returns>Itself.</returns>
         public IPinpadPrinter AddLogo ()
         {
             // If image does not exist in pinpad memory:
@@ -38,6 +54,12 @@ namespace Pinpad.Sdk.Pinpad
 
             return this;
         }
+        /// <summary>
+        /// Add QR code to the printer buffer.
+        /// </summary>
+        /// <param name="alignment">QR code alignment.</param>
+        /// <param name="qrCodeMessage">QR code message.</param>
+        /// <returns>Itself.</returns>
         public IPinpadPrinter AddQrCode(PrinterAlignmentCode alignment, 
             string qrCodeMessage)
         {
@@ -53,6 +75,14 @@ namespace Pinpad.Sdk.Pinpad
 
             return this;
         }
+        /// <summary>
+        /// Add line of text to the printer buffer.
+        /// </summary>
+        /// <param name="alignment">Text alignment.</param>
+        /// <param name="fontSize">Font size.</param>
+        /// <param name="text">Text to print.</param>
+        /// <param name="args">Arguments to the text to print.</param>
+        /// <returns>Itself.</returns>
         public IPinpadPrinter AppendLine (PrinterAlignmentCode alignment, 
             PrinterFontSize fontSize, string text, params object[] args)
         {
@@ -63,12 +93,14 @@ namespace Pinpad.Sdk.Pinpad
                 Alignment = alignment,
                 FontSize = fontSize
             };
-
             this.ItemsToPrint.Add(newLine);
 
             return this;
         }
-
+        /// <summary>
+        /// Print all content in printer buffer.
+        /// </summary>
+        /// <returns>Whether the printing was successful or not.</returns>
         public bool Print ()
         {
             // Add command to begin printing:
@@ -110,6 +142,12 @@ namespace Pinpad.Sdk.Pinpad
             return true;
         }
 
+        /// <summary>
+        /// Creates a printing request based on the action, that is,
+        /// the <see cref="IngenicoPrinterAction"/>.
+        /// </summary>
+        /// <param name="item">Item to print.</param>
+        /// <returns>Request to print something through thermal printer.</returns>
         private PrtRequest GetRequestByType(PrinterItem item)
         {
             switch (item.Type)
@@ -118,7 +156,7 @@ namespace Pinpad.Sdk.Pinpad
                     return this.CreateRequestToStartPrinting();
 
                 case IngenicoPrinterAction.PrintImage:
-                    return this.CreateRequestToPrintLogo(item);
+                    return this.CreateRequestToPrintLogo();
 
                 case IngenicoPrinterAction.PrintQrCode:
                     return this.CreateRequestToPrintQrCode(item);
@@ -136,7 +174,11 @@ namespace Pinpad.Sdk.Pinpad
             return null;
         }
 
-        // Methods to create a printing request:
+        /// <summary>
+        /// Creates a <see cref="PrtRequest"/> configured to notificate the thermal printer
+        /// that a printing operation is about to begin.
+        /// </summary>
+        /// <returns>The printing request.</returns>
         private PrtRequest CreateRequestToStartPrinting()
         {
             PrtRequest startRequest = new PrtRequest();
@@ -146,7 +188,11 @@ namespace Pinpad.Sdk.Pinpad
 
             return startRequest;
         }
-        private PrtRequest CreateRequestToPrintLogo(PrinterItem item)
+        /// <summary>
+        /// Creates a <see cref="PrtRequest"/> configured with Stone logotype to print.
+        /// </summary>
+        /// <returns>The image printing request.</returns>
+        private PrtRequest CreateRequestToPrintLogo()
         {
             PrtRequest printImageRequest = new PrtRequest();
 
@@ -157,6 +203,11 @@ namespace Pinpad.Sdk.Pinpad
             
             return printImageRequest;
         }
+        /// <summary>
+        /// Creates a <see cref="PrtRequest"/> configured with a QR code to print.
+        /// </summary>
+        /// <param name="item">Item with QR code information.</param>
+        /// <returns>The QR code printing request.</returns>
         private PrtRequest CreateRequestToPrintQrCode(PrinterItem item)
         {
             PrtRequest printQrCodeRequest = new PrtRequest();
@@ -172,6 +223,11 @@ namespace Pinpad.Sdk.Pinpad
 
             return printQrCodeRequest;
         }
+        /// <summary>
+        /// Creates a <see cref="PrtRequest"/> configured with a text to print.
+        /// </summary>
+        /// <param name="item">Item with text to print information.</param>
+        /// <returns>The text printing request.</returns>
         private PrtRequest CreateRequestToPrintText(PrinterItem item)
         {
             PrtRequest printTextRequest = new PrtRequest();
@@ -184,6 +240,11 @@ namespace Pinpad.Sdk.Pinpad
 
             return printTextRequest;
         }
+        /// <summary>
+        /// Creates a <see cref="PrtRequest"/> configured to notificate the thermal printer
+        /// that all items have been sent, and the printer can already beging to print.
+        /// </summary>
+        /// <returns>The finish printing request.</returns>
         private PrtRequest CreateRequestToFinishPrinting()
         {
             PrtRequest finishPrintingRequest = new PrtRequest();
@@ -193,6 +254,11 @@ namespace Pinpad.Sdk.Pinpad
 
             return finishPrintingRequest;
         }
+        /// <summary>
+        /// Creates a <see cref="PrtRequest"/> configured with skip lines.
+        /// </summary>
+        /// <param name="item">Item with skip configuration.</param>
+        /// <returns>The skip line request.</returns>
         private PrtRequest CreateRequestToSkipLine(PrinterItem item)
         {
             PrtRequest skipLineRequest = new PrtRequest();
@@ -204,6 +270,10 @@ namespace Pinpad.Sdk.Pinpad
             return skipLineRequest;
         }
 
+        /// <summary>
+        /// Verify if Stone logo exist in pinpad memory.
+        /// </summary>
+        /// <returns>Return if the image exist or not.</returns>
         private bool VerifyIfLogoExists()
         {
             // Verify if image exists in pinpad memory!
@@ -224,6 +294,9 @@ namespace Pinpad.Sdk.Pinpad
 
             return false;
         }
+        /// <summary>
+        /// Load Stone logotype into pinpad memory.
+        /// </summary>
         private void ReloadImage()
         {
             bool status;
