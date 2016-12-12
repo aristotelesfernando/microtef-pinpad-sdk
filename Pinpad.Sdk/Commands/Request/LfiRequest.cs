@@ -13,7 +13,7 @@ namespace Pinpad.Sdk.Commands.Request
         {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
             this.LFI_FILENAME = new VariableLengthProperty<string>("LFI_FILENAME", 3,
-                64, 0.5f, false, false,
+                64, 1f, false, false,
                 DefaultStringFormatter.StringStringFormatter,
                 DefaultStringParser.StringStringParser);
 

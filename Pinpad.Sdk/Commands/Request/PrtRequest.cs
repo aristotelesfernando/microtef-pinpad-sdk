@@ -13,8 +13,7 @@ namespace Pinpad.Sdk.Commands.Request
         public PinpadFixedLengthProperty<IngenicoPrinterAction> PRT_Action { get; private set; }
         public PinpadFixedLengthProperty<PrinterFontSize> PRT_Size { get; private set; }
         public PinpadFixedLengthProperty<PrinterAlignmentCode> PRT_Alignment { get; private set; }
-        public RegionProperty PRT_DATALEN { get; private set; }
-        public SimpleProperty<string> PRT_DATA { get; private set; }
+        public VariableLengthProperty<string> PRT_DATA { get; private set; }
         public PinpadFixedLengthProperty<Nullable<int>> PRT_Steps { get; private set; }
         public PinpadFixedLengthProperty<Nullable<int>> PRT_Horizontal { get; private set; }
 
@@ -33,8 +32,8 @@ namespace Pinpad.Sdk.Commands.Request
                 "PRT_Alignment", 1, true,
                 DefaultStringFormatter.EnumStringFormatter<PrinterAlignmentCode>,
                 DefaultStringParser.EnumStringParser<PrinterAlignmentCode>);
-            this.PRT_DATALEN = new RegionProperty("PRT_DATALEN", 3, false, true);
-            this.PRT_DATA = new SimpleProperty<string>("PRT_DATA", true,
+            this.PRT_DATA = new VariableLengthProperty<string>("PRT_DATA",
+                3, 128, 1, false, true,
                 DefaultStringFormatter.StringStringFormatter,
                 DefaultStringParser.StringStringParser, null);
             this.PRT_Steps = new PinpadFixedLengthProperty<Nullable<int>>("PRT_Steps",
@@ -53,13 +52,6 @@ namespace Pinpad.Sdk.Commands.Request
                 this.AddProperty(this.PRT_Alignment);
                 this.AddProperty(this.PRT_Steps);
                 this.AddProperty(this.PRT_Horizontal);
-                this.AddProperty(this.PRT_DATALEN);
-                this.AddProperty(this.PRT_DATA);
-            }
-            this.EndLastRegion();
-
-            this.StartRegion(this.PRT_DATALEN);
-            {
                 this.AddProperty(this.PRT_DATA);
             }
             this.EndLastRegion();

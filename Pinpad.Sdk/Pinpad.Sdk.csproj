@@ -54,6 +54,7 @@
     <Compile Include="Commands\Request\FncRequest.cs" />
     <Compile Include="Commands\Request\GduRequest.cs" />
     <Compile Include="Commands\Request\LfcRequest.cs" />
+    <Compile Include="Commands\Request\LfeRequest.cs" />
     <Compile Include="Commands\Request\LfiRequest.cs" />
     <Compile Include="Commands\Request\LfrRequest.cs" />
     <Compile Include="Commands\Request\PrtRequest.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Commands\Response\GpnResponse.cs" />
     <Compile Include="Commands\Request\GtsRequest.cs" />
     <Compile Include="Commands\Response\GtsResponse.cs" />
+    <Compile Include="Commands\Response\LfcResponse.cs" />
     <Compile Include="Commands\Response\NtmResponse.cs" />
     <Compile Include="Commands\Request\OpnRequest.cs" />
     <Compile Include="Commands\Response\OpnResponse.cs" />

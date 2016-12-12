@@ -240,7 +240,7 @@ namespace Pinpad.Sdk.Test
             PinpadConnection conn = PinpadConnection.GetFirst();
             PinpadFacade facade = new PinpadFacade(conn);
 
-            facade.Printer.AddImage("stone Logo.png")
+            facade.Printer.AddLogo()
                           .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Big, "Testando {0}", "Ceres")
                           .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Medium, "Valor: {0}", 10m)
                           .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Small, "Volte sempre!")
@@ -253,7 +253,7 @@ namespace Pinpad.Sdk.Test
             PinpadConnection conn = PinpadConnection.GetFirst();
             PinpadFacade facade = new PinpadFacade(conn);
 
-            facade.Printer.AddImage("stoneLogo.bin")
+            facade.Printer.AddLogo()
                           .Print();
         }
     }
