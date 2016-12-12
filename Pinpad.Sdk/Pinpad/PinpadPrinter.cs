@@ -4,6 +4,7 @@ using Pinpad.Sdk.Commands.DataSet;
 using Pinpad.Sdk.Commands.Request;
 using Pinpad.Sdk.Commands.TypeCode;
 using Pinpad.Sdk.Commands.Response;
+using System;
 
 namespace Pinpad.Sdk.Pinpad
 {
@@ -14,21 +15,40 @@ namespace Pinpad.Sdk.Pinpad
     public sealed class PinpadPrinter : IPinpadPrinter
     {
         /// <summary>
+        /// Indicates wether the thermal printer is supported or not.
+        /// </summary>
+        public bool IsSupported
+        {
+            get
+            {
+                if (this.PinpadInformation.ManufacturerName.Contains("INGENICO") == true
+                    && this.PinpadInformation.Model.Contains("iWL250") == true)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+        /// <summary>
         /// Responsible for logical communication with pinpad.
         /// </summary>
         private PinpadCommunication Communication { get; set; }
+        private IPinpadInfos PinpadInformation { get; set; }
         /// <summary>
         /// Printer buffer.
         /// </summary>
         private Collection<PrinterItem> ItemsToPrint { get; set; }
-
+        
         /// <summary>
         /// Creates an instance of <see cref="PinpadPrinter"/> with all it's properties.
         /// </summary>
-        /// <param name="communication"></param>
-        public PinpadPrinter(PinpadCommunication communication)
+        /// <param name="communication">Pinpad communication service.</param>
+        /// <param name="infos">Real time pinpad information.</param>
+        public PinpadPrinter(PinpadCommunication communication, IPinpadInfos infos)
         {
             this.Communication = communication;
+            this.PinpadInformation = infos;
             this.ItemsToPrint = new Collection<PrinterItem>();
         }
 
@@ -97,12 +117,39 @@ namespace Pinpad.Sdk.Pinpad
 
             return this;
         }
+        // TODO: Doc
+        public IPinpadPrinter AppendLine()
+        {
+            this.ItemsToPrint.Add(new PrinterItem
+            {
+                Type = IngenicoPrinterAction.SkipLine,
+                StepsToSkip = 4
+            });
+
+            return this;
+        }
+        public IPinpadPrinter AddSeparator()
+        {
+            return this.AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Big, 
+                "________________________");
+        }
         /// <summary>
         /// Print all content in printer buffer.
         /// </summary>
-        /// <returns>Whether the printing was successful or not.</returns>
+        /// <returns>
+        /// Whether the printing was successful or not. Also, returns false
+        /// if the pinpad has no printer or the printer is not supported by this
+        /// application.
+        /// </returns>
         public bool Print ()
         {
+            // If pinpad has no printer, or is not supported by this application,
+            // this method must return false.
+            if (this.IsSupported == false)
+            {
+                return false;
+            }
+
             // Add command to begin printing:
             this.ItemsToPrint.Insert(0, new PrinterItem { Type = IngenicoPrinterAction.Start });
 
@@ -319,5 +366,7 @@ namespace Pinpad.Sdk.Pinpad
             // Finish sending image:
             status = this.Communication.SendRequestAndVerifyResponseCode(new LfeRequest());
         }
+
+        
     }
 }

@@ -7,6 +7,11 @@
     public interface IPinpadPrinter
     {
         /// <summary>
+        /// Indicates wether the thermal printer is supported or not.
+        /// </summary>
+        bool IsSupported { get; }
+
+        /// <summary>
         /// Add Stone logotype to the printer buffer.
         /// </summary>
         /// <returns>Itself.</returns>
@@ -28,6 +33,9 @@
         /// <returns>Itself.</returns>
         IPinpadPrinter AppendLine(PrinterAlignmentCode alignment,
             PrinterFontSize fontSize, string text, params object[] args);
+        IPinpadPrinter AppendLine();
+        // TODO: Doc
+        IPinpadPrinter AddSeparator();
         /// <summary>
         /// Print all content in printer buffer.
         /// </summary>
