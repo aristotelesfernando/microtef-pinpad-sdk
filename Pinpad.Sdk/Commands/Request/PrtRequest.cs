@@ -62,16 +62,16 @@ namespace Pinpad.Sdk.Commands.Request
                 "PRT_Alignment", 1, true,
                 DefaultStringFormatter.EnumStringFormatter<PrinterAlignmentCode>,
                 DefaultStringParser.EnumStringParser<PrinterAlignmentCode>);
-            this.PRT_DATA = new VariableLengthProperty<string>("PRT_DATA",
-                3, 128, 1, false, true,
+            this.PRT_DATA = new VariableLengthProperty<string>(
+                "PRT_DATA", 3, 512, 1, false, true,
                 DefaultStringFormatter.StringStringFormatter,
                 DefaultStringParser.StringStringParser, null);
-            this.PRT_Steps = new PinpadFixedLengthProperty<Nullable<int>>("PRT_Steps",
-                4, true,
+            this.PRT_Steps = new PinpadFixedLengthProperty<Nullable<int>>(
+                "PRT_Steps", 4, true,
                 DefaultStringFormatter.IntegerStringFormatter,
                 DefaultStringParser.IntegerStringParser);
             this.PRT_Horizontal = new PinpadFixedLengthProperty<Nullable<int>>(
-                "PRT_Horizontal", 4, true,
+                "PRT_Horizontal", 1, true,
                 DefaultStringFormatter.IntegerStringFormatter,
                 DefaultStringParser.IntegerStringParser);
 

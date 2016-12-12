@@ -254,9 +254,8 @@ namespace Pinpad.Sdk.Test
             PinpadConnection conn = PinpadConnection.GetFirst();
             PinpadFacade facade = new PinpadFacade(conn);
 
-            string logo = PrinterLogo.BmpFile;
-
             facade.Printer.AddLogo()
+                          .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Big, "Testando {0}", "Ceres")
                           .Print();
         }
     }

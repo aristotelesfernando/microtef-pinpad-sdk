@@ -7,15 +7,15 @@ namespace Pinpad.Sdk.Commands.Request
     {
         public override string CommandName { get { return "LFR"; } }
         public RegionProperty CMD_LEN1 { get; private set; }
-        public VariableLengthCollectionProperty<HexadecimalData> LFR_Data { get; private set; }
+        public VariableLengthProperty<string> LFR_Data { get; private set; }
 
         public LfrRequest()
         {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
-            this.LFR_Data = new VariableLengthCollectionProperty<HexadecimalData>("LFR_Data", 
-                3, 1, 999, 
-                DefaultStringFormatter.HexadecimalStringFormatter,
-                LfrRequest.ImageStringParser);
+            this.LFR_Data = new VariableLengthProperty<string>(
+                "LFR_Data", 3, 999, 0.5f, false, false, 
+                DefaultStringFormatter.StringStringFormatter,
+                DefaultStringParser.StringStringParser);
 
             this.StartRegion(this.CMD_LEN1);
             {

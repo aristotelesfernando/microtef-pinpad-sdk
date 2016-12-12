@@ -22,6 +22,13 @@ namespace Pinpad.Sdk.Pinpad
 
         public IPinpadPrinter AddLogo ()
         {
+            // If image does not exist in pinpad memory:
+            if (this.VerifyIfLogoExists() == false)
+            {
+                // Loads the image into the memory:
+                this.ReloadImage();
+            }
+
             PrinterItem newQrCode = new PrinterItem
             {
                 Type = IngenicoPrinterAction.PrintImage
@@ -111,7 +118,7 @@ namespace Pinpad.Sdk.Pinpad
                     return this.CreateRequestToStartPrinting();
 
                 case IngenicoPrinterAction.PrintImage:
-                    return this.CreateRequestToPrintImage(item);
+                    return this.CreateRequestToPrintLogo(item);
 
                 case IngenicoPrinterAction.PrintQrCode:
                     return this.CreateRequestToPrintQrCode(item);
@@ -139,7 +146,7 @@ namespace Pinpad.Sdk.Pinpad
 
             return startRequest;
         }
-        private PrtRequest CreateRequestToPrintImage(PrinterItem item)
+        private PrtRequest CreateRequestToPrintLogo(PrinterItem item)
         {
             PrtRequest printImageRequest = new PrtRequest();
 
@@ -147,14 +154,7 @@ namespace Pinpad.Sdk.Pinpad
             printImageRequest.PRT_Action.Value = IngenicoPrinterAction.PrintImage;
             printImageRequest.PRT_Horizontal.Value = 1;
             printImageRequest.PRT_DATA.Value = PrinterLogo.FileName;
-
-            // If image does not exist in pinpad memory:
-            if (this.VerifyIfLogoExists() == true)
-            {
-                // Loads the image into the memory:
-                this.ReloadImage();
-            }
-
+            
             return printImageRequest;
         }
         private PrtRequest CreateRequestToPrintQrCode(PrinterItem item)
@@ -239,7 +239,7 @@ namespace Pinpad.Sdk.Pinpad
             foreach (string imageLine in imageLines)
             {
                 LfrRequest lfr = new LfrRequest();
-                lfr.LFR_Data.Value.Add(new HexadecimalData(imageLine));
+                lfr.LFR_Data.Value = imageLine;
                 status = this.Communication.SendRequestAndVerifyResponseCode(lfr);
             }
 

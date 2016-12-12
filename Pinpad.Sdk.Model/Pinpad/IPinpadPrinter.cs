@@ -1,5 +1,6 @@
 ﻿namespace Pinpad.Sdk.Model
 {
+    // TODO: Doc
     public interface IPinpadPrinter
     {
         IPinpadPrinter AddLogo();

@@ -8,7 +8,7 @@
         /// <summary>
         /// Logo file name to be stored into pinpad memory.
         /// </summary>
-        public const string FileName = "stone.bmp";
+        public const string FileName = "STONE.BMP";
         /// <summary>
         /// Ingenico logotype in monochromatic BMP.
         /// </summary>
