@@ -5,18 +5,48 @@ using System;
 
 namespace Pinpad.Sdk.Commands.Request
 {
-    // TODO: Documentar.
+    /// <summary>
+    /// Print something through pinpad thermal printer.
+    /// </summary>
     internal sealed class PrtRequest : BaseCommand
     {
+        /// <summary>
+        /// Command name, PRT in this case.
+        /// </summary>
         public override string CommandName { get { return "PRT"; } }
+        /// <summary>
+        /// ommand length, excluding itself.
+        /// </summary>
         public RegionProperty CMD_LEN1 { get; private set; }
+        /// <summary>
+        /// Type of data to print.
+        /// </summary>
         public PinpadFixedLengthProperty<IngenicoPrinterAction> PRT_Action { get; private set; }
+        /// <summary>
+        /// Size of the font or QR code.
+        /// </summary>
         public PinpadFixedLengthProperty<PrinterFontSize> PRT_Size { get; private set; }
+        /// <summary>
+        /// Text alignment on receipt.
+        /// </summary>
         public PinpadFixedLengthProperty<PrinterAlignmentCode> PRT_Alignment { get; private set; }
+        /// <summary>
+        /// Data to print (text or image).
+        /// </summary>
         public VariableLengthProperty<string> PRT_DATA { get; private set; }
+        /// <summary>
+        /// Steps to skip.
+        /// </summary>
         public PinpadFixedLengthProperty<Nullable<int>> PRT_Steps { get; private set; }
+        /// <summary>
+        /// Padding to be added at the left side of an image or QR code.
+        /// Could be used to align the image or QR code.
+        /// </summary>
         public PinpadFixedLengthProperty<Nullable<int>> PRT_Horizontal { get; private set; }
 
+        /// <summary>
+        /// Creates a PRT request and it's properties.
+        /// </summary>
         public PrtRequest()
         {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN", 3);

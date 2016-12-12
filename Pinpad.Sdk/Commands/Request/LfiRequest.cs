@@ -2,13 +2,28 @@
 
 namespace Pinpad.Sdk.Commands.Request
 {
-    // TODO: Documentar.
+    /// <summary>
+    /// LFI - Load File Initialization.
+    /// Initialize loading a file into pinpad memory.
+    /// </summary>
     internal sealed class LfiRequest : BaseCommand
     {
+        /// <summary>
+        /// Command name, LFI in this case.
+        /// </summary>
         public override string CommandName { get { return "LFI"; } }
+        /// <summary>
+        /// Command length, excluding itself.
+        /// </summary>
         public RegionProperty CMD_LEN1 { get; private set; }
+        /// <summary>
+        /// File to be put into pinpad memory.
+        /// </summary>
         public VariableLengthProperty<string> LFI_FILENAME { get; private set; }
-        
+
+        /// <summary>
+        /// Creates a LFI request and it's properties.
+        /// </summary>
         public LfiRequest()
         {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);

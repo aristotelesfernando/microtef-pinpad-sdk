@@ -2,12 +2,25 @@
 
 namespace Pinpad.Sdk.Commands.Request
 {
-    // TODO: Documentar.
+    /// <summary>
+    /// LFE - Load File Ends.
+    /// Ends loading a file, that was already initialized with <see cref="LfiRequest"/>
+    /// and loaded with <see cref="LfrRequest"/>.
+    /// </summary>
     internal sealed class LfeRequest : BaseCommand
     {
+        /// <summary>
+        /// Command name, LFE in this case.
+        /// </summary>
         public override string CommandName { get { return "LFE"; } }
+        /// <summary>
+        /// Command length, excluding itself.
+        /// </summary>
         public RegionProperty CMD_LEN1 { get; set; }
 
+        /// <summary>
+        /// Creates a LFE request.
+        /// </summary>
         public LfeRequest()
         {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);

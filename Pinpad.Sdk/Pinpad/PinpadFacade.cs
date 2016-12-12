@@ -1,14 +1,13 @@
-﻿using System;
-using MicroPos.CrossPlatform;
+﻿using MicroPos.CrossPlatform;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Pinpad;
 
 namespace Pinpad.Sdk
 {
-	/// <summary>
-	/// Contains the access to each pinpad component, i. e. keyboard, display, terminal information and so forth.
-	/// </summary>
-	public class PinpadFacade : IPinpadFacade
+    /// <summary>
+    /// Contains the access to each pinpad component, i. e. keyboard, display, terminal information and so forth.
+    /// </summary>
+    public class PinpadFacade : IPinpadFacade
 	{
 		/// <summary>
 		/// Controller for Stone Connection adapter.
@@ -53,9 +52,10 @@ namespace Pinpad.Sdk
 		/// Gets the default Infos adapter
 		/// </summary>
 		public IPinpadInfos Infos { get; internal set; }
-        // TODO: Documentar.
+        /// <summary>
+        /// Adapter for pinpad thermal printer.
+        /// </summary>
         public IPinpadPrinter Printer { get; internal set; }
-
 
         /// <summary>
         /// Creates all pinpad adapters.

@@ -8,6 +8,7 @@ using Pinpad.Sdk.Model;
 using System;
 using Pinpad.Sdk.Test.Mockings;
 using Pinpad.Sdk.Pinpad;
+using Pinpad.Sdk.Commands.DataSet;
 
 namespace Pinpad.Sdk.Test
 {
@@ -252,6 +253,8 @@ namespace Pinpad.Sdk.Test
         {
             PinpadConnection conn = PinpadConnection.GetFirst();
             PinpadFacade facade = new PinpadFacade(conn);
+
+            string logo = PrinterLogo.BmpFile;
 
             facade.Printer.AddLogo()
                           .Print();

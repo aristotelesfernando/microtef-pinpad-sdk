@@ -1,15 +1,28 @@
 ﻿using Pinpad.Sdk.Properties;
-using System;
 
 namespace Pinpad.Sdk.Commands.Request
 {
-    // TODO: Documentar.
+    /// <summary>
+    /// Request to verify if a specific file exists in pinpad memory.
+    /// </summary>
     internal sealed class LfcRequest : BaseCommand
     {
+        /// <summary>
+        /// Command name, LFC in this case.
+        /// </summary>
         public override string CommandName { get { return "LFC"; } }
+        /// <summary>
+        /// Command length, excluding itself.
+        /// </summary>
         public RegionProperty CMD_LEN1 { get; private set; }
+        /// <summary>
+        /// Name of the file to be verified.
+        /// </summary>
         public VariableLengthProperty<string> LFC_FILENAME { get; private set; }
 
+        /// <summary>
+        /// Creates a LFC request and it's properties.
+        /// </summary>
         public LfcRequest()
         {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);

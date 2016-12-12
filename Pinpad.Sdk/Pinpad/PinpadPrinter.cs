@@ -234,7 +234,7 @@ namespace Pinpad.Sdk.Pinpad
             status = this.Communication.SendRequestAndVerifyResponseCode(request);
 
             // Reload image into pinpad memory:
-            string[] imageLines = PrinterLogo.Ingenico.Split('-');
+            string[] imageLines = PrinterLogo.BmpFile.Split('-');
 
             foreach (string imageLine in imageLines)
             {
