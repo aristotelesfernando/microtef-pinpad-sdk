@@ -19,6 +19,7 @@ PinpadTransaction | Utilizar a PinpadCommunication para performar os comandos ne
 IPinpadKeyboard | Dar acesso ao teclado do pinpad. | Ler uma tecla de controle, ler um input (apenas MobiPin10).
 IPinpadDisplay | Dar acesso ao display do pinpad. | Mostrar uma frase na tela do pinpad.
 IPinpadInfos | Dar acesso às informações do pinpad. | Retornar todas as informações relativas ao pinpad e à fabricante do pinpad.
+IPinpadPrinter | Dar acessa à impressora do pinpad. | :warning: _Atualmente, só está implementado para o pinpad iWL250 da Ingenico._ Através dessa propriedade, é possível imprimir a **logo da Stone, textos, QR codes e espaços em branco**.   
 
 ### Contextos
 
@@ -127,6 +128,34 @@ short timeOut = 120;
 string telephoneNumber = facade.Keyboard.GetNumericInput(FirstLineLabelCode.Type, SecondLineLabelCode.TelephoneNumber,
     minimumDigits, maxDigits, timeOut);
 ```
+
+### Imprimir alguma coisa
+
+```
+facade.Printer
+      .AddLogo()
+      .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Small, "Credenciadora Banco Pan")
+      .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Small, "Via Estabelecimento")
+      .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Medium, "MASTERCARD - DEBITO A VISTA")
+      .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Medium, "523463******6251")
+      .AddSeparator()
+      .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Medium, "MICROTEF TESTE")
+      .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Small, "CNPJ: 12.345.678/0001-90")
+      .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Small, "AID: A0000000001234 - ARQC: 12345678901234567")
+      .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Small, facade.Infos.SerialNumber)
+      .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Small, "StoneId: 1234567890123456")
+      .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Medium, "12/12/2016 16:19")
+      .AddSeparator()
+      .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Medium, "CARVALHO/CERES R")
+      .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Big, "Valor: R$ 10,00")
+      .AppendLine()
+      .AddQrCode(PrinterAlignmentCode.Center, "1234567890123456")
+      .Print();
+```
+
+A impressão abaixo irá imprimir:
+
+![Exemplo de recibo](Images/microtef-recipt-example.jpg)
 
 # Dúvidas? :octopus:
 
