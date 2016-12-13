@@ -33,8 +33,15 @@
         /// <returns>Itself.</returns>
         IPinpadPrinter AppendLine(PrinterAlignmentCode alignment,
             PrinterFontSize fontSize, string text, params object[] args);
+        /// <summary>
+        /// Append an empty line.
+        /// </summary>
+        /// <returns>Itself.</returns>
         IPinpadPrinter AppendLine();
-        // TODO: Doc
+        /// <summary>
+        /// Add line separator.
+        /// </summary>
+        /// <returns>Itself.</returns>
         IPinpadPrinter AddSeparator();
         /// <summary>
         /// Print all content in printer buffer.

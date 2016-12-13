@@ -4,7 +4,6 @@ using Pinpad.Sdk.Commands.DataSet;
 using Pinpad.Sdk.Commands.Request;
 using Pinpad.Sdk.Commands.TypeCode;
 using Pinpad.Sdk.Commands.Response;
-using System;
 
 namespace Pinpad.Sdk.Pinpad
 {
@@ -12,7 +11,7 @@ namespace Pinpad.Sdk.Pinpad
     /// Responsible for representate pinpad thermal printer.
     /// Only available for Ingenico iWL250 pinpad.
     /// </summary>
-    public sealed class PinpadPrinter : IPinpadPrinter
+    public sealed class IngenicoPinpadPrinter : IPinpadPrinter
     {
         /// <summary>
         /// Indicates wether the thermal printer is supported or not.
@@ -34,6 +33,9 @@ namespace Pinpad.Sdk.Pinpad
         /// Responsible for logical communication with pinpad.
         /// </summary>
         private PinpadCommunication Communication { get; set; }
+        /// <summary>
+        /// Information about the pinpad connected.
+        /// </summary>
         private IPinpadInfos PinpadInformation { get; set; }
         /// <summary>
         /// Printer buffer.
@@ -41,11 +43,11 @@ namespace Pinpad.Sdk.Pinpad
         private Collection<PrinterItem> ItemsToPrint { get; set; }
         
         /// <summary>
-        /// Creates an instance of <see cref="PinpadPrinter"/> with all it's properties.
+        /// Creates an instance of <see cref="IngenicoPinpadPrinter"/> with all it's properties.
         /// </summary>
         /// <param name="communication">Pinpad communication service.</param>
         /// <param name="infos">Real time pinpad information.</param>
-        public PinpadPrinter(PinpadCommunication communication, IPinpadInfos infos)
+        public IngenicoPinpadPrinter(PinpadCommunication communication, IPinpadInfos infos)
         {
             this.Communication = communication;
             this.PinpadInformation = infos;
@@ -117,7 +119,10 @@ namespace Pinpad.Sdk.Pinpad
 
             return this;
         }
-        // TODO: Doc
+        /// <summary>
+        /// Append an empty line.
+        /// </summary>
+        /// <returns>Itself.</returns>
         public IPinpadPrinter AppendLine()
         {
             this.ItemsToPrint.Add(new PrinterItem
@@ -128,6 +133,10 @@ namespace Pinpad.Sdk.Pinpad
 
             return this;
         }
+        /// <summary>
+        /// Add line separator.
+        /// </summary>
+        /// <returns>Itself.</returns>
         public IPinpadPrinter AddSeparator()
         {
             return this.AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Big, 
@@ -366,7 +375,5 @@ namespace Pinpad.Sdk.Pinpad
             // Finish sending image:
             status = this.Communication.SendRequestAndVerifyResponseCode(new LfeRequest());
         }
-
-        
     }
 }

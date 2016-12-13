@@ -29,7 +29,7 @@ namespace Pinpad.Sdk
 				this.Display = new PinpadDisplay(this.Communication);
                 this.Keyboard = new PinpadKeyboard(this.Communication, this.Infos, this.Display);
                 this.TransactionService = new PinpadTransaction(this.Communication);
-                this.Printer = new PinpadPrinter(this.Communication, this.Infos);
+                this.Printer = new IngenicoPinpadPrinter(this.Communication, this.Infos);
 			}
 		}
 		/// <summary>
