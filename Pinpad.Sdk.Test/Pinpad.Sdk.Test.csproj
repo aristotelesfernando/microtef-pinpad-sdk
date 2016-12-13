@@ -92,10 +92,12 @@
     <Compile Include="Mapper\EmvTrackMapperTest.cs" />
     <Compile Include="Mockings\MockedBaseTableEntry.cs" />
     <Compile Include="Mockings\CardBrandMocker.cs" />
-    <Compile Include="Mockings\MockedPInpadCommunication.cs" />
+    <Compile Include="Mockings\MockedPinpadCommunication.cs" />
     <Compile Include="Mockings\MockedPinpadConnection.cs" />
     <Compile Include="Mockings\MockedPinpadFacade.cs" />
+    <Compile Include="Mockings\MockedPinpadInfos.cs" />
     <Compile Include="NotAutomaticTests.cs" />
+    <Compile Include="Printer\IngenicoPinpadPrinterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transaction\MagneticStripePinReaderTest.cs" />
     <Compile Include="Transaction\PinReaderTest.cs" />

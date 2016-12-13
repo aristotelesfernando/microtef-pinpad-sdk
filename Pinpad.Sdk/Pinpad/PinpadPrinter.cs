@@ -40,7 +40,7 @@ namespace Pinpad.Sdk.Pinpad
         /// <summary>
         /// Printer buffer.
         /// </summary>
-        private Collection<PrinterItem> ItemsToPrint { get; set; }
+        internal Collection<PrinterItem> ItemsToPrint { get; private set; }
         
         /// <summary>
         /// Creates an instance of <see cref="IngenicoPinpadPrinter"/> with all it's properties.

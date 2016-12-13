@@ -152,7 +152,7 @@ namespace Pinpad.Sdk.Test
 
 			Assert.IsTrue(true);
 		}
-		[TestMethod]
+		//[TestMethod]
 		public void OnePinpadFind_test ()
 		{
 			for (int i = 0; i < 5; i++)
@@ -235,7 +235,7 @@ namespace Pinpad.Sdk.Test
             Assert.IsNotNull(card);
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void PrintText_test()
         {
             PinpadConnection conn = PinpadConnection.GetFirst();
@@ -260,7 +260,7 @@ namespace Pinpad.Sdk.Test
                           .AddQrCode(PrinterAlignmentCode.Center, "1234567890123456")
                           .Print();
         }
-        [TestMethod]
+        //[TestMethod]
         public void PrintImage_test()
         {
             PinpadConnection conn = PinpadConnection.GetFirst();
