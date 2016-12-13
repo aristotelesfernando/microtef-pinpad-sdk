@@ -98,6 +98,7 @@
     <Compile Include="Mockings\MockedPinpadInfos.cs" />
     <Compile Include="NotAutomaticTests.cs" />
     <Compile Include="Printer\IngenicoPinpadPrinterTest.cs" />
+    <Compile Include="Printer\PrinterItemTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transaction\MagneticStripePinReaderTest.cs" />
     <Compile Include="Transaction\PinReaderTest.cs" />
