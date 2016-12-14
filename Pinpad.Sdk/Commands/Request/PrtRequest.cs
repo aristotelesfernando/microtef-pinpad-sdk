@@ -1,4 +1,5 @@
-﻿using Pinpad.Sdk.Commands.TypeCode;
+﻿using Pinpad.Sdk.Commands.Context;
+using Pinpad.Sdk.Commands.TypeCode;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Properties;
 using System;
@@ -48,6 +49,7 @@ namespace Pinpad.Sdk.Commands.Request
         /// Creates a PRT request and it's properties.
         /// </summary>
         public PrtRequest()
+            : base(new IngenicoContext())
         {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN", 3);
             this.PRT_Action = new PinpadFixedLengthProperty<IngenicoPrinterAction>(

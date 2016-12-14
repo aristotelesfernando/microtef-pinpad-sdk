@@ -15,10 +15,10 @@ namespace Pinpad.Sdk.Test
     [TestClass]
 	public class NotAutomaticTests
 	{
-		[TestInitialize]
+		//[TestInitialize]
 		public void Setup ()
 		{
-			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
+			//MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
 		}
 		//[TestMethod]
 		public void GCD_test ()
@@ -234,7 +234,6 @@ namespace Pinpad.Sdk.Test
 
             Assert.IsNotNull(card);
         }
-
         //[TestMethod]
         public void PrintText_test()
         {

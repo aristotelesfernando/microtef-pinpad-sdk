@@ -1,4 +1,5 @@
-﻿using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.Commands.Context;
+using Pinpad.Sdk.Properties;
 
 namespace Pinpad.Sdk.Commands.Request
 {
@@ -25,6 +26,7 @@ namespace Pinpad.Sdk.Commands.Request
         /// Creates a LFI request and it's properties.
         /// </summary>
         public LfiRequest()
+            : base (new IngenicoContext())
         {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
             this.LFI_FILENAME = new VariableLengthProperty<string>("LFI_FILENAME", 3,

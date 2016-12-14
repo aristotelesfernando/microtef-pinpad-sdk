@@ -1,9 +1,11 @@
-﻿using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.Commands.Context;
+using Pinpad.Sdk.Properties;
 
 namespace Pinpad.Sdk.Commands.Request
 {
     /// <summary>
-    /// Request to verify if a specific file exists in pinpad memory.
+    /// Request to verify whether a file exists on pinpad memory or not.
+    /// Currenty supported by Ingenico pinpads only.
     /// </summary>
     internal sealed class LfcRequest : BaseCommand
     {
@@ -24,6 +26,7 @@ namespace Pinpad.Sdk.Commands.Request
         /// Creates a LFC request and it's properties.
         /// </summary>
         public LfcRequest()
+            : base(new IngenicoContext())
         {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
             this.LFC_FILENAME = new VariableLengthProperty<string>("LFC_FILENAME", 3,

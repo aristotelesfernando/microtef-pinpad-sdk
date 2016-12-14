@@ -1,4 +1,5 @@
-﻿using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.Commands.Context;
+using Pinpad.Sdk.Properties;
 
 namespace Pinpad.Sdk.Commands.Request
 {
@@ -22,6 +23,7 @@ namespace Pinpad.Sdk.Commands.Request
         /// Creates a LFE request.
         /// </summary>
         public LfeRequest()
+            : base (new IngenicoContext())
         {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
         }
