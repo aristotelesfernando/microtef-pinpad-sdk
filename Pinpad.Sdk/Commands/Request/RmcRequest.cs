@@ -5,7 +5,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// Remove Card Request
 	/// </summary>
-	internal class RmcRequest : BaseCommand 
+	internal sealed class RmcRequest : BaseCommand 
 	{
 		/// <summary>
 		/// Constructor

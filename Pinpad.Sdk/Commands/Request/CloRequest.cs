@@ -5,7 +5,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// CLO request
 	/// </summary>
-	internal class CloRequest : BaseCommand
+	internal sealed class CloRequest : BaseCommand
 	{
 		/// <summary>
 		/// Constructor

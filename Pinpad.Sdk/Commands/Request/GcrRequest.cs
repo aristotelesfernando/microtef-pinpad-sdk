@@ -5,7 +5,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// GCR request
 	/// </summary>
-	internal class GcrRequest : BaseCommand 
+	internal sealed class GcrRequest : BaseCommand 
 	{
 		/// <summary>
 		/// Constructor

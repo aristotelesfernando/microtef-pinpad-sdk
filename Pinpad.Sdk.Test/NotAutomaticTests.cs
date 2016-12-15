@@ -6,15 +6,16 @@ using System.Diagnostics;
 using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Model;
 using System;
-using System.Globalization;
 using Pinpad.Sdk.Test.Mockings;
+using Pinpad.Sdk.Pinpad;
+using Pinpad.Sdk.Commands.DataSet;
 
 namespace Pinpad.Sdk.Test
 {
-	[TestClass]
+    [TestClass]
 	public class NotAutomaticTests
 	{
-		[TestInitialize]
+		//[TestInitialize]
 		public void Setup ()
 		{
 			//MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
@@ -232,6 +233,41 @@ namespace Pinpad.Sdk.Test
             facade.TransactionService.ReadPassword(0.1m, card.PrimaryAccountNumber, CardType.Emv);
 
             Assert.IsNotNull(card);
+        }
+        //[TestMethod]
+        public void PrintText_test()
+        {
+            PinpadConnection conn = PinpadConnection.GetFirst();
+            PinpadFacade facade = new PinpadFacade(conn);
+
+            facade.Printer.AddLogo()
+                          .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Small, "Credenciadora Banco Pan")
+                          .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Small, "Via Estabelecimento")
+                          .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Medium, "MASTERCARD - DEBITO A VISTA")
+                          .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Medium, "525663******6251")
+                          .AddSeparator()
+                          .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Medium, "MICROTEF TESTE")
+                          .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Small, "CNPJ: 12.345.678/0001-90")
+                          .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Small, "AID: A0000000001234 - ARQC: 12345678901234567")
+                          .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Small, facade.Infos.SerialNumber)
+                          .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Small, "StoneId: 1234567890123456")
+                          .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Medium, "12/12/2016 16:19")
+                          .AddSeparator()
+                          .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Medium, "CARVALHO/CERES R")
+                          .AppendLine(PrinterAlignmentCode.Left, PrinterFontSize.Big, "Valor: R$ 10,00")
+                          .AppendLine()
+                          .AddQrCode(PrinterAlignmentCode.Center, "1234567890123456")
+                          .Print();
+        }
+        //[TestMethod]
+        public void PrintImage_test()
+        {
+            PinpadConnection conn = PinpadConnection.GetFirst();
+            PinpadFacade facade = new PinpadFacade(conn);
+
+            facade.Printer.AddLogo()
+                          .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Big, "Testando {0}", "Ceres")
+                          .Print();
         }
     }
 }

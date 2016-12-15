@@ -6,7 +6,7 @@ namespace Pinpad.Sdk.Commands
     /// <summary>
     /// GIN request
     /// </summary>
-    internal class GinRequest : BaseCommand 
+    internal sealed class GinRequest : BaseCommand 
 	{
 		// Members
 		/// <summary>
