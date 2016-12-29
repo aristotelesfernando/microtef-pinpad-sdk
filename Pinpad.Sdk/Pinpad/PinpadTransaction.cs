@@ -103,8 +103,8 @@ namespace Pinpad.Sdk
 			if (status == AbecsResponseStatus.ST_TABVERDIF ||
 				status == AbecsResponseStatus.ST_CARDAPPNAV)
 			{
-				// TODO: FAZER UM TRATAMENTO DESCENTE
-				return null;
+                // TODO: FAZER UM TRATAMENTO DESCENTE
+                return null;
 			}
 			else if (status == AbecsResponseStatus.ST_TIMEOUT && this.pinpadCommunication.OpenPinpadConnection() == false)
 			{
