@@ -332,6 +332,9 @@ namespace Pinpad.Sdk.Pinpad
         /// <returns>Return if the image exist or not.</returns>
         private bool VerifyIfLogoExists()
         {
+            // Verify if pinpad is supported:
+            if (this.IsSupported == false) { return true; }
+
             // Verify if image exists in pinpad memory!
 
             // Setup LFC request:
