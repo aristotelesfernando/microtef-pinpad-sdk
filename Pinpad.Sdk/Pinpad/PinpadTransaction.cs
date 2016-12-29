@@ -103,8 +103,7 @@ namespace Pinpad.Sdk
 			if (status == AbecsResponseStatus.ST_TABVERDIF ||
 				status == AbecsResponseStatus.ST_CARDAPPNAV)
 			{
-                // TODO: Forçar carga de tabelas!
-                this.LastCommandStatus = ResponseStatus.InvalidEmvApplication;
+                // TODO: FAZER UM TRATAMENTO DESCENTE
                 return null;
 			}
 			else if (status == AbecsResponseStatus.ST_TIMEOUT && this.pinpadCommunication.OpenPinpadConnection() == false)
