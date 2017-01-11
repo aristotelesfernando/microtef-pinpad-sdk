@@ -21,6 +21,7 @@ namespace Pinpad.Sdk.Test
 		{
 			//MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
 		}
+
 		//[TestMethod]
 		public void GCD_test ()
 		{

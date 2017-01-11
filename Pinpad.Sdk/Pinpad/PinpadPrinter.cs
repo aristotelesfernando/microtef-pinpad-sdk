@@ -111,7 +111,7 @@ namespace Pinpad.Sdk.Pinpad
             PrinterItem newLine = new PrinterItem
             {
                 Type = IngenicoPrinterAction.PrintText,
-                Text = string.Format(text, args),
+                Text = this.GetNormalizedText(string.Format(text, args)),
                 Alignment = alignment,
                 FontSize = fontSize
             };
@@ -119,6 +119,7 @@ namespace Pinpad.Sdk.Pinpad
 
             return this;
         }
+
         /// <summary>
         /// Append an empty line.
         /// </summary>
@@ -326,6 +327,17 @@ namespace Pinpad.Sdk.Pinpad
             return skipLineRequest;
         }
 
+        /// <summary>
+        /// Remove special characters and replace them with their equivalent.
+        /// </summary>
+        /// <param name="textToNormalize">Text to be normalized.</param>
+        /// <returns>The normalized equivalent text.</returns>
+        private string GetNormalizedText(string textToNormalize)
+        {
+            // Remove special characters with their equivalent:
+            byte[] bytes = System.Text.Encoding.GetEncoding("iso-8859-8").GetBytes(textToNormalize);
+            return System.Text.Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+        }
         /// <summary>
         /// Verify if Stone logo exist in pinpad memory.
         /// </summary>
