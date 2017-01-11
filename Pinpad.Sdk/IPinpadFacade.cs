@@ -1,4 +1,5 @@
 ﻿using Pinpad.Sdk.Model;
+
 namespace Pinpad.Sdk
 {
 	/// <summary>
@@ -26,6 +27,9 @@ namespace Pinpad.Sdk
 		/// Gets the default Infos adapter
 		/// </summary>
 		IPinpadInfos Infos { get; }
+        /// <summary>
+        /// Gets the default pinpad printer adapter.
+        /// </summary>
         IPinpadPrinter Printer { get; }
 	}
 }

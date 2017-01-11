@@ -56,6 +56,10 @@
       <HintPath>..\packages\MicroPos.CrossPlatform.1.4.0\lib\portable40-net45+sl5+win8+wp8+wpa81\MicroPos.CrossPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MicroPos.Platform.Desktop, Version=2.5.9.0, Culture=neutral, PublicKeyToken=38ae2303208e40c0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\micropos-platform-desktop\MicroPos.Platform.Desktop\bin\Release\MicroPos.Platform.Desktop.dll</HintPath>
+    </Reference>
     <Reference Include="Moq, Version=4.5.23.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.5.23\lib\net45\Moq.dll</HintPath>
       <Private>True</Private>
@@ -123,7 +127,6 @@
       <Name>Pinpad.Sdk</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

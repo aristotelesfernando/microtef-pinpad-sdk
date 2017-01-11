@@ -147,7 +147,6 @@
     <Compile Include="Transaction\PinReader.cs" />
     <Compile Include="Commands\DataSet\ApplicationType.cs" />
     <Compile Include="Commands\DataSet\ContactlessMode.cs" />
-    <Compile Include="Commands\DataSet\CryptographyMode.cs" />
     <Compile Include="Commands\DataSet\FallbackStatus.cs" />
     <Compile Include="Commands\DataSet\GkeActionCode.cs" />
     <Compile Include="Commands\DataSet\InterchangeType.cs" />

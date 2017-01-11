@@ -5,6 +5,7 @@ using System.Globalization;
 using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Transaction;
 using Pinpad.Sdk.Exceptions;
+using Pinpad.Sdk.Model.TypeCode;
 
 namespace Pinpad.Sdk
 {
@@ -109,7 +110,8 @@ namespace Pinpad.Sdk
             request.GOC_CASHBACK.Value = 0;
             request.GOC_EXCLIST.Value = false;
             request.GOC_CONNECT.Value = true;
-            request.GOC_METHOD.Value = new CryptographyMethod(KeyManagementMode.DerivedUniqueKeyPerTransaction, CryptographyMode.TripleDataEncryptionStandard);
+            request.GOC_METHOD.Value = new CryptographyMethod(KeyManagementMode.DerivedUniqueKeyPerTransaction, 
+                CryptographyMode.TripleDataEncryptionStandard);
             request.GOC_KEYIDX.Value = (int)StoneIndexCode.EncryptionKey;
             request.GOC_WKENC.Value = new HexadecimalData("00000000000000000000000000000000");
             request.GOC_RISKMAN.Value = false;

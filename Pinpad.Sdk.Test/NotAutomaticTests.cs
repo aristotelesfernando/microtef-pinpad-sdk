@@ -9,16 +9,17 @@ using System;
 using Pinpad.Sdk.Test.Mockings;
 using Pinpad.Sdk.Pinpad;
 using Pinpad.Sdk.Commands.DataSet;
+using Pinpad.Sdk.Model.TypeCode;
 
 namespace Pinpad.Sdk.Test
 {
     [TestClass]
 	public class NotAutomaticTests
 	{
-		//[TestInitialize]
+		[TestInitialize]
 		public void Setup ()
 		{
-			//MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
+			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
 		}
 		//[TestMethod]
 		public void GCD_test ()
@@ -268,6 +269,23 @@ namespace Pinpad.Sdk.Test
             facade.Printer.AddLogo()
                           .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Big, "Testando {0}", "Ceres")
                           .Print();
+        }
+        [TestMethod]
+        public void PinpadInfo_GetDukptSerialNumber_test()
+        {
+            PinpadConnection conn = PinpadConnection.GetFirst();
+            PinpadFacade facade = new PinpadFacade(conn);
+
+            for (int i = 1; i <= 21; i++)
+            {
+                Debug.WriteLine("{0} |  DES | {1}", i, facade.Infos
+                    .GetDukptSerialNumber(i, 
+                    CryptographyMode.DataEncryptionStandard));
+                Debug.WriteLine("{0} | 3DES | {1}", i, facade.Infos
+                    .GetDukptSerialNumber(i, 
+                    CryptographyMode.TripleDataEncryptionStandard));
+            }
+            ;
         }
     }
 }

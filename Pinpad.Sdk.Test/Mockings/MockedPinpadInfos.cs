@@ -1,5 +1,6 @@
 ﻿using System;
 using Pinpad.Sdk.Model;
+using Pinpad.Sdk.Model.TypeCode;
 
 namespace Pinpad.Sdk.Test.Mockings
 {
@@ -60,6 +61,10 @@ namespace Pinpad.Sdk.Test.Mockings
             {
                 return "123.568.44";
             }
+        }
+        public string GetDukptSerialNumber(int indexToSearch, CryptographyMode cryptographyMode)
+        {
+            return "mocked KSN";
         }
     }
 }

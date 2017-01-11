@@ -1,5 +1,7 @@
-﻿using Pinpad.Sdk.Commands;
+﻿using System;
+using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Model;
+using Pinpad.Sdk.Model.TypeCode;
 using Pinpad.Sdk.Properties;
 
 namespace Pinpad.Sdk 
@@ -150,11 +152,39 @@ namespace Pinpad.Sdk
 		{
 			this.communication = communication;
 		}
-        
-		// Public Methods
-		/// <summary>
-		/// Update pinpad informations.
-		/// </summary>
+
+        // Public Methods
+        /// <summary>
+        /// Obtains the current KSN (Key Serial Number) of an index in the table.
+        /// </summary>
+        /// <param name="indexToSearch">KSN index.</param>
+        /// <param name="cryptographyMode">Cryptography method.</param>
+        /// <returns>The obtained KSN, or null if the KSN was not found.</returns>
+        public string GetDukptSerialNumber(int indexToSearch, CryptographyMode cryptographyMode)
+        {
+            // Setup request:
+            GduRequest request = new GduRequest();
+            request.GDU_IDX.Value = indexToSearch;
+            request.GDU_METHOD.Value = new CryptographyMethod(KeyManagementMode.DerivedUniqueKeyPerTransaction,
+                cryptographyMode);
+
+            // Send request to the pinpad:
+            GduResponse response = this.communication
+                .SendRequestAndReceiveResponse<GduResponse>(request);
+
+            // Verify if the command was successful:
+            if (response != null && response.RSP_STAT.Value == AbecsResponseStatus.ST_OK)
+            {
+                // Return KSN (if any):
+                return response.GDU_KSN.Value;
+            }
+
+            // Failure:
+            return null;
+        }
+        /// <summary>
+        /// Update pinpad informations.
+        /// </summary>
         public void Update ()
         {
             this._ginResponse = null;
@@ -200,5 +230,5 @@ namespace Pinpad.Sdk
 			// Sends the request to pinpad, gets and returns it's response:
 			return this.communication.SendRequestAndReceiveResponse<GduResponse>(request);
 		}
-	}
+    }
 }

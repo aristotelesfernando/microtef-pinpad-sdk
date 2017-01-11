@@ -5,13 +5,14 @@ using System;
 using System.Globalization;
 using Pinpad.Sdk.Utilities;
 using Pinpad.Sdk.Model.Utilities;
+using Pinpad.Sdk.Model.TypeCode;
 
 namespace Pinpad.Sdk
 {
-	/// <summary>
-	/// Pinpad keyboard tool
-	/// </summary>
-	public class PinpadKeyboard : IPinpadKeyboard
+    /// <summary>
+    /// Pinpad keyboard tool
+    /// </summary>
+    public class PinpadKeyboard : IPinpadKeyboard
 	{
         // Properties
         /// <summary>

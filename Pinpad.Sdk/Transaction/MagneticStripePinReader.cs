@@ -3,6 +3,7 @@ using System;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Transaction;
+using Pinpad.Sdk.Model.TypeCode;
 
 namespace Pinpad.Sdk
 {
@@ -76,7 +77,8 @@ namespace Pinpad.Sdk
 			GpnRequest request = new GpnRequest();
 
 			// Assembling GPN command.
-			request.GPN_METHOD.Value = new CryptographyMethod(KeyManagementMode.DerivedUniqueKeyPerTransaction, CryptographyMode.TripleDataEncryptionStandard);
+			request.GPN_METHOD.Value = new CryptographyMethod(KeyManagementMode.DerivedUniqueKeyPerTransaction, 
+                CryptographyMode.TripleDataEncryptionStandard);
 			request.GPN_KEYIDX.Value = (int)StoneIndexCode.EncryptionKey;
 			request.GPN_WKENC.Value = new HexadecimalData("");
 			request.GPN_PAN.Value = pan;

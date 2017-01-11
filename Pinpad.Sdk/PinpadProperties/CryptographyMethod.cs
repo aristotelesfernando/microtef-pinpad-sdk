@@ -1,5 +1,5 @@
 ﻿using Pinpad.Sdk.Commands;
-using Pinpad.Sdk.TypeCode;
+using Pinpad.Sdk.Model.TypeCode;
 using System;
 
 /* WARNING!

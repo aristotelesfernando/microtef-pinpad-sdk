@@ -1,4 +1,6 @@
-﻿namespace Pinpad.Sdk.Model
+﻿using Pinpad.Sdk.Model.TypeCode;
+
+namespace Pinpad.Sdk.Model
 {
 	/// <summary>
 	/// Pinpad informations.
@@ -37,5 +39,12 @@
 		/// If stone is supported on this pinpad. If this value is false, none financial operation can be performed.
 		/// </summary>
 		bool IsStoneSupported { get; }
+        /// <summary>
+        /// Obtains the current KSN (Key Serial Number) of an index in the table.
+        /// </summary>
+        /// <param name="indexToSearch">KSN index.</param>
+        /// <param name="cryptographyMode">Cryptography method.</param>
+        /// <returns>The obtained KSN, or null if the KSN was not found.</returns>
+        string GetDukptSerialNumber(int indexToSearch, CryptographyMode cryptographyMode);
 	}
 }

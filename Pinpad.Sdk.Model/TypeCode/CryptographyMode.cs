@@ -1,4 +1,4 @@
-﻿namespace Pinpad.Sdk.Commands
+﻿namespace Pinpad.Sdk.Model.TypeCode
 {
     /// <summary>
     /// Enumerator for cryptography methods
