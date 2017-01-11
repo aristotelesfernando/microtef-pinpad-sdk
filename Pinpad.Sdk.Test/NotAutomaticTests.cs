@@ -16,10 +16,10 @@ namespace Pinpad.Sdk.Test
     [TestClass]
 	public class NotAutomaticTests
 	{
-		[TestInitialize]
+		//[TestInitialize]
 		public void Setup ()
 		{
-			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
+			//MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
 		}
 		//[TestMethod]
 		public void GCD_test ()
@@ -270,7 +270,7 @@ namespace Pinpad.Sdk.Test
                           .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Big, "Testando {0}", "Ceres")
                           .Print();
         }
-        [TestMethod]
+        //[TestMethod]
         public void PinpadInfo_GetDukptSerialNumber_test()
         {
             PinpadConnection conn = PinpadConnection.GetFirst();
@@ -285,7 +285,6 @@ namespace Pinpad.Sdk.Test
                     .GetDukptSerialNumber(i, 
                     CryptographyMode.TripleDataEncryptionStandard));
             }
-            ;
         }
     }
 }
