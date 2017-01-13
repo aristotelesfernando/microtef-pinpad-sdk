@@ -15,10 +15,10 @@ namespace Pinpad.Sdk.Commands
 	/// </summary>
 	internal class GcrResponse : BaseResponse 
 	{
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public GcrResponse() 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public GcrResponse() 
 		{
 			this.RSP_LEN1 = new RegionProperty("RSP_LEN1", 3);
 			this.GCR_CARDTYPE = new PinpadFixedLengthProperty<ApplicationType>("GCR_CARDTYPE", 2, false, DefaultStringFormatter.EnumStringFormatter<ApplicationType>, DefaultStringParser.EnumStringParser<ApplicationType>);

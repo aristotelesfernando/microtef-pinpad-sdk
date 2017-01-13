@@ -56,7 +56,10 @@ namespace Pinpad.Sdk.Properties
 					}
 					catch (Exception ex)
 					{
-						throw new PropertyParseException(stringReader.Value, property.Name, stringReader.LastReadString, "Failed to parse \"" + stringReader.LastReadString + "\"", ex);
+                        if (property.IsOptional == false)
+                        {
+						    throw new PropertyParseException(stringReader.Value, property.Name, stringReader.LastReadString, "Failed to parse \"" + stringReader.LastReadString + "\"", ex);
+                        }
 					}
 
 					if (this.IsPropertyFinal(property) == true) { break; }

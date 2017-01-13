@@ -76,17 +76,17 @@ namespace Pinpad.Sdk.Properties
 		/// </summary>
 		private Func<StringReader, type> stringParser;
 
-		// Constructor
-		/// <summary>
-		/// Constructor that sets default values.
-		/// </summary>
-		/// <param name="name">Name of the property</param>
-		/// <param name="isOptional">Indicates if this property must exist in the command string or not</param>
-		/// <param name="stringFormatter">String formatter to use</param>
-		/// <param name="stringParser">String parser to use</param>
-		/// <param name="defaultStringValue">Default string value for Optional properties with default value</param>
-		/// <param name="value">Initial Value for the property</param>
-		public SimpleProperty(string name, bool isOptional = false, Func<type, string> stringFormatter = null, Func<StringReader, type> stringParser = null, string defaultStringValue = null, type value = default(type))
+        // Constructor
+        /// <summary>
+        /// Constructor that sets default values.
+        /// </summary>
+        /// <param name="name">Name of the property</param>
+        /// <param name="isOptional">Indicates if this property must exist in the command string or not</param>
+        /// <param name="stringFormatter">String formatter to use</param>
+        /// <param name="stringParser">String parser to use</param>
+        /// <param name="defaultStringValue">Default string value for Optional properties with default value</param>
+        /// <param name="value">Initial Value for the property</param>
+        public SimpleProperty(string name, bool isOptional = false, Func<type, string> stringFormatter = null, Func<StringReader, type> stringParser = null, string defaultStringValue = null, type value = default(type))
 		{
 			this.Name = name;
 			this.IsOptional = isOptional;
