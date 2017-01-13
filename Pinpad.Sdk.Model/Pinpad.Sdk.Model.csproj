@@ -70,7 +70,7 @@
     <Compile Include="Transaction\PinpadCardBrand.cs" />
     <Compile Include="TypeCode\AmountCurrencyCode.cs" />
     <Compile Include="TypeCode\CardType.cs" />
-    <Compile Include="TypeCode\ContactlessMode.cs" />
+    <Compile Include="TypeCode\PinpadContactlessMode.cs" />
     <Compile Include="TypeCode\CryptographyMode.cs" />
     <Compile Include="TypeCode\DisplayPaddingType.cs" />
     <Compile Include="TypeCode\EmvTableType.cs" />
