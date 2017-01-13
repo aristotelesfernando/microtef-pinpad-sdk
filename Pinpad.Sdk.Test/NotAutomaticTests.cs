@@ -16,10 +16,10 @@ namespace Pinpad.Sdk.Test
     [TestClass]
 	public class NotAutomaticTests
 	{
-		//[TestInitialize]
+		[TestInitialize]
 		public void Setup ()
 		{
-			//MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
+			MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
 		}
 
 		//[TestMethod]
@@ -221,7 +221,7 @@ namespace Pinpad.Sdk.Test
 
 			Debug.WriteLine(value);
 		}
-		//[TestMethod]
+		[TestMethod]
 		public void PinpadTransaction_ReadCard_test ()
 		{
             PinpadConnection conn = PinpadConnection.GetFirst();
@@ -229,6 +229,7 @@ namespace Pinpad.Sdk.Test
             TransactionType trnxType = TransactionType.Undefined;
 
             facade.TransactionService.EmvTable.UpdatePinpad(false);
+
             CardEntry card = facade.TransactionService.ReadCard(TransactionType.Debit, 
                 0.1m, out trnxType, CardBrandMocker.GetMock());
 

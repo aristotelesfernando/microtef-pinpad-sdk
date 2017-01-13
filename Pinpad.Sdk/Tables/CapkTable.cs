@@ -46,7 +46,8 @@ namespace Pinpad.Sdk
         }
 
         /// <summary>
-        /// Registered Application provider Identifier
+        /// Registered Application provider Identifier.
+        /// 10 first bytes of AID.
         /// </summary>
         public PinpadFixedLengthProperty<HexadecimalData> T2_RID { get; private set; }
 
