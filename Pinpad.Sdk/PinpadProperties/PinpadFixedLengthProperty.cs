@@ -82,7 +82,24 @@ namespace Pinpad.Sdk.Properties
 			}
 			else
 			{
-				type obj = this.stringParser(reader, this.Length);
+                type obj;
+
+                try
+                {
+                     obj = this.stringParser(reader, this.Length);
+                }
+                catch (Exception)
+                {
+                    if (this.IsOptional == true)
+                    {
+                        obj = default(type);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
 				this.Value = obj;
 			}
 		}
