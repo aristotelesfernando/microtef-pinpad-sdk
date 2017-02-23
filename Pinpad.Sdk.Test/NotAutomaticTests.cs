@@ -288,7 +288,7 @@ namespace Pinpad.Sdk.Test
                     CryptographyMode.TripleDataEncryptionStandard));
             }
         }
-        [TestMethod]
+        //[TestMethod]
         public void Pinpad_GetValueInOptionsShortWithCircularBehavior_test()
         {
             PinpadConnection conn = PinpadConnection.GetFirst();
@@ -300,7 +300,7 @@ namespace Pinpad.Sdk.Test
            
             key.DataPicker.GetValueInOptions("Menu", true, 1, 2,3);
         }
-        [TestMethod]
+        //[TestMethod]
         public void Pinpad_GetValueInOptionsStringWithCircularBehavior_test()
         {
             PinpadConnection conn = PinpadConnection.GetFirst();
