@@ -136,24 +136,9 @@ namespace Pinpad.Sdk.Test.Utilities
             var infos = new Mock<IPinpadInfos>();
             IDataPicker picker = new DataPicker(keyboard.Object, infos.Object, display.Object);
             // Act
-            short? value = picker.GetValueInOptions(string.Empty, 1, 2, 3, 4, 5);
+            short? value = picker.GetValueInOptions(string.Empty, false, 1, 2, 3, 4, 5);
             // Assert
-        }
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void GetValueInOptions_string_should_throws_exception_when_label_is_empty()
-        {
-            // Arrange
-            var display = new Mock<IPinpadDisplay>();
-            display.Setup(x => x.ShowMessage("label", string.Empty, DisplayPaddingType.Center)).Returns(true);
-            var keyboard = new Mock<IPinpadKeyboard>();
-            keyboard.Setup(x => x.GetKey()).Returns(PinpadKeyCode.Cancel);
-            var infos = new Mock<IPinpadInfos>();
-            IDataPicker picker = new DataPicker(keyboard.Object, infos.Object, display.Object);
-            // Act
-            string value = picker.GetValueInOptions(string.Empty, string.Empty, string.Empty);
-            // Assert
-        }
+        }        
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void GetValueInOptions_short_should_throws_exception_when_label_is_null()
@@ -166,7 +151,7 @@ namespace Pinpad.Sdk.Test.Utilities
             var infos = new Mock<IPinpadInfos>();
             IDataPicker picker = new DataPicker(keyboard.Object, infos.Object, display.Object);
             // Act
-            short? value = picker.GetValueInOptions(null, 1, 2, 3, 4, 5);
+            short? value = picker.GetValueInOptions(null, false, 1, 2, 3, 4, 5);
             // Assert
         }
         [TestMethod]
@@ -181,7 +166,7 @@ namespace Pinpad.Sdk.Test.Utilities
             var infos = new Mock<IPinpadInfos>();
             IDataPicker picker = new DataPicker(keyboard.Object, infos.Object, display.Object);
             // Act
-            string value = picker.GetValueInOptions(null, string.Empty, string.Empty);
+            string value = picker.GetValueInOptions(null, false, string.Empty, string.Empty);
             // Assert
         }
         [TestMethod]
@@ -196,7 +181,7 @@ namespace Pinpad.Sdk.Test.Utilities
             var infos = new Mock<IPinpadInfos>();
             IDataPicker picker = new DataPicker(keyboard.Object, infos.Object, display.Object);
             // Act
-            short? value = picker.GetValueInOptions("label", new short[]{ });
+            short? value = picker.GetValueInOptions("label", false, new short[]{ });
             // Assert
         }
         [TestMethod]
@@ -211,7 +196,7 @@ namespace Pinpad.Sdk.Test.Utilities
             var infos = new Mock<IPinpadInfos>();
             IDataPicker picker = new DataPicker(keyboard.Object, infos.Object, display.Object);
             // Act
-            string value = picker.GetValueInOptions("label", new string[] { });
+            string value = picker.GetValueInOptions("label", false, new string[] { });
             // Assert
         }
         [TestMethod]
@@ -225,7 +210,7 @@ namespace Pinpad.Sdk.Test.Utilities
             var infos = new Mock<IPinpadInfos>();
             IDataPicker picker = new DataPicker(keyboard.Object, infos.Object, display.Object);
             // Act
-            short? value = picker.GetValueInOptions("label", 1, 2, 3, 4, 5);
+            short? value = picker.GetValueInOptions("label", false, 1, 2, 3, 4, 5);
             // Assert
             Assert.IsNull(value);
             Assert.IsFalse(value.HasValue);
@@ -241,7 +226,7 @@ namespace Pinpad.Sdk.Test.Utilities
             var infos = new Mock<IPinpadInfos>();
             IDataPicker picker = new DataPicker(keyboard.Object, infos.Object, display.Object);
             // Act
-            string value = picker.GetValueInOptions("label", "um", "dois", "tres", "quatro", "cinco");
+            string value = picker.GetValueInOptions("label", false, "um", "dois", "tres", "quatro", "cinco");
             // Assert
             Assert.IsNull(value);
         }
@@ -256,7 +241,7 @@ namespace Pinpad.Sdk.Test.Utilities
             var infos = new Mock<IPinpadInfos>();
             IDataPicker picker = new DataPicker(keyboard.Object, infos.Object, display.Object);
             // Act
-            short? value = picker.GetValueInOptions("label", 1, 2, 3, 4, 5);
+            short? value = picker.GetValueInOptions("label", false, 1, 2, 3, 4, 5);
             // Assert
             Assert.IsNotNull(value);
             Assert.IsTrue(value.HasValue);
@@ -273,7 +258,7 @@ namespace Pinpad.Sdk.Test.Utilities
             var infos = new Mock<IPinpadInfos>();
             IDataPicker picker = new DataPicker(keyboard.Object, infos.Object, display.Object);
             // Act
-            string value = picker.GetValueInOptions("label", "um", "dois", "tres", "quatro", "cinco");
+            string value = picker.GetValueInOptions("label", false, "um", "dois", "tres", "quatro", "cinco");
             // Assert
             Assert.IsNotNull(value);
             Assert.AreEqual("um", value);
