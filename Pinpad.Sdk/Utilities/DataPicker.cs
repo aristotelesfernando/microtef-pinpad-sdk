@@ -43,10 +43,11 @@ namespace Pinpad.Sdk.Utilities
         /// Get numeric value in range informed.
         /// </summary>
         /// <param name="label">Text to display on the first line of pinpad display.</param>
+        /// <param name="circularBehavior">Behavior of the list.</param>
         /// <param name="minimunLimit">Minimum numeric value for pick. Limit: -32.768.</param>
         /// <param name="maximumLimit">Maximum numeric value for pick. Limit: 32.767.</param>
         /// <returns>Number picked or null if no one was picked.</returns>
-        public Nullable<short> GetNumericValue(string label, short minimunLimit, short maximumLimit)
+        public Nullable<short> GetNumericValue(string label, bool circularBehavior, short minimunLimit, short maximumLimit)
         {
             if (minimunLimit > maximumLimit)
             {
@@ -60,28 +61,14 @@ namespace Pinpad.Sdk.Utilities
             PinpadKeyCode code = PinpadKeyCode.Undefined;
             short index = minimunLimit;
 
-            do
+           if(circularBehavior == true)
             {
-                this._display.ShowMessage(label + ":", index.ToString(), DisplayPaddingType.Left);
-                code = this._keyboard.GetKey();
-
-                if (code == PinpadKeyCode.Backspace)
-                {
-                    // Restart counter
-                    index = minimunLimit;
-                }
-                else if (code == this.DataPickerKeys.DownKey && index < maximumLimit)
-                {
-                    // Down key
-                    index++;
-                }
-                else if (code == this.DataPickerKeys.UpKey && index < minimunLimit)
-                {
-                    // Up key
-                    index--;
-                }
-
-            } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel && code != PinpadKeyCode.Undefined);
+                this.AddCircularBehaviorNumericValue(label,minimunLimit,maximumLimit);
+            }
+           else
+            {
+                this.AddLinearBehaviorNumericValue(label, minimunLimit, maximumLimit);
+            }
 
             if (code == PinpadKeyCode.Return)
             {
@@ -190,7 +177,6 @@ namespace Pinpad.Sdk.Utilities
                     // Up key
                     index--;
                 }
-
             } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel && code != PinpadKeyCode.Undefined);
         }
         /// <summary>
@@ -203,6 +189,7 @@ namespace Pinpad.Sdk.Utilities
         {
             PinpadKeyCode code = PinpadKeyCode.Undefined;
             int index = 0;
+
             do
             {
                 this._display.ShowMessage(label + ":", options[index].ToString(), DisplayPaddingType.Left);
@@ -224,7 +211,6 @@ namespace Pinpad.Sdk.Utilities
                         // Down key
                         index++;
                     }
-
                 }
                 else if (code == this.DataPickerKeys.UpKey)
                 {
@@ -237,9 +223,87 @@ namespace Pinpad.Sdk.Utilities
                         // Up key
                         index--;
                     }
-
                 }
+            } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel && code != PinpadKeyCode.Undefined);
+        }
+        ///<summary>
+        /// Modify the behavior of the list to linear.
+        ///</summary> 
+        /// <param name="label">Text to display on the first line of pinpad display.</param>        
+        /// <param name="minimunLimit">Minimum numeric value for pick. Limit: -32.768.</param>
+        /// <param name="maximumLimit">Maximum numeric value for pick. Limit: 32.767.</param>
+        private void AddLinearBehaviorNumericValue(string label, short minimunLimit, short maximumLimit)
+        {
+            PinpadKeyCode code = PinpadKeyCode.Undefined;
+            short index = minimunLimit;
 
+            do
+            {
+                this._display.ShowMessage(label + ":", index.ToString(), DisplayPaddingType.Left);
+                code = this._keyboard.GetKey();
+
+                if (code == PinpadKeyCode.Backspace)
+                {
+                    // Restart counter
+                    index = minimunLimit;
+                }
+                else if (code == this.DataPickerKeys.DownKey && index < maximumLimit)
+                {
+                    // Down key
+                    index++;
+                }
+                else if (code == this.DataPickerKeys.UpKey && index > minimunLimit)
+                {
+                    // Up key
+                    index--;
+                }
+            } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel && code != PinpadKeyCode.Undefined);
+        }
+        ///<summary>
+        /// Modify the behavior of the list to circular.
+        ///</summary> 
+        /// <param name="label">Text to display on the first line of pinpad display.</param>       
+        /// <param name="minimunLimit">Minimum numeric value for pick. Limit: -32.768.</param>
+        /// <param name="maximumLimit">Maximum numeric value for pick. Limit: 32.767.</param>
+        private void AddCircularBehaviorNumericValue(string label, short minimunLimit, short maximumLimit)
+        {
+            PinpadKeyCode code = PinpadKeyCode.Undefined;
+            short index = minimunLimit;
+
+            do
+            {
+                this._display.ShowMessage(label + ":", index.ToString(), DisplayPaddingType.Left);
+                code = this._keyboard.GetKey();
+
+                if (code == PinpadKeyCode.Backspace)
+                {
+                    // Restart counter
+                    index = minimunLimit;
+                }
+                else if (code == this.DataPickerKeys.DownKey)
+                {
+                    if(index == maximumLimit)
+                    {
+                        index = minimunLimit;
+                    }
+                    else
+                    {
+                        // Down key
+                        index++;
+                    }                   
+                }
+                else if (code == this.DataPickerKeys.UpKey && index > minimunLimit)
+                {
+                    if(index == minimunLimit)
+                    {
+                        index = maximumLimit;
+                    }
+                    else
+                    {
+                        // Up key
+                        index--;
+                    }                    
+                }
             } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel && code != PinpadKeyCode.Undefined);
         }
     }
