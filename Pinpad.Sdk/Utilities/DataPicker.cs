@@ -63,11 +63,11 @@ namespace Pinpad.Sdk.Utilities
 
            if(circularBehavior == true)
             {
-                this.AddCircularBehaviorNumericValue(label,minimunLimit,maximumLimit);
+                code = this.AddCircularBehaviorNumericValue(label,minimunLimit,maximumLimit);
             }
            else
             {
-                this.AddLinearBehaviorNumericValue(label, minimunLimit, maximumLimit);
+                code = this.AddLinearBehaviorNumericValue(label, minimunLimit, maximumLimit);
             }
 
             if (code == PinpadKeyCode.Return)
@@ -134,11 +134,11 @@ namespace Pinpad.Sdk.Utilities
 
             if (circularBehavior == true)
             {
-                this.AddCircularBehavior<V>(label, options);               
+                code = this.AddCircularBehavior<V>(label, options);               
             }
             else
             {
-                this.AddLinearBehavior<V>(label, options);              
+                code = this.AddLinearBehavior<V>(label, options);              
             }
             if (code == PinpadKeyCode.Return)
             {
@@ -153,7 +153,7 @@ namespace Pinpad.Sdk.Utilities
         /// <typeparam name="V"></typeparam>
         /// <param name="label">Text to display on the first line of pinpad display.</param>
         /// <param name="options">Array with options.</param>
-        private void AddLinearBehavior<V>(string label, params V[] options)
+        private PinpadKeyCode AddLinearBehavior<V>(string label, params V[] options)
         {
             PinpadKeyCode code = PinpadKeyCode.Undefined;
             int index = 0;
@@ -178,6 +178,8 @@ namespace Pinpad.Sdk.Utilities
                     index--;
                 }
             } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel && code != PinpadKeyCode.Undefined);
+
+            return code;
         }
         /// <summary>
         /// Modify the behavior of the list to circular.
@@ -185,7 +187,7 @@ namespace Pinpad.Sdk.Utilities
         /// <typeparam name="V"></typeparam>
         /// <param name="label">Text to display on the first line of pinpad display.</param>
         /// <param name="options">Array with options.</param>
-        private void AddCircularBehavior<V>(string label, params V[] options)
+        private PinpadKeyCode AddCircularBehavior<V>(string label, params V[] options)
         {
             PinpadKeyCode code = PinpadKeyCode.Undefined;
             int index = 0;
@@ -225,6 +227,8 @@ namespace Pinpad.Sdk.Utilities
                     }
                 }
             } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel && code != PinpadKeyCode.Undefined);
+
+            return code;
         }
         ///<summary>
         /// Modify the behavior of the list to linear.
@@ -232,7 +236,7 @@ namespace Pinpad.Sdk.Utilities
         /// <param name="label">Text to display on the first line of pinpad display.</param>        
         /// <param name="minimunLimit">Minimum numeric value for pick. Limit: -32.768.</param>
         /// <param name="maximumLimit">Maximum numeric value for pick. Limit: 32.767.</param>
-        private void AddLinearBehaviorNumericValue(string label, short minimunLimit, short maximumLimit)
+        private PinpadKeyCode AddLinearBehaviorNumericValue(string label, short minimunLimit, short maximumLimit)
         {
             PinpadKeyCode code = PinpadKeyCode.Undefined;
             short index = minimunLimit;
@@ -258,6 +262,8 @@ namespace Pinpad.Sdk.Utilities
                     index--;
                 }
             } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel && code != PinpadKeyCode.Undefined);
+
+            return code;
         }
         ///<summary>
         /// Modify the behavior of the list to circular.
@@ -265,7 +271,7 @@ namespace Pinpad.Sdk.Utilities
         /// <param name="label">Text to display on the first line of pinpad display.</param>       
         /// <param name="minimunLimit">Minimum numeric value for pick. Limit: -32.768.</param>
         /// <param name="maximumLimit">Maximum numeric value for pick. Limit: 32.767.</param>
-        private void AddCircularBehaviorNumericValue(string label, short minimunLimit, short maximumLimit)
+        private PinpadKeyCode AddCircularBehaviorNumericValue(string label, short minimunLimit, short maximumLimit)
         {
             PinpadKeyCode code = PinpadKeyCode.Undefined;
             short index = minimunLimit;
@@ -305,6 +311,8 @@ namespace Pinpad.Sdk.Utilities
                     }                    
                 }
             } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel && code != PinpadKeyCode.Undefined);
+
+            return code;
         }
     }
 }
