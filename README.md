@@ -129,6 +129,41 @@ string telephoneNumber = facade.Keyboard.GetNumericInput(FirstLineLabelCode.Type
     minimumDigits, maxDigits, timeOut);
 ```
 
+### Exibe lista de opções de acordo com um 'range' definido 
+
+
+```
+
+// Exibe uma lista de opções com tamanho definido de itens.
+
+Nullable<short> GetNumericValue("Menu", false, 0, 5); // comportamento linear
+
+Nullable<short> GetNumericValue("Menu", true, 0, 5); // comportamento circular
+    
+```
+
+### Exibe lista de opções 
+
+
+```
+*string como parametro*
+
+// Exibe uma lista de opções com parametros em string. A lista também pode ter um comportamento circular.
+
+string value = facade.Keyboard.DataPicker.GetValueInOptions("Menu", false, "opcao1", "opcao2", "opcao3"); //comportamento linear
+
+string value = facade.Keyboard.DataPicker.GetValueInOptions("Menu", true, "opcao1", "opcao2", "opcao3"); //comportamento circular
+
+*Valores numericos como parametro*
+
+// Exibe uma lista de opções com parametros em short (numérico). A lista também pode ter um comportamento circular.
+
+Nullabel<short> value = facade.Keyboard.DataPicker.GetValueInOptions("Parcelas", false, 2, 3, 4, 5, 6); // comportamento linear
+
+Nullable<short> value = facade.Keyboard.DataPicker.GetValueInOptions("Parcelas", true, 2, 3, 4, 5, 6); // comportamento circular
+    
+```
+
 ### Imprimir alguma coisa
 
 ```

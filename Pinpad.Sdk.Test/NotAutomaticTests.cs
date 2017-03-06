@@ -16,14 +16,14 @@ namespace Pinpad.Sdk.Test
     [TestClass]
 	public class NotAutomaticTests
 	{
-		//[TestInitialize]
-		public void Setup ()
-		{
-			//MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
-		}
+        //[TestInitialize]
+        //public void Setup()
+        //{
+        //    MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
+        //}
 
-		//[TestMethod]
-		public void GCD_test ()
+        //[TestMethod]
+        public void GCD_test ()
 		{
 			GcdRequest r = new GcdRequest();
 			r.SPE_MSGIDX.Value = KeyboardMessageCode.AskForSecurityCode;
@@ -191,15 +191,16 @@ namespace Pinpad.Sdk.Test
 
 			bool status = facade.Communication.Ping();
 		}
-		//[TestMethod]
-		public void GetNumericValue_test ()
+        //[TestMethod]
+        public void GetNumericValue_test ()
 		{
 			PinpadConnection conn = PinpadConnection.GetFirst();
 			PinpadFacade facade = new PinpadFacade(conn);
 
-			int? value = facade.Keyboard.DataPicker.GetNumericValue("Data Picker", 0, 5);
+			Nullable<int> value = facade.Keyboard.DataPicker.GetNumericValue("Data Picker", false,  0, 5);
 
 			Debug.WriteLine(value.Value);
+            facade.Communication.ClosePinpadConnection("Carnaval 2017");
 		}
 		//[TestMethod]
 		public void GetValueInOptionsShort_test ()
@@ -207,7 +208,7 @@ namespace Pinpad.Sdk.Test
 			PinpadConnection conn = PinpadConnection.GetFirst();
 			PinpadFacade facade = new PinpadFacade(conn);
 
-			short? value = facade.Keyboard.DataPicker.GetValueInOptions("Parcelas", 2, 3, 4, 5, 6);
+			Nullable<short> value = facade.Keyboard.DataPicker.GetValueInOptions("Parcelas", false,2, 3, 4, 5, 6);
 
 			Debug.WriteLine(value.Value);
 		}
@@ -217,7 +218,7 @@ namespace Pinpad.Sdk.Test
 			PinpadConnection conn = PinpadConnection.GetFirst();
 			PinpadFacade facade = new PinpadFacade(conn);
 
-			string value = facade.Keyboard.DataPicker.GetValueInOptions("Pokemon", "Bulbasaur", "Charmander", "Squirtle");
+			string value = facade.Keyboard.DataPicker.GetValueInOptions("Pokemon", false, "Bulbasaur", "Charmander", "Squirtle");
 
 			Debug.WriteLine(value);
 		}
@@ -287,6 +288,30 @@ namespace Pinpad.Sdk.Test
                     .GetDukptSerialNumber(i, 
                     CryptographyMode.TripleDataEncryptionStandard));
             }
+        }
+        //[TestMethod]
+        public void Pinpad_GetValueInOptionsShortWithCircularBehavior_test()
+        {
+            PinpadConnection conn = PinpadConnection.GetFirst();
+
+            PinpadCommunication comm = new PinpadCommunication(conn);
+            PinpadInfos infos = new PinpadInfos(comm);
+            IPinpadDisplay display = new PinpadDisplay(comm);
+            PinpadKeyboard key = new PinpadKeyboard(comm, infos, display);
+           
+            key.DataPicker.GetValueInOptions("Menu", true, 1, 2,3);
+        }
+        //[TestMethod]
+        public void Pinpad_GetValueInOptionsStringWithCircularBehavior_test()
+        {
+            PinpadConnection conn = PinpadConnection.GetFirst();
+
+            PinpadCommunication comm = new PinpadCommunication(conn);
+            PinpadInfos infos = new PinpadInfos(comm);
+            IPinpadDisplay display = new PinpadDisplay(comm);
+            PinpadKeyboard key = new PinpadKeyboard(comm, infos, display);
+
+            key.DataPicker.GetValueInOptions("Carnaval", true, "Simpatiaequaseamor", "OrquestraVoadora", "SargentoPimenta", "Carmelitas");
         }
     }
 }
