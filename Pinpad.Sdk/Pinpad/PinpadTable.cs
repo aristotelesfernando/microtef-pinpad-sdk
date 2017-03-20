@@ -126,8 +126,9 @@ namespace Pinpad.Sdk
         /// Adds a pinpad entry, converts it into raw pinpad entry and adds to the collection.
         /// </summary>
         /// <param name="entry">Pinpad AID or CAPK entry.</param>
+        /// <param name="isModification">Whether this method represents a table modification or not.</param>
         /// <returns>If the entry was added or not. In case of false return, verify if the entry is CAPK or AID.</returns>
-        public bool AddEntry (BaseTable entry)
+        public bool AddEntry (BaseTable entry, bool isModification = true)
         {
 			if (entry is AidTable == false && entry is CapkTable == false)
 			{
@@ -154,7 +155,7 @@ namespace Pinpad.Sdk
                 this.tableCollection.Add(entry);
 
                 // Indicates changes (pinpad is not updated):
-                this.tableCollectionModified = true;
+                this.tableCollectionModified = isModification;
             }
 
             return true;
