@@ -13,7 +13,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// PinPad command
 	/// </summary>
-	internal abstract class BaseCommand : BaseProperty 
+	public abstract class BaseCommand : BaseProperty 
 	{
 		// Members
 		/// <summary>
@@ -34,8 +34,6 @@ namespace Pinpad.Sdk.Commands
 		/// Creates all properties for a basic command.
 		/// </summary>
 		/// <param name="context"><see cref="Pinpad.Sdk.Commands.IContext">Pinpad context.</see></param>
-		/// <seealso cref="Pinpad.Sdk.Commands.AbecsContext"/>
-		/// <seealso cref="Pinpad.Sdk.Commands.GertecContext"/>
 		public BaseCommand (IContext context = null)
 		{
 			if (context == null) { context = new AbecsContext(); }

@@ -6,7 +6,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// Context of a command.
 	/// </summary>
-	internal interface IContext
+	public interface IContext
 	{
 		/// <summary>
 		/// Byte indicating the beggining of a package.

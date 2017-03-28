@@ -9,13 +9,14 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Collections.Generic;
+using Pinpad.Sdk.Model.Pinpad;
 
 namespace Pinpad.Sdk
 {
     /// <summary>
     /// Responsible for authorization operations.
     /// </summary>
-    public class PinpadTransaction : IPinpadTransaction
+    public sealed class PinpadTransaction : IPinpadTransaction
 	{
 		/// <summary>
 		/// Responsible for read card password itself, depending on card type.
@@ -24,7 +25,7 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Responsible for sending requests to the pinpad.
 		/// </summary>
-		private PinpadCommunication pinpadCommunication;
+		private IPinpadCommunication pinpadCommunication;
 		/// <summary>
 		/// Pinpad Emv table handler, that is, responsible for all operations related to table (CAPK and AID tables) controlling.
 		/// </summary>
@@ -39,7 +40,7 @@ namespace Pinpad.Sdk
 		/// Constructor that
 		/// </summary>
 		/// <param name="pinpadCommunication"></param>
-		public PinpadTransaction (PinpadCommunication pinpadCommunication)
+		public PinpadTransaction (IPinpadCommunication pinpadCommunication)
 		{
 			this.pinReader = new PinReader(pinpadCommunication);
 			this.pinpadCommunication = pinpadCommunication;

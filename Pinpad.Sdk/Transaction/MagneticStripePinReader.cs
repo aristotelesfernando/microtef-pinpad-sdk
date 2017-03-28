@@ -4,6 +4,7 @@ using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Transaction;
 using Pinpad.Sdk.Model.TypeCode;
+using Pinpad.Sdk.Model.Pinpad;
 
 namespace Pinpad.Sdk
 {
@@ -33,7 +34,7 @@ namespace Pinpad.Sdk
 		/// <param name="pin">Pin read.</param>
 		/// <returns>Wheter is an online transaction or not.</returns>
 		/// <exception cref="System.InvalidOperationException">Thrown when parameter validation fails.</exception>
-		internal ResponseStatus Read(PinpadCommunication pinpadCommunication, string pan, decimal amount, out Pin pin)
+		internal ResponseStatus Read(IPinpadCommunication pinpadCommunication, string pan, decimal amount, out Pin pin)
 		{
 			pin = null;
 
@@ -72,7 +73,7 @@ namespace Pinpad.Sdk
 		/// <param name="pan">Primary Account Number printed on the card.</param>
 		/// <param name="amount">Transaction amount.</param>
 		/// <returns>ABECS GPN command response.</returns>
-		private GpnResponse SendGpn(PinpadCommunication pinpadCommunication, string pan, decimal amount)
+		private GpnResponse SendGpn(IPinpadCommunication pinpadCommunication, string pan, decimal amount)
 		{
 			GpnRequest request = new GpnRequest();
 
@@ -136,7 +137,7 @@ namespace Pinpad.Sdk
 		/// </summary>
 		/// <exception cref="System.ArgumentNullException">When one parameter is null.</exception>
 		/// <exception cref="System.ArgumentException">When one parameter is not null, but contains invalid data.</exception>
-		private void Validate(PinpadCommunication pinpadCommunication, decimal amount, string pan)
+		private void Validate(IPinpadCommunication pinpadCommunication, decimal amount, string pan)
 		{
 			if (pinpadCommunication == null) { throw new ArgumentNullException("pinpadFacade cannot be null. Unable to communicate with the pinpad."); }
 			if (amount <= 0) { throw new ArgumentException("amount should be greater than 0."); }

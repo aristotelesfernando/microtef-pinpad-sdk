@@ -4,6 +4,7 @@ using Pinpad.Sdk.Commands.DataSet;
 using Pinpad.Sdk.Commands.Request;
 using Pinpad.Sdk.Commands.TypeCode;
 using Pinpad.Sdk.Commands.Response;
+using Pinpad.Sdk.Model.Pinpad;
 
 namespace Pinpad.Sdk.Pinpad
 {
@@ -32,7 +33,7 @@ namespace Pinpad.Sdk.Pinpad
         /// <summary>
         /// Responsible for logical communication with pinpad.
         /// </summary>
-        private PinpadCommunication Communication { get; set; }
+        private IPinpadCommunication Communication { get; set; }
         /// <summary>
         /// Information about the pinpad connected.
         /// </summary>
@@ -47,7 +48,7 @@ namespace Pinpad.Sdk.Pinpad
         /// </summary>
         /// <param name="communication">Pinpad communication service.</param>
         /// <param name="infos">Real time pinpad information.</param>
-        public IngenicoPinpadPrinter(PinpadCommunication communication, IPinpadInfos infos)
+        public IngenicoPinpadPrinter(IPinpadCommunication communication, IPinpadInfos infos)
         {
             this.Communication = communication;
             this.PinpadInformation = infos;

@@ -5,7 +5,7 @@ namespace Pinpad.Sdk.Events
 	/// <summary>
 	/// Event Args for when a file is loaded
 	/// </summary>
-	public class PinpadFileLoadedEventArgs : EventArgs
+	public sealed class PinpadFileLoadedEventArgs : EventArgs
 	{
 		/// <summary>
 		/// PinPad used

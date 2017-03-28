@@ -8,63 +8,64 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using Pinpad.Sdk.Model.Pinpad;
 
 namespace Pinpad.Sdk
 {
 	/// <summary>
 	/// Pinpad communication adapter
 	/// </summary>
-	public class PinpadCommunication
+	public sealed class PinpadCommunication : IPinpadCommunication
 	{
 		/* Members! */
 		// Constants
-		/// <summary>
-		/// Timeout to acknowledge a message
-		/// </summary>
-		public const int ACKNOWLEDGE_TIMEOUT = 4000;
-		/// <summary>
-		/// Timeout to cancel a message
-		/// </summary>
-		public const int CANCEL_TIMEOUT = 4000;
-		/// <summary>
-		/// Timeout for NonBlocking messages
-		/// </summary>
-		public const int NON_BLOCKING_TIMEOUT = 2000;
 		/// <summary>
 		/// Timeout for Blocking messages
 		/// </summary>
 		public const int BLOCKING_TIMEOUT = 30000;
 		/// <summary>
-		/// Byte used to cancel the previous operation.
+		/// Timeout to acknowledge a message
 		/// </summary>
-		public const byte CANCEL_BYTE = 0x18;
+		internal const int ACKNOWLEDGE_TIMEOUT = 4000;
 		/// <summary>
-		/// Pinpad response when a CAN is acknowledged.
+		/// Timeout to cancel a message
 		/// </summary>
-		public const byte EOT_BYTE = 0x04;
+		internal const int CANCEL_TIMEOUT = 4000;
 		/// <summary>
-		/// Returned to the SPE from the pinpad, indicating an INVALID package. 
-		/// In this case, the SPE must remand the package.
+		/// Timeout for NonBlocking messages
 		/// </summary>
-		public const byte NOT_ACKNOWLEDGED_BYTE = 0x15;
-		/// <summary>
-		/// Returned to the SPE from the pinpad, indicating a valid package.
-		/// </summary>
-		public const byte ACKNOWLEDGE_BYTE = 0x06;
-		/// <summary>
-		/// Null byte, used to verify whether the pinpad is connected/alive.
-		/// </summary>
-		public const byte NULL_BYTE = 0x00;
-		/// <summary>
-		/// Number of times to try to remand a package in case of failure.
-		/// </summary>
-		public const short TIMES_TO_REMAND_PACKAGE_ON_FAILURE = 3;
+		internal const int NON_BLOCKING_TIMEOUT = 2000;
+        /// <summary>
+        /// Byte used to cancel the previous operation.
+        /// </summary>
+        internal const byte CANCEL_BYTE = 0x18;
+        /// <summary>
+        /// Pinpad response when a CAN is acknowledged.
+        /// </summary>
+        internal const byte EOT_BYTE = 0x04;
+        /// <summary>
+        /// Returned to the SPE from the pinpad, indicating an INVALID package. 
+        /// In this case, the SPE must remand the package.
+        /// </summary>
+        internal const byte NOT_ACKNOWLEDGED_BYTE = 0x15;
+        /// <summary>
+        /// Returned to the SPE from the pinpad, indicating a valid package.
+        /// </summary>
+        internal const byte ACKNOWLEDGE_BYTE = 0x06;
+        /// <summary>
+        /// Null byte, used to verify whether the pinpad is connected/alive.
+        /// </summary>
+        internal const byte NULL_BYTE = 0x00;
+        /// <summary>
+        /// Number of times to try to remand a package in case of failure.
+        /// </summary>
+        internal const short TIMES_TO_REMAND_PACKAGE_ON_FAILURE = 3;
 
 		// Public members
 		/// <summary>
 		/// Connection with Pinpad device
 		/// </summary>
-		public PinpadConnection PinpadConnection { get; private set; }
+		public IBasicPinpadConnection PinpadConnection { get; private set; }
 		/// <summary>
 		/// Last request string sent to the Pinpad
 		/// </summary>
@@ -73,6 +74,9 @@ namespace Pinpad.Sdk
 		/// Last response string received from the Pinpad
 		/// </summary>
 		public string LastReceivedResponse { get; private set; }
+        /// <summary>
+        /// Serial port in which the pinpad is attached.
+        /// </summary>
 		public string PortName { get { return this.PinpadConnection.Connection.ConnectionName; } }
 
 		// Private members
@@ -82,7 +86,7 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Event for when the Pinpad receives a notification
 		/// </summary>
-		public EventHandler<PinpadNotificationEventArgs> OnNotification { get; set; }
+		public EventHandler<PinpadNotificationEventArgs> NotificationReceived { get; set; }
 
 		// Constructor:
 		/// <summary>
@@ -268,13 +272,15 @@ namespace Pinpad.Sdk
 		/// </summary>
 		/// <param name="request">Request to send</param>
 		/// <returns>true if the request was sent, response was received, command is not ERR and response code equals ST_OK</returns>
-		internal bool SendRequestAndVerifyResponseCode (BaseCommand request)
+		public bool SendRequestAndVerifyResponseCode (object request)
 		{
-			lock (this.PinpadConnection)
+            BaseCommand castRequest = request as BaseCommand;
+
+            lock (this.PinpadConnection)
 			{
-				if (this.SendRequest(request) == true)
+				if (this.SendRequest(castRequest) == true)
 				{
-					return this.ReceiveResponseAndVerifyResponseCode(request.CommandContext);
+					return this.ReceiveResponseAndVerifyResponseCode(castRequest.CommandContext);
 				}
 				else
 				{
@@ -307,65 +313,78 @@ namespace Pinpad.Sdk
 				return true;
 			}
 		}
-		/// <summary>
-		/// Sends a Request and Receives the specified responseType
-		/// </summary>
-		/// <typeparam name="responseType">PinpadBaseResponseController to use</typeparam>
-		/// <param name="request">Request to send</param>
-		/// <returns>responseType or null on failure</returns>
-		internal responseType SendRequestAndReceiveResponse<responseType> (BaseCommand request)
-			where responseType : BaseResponse, new()
+        /// <summary>
+        /// Sends a Request and Receives the specified responseType
+        /// </summary>
+        /// <typeparam name="T">PinpadBaseResponseController to use</typeparam>
+        /// <param name="request">Request to send</param>
+        /// <returns>responseType or null on failure</returns>
+        public T SendRequestAndReceiveResponse<T>(object request)
+            where T : new()
 		{
+            BaseCommand castRequest = request as BaseCommand;
+
+            if (castRequest == null)
+            {
+                throw new InvalidOperationException("Request does not implement expected type.");
+            }
+
 			lock (this.PinpadConnection)
 			{
-				if (this.SendRequest(request) == false)
+				if (this.SendRequest(castRequest) == false)
 				{
-					return null;
+					return default(T);
 				}
 				else
 				{
-					return this.ReceiveResponse<responseType>(request.CommandContext);
+					return (T)this.ReceiveResponse<T>(castRequest.CommandContext);
 				}
 			}
 		}
 		/// <summary>
 		/// Receives a specific response from the Pinpad
 		/// </summary>
-		/// <typeparam name="responseType">PinpadBaseResponseController to use</typeparam>
+		/// <typeparam name="T">PinpadBaseResponseController to use</typeparam>
 		/// <returns>response object or null if cancelled</returns>
-		internal responseType ReceiveResponse<responseType> (IContext context = null)
-			where responseType : BaseResponse, new()
+		internal T ReceiveResponse<T> (IContext context = null)
+			where T : new()
 		{
-			responseType response = new responseType();
+			T response = new T();
+            BaseResponse castResponse = response as BaseResponse;
 
-			if (response is GenericResponse)
+            if (castResponse == null)
+            {
+                throw new InvalidOperationException("Response does not implement expected type.");
+            }
+
+            if (castResponse is GenericResponse)
 			{
 				if (context == null) { throw new ArgumentNullException("Context cannot be null."); }
-				response.CommandContext = context;
+                castResponse.CommandContext = context;
 			}
 
 			string responseString;
-			if (response.IsBlockingCommand == true)
+			if (castResponse.IsBlockingCommand == true)
 			{
-				responseString = this.ReceiveResponseString(PinpadCommunication.BLOCKING_TIMEOUT, response.CommandContext);
+				responseString = this.ReceiveResponseString(PinpadCommunication.BLOCKING_TIMEOUT, 
+                    castResponse.CommandContext);
 				Debug.WriteLine("Response (blocking): " + responseString);
-
 			}
 			else
 			{
-				responseString = this.ReceiveResponseString(PinpadCommunication.NON_BLOCKING_TIMEOUT, response.CommandContext);
+				responseString = this.ReceiveResponseString(PinpadCommunication.NON_BLOCKING_TIMEOUT,
+                    castResponse.CommandContext);
 				Debug.WriteLine("Response: " + responseString);
 			}
 
 			if (responseString == null)
 			{
 				Debug.WriteLine("Response: (null)");
-				return null;
+				return default(T);
 			}
 
-
-			response.CommandString = responseString;
-			return response;
+            castResponse.CommandString = responseString;
+			return (T)(object)castResponse;
 		}
 		/// <summary>
 		/// Receives a response from a command from the Pinpad
@@ -394,8 +413,6 @@ namespace Pinpad.Sdk
 						ex is TimeoutException == false &&
 						ex is InvalidOperationException == false)
 					{
-
-						//CrossPlatformController.SendMailController.SendReportMailThreaded("PinpadSDK: EXCEPTION AT Pinpad.PinpadCommunication:ReceiveResponseString", ex.ToString());
 						throw;
 					}
 				}
@@ -416,9 +433,9 @@ namespace Pinpad.Sdk
 					if (response.CommandName == notificationResponse.CommandName)
 					{
 						notificationResponse.CommandString = openedResponseString;
-						if (this.OnNotification != null)
+						if (this.NotificationReceived != null)
 						{
-							this.OnNotification(this, new PinpadNotificationEventArgs(notificationResponse.NTM_MSG.Value));
+							this.NotificationReceived(this, new PinpadNotificationEventArgs(notificationResponse.NTM_MSG.Value));
 						}
 
 						return this.ReceiveResponseString(timeout, response.CommandContext);

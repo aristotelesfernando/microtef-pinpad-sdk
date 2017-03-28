@@ -1,4 +1,5 @@
 ﻿using Pinpad.Sdk.Model;
+using Pinpad.Sdk.Model.Pinpad;
 using System;
 using System.Diagnostics;
 
@@ -7,7 +8,7 @@ namespace Pinpad.Sdk
 	/// <summary>
 	/// Responsible for getting pinpad security information (Pin Block and Key Serial Number(KSN)).
 	/// </summary>
-	internal class PinReader
+	internal sealed class PinReader
 	{
 		// Constants
 		/// <summary>
@@ -23,7 +24,7 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Facade through which pinpad communication is made.
 		/// </summary>
-		private PinpadCommunication pinpadCommunication;
+		private IPinpadCommunication pinpadCommunication;
 		/// <summary>
 		/// Defines how data is read, according to card type.
 		/// </summary>
@@ -45,7 +46,7 @@ namespace Pinpad.Sdk
 		/// </summary>
 		/// <param name="pinpadCommunication">PinpadFacade mandatory to this class be able to communicate with the pinpad.</param>
 		/// <exception cref="System.InvalidOperationException">Thrown when one parameter validation fails.</exception>
-		internal PinReader(PinpadCommunication pinpadCommunication)
+		internal PinReader(IPinpadCommunication pinpadCommunication)
 		{
 			try { this.Validate(pinpadCommunication); }
 			catch (Exception ex)
@@ -101,7 +102,7 @@ namespace Pinpad.Sdk
 		/// </summary>
 		/// <exception cref="System.ArgumentNullException">When one parameter is null.</exception>
 		/// <exception cref="System.ArgumentException">When one parameter is not null, but contains invalid data.</exception>
-		private void Validate(PinpadCommunication pinpadFacade)
+		private void Validate(IPinpadCommunication pinpadFacade)
 		{
 			if (pinpadFacade == null)
 			{

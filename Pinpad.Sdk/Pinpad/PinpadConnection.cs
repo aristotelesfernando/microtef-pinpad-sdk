@@ -1,20 +1,21 @@
 ﻿using MicroPos.CrossPlatform;
-using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Model.Exceptions;
+using Pinpad.Sdk.Model.Pinpad;
 using System.IO;
+using System;
 
 namespace Pinpad.Sdk
 {
 	/// <summary>
 	/// Pinpad connection handler.
 	/// </summary>
-	public class PinpadConnection
+	public sealed class PinpadConnection : IBasicPinpadConnection
 	{
 		// Members
 		/// <summary>
 		/// Actually connection, depending on the platform.
 		/// </summary>
-		public IPinpadConnection Connection;
+		public IPinpadConnection Connection { get; private set; }
 
 		/// <summary>
 		/// Whether the connection is opened or not.
@@ -30,12 +31,12 @@ namespace Pinpad.Sdk
 			}
 		}
 
-		// Constructor
-		/// <summary>
-		/// Creates the object based on the <see cref="IPinpadConnection">connection provided</see> by the platform (Desktop, UWP...).
-		/// </summary>
-		/// <param name="connection">Connection provided by the platform (Desktop, UWP...).</param>
-		public PinpadConnection (IPinpadConnection connection)
+        // Constructor
+        /// <summary>
+        /// Creates the object based on the <see cref="IPinpadConnection">connection provided</see> by the platform (Desktop, UWP...).
+        /// </summary>
+        /// <param name="connection">Connection provided by the platform (Desktop, UWP...).</param>
+        public PinpadConnection (IPinpadConnection connection)
 		{
 			this.Connection = connection;
 		}

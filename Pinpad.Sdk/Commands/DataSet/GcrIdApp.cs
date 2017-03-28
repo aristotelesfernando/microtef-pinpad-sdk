@@ -6,7 +6,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// Controller for GCR PinPad command request Id App entry
 	/// </summary>
-	public class GcrIdApp : BaseProperty 
+	public sealed class GcrIdApp : BaseProperty 
 	{
 		/// <summary>
 		/// Constructor

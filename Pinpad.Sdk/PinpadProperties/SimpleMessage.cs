@@ -7,7 +7,7 @@ namespace Pinpad.Sdk.Properties
 	/// <summary>
 	/// simple pin pad message (32 characters long with 2 lines of 16 characters)
 	/// </summary>
-	public class SimpleMessage : BaseProperty 
+	public sealed class SimpleMessage : BaseProperty 
 	{
 		// Constants
 		/// <summary>

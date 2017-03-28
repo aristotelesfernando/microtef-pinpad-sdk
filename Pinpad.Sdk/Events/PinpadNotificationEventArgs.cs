@@ -6,7 +6,7 @@ namespace Pinpad.Sdk.Events
 	/// <summary>
 	/// Event args for when the PinPad receives a Notification message
 	/// </summary>
-	public class PinpadNotificationEventArgs : EventArgs
+	public sealed class PinpadNotificationEventArgs : EventArgs
 	{
 		/// <summary>
 		/// PinPad message

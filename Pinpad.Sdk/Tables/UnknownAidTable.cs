@@ -6,7 +6,7 @@ namespace Pinpad.Sdk
     /// <summary>
     /// unknown pattern aid table
     /// </summary>
-    public class UnknownAidTable : BaseAidTable {
+    public sealed class UnknownAidTable : BaseAidTable {
         /// <summary>
         /// Constructor
         /// </summary>

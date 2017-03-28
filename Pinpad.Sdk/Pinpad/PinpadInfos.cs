@@ -9,7 +9,7 @@ namespace Pinpad.Sdk
 	/// <summary>
 	/// Pinpad informations.
 	/// </summary>
-	public class PinpadInfos : IPinpadInfos
+	public sealed class PinpadInfos : IPinpadInfos
 	{
 		// Members
 		/// <summary>

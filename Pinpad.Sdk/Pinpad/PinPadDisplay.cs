@@ -8,7 +8,7 @@ namespace Pinpad.Sdk
 	/// <summary>
 	/// Pinpad display API.
 	/// </summary>
-	public class PinpadDisplay : IPinpadDisplay
+	public sealed class PinpadDisplay : IPinpadDisplay
 	{
 		// Constants
 		/// <summary>

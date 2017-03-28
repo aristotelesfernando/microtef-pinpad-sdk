@@ -10,13 +10,13 @@ namespace Pinpad.Sdk.Test.Transaction
 	{
         EmvPinReader reader;
         MockedPinpadFacade mockedFacade;
-		MockedPinpadCommunication mockedComm;
+		PinpadCommunicationMock mockedComm;
 		Pin pin;
 
 		[TestInitialize]
 		public void Setup()
 		{
-			this.mockedComm = new MockedPinpadCommunication();
+			this.mockedComm = new PinpadCommunicationMock();
             this.mockedFacade = new MockedPinpadFacade();
             this.reader = new EmvPinReader();
 		}

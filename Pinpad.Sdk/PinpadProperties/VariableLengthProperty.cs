@@ -6,7 +6,7 @@ namespace Pinpad.Sdk.Properties
 	/// <summary>
 	/// Controller for PinPad command properties with the length variable
 	/// </summary>
-	public class VariableLengthProperty<type> : SimpleProperty<type>
+	public sealed class VariableLengthProperty<type> : SimpleProperty<type>
 	{
 		// Members
 		/// <summary>

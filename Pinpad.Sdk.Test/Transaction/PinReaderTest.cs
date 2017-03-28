@@ -13,7 +13,7 @@ namespace Pinpad.Sdk.Test.Transaction
         [TestInitialize]
         public void Setup()
         {
-            this.pinReader = new PinReader(new MockedPinpadCommunication());
+            this.pinReader = new PinReader(new PinpadCommunicationMock());
         }
 
         [TestMethod]

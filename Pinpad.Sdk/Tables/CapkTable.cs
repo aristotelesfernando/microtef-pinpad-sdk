@@ -9,7 +9,7 @@ namespace Pinpad.Sdk
     /// Certification Authority Public Key table
     /// CAPKs are used by EMV cards for offline autentication and pin cryptography
     /// </summary>
-    public class CapkTable : BaseTable {
+    public sealed class CapkTable : BaseTable {
         /// <summary>
         /// Constructor
         /// </summary>

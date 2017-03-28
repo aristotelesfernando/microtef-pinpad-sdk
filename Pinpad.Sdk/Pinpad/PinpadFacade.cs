@@ -1,5 +1,6 @@
 ﻿using MicroPos.CrossPlatform;
 using Pinpad.Sdk.Model;
+using Pinpad.Sdk.Model.Pinpad;
 using Pinpad.Sdk.Pinpad;
 
 namespace Pinpad.Sdk
@@ -7,7 +8,7 @@ namespace Pinpad.Sdk
     /// <summary>
     /// Contains the access to each pinpad component, i. e. keyboard, display, terminal information and so forth.
     /// </summary>
-    public class PinpadFacade : IPinpadFacade
+    public sealed class PinpadFacade : IPinpadFacade
 	{
 		/// <summary>
 		/// Controller for Stone Connection adapter.
@@ -25,17 +26,19 @@ namespace Pinpad.Sdk
 				this.pinpadConnection = value;
 
 				this.Communication = new PinpadCommunication(this.Connection);
-				this.Infos = new PinpadInfos(this.Communication);
-				this.Display = new PinpadDisplay(this.Communication);
-                this.Keyboard = new PinpadKeyboard(this.Communication, this.Infos, this.Display);
-                this.TransactionService = new PinpadTransaction(this.Communication);
-                this.Printer = new IngenicoPinpadPrinter(this.Communication, this.Infos);
+				this.Infos = new PinpadInfos(this.Communication as PinpadCommunication);
+				this.Display = new PinpadDisplay(this.Communication as PinpadCommunication);
+                this.Keyboard = new PinpadKeyboard(this.Communication as PinpadCommunication, 
+                    this.Infos, this.Display);
+                this.TransactionService = new PinpadTransaction(this.Communication as PinpadCommunication);
+                this.Printer = new IngenicoPinpadPrinter(this.Communication as PinpadCommunication, 
+                    this.Infos);
 			}
 		}
 		/// <summary>
 		/// Gets the default Communication adapter.
 		/// </summary>
-		public PinpadCommunication Communication { get; internal set; }
+		public IPinpadCommunication Communication { get; internal set; }
 		/// <summary>
 		/// Responsible for authorization operations.
 		/// </summary>

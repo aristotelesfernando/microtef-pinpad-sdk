@@ -73,7 +73,7 @@ namespace Pinpad.Sdk.Test.EmvTable
         [ExpectedException(typeof(ArgumentNullException))]
         public void PinpadTablpeoe_should_throw_exception_if_null_PinpadCommunication()
         {
-			PinpadTable table = new PinpadTable(this.MockedFacade.Communication);
+			PinpadTable table = new PinpadTable(this.MockedFacade.Communication as PinpadCommunication);
         }
 
         // ** Tests bellow are commented, due to need of pinpad connection:
