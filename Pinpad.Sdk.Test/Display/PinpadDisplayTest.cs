@@ -11,7 +11,7 @@ namespace Pinpad.Sdk.Test.Display
 		[TestMethod]
 		public void PinpadDisplay_should_not_return_null()
 		{
-			PinpadConnection conn = new PinpadConnection(Mock.Of<IPinpadConnection>());
+			IPinpadConnection conn = Mock.Of<IPinpadConnection>();
 
 			PinpadCommunication comm = new PinpadCommunication(conn);
 			PinpadDisplay display = new PinpadDisplay(comm);

@@ -8,7 +8,7 @@ namespace Pinpad.Sdk.Test
 {
 	public class PinpadCommunicationMock : IPinpadCommunication
 	{
-        public IBasicPinpadConnection PinpadConnection
+        public IPinpadConnection Connection
         {
             get
             {

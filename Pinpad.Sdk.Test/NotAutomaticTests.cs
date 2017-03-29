@@ -40,7 +40,7 @@ namespace Pinpad.Sdk.Test
 			//this.mockedPinpadConnection = new MockedPinpadConnection();
 
 			// prod:
-			PinpadConnection conn = PinpadConnection.GetFirst();
+			IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
 
 			PinpadCommunication comm = new PinpadCommunication(conn);
 
@@ -72,7 +72,7 @@ namespace Pinpad.Sdk.Test
 		//[TestMethod]
 		public void Keyboard_getNumber_test ()
 		{
-			PinpadConnection conn = PinpadConnection.GetFirst();
+			IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
 
 			PinpadFacade facade = new PinpadFacade(conn);
 
@@ -92,7 +92,7 @@ namespace Pinpad.Sdk.Test
 		//[TestMethod]
 		public void Keyboard_GetAmount_test ()
 		{
-			PinpadConnection conn = PinpadConnection.GetFirst();
+			IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
 
 			PinpadFacade pinpad = new PinpadFacade(conn);
 			Nullable<decimal> amount = pinpad.Keyboard.GetAmount(AmountCurrencyCode.Yen);
@@ -109,7 +109,7 @@ namespace Pinpad.Sdk.Test
 		//[TestMethod]
 		public void OPN_test ()
 		{
-			PinpadConnection conn = PinpadConnection.GetFirst();
+			IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
 
 			PinpadCommunication comm = new PinpadCommunication(conn);
 
@@ -143,13 +143,13 @@ namespace Pinpad.Sdk.Test
 			// Show corresponding COM port on the pinpad display:
 			foreach (IPinpadFacade pinpad in pinpads)
 			{
-				pinpad.Display.ShowMessage("", pinpad.Communication.PinpadConnection.Connection.ConnectionName, DisplayPaddingType.Center);
+				pinpad.Display.ShowMessage("", pinpad.Communication.PortName, DisplayPaddingType.Center);
 			}
 
 			// Closing conections...
 			foreach (IPinpadFacade pinpad in pinpads)
 			{
-				pinpad.Communication.ClosePinpadConnection("Close " + pinpad.Communication.PinpadConnection.Connection.ConnectionName);
+				pinpad.Communication.ClosePinpadConnection("Close " + pinpad.Communication.PortName);
 			}
 
 			Assert.IsTrue(true);
@@ -159,7 +159,7 @@ namespace Pinpad.Sdk.Test
 		{
 			for (int i = 0; i < 5; i++)
 			{
-				PinpadConnection conn = PinpadConnection.GetFirst();
+				IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
 				PinpadFacade facade = new PinpadFacade(conn);
 
 				facade.Display.ShowMessage("YAY! ^-^", (i + 1).ToString(), DisplayPaddingType.Center);
@@ -172,7 +172,7 @@ namespace Pinpad.Sdk.Test
 		{
 			for (int i = 0; i < 5; i++)
 			{
-				PinpadConnection conn = PinpadConnection.GetAt("COM27");
+				IPinpadConnection conn = PinpadConnectionProvider.GetAt("COM27");
                 PinpadFacade facade = new PinpadFacade(conn);
 
 				bool displayStatus = facade.Display.ShowMessage("YAY! ^-^", (i + 1).ToString(), DisplayPaddingType.Center);
@@ -183,7 +183,7 @@ namespace Pinpad.Sdk.Test
 		//[TestMethod]
 		public void Ping_test ()
 		{
-			PinpadConnection conn = PinpadConnection.GetFirst();
+			IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
 			PinpadFacade facade = new PinpadFacade(conn);
 
 			facade.Display.ShowMessage("yay!", null, DisplayPaddingType.Center);
@@ -194,7 +194,7 @@ namespace Pinpad.Sdk.Test
         //[TestMethod]
         public void GetNumericValue_test ()
 		{
-			PinpadConnection conn = PinpadConnection.GetFirst();
+			IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
 			PinpadFacade facade = new PinpadFacade(conn);
 
 			Nullable<int> value = facade.Keyboard.DataPicker.GetNumericValue("Data Picker", false,  0, 5);
@@ -205,7 +205,7 @@ namespace Pinpad.Sdk.Test
 		//[TestMethod]
 		public void GetValueInOptionsShort_test ()
 		{
-			PinpadConnection conn = PinpadConnection.GetFirst();
+			IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
 			PinpadFacade facade = new PinpadFacade(conn);
 
 			Nullable<short> value = facade.Keyboard.DataPicker.GetValueInOptions("Parcelas", false,2, 3, 4, 5, 6);
@@ -215,7 +215,7 @@ namespace Pinpad.Sdk.Test
 		//[TestMethod]
 		public void GetValueInOptionsString_test ()
 		{
-			PinpadConnection conn = PinpadConnection.GetFirst();
+			IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
 			PinpadFacade facade = new PinpadFacade(conn);
 
 			string value = facade.Keyboard.DataPicker.GetValueInOptions("Pokemon", false, "Bulbasaur", "Charmander", "Squirtle");
@@ -225,7 +225,7 @@ namespace Pinpad.Sdk.Test
 		//[TestMethod]
 		public void PinpadTransaction_ReadCard_test ()
 		{
-            PinpadConnection conn = PinpadConnection.GetFirst();
+            IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
             PinpadFacade facade = new PinpadFacade(conn);
             TransactionType trnxType = TransactionType.Undefined;
 
@@ -241,7 +241,7 @@ namespace Pinpad.Sdk.Test
         //[TestMethod]
         public void PrintText_test()
         {
-            PinpadConnection conn = PinpadConnection.GetFirst();
+            IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
             PinpadFacade facade = new PinpadFacade(conn);
 
             facade.Printer.AddLogo()
@@ -266,7 +266,7 @@ namespace Pinpad.Sdk.Test
         //[TestMethod]
         public void PrintImage_test()
         {
-            PinpadConnection conn = PinpadConnection.GetFirst();
+            IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
             PinpadFacade facade = new PinpadFacade(conn);
 
             facade.Printer.AddLogo()
@@ -276,7 +276,7 @@ namespace Pinpad.Sdk.Test
         //[TestMethod]
         public void PinpadInfo_GetDukptSerialNumber_test()
         {
-            PinpadConnection conn = PinpadConnection.GetFirst();
+            IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
             PinpadFacade facade = new PinpadFacade(conn);
 
             for (int i = 1; i <= 21; i++)
@@ -292,7 +292,7 @@ namespace Pinpad.Sdk.Test
         //[TestMethod]
         public void Pinpad_GetValueInOptionsShortWithCircularBehavior_test()
         {
-            PinpadConnection conn = PinpadConnection.GetFirst();
+            IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
 
             PinpadCommunication comm = new PinpadCommunication(conn);
             PinpadInfos infos = new PinpadInfos(comm);
@@ -304,7 +304,7 @@ namespace Pinpad.Sdk.Test
         //[TestMethod]
         public void Pinpad_GetValueInOptionsStringWithCircularBehavior_test()
         {
-            PinpadConnection conn = PinpadConnection.GetFirst();
+            IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
 
             PinpadCommunication comm = new PinpadCommunication(conn);
             PinpadInfos infos = new PinpadInfos(comm);

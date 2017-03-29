@@ -49,7 +49,6 @@
     <Compile Include="Exceptions\ExpiredCardException.cs" />
     <Compile Include="Exceptions\PinpadException.cs" />
     <Compile Include="Exceptions\PinpadNotFoundException.cs" />
-    <Compile Include="Pinpad\IBasicPinpadConnection.cs" />
     <Compile Include="Pinpad\IPinpadCommunication.cs" />
     <Compile Include="Pinpad\IPinpadKeyboard.cs" />
     <Compile Include="Pinpad\IPinpadPrinter.cs" />

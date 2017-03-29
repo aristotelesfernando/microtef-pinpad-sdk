@@ -117,7 +117,7 @@
     <Compile Include="PinpadProperties\VariableLengthCollectionProperty.cs" />
     <Compile Include="PinpadProperties\VariableLengthProperty.cs" />
     <Compile Include="Pinpad\PinpadFacade.cs" />
-    <Compile Include="Pinpad\PinpadConnection.cs" />
+    <Compile Include="Pinpad\PinpadConnectionProvider.cs" />
     <Compile Include="Pinpad\PinpadPrinter.cs" />
     <Compile Include="Pinpad\PinpadTable.cs" />
     <Compile Include="Pinpad\PinpadTransaction.cs" />

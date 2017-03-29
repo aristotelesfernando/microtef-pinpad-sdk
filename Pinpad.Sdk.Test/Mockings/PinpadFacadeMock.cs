@@ -7,7 +7,7 @@ namespace Pinpad.Sdk.Test
     public class MockedPinpadFacade : IPinpadFacade
     {
         public IPinpadCommunication Communication { get; set; }
-		public PinpadConnection Connection { get; set; }
+		public PinpadConnectionProvider Connection { get; set; }
 		public IPinpadDisplay Display { get; set; }
         public IPinpadInfos Infos { get; set; }
         public IPinpadKeyboard Keyboard { get; set; }

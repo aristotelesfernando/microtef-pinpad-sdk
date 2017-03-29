@@ -13,12 +13,12 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Controller for Stone Connection adapter.
 		/// </summary>
-		private PinpadConnection pinpadConnection;
+		private IPinpadConnection pinpadConnection;
 		/// <summary>
 		/// Controller for Stone Connection adapter.
 		/// It's set method updates the pinpad facade properties based on the new connection.
 		/// </summary>
-		internal PinpadConnection Connection
+		internal IPinpadConnection Connection
 		{
 			get { return this.pinpadConnection; }
 			set
@@ -65,14 +65,6 @@ namespace Pinpad.Sdk
         /// </summary>
         /// <param name="pinpadConnection">Pinpad connection.</param>
         public PinpadFacade(IPinpadConnection pinpadConnection)
-		{
-			this.Connection = new PinpadConnection(pinpadConnection);
-		}
-		/// <summary>
-		/// Creates all pinpad adapters.
-		/// </summary>
-		/// <param name="pinpadConnection">Pinpad connection.</param>
-		public PinpadFacade (PinpadConnection pinpadConnection)
 		{
 			this.Connection = pinpadConnection;
 		}

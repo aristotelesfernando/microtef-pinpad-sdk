@@ -1,9 +1,11 @@
-﻿namespace Pinpad.Sdk.Model.Pinpad
+﻿using MicroPos.CrossPlatform;
+
+namespace Pinpad.Sdk.Model.Pinpad
 {
     // TODO: Doc
     public interface IPinpadCommunication
     {
-        IBasicPinpadConnection PinpadConnection { get; }
+        IPinpadConnection Connection { get; }
         string PortName { get; }
         bool OpenPinpadConnection();
         bool ClosePinpadConnection(string message);
