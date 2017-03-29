@@ -6,8 +6,6 @@ using System;
 
 namespace Pinpad.Sdk
 {
-    // TODO: PARAR DE UTILIZAR!
-
 	/// <summary>
 	/// Pinpad connection handler.
 	/// </summary>
