@@ -14,7 +14,7 @@ namespace Pinpad.Sdk.Properties
 	/// <summary>
 	/// Controller for cryptography methods.
 	/// </summary>
-	public class CryptographyMethod
+	public sealed class CryptographyMethod
 	{
 		/// <summary>
 		/// Cryptography Key Management Method

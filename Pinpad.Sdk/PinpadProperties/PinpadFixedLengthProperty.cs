@@ -13,7 +13,7 @@ namespace Pinpad.Sdk.Properties
 	/// <summary>
 	/// Controller for PinPad command properties with a fixed length
 	/// </summary>
-	public class PinpadFixedLengthProperty<type> : SimpleProperty<type> 
+	public sealed class PinpadFixedLengthProperty<type> : SimpleProperty<type> 
 	{
 		// Members
 		/// <summary>

@@ -6,6 +6,7 @@ using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Transaction;
 using Pinpad.Sdk.Exceptions;
 using Pinpad.Sdk.Model.TypeCode;
+using Pinpad.Sdk.Model.Pinpad;
 
 namespace Pinpad.Sdk
 {
@@ -29,7 +30,7 @@ namespace Pinpad.Sdk
         /// <param name="amount">Transaction amount.</param>
         /// <param name="pin">Pin information read.</param>
         /// <returns>Operation status.</returns>
-		internal ResponseStatus Read(PinpadCommunication communication, decimal amount, out Pin pin)
+		internal ResponseStatus Read(IPinpadCommunication communication, decimal amount, out Pin pin)
 		{
 			pin = null;
 
@@ -102,7 +103,7 @@ namespace Pinpad.Sdk
 		/// <param name="pinpadCommunication">Pinpad communication, through which the communication with the pinpad is made.</param>
 		/// <param name="amount">Transaction amount.</param>
 		/// <returns>ABECS GOC command response.</returns>
-		private GocResponse SendGoc(PinpadCommunication pinpadCommunication, decimal amount)
+		private GocResponse SendGoc(IPinpadCommunication pinpadCommunication, decimal amount)
         {
             GocRequest request = new GocRequest();
 
@@ -213,7 +214,7 @@ namespace Pinpad.Sdk
         /// </summary>
         /// <param name="communication">Pinpad facade, through which pinpad communication are made.</param>
         /// <param name="amount">Transaction amount.</param>
-        private void Validate(PinpadCommunication communication, decimal amount)
+        private void Validate(IPinpadCommunication communication, decimal amount)
         {
             if (communication == null) { throw new ArgumentNullException("pinpadCommunication cannot be null. Unable to communicate with the pinpad."); }
             if (amount <= 0) { throw new ArgumentException("amount shall be greater than 0."); }

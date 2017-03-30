@@ -73,39 +73,33 @@ namespace Pinpad.Sdk.Test.EmvTable
         [ExpectedException(typeof(ArgumentNullException))]
         public void PinpadTablpeoe_should_throw_exception_if_null_PinpadCommunication()
         {
-			PinpadTable table = new PinpadTable(this.MockedFacade.Communication);
+			PinpadTable table = new PinpadTable(this.MockedFacade.Communication as PinpadCommunication);
         }
+        [TestMethod]
+        public void PinpadTable_should_not_return_null()
+        {
+            IPinpadConnection conn = Mock.Of<IPinpadConnection>();
+            this.MockedFacade.Communication = new PinpadCommunication(conn);
+            PinpadTable table = new PinpadTable(this.MockedFacade.Communication);
+            Assert.IsNotNull(table);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void PinpadTable_AddEntry_should_throw_exception_if_unknown_entry()
+        {
+            PinpadTable table = new PinpadTable(new PinpadCommunicationMock());
+            table.AddEntry(new MockedBaseTableEntry());
+        }
+        [TestMethod]
+        public void PinpadTable_loading_tables_should_succeed()
+        {
+            PinpadTable table = new PinpadTable(new PinpadCommunicationMock());
 
-        // ** Tests bellow are commented, due to need of pinpad connection:
-        // TODO: Criar interface para PinpadCommunication, assim é possível mocar o
-        // comportamento dos métodos.
-        //[TestMethod]
-        //public void PinpadTable_should_not_return_null()
-        //{
-        //    PinpadConnection conn = new PinpadConnection(Mock.Of<IPinpadConnection>());
-        //    this.MockedFacade.Communication = new PinpadCommunication(conn);
-        //    PinpadTable table = new PinpadTable(this.MockedFacade.Communication);
-        //    Assert.IsNotNull(table);
-        //}
+            Assert.AreEqual(table.CapkTable.Count, 0);
 
-        //[TestMethod]
-        //[ExpectedException(typeof(NotImplementedException))]
-        //public void PinpadTable_AddEntry_should_throw_exception_if_unknown_entry()
-        //{
-        //    PinpadTable table = new PinpadTable(new MockedPinpadCommunication());
-        //    table.AddEntry(new MockedBaseTableEntry());
-        //}
+            for (int i = 0; i < 10; i++) { table.AddEntry(this.GetCapk(4)); }
 
-        //[TestMethod]
-        //public void PinpadTable_loading_tables_should_succeed()
-        //{
-        //    PinpadTable table = new PinpadTable(new MockedPinpadCommunication());
-
-        //    Assert.AreEqual(table.CapkTable.Count, 0);
-
-        //    for (int i = 0; i < 10; i++) { table.AddEntry(this.GetCapk(4)); }
-
-        //    Assert.AreEqual(table.CapkTable.Count, 1);
-        //}
+            Assert.AreEqual(table.CapkTable.Count, 1);
+        }
     }
 }

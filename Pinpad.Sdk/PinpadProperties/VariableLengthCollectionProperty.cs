@@ -9,7 +9,7 @@ namespace Pinpad.Sdk.Properties
 	/// Controller for PinPad properties with a list of items
 	/// </summary>
 	/// <typeparam name="type">data type to hold</typeparam>
-	public class VariableLengthCollectionProperty<type> : SimpleProperty<List<type>>
+	public sealed class VariableLengthCollectionProperty<type> : SimpleProperty<List<type>>
 	{
 		// Members
 		private List<type> Collection { get; set; }

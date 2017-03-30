@@ -56,6 +56,9 @@
       <HintPath>..\packages\MicroPos.CrossPlatform.1.4.0\lib\portable40-net45+sl5+win8+wp8+wpa81\MicroPos.CrossPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MicroPos.Platform.Desktop">
+      <HintPath>..\..\micropos-platform-desktop\MicroPos.Platform.Desktop\bin\Release\MicroPos.Platform.Desktop.dll</HintPath>
+    </Reference>
     <Reference Include="Moq, Version=4.5.23.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.5.23\lib\net45\Moq.dll</HintPath>
       <Private>True</Private>
@@ -91,12 +94,12 @@
     <Compile Include="Mapper\CardMapperTest.cs" />
     <Compile Include="Mapper\MagneticStripe\DefaultMagneticStripeTrackReaderTest.cs" />
     <Compile Include="Mapper\EmvTrackMapperTest.cs" />
-    <Compile Include="Mockings\MockedBaseTableEntry.cs" />
+    <Compile Include="Mockings\BaseTableEntryMock.cs" />
     <Compile Include="Mockings\CardBrandMocker.cs" />
-    <Compile Include="Mockings\MockedPinpadCommunication.cs" />
-    <Compile Include="Mockings\MockedPinpadConnection.cs" />
-    <Compile Include="Mockings\MockedPinpadFacade.cs" />
-    <Compile Include="Mockings\MockedPinpadInfos.cs" />
+    <Compile Include="Mockings\PinpadCommunicationMock.cs" />
+    <Compile Include="Mockings\PinpadConnectionMock.cs" />
+    <Compile Include="Mockings\PinpadFacadeMock.cs" />
+    <Compile Include="Mockings\PinpadInfosMock.cs" />
     <Compile Include="NotAutomaticTests.cs" />
     <Compile Include="Printer\IngenicoPinpadPrinterTest.cs" />
     <Compile Include="Printer\PrinterItemTest.cs" />

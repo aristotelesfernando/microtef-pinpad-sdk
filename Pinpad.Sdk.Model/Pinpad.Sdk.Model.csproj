@@ -49,6 +49,7 @@
     <Compile Include="Exceptions\ExpiredCardException.cs" />
     <Compile Include="Exceptions\PinpadException.cs" />
     <Compile Include="Exceptions\PinpadNotFoundException.cs" />
+    <Compile Include="Pinpad\IPinpadCommunication.cs" />
     <Compile Include="Pinpad\IPinpadKeyboard.cs" />
     <Compile Include="Pinpad\IPinpadPrinter.cs" />
     <Compile Include="Transaction\CardEntry.cs" />
@@ -99,6 +100,7 @@
       <Private>True</Private>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

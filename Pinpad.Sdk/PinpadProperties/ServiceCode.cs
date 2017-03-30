@@ -7,7 +7,7 @@ namespace Pinpad.Sdk.Properties
 	/// <summary>
 	/// Controller for Service Codes
 	/// </summary>
-	public class ServiceCode 
+	public sealed class ServiceCode 
 	{
 		/// <summary>
 		/// The service code as string.

@@ -12,7 +12,7 @@ namespace Pinpad.Sdk.Properties
 	/// <summary>
 	/// Controller for reading a string containing parameters.
 	/// </summary>
-	public class StringReader 
+	public sealed class StringReader 
 	{
 		// Members
 		/// <summary>

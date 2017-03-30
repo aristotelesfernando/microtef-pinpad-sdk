@@ -13,7 +13,7 @@ namespace Pinpad.Sdk.Properties
 	/// <summary>
 	/// Contains commonly used StringFormatters
 	/// </summary>
-	public class DefaultStringFormatter 
+	public sealed class DefaultStringFormatter 
 	{
 		/// <summary>
 		/// Default integer string formatter.

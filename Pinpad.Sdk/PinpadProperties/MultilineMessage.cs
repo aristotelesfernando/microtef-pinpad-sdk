@@ -13,7 +13,7 @@ namespace Pinpad.Sdk.Properties
 	/// <summary>
 	/// multiline PinPad message
 	/// </summary>
-	public class MultilineMessage : BaseProperty 
+	public sealed class MultilineMessage : BaseProperty 
 	{
 		// Members
 		/// <summary>

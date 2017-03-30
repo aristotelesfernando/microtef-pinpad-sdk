@@ -14,7 +14,7 @@ namespace Pinpad.Sdk.Properties
     /// <summary>
     /// Property that represents a region in the command
     /// </summary>
-    public class RegionProperty : SimpleProperty<Nullable<int>> 
+    public sealed class RegionProperty : SimpleProperty<Nullable<int>> 
 	{
 		// Members
         /// <summary>

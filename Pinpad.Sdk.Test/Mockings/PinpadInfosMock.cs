@@ -4,7 +4,7 @@ using Pinpad.Sdk.Model.TypeCode;
 
 namespace Pinpad.Sdk.Test.Mockings
 {
-    public sealed class MockedPinpadInfos : IPinpadInfos
+    public sealed class PinpadInfosMock : IPinpadInfos
     {
         public bool IsContactless
         {

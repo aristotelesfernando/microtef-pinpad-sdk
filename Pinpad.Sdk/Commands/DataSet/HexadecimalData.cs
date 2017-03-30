@@ -15,7 +15,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// Controller for Hexadecimal data
 	/// </summary>
-	public class HexadecimalData 
+	public sealed class HexadecimalData 
 	{
 		// Members
 		/// <summary>

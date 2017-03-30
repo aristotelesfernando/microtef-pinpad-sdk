@@ -12,7 +12,7 @@ namespace Pinpad.Sdk
     /// <summary>
     /// Pinpad keyboard tool
     /// </summary>
-    public class PinpadKeyboard : IPinpadKeyboard
+    public sealed class PinpadKeyboard : IPinpadKeyboard
 	{
         // Properties
         /// <summary>

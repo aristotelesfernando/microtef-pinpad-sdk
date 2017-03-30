@@ -14,7 +14,7 @@ namespace Pinpad.Sdk.Properties
 	/// <summary>
 	/// Contains commonly used String Parsers.
 	/// </summary>
-	public class DefaultStringParser 
+	public sealed class DefaultStringParser 
 	{
 		/// <summary>
 		/// Parses a long integer with the specified string length.

@@ -1,4 +1,5 @@
 ﻿using Pinpad.Sdk.Model;
+using Pinpad.Sdk.Model.Pinpad;
 
 namespace Pinpad.Sdk
 {
@@ -10,7 +11,7 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Gets the default Communication adapter.
 		/// </summary>
-		PinpadCommunication Communication { get; }
+		IPinpadCommunication Communication { get; }
 		/// <summary>
 		/// Responsible for authorization operations.
 		/// </summary>

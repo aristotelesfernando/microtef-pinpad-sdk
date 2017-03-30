@@ -7,7 +7,7 @@ namespace Pinpad.Sdk
 	/// <summary>
 	/// Controller for CAPK revoked certificates
 	/// </summary>
-	public class RevCerTable : BaseTable {
+	public sealed class RevCerTable : BaseTable {
 		/// <summary>
 		/// Constructor
 		/// </summary>

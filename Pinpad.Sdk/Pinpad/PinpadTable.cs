@@ -1,4 +1,5 @@
 ﻿using Pinpad.Sdk.Commands;
+using Pinpad.Sdk.Model.Pinpad;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace Pinpad.Sdk
     /// <summary>
     /// PinpadTable manager. PinpadTable is responsible for all operations related to table (CAPK and AID tables) controlling.
     /// </summary>
-    public class PinpadTable
+    public sealed class PinpadTable
     {
         // Constants:
         /// <summary>
@@ -28,7 +29,7 @@ namespace Pinpad.Sdk
         /// <summary>
         /// Pinpad communication provider.
         /// </summary>
-        public PinpadCommunication PinpadCommunication { get; private set; }
+        public IPinpadCommunication PinpadCommunication { get; private set; }
 
         // Table controlling members:
         /// <summary>
@@ -111,7 +112,7 @@ namespace Pinpad.Sdk
 		/// Creates a pinpad table adapter.
 		/// </summary>
 		/// <param name="pinpadCommunication">Pinpad communication, through which is possible to communicate with the pinpad.</param>
-        public PinpadTable (PinpadCommunication pinpadCommunication)
+        public PinpadTable (IPinpadCommunication pinpadCommunication)
         {
 			if (pinpadCommunication == null)
             {

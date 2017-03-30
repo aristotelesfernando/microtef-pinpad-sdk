@@ -102,12 +102,12 @@
     <Compile Include="Commands\DataSet\GertecResponseCode.cs" />
     <Compile Include="IPinpadFacade.cs" />
     <Compile Include="PinpadProperties\BaseProperty.cs" />
+    <Compile Include="PinpadProperties\IProperty.cs" />
     <Compile Include="PinpadProperties\PinpadCollectionProperty.cs" />
     <Compile Include="PinpadProperties\CryptographyMethod.cs" />
     <Compile Include="PinpadProperties\DefaultStringFormatter.cs" />
     <Compile Include="PinpadProperties\DefaultStringParser.cs" />
     <Compile Include="PinpadProperties\PinpadFixedLengthProperty.cs" />
-    <Compile Include="PinpadProperties\IProperty.cs" />
     <Compile Include="PinpadProperties\MultilineMessage.cs" />
     <Compile Include="PinpadProperties\RegionProperty.cs" />
     <Compile Include="PinpadProperties\ServiceCode.cs" />
@@ -117,7 +117,7 @@
     <Compile Include="PinpadProperties\VariableLengthCollectionProperty.cs" />
     <Compile Include="PinpadProperties\VariableLengthProperty.cs" />
     <Compile Include="Pinpad\PinpadFacade.cs" />
-    <Compile Include="Pinpad\PinpadConnection.cs" />
+    <Compile Include="Pinpad\PinpadConnectionProvider.cs" />
     <Compile Include="Pinpad\PinpadPrinter.cs" />
     <Compile Include="Pinpad\PinpadTable.cs" />
     <Compile Include="Pinpad\PinpadTransaction.cs" />

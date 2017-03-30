@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Entry data to finish an EMV authorization.
 	/// </summary>
-	public class IssuerEmvDataEntry
+	public sealed class IssuerEmvDataEntry
 	{
 		/// <summary>
 		/// Communication status from acquirer. On ABECS, corresponds to FNC_COMMST.

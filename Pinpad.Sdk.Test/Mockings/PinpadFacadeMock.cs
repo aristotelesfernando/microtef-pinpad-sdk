@@ -1,12 +1,13 @@
 ﻿using System;
 using Pinpad.Sdk.Model;
+using Pinpad.Sdk.Model.Pinpad;
 
 namespace Pinpad.Sdk.Test
 {
     public class MockedPinpadFacade : IPinpadFacade
     {
-        public PinpadCommunication Communication { get; set; }
-		public PinpadConnection Connection { get; set; }
+        public IPinpadCommunication Communication { get; set; }
+		public PinpadConnectionProvider Connection { get; set; }
 		public IPinpadDisplay Display { get; set; }
         public IPinpadInfos Infos { get; set; }
         public IPinpadKeyboard Keyboard { get; set; }

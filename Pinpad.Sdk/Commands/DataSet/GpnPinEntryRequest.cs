@@ -6,7 +6,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// GPN pin entry record
 	/// </summary>
-	public class GpnPinEntryRequest : BaseProperty 
+	public sealed class GpnPinEntryRequest : BaseProperty 
 	{
 		/// <summary>
 		/// Constructor

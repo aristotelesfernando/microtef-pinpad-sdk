@@ -7,7 +7,7 @@ namespace Pinpad.Sdk
 	/// <summary>
 	/// EMV Application IDentifier table record
 	/// </summary>
-	public class AidTable : BaseAidTable 
+	public sealed class AidTable : BaseAidTable 
 	{
 		/// <summary>
 		/// Default value for Transaction Category Code.

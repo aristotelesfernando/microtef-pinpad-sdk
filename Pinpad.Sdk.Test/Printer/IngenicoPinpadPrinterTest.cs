@@ -14,8 +14,8 @@ namespace Pinpad.Sdk.Test.Printer
         [TestInitialize]
         public void Setup ()
         {
-            this.Printer = new IngenicoPinpadPrinter(new MockedPinpadCommunication(),
-                new MockedPinpadInfos());
+            this.Printer = new IngenicoPinpadPrinter(new PinpadCommunicationMock(),
+                new PinpadInfosMock());
         }
 
         [TestMethod]
