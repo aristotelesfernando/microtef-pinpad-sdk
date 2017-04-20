@@ -34,7 +34,7 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Timeout for NonBlocking messages
 		/// </summary>
-		internal const int NON_BLOCKING_TIMEOUT = 2000;
+		public const int NON_BLOCKING_TIMEOUT = 2000;
         /// <summary>
         /// Byte used to cancel the previous operation.
         /// </summary>
