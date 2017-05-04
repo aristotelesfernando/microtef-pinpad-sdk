@@ -77,7 +77,7 @@ namespace Pinpad.Sdk
         /// <summary>
         /// Serial port in which the pinpad is attached.
         /// </summary>
-		public string PortName { get { return this.Connection.ConnectionName; } }
+		public string ConnectionName { get { return this.Connection.ConnectionName; } }
 
 		// Private members
         /// <summary>
@@ -216,25 +216,25 @@ namespace Pinpad.Sdk
 			{
 				if (this._requestCanceled == false)
 				{
-					this.Connection.ReadTimeout = PinpadCommunication.CANCEL_TIMEOUT;
+                    // Sends a CAN request while the pinpad does not acknowledge the cancellation.
+                    // That is, while the application does not receive the EOT byte.
+                    this.Connection.ReadTimeout = PinpadCommunication.CANCEL_TIMEOUT;
 
 					byte b;
 
-					// Sends a CAN request while the pinpad does not acknowledge the cancellation.
-					// That is, while the application does not receive the EOT byte.
-					do
-					{
-						try
-						{
-							b = this.Connection.ReadByte();
-						}
-						catch (TimeoutException)
-						{
-							return false;
-						}
-					} while (b != EOT_BYTE); // Wait for EOT
+                    do
+                    {
+                        try
+                        {
+                            b = this.Connection.ReadByte();
+                        }
+                        catch (TimeoutException)
+                        {
+                            return false;
+                        }
+                    } while (b != EOT_BYTE); // Wait for EOT
 
-					this._requestCanceled = true;
+                    this._requestCanceled = true;
 				}
 			}
 			return this._requestCanceled;
@@ -488,7 +488,7 @@ namespace Pinpad.Sdk
         private void OpenConnectionSafely()
         {
             // Search for a pinpad in the specified serial port:
-            this.Connection = PinpadConnectionManager.GetPinpadConnection(this.PortName);
+            this.Connection = PinpadConnectionManager.GetPinpadConnection(this.ConnectionName);
 
             if (this.Connection.IsOpen == false)
             {
@@ -543,14 +543,16 @@ namespace Pinpad.Sdk
 
 			lock (this.Connection)
 			{
-				// Cancel the previous request:
-				this.CancelRequest();
+                // TODO: PINPADWIFI! Cancel Request comentado
 
-				// Saves the current request as last:
-				this.LastSentRequest = request.CommandString;
+                // Cancel the previous request:
+                //this.CancelRequest();
 
-				// Send the request:
-				return InternalSendRequest(requestByteCollection.ToArray());
+                ////// Saves the current request as last:
+                //this.LastSentRequest = request.CommandString;
+
+                // Send the request:
+                return InternalSendRequest(requestByteCollection.ToArray());
 			}
 		}
         /// <summary>
@@ -560,63 +562,73 @@ namespace Pinpad.Sdk
         /// the context features.</param>
         /// <param name="counter">Number of times to try to read the response (timeout).</param>
         /// <returns>The response as string or null in case of nothing received.</returns>
-		private string InternalReceiveResponseString (IContext context, int counter = 0)
-		{
-			byte b;
+		private string InternalReceiveResponseString(IContext context, int counter = 0)
+        {
+            byte b;
 
-			// Response itself
-			List<byte> responseByteCollection = new List<byte>();
+            // Response itself
+            List<byte> responseByteCollection = new List<byte>();
 
-			// Reads a byte (possible garbage) until the reading of a SYN (in case of a normal request) or 
-			// an EOT (in case of a cancel request):
-			do
-			{
-				// Reads one byte:
-				b = this.Connection.ReadByte();
+            // Reads a byte (possible garbage) until the reading of a SYN (in case of a normal request) or 
+            // an EOT (in case of a cancel request):
 
-				if (context.HasToIncludeFirstByte == true)
-				{
-					responseByteCollection.Add(b);
-				}
+            do
+            {
+                // Reads one byte:
+                b = this.Connection.ReadByte();
 
-			} while (b != context.StartByte && b != EOT_BYTE);
+                if (context.HasToIncludeFirstByte == true)
+                {
+                    responseByteCollection.Add(b);
+                }
 
-			// In case of EOT, the request was cancelled:
-			if (b == EOT_BYTE)
-			{
-				this._requestCanceled = true;
-				return null;
-			}
+            } while (b != context.StartByte && b != EOT_BYTE);
 
-			// In case of SYN:
-			string command = null;
+            // In case of EOT, the request was cancelled:
+            if (b == EOT_BYTE)
+            {
+                this._requestCanceled = true;
+                return null;
+            }
 
-			// Iterates, reading bytes from I/O buffer (while an ETB if found):
-			do
-			{
-				// Reads one byte:
-				b = this.Connection.ReadByte();
+            // In case of SYN:
+            string command = null;
 
-				// If the byte read is an ETB (response from a CAN request):
-				if (b == context.EndByte)
-				{
-					command = CrossPlatformController.TextEncodingController.GetString(TextEncodingType.Ascii, responseByteCollection.ToArray());
-				}
+            // Iterates, reading bytes from I/O buffer (while an ETB if found):
+            do
+            {
+                // Reads one byte:
+                b = this.Connection.ReadByte();
 
-				// Adds the byte to the response:
-				responseByteCollection.Add(b);
-			} while (b != context.EndByte);
+                // If the byte read is an ETB (response from a CAN request):
+                if (b == context.EndByte)
+                {
+                    command = CrossPlatformController.TextEncodingController.GetString(TextEncodingType.Ascii, responseByteCollection.ToArray());
+                }
 
-			// Get's the checksum DIRECTLY from the response:
-			byte [] receivedChecksum = new byte [context.IntegrityCodeLength];
+                // Adds the byte to the response:
+                responseByteCollection.Add(b);
+            } while (b != context.EndByte);
 
-			for (int i = 0; i < context.IntegrityCodeLength; i++)
-			{
-				receivedChecksum [i] = this.Connection.ReadByte();
-			}
+            // Get's the checksum DIRECTLY from the response:
+            byte[] receivedChecksum = new byte[context.IntegrityCodeLength];
 
-			// Generates a checksum from the response body:
-			byte [] generatedChecksum = context.GetIntegrityCode(responseByteCollection.ToArray());
+            for (int i = 0; i < context.IntegrityCodeLength; i++)
+            {
+                receivedChecksum[i] = this.Connection.ReadByte();
+            }
+
+            // Generates a checksum from the response body:
+            byte[] generatedChecksum = context.GetIntegrityCode(responseByteCollection.ToArray());
+
+            //TODO: PINPADWIFI! Inversão dos index. Implementar de forma digna ou receber ja da forma correta do POS.
+            if (this.Connection.CommunicationType == CommunicationType.Wifi) {
+                byte[] auxByte = new byte[context.IntegrityCodeLength];
+                auxByte[0] = generatedChecksum[0];
+                auxByte[1] = generatedChecksum[1];
+                generatedChecksum[0] = auxByte[1];
+                generatedChecksum[1] = auxByte[0];
+            }
 
 			// Verify if both checksums match:
 			if (context.IsIntegrityCodeValid(receivedChecksum, generatedChecksum) == false)

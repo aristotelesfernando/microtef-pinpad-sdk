@@ -15,7 +15,7 @@ namespace Pinpad.Sdk.Model.Pinpad
         /// <summary>
         /// Port name in which the pinpad is connected.
         /// </summary>
-        string PortName { get; }
+        string ConnectionName { get; }
         /// <summary>
         /// Open logic connection to the pinpad.
         /// </summary>
