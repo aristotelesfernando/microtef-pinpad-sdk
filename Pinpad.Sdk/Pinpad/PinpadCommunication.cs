@@ -75,7 +75,7 @@ namespace Pinpad.Sdk
 		/// </summary>
 		public string LastReceivedResponse { get; private set; }
         /// <summary>
-        /// Serial port in which the pinpad is attached.
+        /// Serial port or ip address in which the pinpad is attached.
         /// </summary>
 		public string ConnectionName { get { return this.Connection.ConnectionName; } }
 
@@ -543,13 +543,11 @@ namespace Pinpad.Sdk
 
 			lock (this.Connection)
 			{
-                // TODO: PINPADWIFI! Cancel Request comentado
-
                 // Cancel the previous request:
-                //this.CancelRequest();
+                this.CancelRequest();
 
-                ////// Saves the current request as last:
-                //this.LastSentRequest = request.CommandString;
+                // Saves the current request as last:
+                this.LastSentRequest = request.CommandString;
 
                 // Send the request:
                 return InternalSendRequest(requestByteCollection.ToArray());
@@ -608,6 +606,7 @@ namespace Pinpad.Sdk
 
                 // Adds the byte to the response:
                 responseByteCollection.Add(b);
+
             } while (b != context.EndByte);
 
             // Get's the checksum DIRECTLY from the response:
@@ -621,17 +620,8 @@ namespace Pinpad.Sdk
             // Generates a checksum from the response body:
             byte[] generatedChecksum = context.GetIntegrityCode(responseByteCollection.ToArray());
 
-            //TODO: PINPADWIFI! Inversão dos index. Implementar de forma digna ou receber ja da forma correta do POS.
-            if (this.Connection.CommunicationType == CommunicationType.Wifi) {
-                byte[] auxByte = new byte[context.IntegrityCodeLength];
-                auxByte[0] = generatedChecksum[0];
-                auxByte[1] = generatedChecksum[1];
-                generatedChecksum[0] = auxByte[1];
-                generatedChecksum[1] = auxByte[0];
-            }
-
-			// Verify if both checksums match:
-			if (context.IsIntegrityCodeValid(receivedChecksum, generatedChecksum) == false)
+            // Verify if both checksums match:
+            if (context.IsIntegrityCodeValid(receivedChecksum, generatedChecksum) == false)
 			{
 				// If has tries to remand the message:
 				if (counter < TIMES_TO_REMAND_PACKAGE_ON_FAILURE)
