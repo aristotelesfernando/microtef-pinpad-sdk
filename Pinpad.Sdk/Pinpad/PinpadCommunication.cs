@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using Pinpad.Sdk.Model.Pinpad;
+using Pinpad.Sdk.Commands.TypeCode;
 
 namespace Pinpad.Sdk
 {
@@ -60,6 +61,10 @@ namespace Pinpad.Sdk
         /// Number of times to try to remand a package in case of failure.
         /// </summary>
         internal const short TIMES_TO_REMAND_PACKAGE_ON_FAILURE = 3;
+        /// <summary>
+        /// First command sent to pos wifi.
+        /// </summary>
+        internal bool firstCommand = true;
 
 		// Public members
 		/// <summary>
@@ -107,6 +112,7 @@ namespace Pinpad.Sdk
 			this.Connection = pinpadConnection;
 			this.Connection.ReadTimeout = NON_BLOCKING_TIMEOUT;
 			this.Connection.WriteTimeout = NON_BLOCKING_TIMEOUT;
+            this.firstCommand = true;
 		}
 
 		/* Public methods */
@@ -227,6 +233,7 @@ namespace Pinpad.Sdk
                         try
                         {
                             b = this.Connection.ReadByte();
+
                         }
                         catch (TimeoutException)
                         {
@@ -541,13 +548,18 @@ namespace Pinpad.Sdk
 
 			List<byte> requestByteCollection = request.CommandContext.GetRequestBody(request);
 
-			lock (this.Connection)
-			{
-                // Cancel the previous request:
-                this.CancelRequest();
+            lock (this.Connection)
+            {
+                if(firstCommand == true || request.CommandString.IsBlockingCommand())
+                {
+                    // Cancel the previous request:
+                    this.CancelRequest();
 
-                // Saves the current request as last:
-                this.LastSentRequest = request.CommandString;
+                    // Saves the current request as last:
+                    this.LastSentRequest = request.CommandString;
+
+                    this.firstCommand = false;
+                }
 
                 // Send the request:
                 return InternalSendRequest(requestByteCollection.ToArray());
@@ -563,7 +575,7 @@ namespace Pinpad.Sdk
 		private string InternalReceiveResponseString(IContext context, int counter = 0)
         {
             byte b;
-
+            
             // Response itself
             List<byte> responseByteCollection = new List<byte>();
 
