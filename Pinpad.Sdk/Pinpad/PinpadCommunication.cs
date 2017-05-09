@@ -545,9 +545,7 @@ namespace Pinpad.Sdk
 
             lock (this.Connection)
             {
-                if(this.LastReceivedResponse == null 
-                    || this.LastReceivedResponse == CrossPlatformController.TextEncodingController.GetString(TextEncodingType.Ascii, new byte[] { NOT_ACKNOWLEDGED_BYTE })
-                    || request.CommandString.IsBlockingCommand())
+                if(this.Connection.IsOpen == false || request.CommandString.IsBlockingCommand())
                 {
                     // Cancel the previous request:
                     this.CancelRequest();
