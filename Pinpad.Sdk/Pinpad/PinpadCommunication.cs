@@ -61,10 +61,6 @@ namespace Pinpad.Sdk
         /// Number of times to try to remand a package in case of failure.
         /// </summary>
         internal const short TIMES_TO_REMAND_PACKAGE_ON_FAILURE = 3;
-        /// <summary>
-        /// First command sent to pos wifi.
-        /// </summary>
-        internal bool firstCommand = true;
 
 		// Public members
 		/// <summary>
@@ -112,7 +108,6 @@ namespace Pinpad.Sdk
 			this.Connection = pinpadConnection;
 			this.Connection.ReadTimeout = NON_BLOCKING_TIMEOUT;
 			this.Connection.WriteTimeout = NON_BLOCKING_TIMEOUT;
-            this.firstCommand = true;
 		}
 
 		/* Public methods */
@@ -550,15 +545,15 @@ namespace Pinpad.Sdk
 
             lock (this.Connection)
             {
-                if(firstCommand == true || request.CommandString.IsBlockingCommand())
+                if(this.LastReceivedResponse == null 
+                    || this.LastReceivedResponse == CrossPlatformController.TextEncodingController.GetString(TextEncodingType.Ascii, new byte[] { NOT_ACKNOWLEDGED_BYTE })
+                    || request.CommandString.IsBlockingCommand())
                 {
                     // Cancel the previous request:
                     this.CancelRequest();
 
                     // Saves the current request as last:
                     this.LastSentRequest = request.CommandString;
-
-                    this.firstCommand = false;
                 }
 
                 // Send the request:
