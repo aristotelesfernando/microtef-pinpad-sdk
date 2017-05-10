@@ -3,53 +3,52 @@ using System;
 
 namespace Pinpad.Sdk.Commands.TypeCode
 {
-    //TODO : Docum
     /// <summary>
-    /// 
+    /// Contains the blocking commands.
     /// </summary>
     public enum BlockingCommandCode
     {
         /// <summary>
-        /// invalid value
+        /// Invalid value.
         /// </summary>
         Undefined = 0,
         /// <summary>
-        ///Get card
+        /// Get card from ABECS specification.
         /// </summary>
         GCR = 1,
-
         /// <summary>
-        /// Go on chip
+        /// Go on chip from ABECS specification.
         /// </summary>
         GOC = 2,
-
         /// <summary>
-        /// Get key
+        /// Get key from ABECS specification.
         /// </summary>
         GKY = 3,
-
         /// <summary>
-        /// Get PIN
+        /// Get PIN from ABECS specification.
         /// </summary>
         GPN = 4,
-
         /// <summary>
-        /// Remove card
+        /// Remove card from ABECS specification.
         /// </summary>
         RMC = 5,
     }
+
     /// <summary>
-    /// 
+    /// String extension class.
     /// </summary>
     public static class BlockingCommandCodeExtension
     {
+        /// <summary>
+        /// Checks if the command received is a blocking command.
+        /// </summary>
         public static bool IsBlockingCommand(this string command)
         {
-          return Enum.GetValues(typeof(BlockingCommandCode))
-                                            .Cast<BlockingCommandCode>()
-                                            .ToArray()
-                                            .Where(x => command.Contains(x.ToString()))
-                                            .FirstOrDefault() != BlockingCommandCode.Undefined;
+            return Enum.GetValues(typeof(BlockingCommandCode))
+                                              .Cast<BlockingCommandCode>()
+                                              .ToArray()
+                                              .Where(x => command.Contains(x.ToString()))
+                                              .FirstOrDefault() != BlockingCommandCode.Undefined;
         }
     }
 }

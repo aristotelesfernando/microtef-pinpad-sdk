@@ -76,7 +76,7 @@ namespace Pinpad.Sdk
 		/// </summary>
 		public string LastReceivedResponse { get; private set; }
         /// <summary>
-        /// Serial port or ip address in which the pinpad is attached.
+        /// Serial port or IP address in which the pinpad is attached.
         /// </summary>
 		public string ConnectionName { get { return this.Connection.ConnectionName; } }
 
@@ -213,6 +213,7 @@ namespace Pinpad.Sdk
 
 			// Send CAN byte (byte to cancel previous command)
 			this.Connection.WriteByte(CANCEL_BYTE);
+            Debug.WriteLine("Sending CAN");
 			lock (this.Connection)
 			{
 				if (this._requestCanceled == false)
@@ -545,18 +546,15 @@ namespace Pinpad.Sdk
 
             lock (this.Connection)
             {
-                if(this.Connection.IsOpen == false || request.CommandString.IsBlockingCommand())
-                {
-                    // Cancel the previous request:
-                    this.CancelRequest();
+                // Cancel the previous request:
+                this.CancelRequest();
 
-                    // Saves the current request as last:
-                    this.LastSentRequest = request.CommandString;
-                }
+                // Saves the current request as last:
+                this.LastSentRequest = request.CommandString;
 
                 // Send the request:
                 return InternalSendRequest(requestByteCollection.ToArray());
-			}
+            }
 		}
         /// <summary>
         /// Receive command response as string.
