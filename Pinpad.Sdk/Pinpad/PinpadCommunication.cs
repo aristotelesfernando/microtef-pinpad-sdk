@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using Pinpad.Sdk.Model.Pinpad;
+using Pinpad.Sdk.Commands.TypeCode;
 
 namespace Pinpad.Sdk
 {
@@ -75,9 +76,9 @@ namespace Pinpad.Sdk
 		/// </summary>
 		public string LastReceivedResponse { get; private set; }
         /// <summary>
-        /// Serial port in which the pinpad is attached.
+        /// Serial port or IP address in which the pinpad is attached.
         /// </summary>
-		public string PortName { get { return this.Connection.ConnectionName; } }
+		public string ConnectionName { get { return this.Connection.ConnectionName; } }
 
 		// Private members
         /// <summary>
@@ -212,29 +213,31 @@ namespace Pinpad.Sdk
 
 			// Send CAN byte (byte to cancel previous command)
 			this.Connection.WriteByte(CANCEL_BYTE);
+            Debug.WriteLine("Sending CAN");
 			lock (this.Connection)
 			{
 				if (this._requestCanceled == false)
 				{
-					this.Connection.ReadTimeout = PinpadCommunication.CANCEL_TIMEOUT;
+                    // Sends a CAN request while the pinpad does not acknowledge the cancellation.
+                    // That is, while the application does not receive the EOT byte.
+                    this.Connection.ReadTimeout = PinpadCommunication.CANCEL_TIMEOUT;
 
 					byte b;
 
-					// Sends a CAN request while the pinpad does not acknowledge the cancellation.
-					// That is, while the application does not receive the EOT byte.
-					do
-					{
-						try
-						{
-							b = this.Connection.ReadByte();
-						}
-						catch (TimeoutException)
-						{
-							return false;
-						}
-					} while (b != EOT_BYTE); // Wait for EOT
+                    do
+                    {
+                        try
+                        {
+                            b = this.Connection.ReadByte();
 
-					this._requestCanceled = true;
+                        }
+                        catch (TimeoutException)
+                        {
+                            return false;
+                        }
+                    } while (b != EOT_BYTE); // Wait for EOT
+
+                    this._requestCanceled = true;
 				}
 			}
 			return this._requestCanceled;
@@ -488,7 +491,7 @@ namespace Pinpad.Sdk
         private void OpenConnectionSafely()
         {
             // Search for a pinpad in the specified serial port:
-            this.Connection = PinpadConnectionManager.GetPinpadConnection(this.PortName);
+            this.Connection = PinpadConnectionManager.GetPinpadConnection(this.ConnectionName);
 
             if (this.Connection.IsOpen == false)
             {
@@ -541,17 +544,17 @@ namespace Pinpad.Sdk
 
 			List<byte> requestByteCollection = request.CommandContext.GetRequestBody(request);
 
-			lock (this.Connection)
-			{
-				// Cancel the previous request:
-				this.CancelRequest();
+            lock (this.Connection)
+            {
+                // Cancel the previous request:
+                this.CancelRequest();
 
-				// Saves the current request as last:
-				this.LastSentRequest = request.CommandString;
+                // Saves the current request as last:
+                this.LastSentRequest = request.CommandString;
 
-				// Send the request:
-				return InternalSendRequest(requestByteCollection.ToArray());
-			}
+                // Send the request:
+                return InternalSendRequest(requestByteCollection.ToArray());
+            }
 		}
         /// <summary>
         /// Receive command response as string.
@@ -560,66 +563,68 @@ namespace Pinpad.Sdk
         /// the context features.</param>
         /// <param name="counter">Number of times to try to read the response (timeout).</param>
         /// <returns>The response as string or null in case of nothing received.</returns>
-		private string InternalReceiveResponseString (IContext context, int counter = 0)
-		{
-			byte b;
+		private string InternalReceiveResponseString(IContext context, int counter = 0)
+        {
+            byte b;
+            
+            // Response itself
+            List<byte> responseByteCollection = new List<byte>();
 
-			// Response itself
-			List<byte> responseByteCollection = new List<byte>();
+            // Reads a byte (possible garbage) until the reading of a SYN (in case of a normal request) or 
+            // an EOT (in case of a cancel request):
 
-			// Reads a byte (possible garbage) until the reading of a SYN (in case of a normal request) or 
-			// an EOT (in case of a cancel request):
-			do
-			{
-				// Reads one byte:
-				b = this.Connection.ReadByte();
+            do
+            {
+                // Reads one byte:
+                b = this.Connection.ReadByte();
 
-				if (context.HasToIncludeFirstByte == true)
-				{
-					responseByteCollection.Add(b);
-				}
+                if (context.HasToIncludeFirstByte == true)
+                {
+                    responseByteCollection.Add(b);
+                }
 
-			} while (b != context.StartByte && b != EOT_BYTE);
+            } while (b != context.StartByte && b != EOT_BYTE);
 
-			// In case of EOT, the request was cancelled:
-			if (b == EOT_BYTE)
-			{
-				this._requestCanceled = true;
-				return null;
-			}
+            // In case of EOT, the request was cancelled:
+            if (b == EOT_BYTE)
+            {
+                this._requestCanceled = true;
+                return null;
+            }
 
-			// In case of SYN:
-			string command = null;
+            // In case of SYN:
+            string command = null;
 
-			// Iterates, reading bytes from I/O buffer (while an ETB if found):
-			do
-			{
-				// Reads one byte:
-				b = this.Connection.ReadByte();
+            // Iterates, reading bytes from I/O buffer (while an ETB if found):
+            do
+            {
+                // Reads one byte:
+                b = this.Connection.ReadByte();
 
-				// If the byte read is an ETB (response from a CAN request):
-				if (b == context.EndByte)
-				{
-					command = CrossPlatformController.TextEncodingController.GetString(TextEncodingType.Ascii, responseByteCollection.ToArray());
-				}
+                // If the byte read is an ETB (response from a CAN request):
+                if (b == context.EndByte)
+                {
+                    command = CrossPlatformController.TextEncodingController.GetString(TextEncodingType.Ascii, responseByteCollection.ToArray());
+                }
 
-				// Adds the byte to the response:
-				responseByteCollection.Add(b);
-			} while (b != context.EndByte);
+                // Adds the byte to the response:
+                responseByteCollection.Add(b);
 
-			// Get's the checksum DIRECTLY from the response:
-			byte [] receivedChecksum = new byte [context.IntegrityCodeLength];
+            } while (b != context.EndByte);
 
-			for (int i = 0; i < context.IntegrityCodeLength; i++)
-			{
-				receivedChecksum [i] = this.Connection.ReadByte();
-			}
+            // Get's the checksum DIRECTLY from the response:
+            byte[] receivedChecksum = new byte[context.IntegrityCodeLength];
 
-			// Generates a checksum from the response body:
-			byte [] generatedChecksum = context.GetIntegrityCode(responseByteCollection.ToArray());
+            for (int i = 0; i < context.IntegrityCodeLength; i++)
+            {
+                receivedChecksum[i] = this.Connection.ReadByte();
+            }
 
-			// Verify if both checksums match:
-			if (context.IsIntegrityCodeValid(receivedChecksum, generatedChecksum) == false)
+            // Generates a checksum from the response body:
+            byte[] generatedChecksum = context.GetIntegrityCode(responseByteCollection.ToArray());
+
+            // Verify if both checksums match:
+            if (context.IsIntegrityCodeValid(receivedChecksum, generatedChecksum) == false)
 			{
 				// If has tries to remand the message:
 				if (counter < TIMES_TO_REMAND_PACKAGE_ON_FAILURE)

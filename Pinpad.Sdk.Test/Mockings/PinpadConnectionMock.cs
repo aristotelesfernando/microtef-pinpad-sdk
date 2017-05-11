@@ -7,6 +7,15 @@ namespace Pinpad.Sdk.Test
     {
         // Members
         public int BytesToRead { get { return 1; } }
+
+        public CommunicationType CommunicationType
+        {
+            get
+            {
+                return CommunicationType.SerialPort;
+            }
+        }
+
         public string ConnectionName { get { return "COM7"; } }
         public bool IsOpen { get { return true; } }
         public int ReadTimeout
