@@ -48,11 +48,11 @@ namespace Pinpad.Sdk
         /// Returned to the SPE from the pinpad, indicating an INVALID package. 
         /// In this case, the SPE must remand the package.
         /// </summary>
-        internal const byte NOT_ACKNOWLEDGED_BYTE = 0x15;
+        public const byte NOT_ACKNOWLEDGED_BYTE = 0x15;
         /// <summary>
         /// Returned to the SPE from the pinpad, indicating a valid package.
         /// </summary>
-        internal const byte ACKNOWLEDGE_BYTE = 0x06;
+        public const byte ACKNOWLEDGE_BYTE = 0x06;
         /// <summary>
         /// Null byte, used to verify whether the pinpad is connected/alive.
         /// </summary>
