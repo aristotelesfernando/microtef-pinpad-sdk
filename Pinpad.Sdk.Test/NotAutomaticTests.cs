@@ -313,5 +313,10 @@ namespace Pinpad.Sdk.Test
 
             key.DataPicker.GetValueInOptions("Carnaval", true, "Simpatiaequaseamor", "OrquestraVoadora", "SargentoPimenta", "Carmelitas");
         }
+        [TestMethod]
+        public void Upi_test()
+        {
+            IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
+        }
     }
 }
