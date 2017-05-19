@@ -61,6 +61,7 @@
     <Compile Include="Commands\Request\LfrRequest.cs" />
     <Compile Include="Commands\Request\PrtRequest.cs" />
     <Compile Include="Commands\Request\UpiRequest.cs" />
+    <Compile Include="Commands\Request\UprRequest.cs" />
     <Compile Include="Commands\Response\BaseResponse.cs" />
     <Compile Include="Commands\Context\AbecsContext.cs" />
     <Compile Include="Commands\Context\GertecContext.cs" />

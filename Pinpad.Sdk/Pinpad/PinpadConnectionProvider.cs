@@ -15,10 +15,11 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Finds one pinpad and connects to it (connection is not closed).
 		/// </summary>
+        /// <param name="enableWifi">Whether Wi-Fi pinpads shall be searched.</param>
 		/// <returns>Returns the first pinpad found.</returns>
-		public static IPinpadConnection GetFirst ()
+		public static IPinpadConnection GetFirst (bool enableWifi = false)
 		{
-			IPinpadConnection conn = CrossPlatformController.PinpadFinder.Find();
+			IPinpadConnection conn = CrossPlatformController.PinpadFinder.Find(enableWifi);
 
 			if (conn == null)
 			{

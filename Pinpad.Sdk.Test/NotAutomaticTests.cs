@@ -10,6 +10,7 @@ using Pinpad.Sdk.Test.Mockings;
 using Pinpad.Sdk.Pinpad;
 using Pinpad.Sdk.Commands.DataSet;
 using Pinpad.Sdk.Model.TypeCode;
+using Pinpad.Sdk.Commands.Request;
 
 namespace Pinpad.Sdk.Test
 {
@@ -316,7 +317,16 @@ namespace Pinpad.Sdk.Test
         [TestMethod]
         public void Upi_test()
         {
-            IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
+            IPinpadConnection conn = PinpadConnectionProvider.GetFirst(true);
+
+            if (conn != null)
+            {
+                IPinpadFacade pinpad = new PinpadFacade(conn);
+
+                UpiRequest upiRequest = new UpiRequest();
+                upiRequest.UPI_APPSIZE.Value = 12345678;
+                pinpad.Communication.SendRequestAndReceiveResponse<GenericResponse>(upiRequest);
+            }
         }
     }
 }
