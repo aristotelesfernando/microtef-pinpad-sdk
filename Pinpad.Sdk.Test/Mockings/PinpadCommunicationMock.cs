@@ -15,7 +15,7 @@ namespace Pinpad.Sdk.Test
                 throw new NotImplementedException();
             }
         }
-        public string PortName
+        public string ConnectionName
         {
             get
             {

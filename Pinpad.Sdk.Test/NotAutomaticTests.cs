@@ -143,13 +143,13 @@ namespace Pinpad.Sdk.Test
 			// Show corresponding COM port on the pinpad display:
 			foreach (IPinpadFacade pinpad in pinpads)
 			{
-				pinpad.Display.ShowMessage("", pinpad.Communication.PortName, DisplayPaddingType.Center);
+				pinpad.Display.ShowMessage("", pinpad.Communication.ConnectionName, DisplayPaddingType.Center);
 			}
 
 			// Closing conections...
 			foreach (IPinpadFacade pinpad in pinpads)
 			{
-				pinpad.Communication.ClosePinpadConnection("Close " + pinpad.Communication.PortName);
+				pinpad.Communication.ClosePinpadConnection("Close " + pinpad.Communication.ConnectionName);
 			}
 
 			Assert.IsTrue(true);

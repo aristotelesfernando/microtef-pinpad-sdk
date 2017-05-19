@@ -97,6 +97,7 @@
     <Compile Include="Commands\Request\TleRequest.cs" />
     <Compile Include="Commands\Request\TliRequest.cs" />
     <Compile Include="Commands\Request\TlrRequest.cs" />
+    <Compile Include="Commands\TypeCode\BlockingCommandCode.cs" />
     <Compile Include="Commands\TypeCode\IngenicoPrinterAction.cs" />
     <Compile Include="Events\PinpadFileLoadedEventArgs.cs" />
     <Compile Include="Events\PinpadNotificationEventArgs.cs" />
