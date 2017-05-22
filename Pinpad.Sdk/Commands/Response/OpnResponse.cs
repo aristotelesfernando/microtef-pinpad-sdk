@@ -40,7 +40,8 @@ namespace Pinpad.Sdk.Commands
 		public OpnResponse() 
 		{
 			this.RSP_LEN1 = new RegionProperty("RSP_LEN1", 3, false, true);
-			this.OPN_STONEVER = new PinpadFixedLengthProperty<Nullable<int>>("OPN_STONEVER", 3, true, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
+			this.OPN_STONEVER = new PinpadFixedLengthProperty<Nullable<int>>("OPN_STONEVER", 3, true, 
+                DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
 
 			this.StartRegion(this.RSP_LEN1);
 			{

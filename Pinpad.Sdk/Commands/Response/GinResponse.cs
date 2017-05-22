@@ -1,4 +1,5 @@
 ﻿using Pinpad.Sdk.Properties;
+using System;
 
 namespace Pinpad.Sdk.Commands 
 {
@@ -52,6 +53,8 @@ namespace Pinpad.Sdk.Commands
         /// Serial number
         /// </summary>
         public PinpadFixedLengthProperty<string> GIN_SERNUM { get; private set; }
+        // TODO: Doc
+        public PinpadFixedLengthProperty<Nullable<int>> GIN_ISSTONE { get; private set; }
 
         // Constructor
         /// <summary>
@@ -74,6 +77,8 @@ namespace Pinpad.Sdk.Commands
                 DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
             this.GIN_SERNUM = new PinpadFixedLengthProperty<string>("GIN_SERNUM", 20, false, 
                 DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
+            this.GIN_ISSTONE = new PinpadFixedLengthProperty<Nullable<int>>("GIN_ISSTONE", 1, true,
+                DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
 
             this.StartRegion(this.RSP_LEN1);
             {
@@ -84,6 +89,7 @@ namespace Pinpad.Sdk.Commands
                 this.AddProperty(this.GIN_SPECVER);
                 this.AddProperty(this.GIN_MANVER);
                 this.AddProperty(this.GIN_SERNUM);
+                this.AddProperty(this.GIN_ISSTONE);
             }
             this.EndLastRegion();
         }

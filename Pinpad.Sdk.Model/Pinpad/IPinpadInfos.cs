@@ -39,6 +39,9 @@ namespace Pinpad.Sdk.Model
 		/// If stone is supported on this pinpad. If this value is false, none financial operation can be performed.
 		/// </summary>
 		bool IsStoneSupported { get; }
+        // TODO: Doc
+        bool IsStoneProprietaryDevice { get; }
+
         /// <summary>
         /// Obtains the current KSN (Key Serial Number) of an index in the table.
         /// </summary>

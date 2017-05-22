@@ -142,13 +142,28 @@ namespace Pinpad.Sdk
 				else { return this.gduResponse.IsStoneSupported; }
 			}
 		}
+        // TODO: Doc
+        public bool IsStoneProprietaryDevice
+        {
+            get
+            {
+                if (this.ginResponse == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return ginResponse.GIN_ISSTONE.Value == 1;
+                }
+            }
+        }
 
-		// Constructor
-		/// <summary>
-		/// Pinpad information.
-		/// </summary>
-		/// <param name="communication">Pinpad communication.</param>
-		public PinpadInfos(PinpadCommunication communication)
+        // Constructor
+        /// <summary>
+        /// Pinpad information.
+        /// </summary>
+        /// <param name="communication">Pinpad communication.</param>
+        public PinpadInfos(PinpadCommunication communication)
 		{
 			this.communication = communication;
 		}
