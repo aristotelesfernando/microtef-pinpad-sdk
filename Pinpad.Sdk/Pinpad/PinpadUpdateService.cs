@@ -5,7 +5,6 @@ using System.IO;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Commands.Request;
 using Pinpad.Sdk.Commands.Response;
-using System.Text;
 using MicroPos.CrossPlatform.TypeCode;
 
 namespace Pinpad.Sdk.Pinpad
@@ -48,9 +47,19 @@ namespace Pinpad.Sdk.Pinpad
             }
         }
 
-        public PinpadUpdateService (IPinpadInfos pinpadInformation)
+        public PinpadUpdateService (IPinpadInfos pinpadInformation, IPinpadCommunication pinpadCommunication)
         {
+            if (pinpadInformation == null)
+            {
+                throw new ArgumentNullException("pinpadInformation");
+            }
+            if (pinpadCommunication == null)
+            {
+                throw new ArgumentNullException("pinpadCommunication");
+            }
+
             this.PinpadInfos = pinpadInformation;
+            this.PinpadCommunication = pinpadCommunication;
         }
 
         public bool Load (string filePath)
