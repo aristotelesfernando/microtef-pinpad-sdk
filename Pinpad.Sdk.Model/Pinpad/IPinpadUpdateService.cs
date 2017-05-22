@@ -6,6 +6,6 @@
         int SectionSize { get; }
         byte [] NextPackageSection { get; }
 
-        void Load(string filePath);
+        bool Load(string filePath);
     }
 }

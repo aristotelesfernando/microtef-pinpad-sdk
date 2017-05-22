@@ -33,6 +33,6 @@ namespace Pinpad.Sdk.Commands.Request
                 this.AddProperty(this.UPR_REC);
             }
             this.EndLastRegion();
-        }
+        }   
     }
 }

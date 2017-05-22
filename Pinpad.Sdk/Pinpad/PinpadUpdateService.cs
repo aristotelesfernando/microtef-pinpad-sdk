@@ -1,13 +1,16 @@
 ﻿using System;
 using Pinpad.Sdk.Model.Pinpad;
+using MicroPos.CrossPlatform;
+using System.IO;
 
 namespace Pinpad.Sdk.Pinpad
 {
     // TODO: Doc
     public sealed class PinpadUpdateService : IPinpadUpdateService
     {
-        private byte [] File { get; set; }
+        private byte [] ApplicationFile { get; set; }
         private int FileCount;
+        private IStorageController FileSystemManager { get { return CrossPlatformController.StorageController; } }
 
         public int SectionSize { get { return 900; } }
         public byte[] NextPackageSection
@@ -18,16 +21,30 @@ namespace Pinpad.Sdk.Pinpad
             }
         }
 
-        public void Load(string filePath)
+        public bool Load(string filePath)
         {
-            // TODO: Verify if the file exist
+            // Verify if the file exist:
+            if (this.FileSystemManager.FileExist(filePath) == false) { return false; }
 
-            // TODO: Read bytes of file
+            try
+            {
+                // Read bytes of file:
+                using (Stream appFileBytes = this.FileSystemManager.OpenFile(filePath))
+                {
+                    // Saves file bytes in the property:
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        appFileBytes.CopyTo(ms);
+                        this.ApplicationFile = ms.ToArray();
+                    }
+                }
 
-            // TODO: Saves file bytes in the property
-
-            //
-            throw new NotImplementedException();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
