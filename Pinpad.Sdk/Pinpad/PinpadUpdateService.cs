@@ -17,7 +17,24 @@ namespace Pinpad.Sdk.Pinpad
         {
             get
             {
-                throw new NotImplementedException();
+                int bytesToCopy = this.SectionSize;
+                
+                // If the file were already read, then there is no section left to read:
+                if (this.SectionSize == this.ApplicationFile.Length) { return null; }
+                
+                // If there isn't another full section, that is, the current section is smaller than the
+                // default size of a section, then the application must read only the remaining bytes:
+                if (this.FileCount - ApplicationFile.Length < this.SectionSize)
+                {
+                    // Then read a full section:
+                    bytesToCopy = this.FileCount - ApplicationFile.Length;
+                }
+
+                byte[] partial = new byte[bytesToCopy];
+                Array.Copy(this.ApplicationFile, partial, bytesToCopy);
+                this.FileCount += bytesToCopy;
+
+                return partial;
             }
         }
 
@@ -38,6 +55,9 @@ namespace Pinpad.Sdk.Pinpad
                         this.ApplicationFile = ms.ToArray();
                     }
                 }
+
+                // Reset the file count:
+                this.FileCount = 0;
 
                 return true;
             }
