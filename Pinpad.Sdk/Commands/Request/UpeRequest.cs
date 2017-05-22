@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Pinpad.Sdk.Commands.Request
+﻿namespace Pinpad.Sdk.Commands.Request
 {
     // TODO: Doc
     public sealed class UpeRequest : BaseCommand

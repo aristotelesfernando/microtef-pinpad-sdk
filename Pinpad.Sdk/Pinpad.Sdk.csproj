@@ -54,6 +54,7 @@
     <Compile Include="Commands\Request\CngRequest.cs" />
     <Compile Include="Commands\Request\DexRequest.cs" />
     <Compile Include="Commands\Request\FncRequest.cs" />
+    <Compile Include="Commands\Request\GavRequest.cs" />
     <Compile Include="Commands\Request\GduRequest.cs" />
     <Compile Include="Commands\Request\LfcRequest.cs" />
     <Compile Include="Commands\Request\LfeRequest.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Commands\Request\GcdRequest.cs" />
     <Compile Include="Commands\Response\CloResponse.cs" />
     <Compile Include="Commands\Response\FncResponse.cs" />
+    <Compile Include="Commands\Response\GavResponse.cs" />
     <Compile Include="Commands\Response\GcdResponse.cs" />
     <Compile Include="Commands\DataSet\GcrIdApp.cs" />
     <Compile Include="Commands\Request\GcrRequest.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="Pinpad\PinpadDisplay.cs" />
     <Compile Include="Pinpad\PinpadInfos.cs" />
     <Compile Include="Pinpad\PinpadKeyboard.cs" />
+    <Compile Include="Pinpad\PinpadUpdateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StoneIndexCode.cs" />
     <Compile Include="Tables\BaseAidTable.cs" />

@@ -60,6 +60,8 @@ namespace Pinpad.Sdk
         /// </summary>
         public IPinpadPrinter Printer { get; internal set; }
 
+        public IPinpadUpdateService UpdateService { get; set; }
+
         /// <summary>
         /// Creates all pinpad adapters.
         /// </summary>

@@ -17,11 +17,11 @@ namespace Pinpad.Sdk.Test
     [TestClass]
 	public class NotAutomaticTests
 	{
-        //[TestInitialize]
-        //public void Setup()
-        //{
-        //    MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
-        //}
+        [TestInitialize]
+        public void Setup()
+        {
+            MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
+        }
 
         //[TestMethod]
         public void GCD_test ()

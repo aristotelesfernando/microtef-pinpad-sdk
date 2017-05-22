@@ -60,13 +60,20 @@ namespace Pinpad.Sdk.Commands
         public GinResponse() 
 		{
             this.RSP_LEN1 = new RegionProperty("RSP_LEN1", 3);
-            this.GIN_MNAME = new PinpadFixedLengthProperty<string>("GIN_MNAME", 20, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
-            this.GIN_MODEL = new PinpadFixedLengthProperty<string>("GIN_MODEL", 19, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
-            this.GIN_CTLSUP = new PinpadFixedLengthProperty<string>("GIN_CTLSUP", 1, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
-            this.GIN_SOVER = new PinpadFixedLengthProperty<string>("GIN_SOVER", 20, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
-            this.GIN_SPECVER = new PinpadFixedLengthProperty<string>("GIN_SPECVER", 4, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
-            this.GIN_MANVER = new PinpadFixedLengthProperty<string>("GIN_MANVER", 16, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
-            this.GIN_SERNUM = new PinpadFixedLengthProperty<string>("GIN_SERNUM", 20, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
+            this.GIN_MNAME = new PinpadFixedLengthProperty<string>("GIN_MNAME", 20, false, 
+                DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
+            this.GIN_MODEL = new PinpadFixedLengthProperty<string>("GIN_MODEL", 19, false, 
+                DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
+            this.GIN_CTLSUP = new PinpadFixedLengthProperty<string>("GIN_CTLSUP", 1, false, 
+                DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
+            this.GIN_SOVER = new PinpadFixedLengthProperty<string>("GIN_SOVER", 20, false, 
+                DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
+            this.GIN_SPECVER = new PinpadFixedLengthProperty<string>("GIN_SPECVER", 4, false, 
+                DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
+            this.GIN_MANVER = new PinpadFixedLengthProperty<string>("GIN_MANVER", 16, false, 
+                DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
+            this.GIN_SERNUM = new PinpadFixedLengthProperty<string>("GIN_SERNUM", 20, false, 
+                DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
 
             this.StartRegion(this.RSP_LEN1);
             {
