@@ -78,6 +78,18 @@ namespace Pinpad.Sdk.Model
         /// coding convention as in ISO 7813.
         /// </summary>
         CardholderNameExtended = 0x9F0B,
+        /// <summary>
+        /// Secondary amount associated with the transaction representing a cashback amount.
+        /// </summary>
+        AmountOther = 0x9F03,
+        /// <summary>
+        /// Identifies and differentiates cards with the same PAN.
+        /// </summary>
+        ApplicationPrimaryAccountNumberSequenceNumber = 0x5F34,
+        /// <summary>
+        /// Indicates the environment of the terminal, its communications capability, and its operational control.
+        /// </summary>
+        TerminalType = 0x9F35
     }
 
 	/// <summary>
