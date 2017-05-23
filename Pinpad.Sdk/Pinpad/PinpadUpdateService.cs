@@ -109,7 +109,9 @@ namespace Pinpad.Sdk.Pinpad
             GavRequest gavRequest = new GavRequest();
             GavResponse gavResponse = this.PinpadCommunication
                 .SendRequestAndReceiveResponse<GavResponse>(gavRequest);
-
+            
+            // TODO: Tirar essa validação, porque não faz sentido.
+            // TODO: Extrair versão e validar se a baixada é maior do que a atual.
             if (this.ApplicationNameAndVersion.Contains(gavResponse?.GAV_APPVER.Value) == true)
             {
                 // Send the Update Init (UPI):

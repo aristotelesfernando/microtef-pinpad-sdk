@@ -326,8 +326,10 @@ namespace Pinpad.Sdk.Test
                 bool isLoaded = pinpad.UpdateService.Load(System.IO.Path
                     .Combine(@"C:\Users\ccarvalho\Desktop\update-cmd", "StonePinpadWifi(v1.1.1).zip"));
 
+                pinpad.Display.ShowMessage("ATUALIZANDO", "MAQUININHA :-)", DisplayPaddingType.Center);
                 pinpad.UpdateService.Update();
+                pinpad.Display.ShowMessage("RENICIE PARA", "ATUALIZAR", DisplayPaddingType.Center);
             }
-        }
+        }   
     }
 }
