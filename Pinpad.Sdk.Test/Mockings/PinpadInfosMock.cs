@@ -1,5 +1,4 @@
-﻿using System;
-using Pinpad.Sdk.Model;
+﻿using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.TypeCode;
 
 namespace Pinpad.Sdk.Test.Mockings
@@ -11,6 +10,13 @@ namespace Pinpad.Sdk.Test.Mockings
             get
             {
                 return false;
+            }
+        }
+        public bool IsStoneProprietaryDevice
+        {
+            get
+            {
+                return true;
             }
         }
         public bool IsStoneSupported
