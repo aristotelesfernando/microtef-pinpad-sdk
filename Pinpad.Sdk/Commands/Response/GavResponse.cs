@@ -24,22 +24,19 @@ namespace Pinpad.Sdk.Commands.Response
         /// <summary>
         /// Pinpad Wi-Fi application version under the format x.y.z.
         /// </summary>
-        public PinpadFixedLengthProperty<string> GAV_APPVER { get; private set; }
+        public VariableLengthProperty<string> GAV_APPVER { get; private set; }
 
         /// <summary>
         /// Creates the response with it's properties.
         /// </summary>
         public GavResponse()
         {
-            this.RSP_LEN1 = new RegionProperty("RSP_LEN1", 3);
-            this.GAV_APPVER = new PinpadFixedLengthProperty<string>("GAV_APPVER", 16, true,
-                DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
-
-            this.StartRegion(this.RSP_LEN1);
-            {
-                this.AddProperty(this.GAV_APPVER);
-            }
-            this.EndLastRegion();
+            this.GAV_APPVER = new VariableLengthProperty<string>("GAV_APPVER", 3, 
+                16, 1, false, false, 
+                DefaultStringFormatter.StringStringFormatter, 
+                DefaultStringParser.StringStringParser);
+            
+            this.AddProperty(this.GAV_APPVER);
         }
     }
 }

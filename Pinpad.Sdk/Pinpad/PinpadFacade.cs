@@ -33,6 +33,7 @@ namespace Pinpad.Sdk
                 this.TransactionService = new PinpadTransaction(this.Communication as PinpadCommunication);
                 this.Printer = new IngenicoPinpadPrinter(this.Communication as PinpadCommunication, 
                     this.Infos);
+                this.UpdateService = new PinpadUpdateService(this.Infos, this.Communication);
 			}
 		}
 		/// <summary>

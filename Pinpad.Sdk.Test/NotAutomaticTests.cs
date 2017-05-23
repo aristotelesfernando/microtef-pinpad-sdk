@@ -315,17 +315,18 @@ namespace Pinpad.Sdk.Test
             key.DataPicker.GetValueInOptions("Carnaval", true, "Simpatiaequaseamor", "OrquestraVoadora", "SargentoPimenta", "Carmelitas");
         }
         [TestMethod]
-        public void Upi_test()
+        public void UpdateService_test()
         {
-            IPinpadConnection conn = PinpadConnectionProvider.GetFirst(true);
+            IPinpadConnection conn = PinpadConnectionProvider.GetAt("192.168.1.102");
 
             if (conn != null)
             {
                 IPinpadFacade pinpad = new PinpadFacade(conn);
 
-                UpiRequest upiRequest = new UpiRequest();
-                upiRequest.UPI_APPSIZE.Value = 12345678;
-                pinpad.Communication.SendRequestAndReceiveResponse<GenericResponse>(upiRequest);
+                bool isLoaded = pinpad.UpdateService.Load(System.IO.Path
+                    .Combine(@"C:\Users\ccarvalho\Desktop\update-cmd", "StonePinpadWifi(v1.1.1).zip"));
+
+                pinpad.UpdateService.Update();
             }
         }
     }
