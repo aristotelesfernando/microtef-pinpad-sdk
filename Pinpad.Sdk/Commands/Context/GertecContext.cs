@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MicroPos.CrossPlatform;
 using MicroPos.CrossPlatform.TypeCode;
+using Pinpad.Sdk.PinpadProperties.Refactor;
 
 namespace Pinpad.Sdk.Commands
 {
@@ -85,7 +87,33 @@ namespace Pinpad.Sdk.Commands
 
 			return requestBody;
 		}
-		public void FormatResponse (List<byte> response)
+        // TODO: Doc.
+        public List<byte> GetRequestBody(PinpadProperties.Refactor.BaseCommand request)
+        {
+            // TODO: Melhorar!
+            List<byte> requestBody = new List<byte>();
+            
+            // Gets the command data track:
+            requestBody.AddRange(request.CommandTrack);
+
+            // Add STX (indication the begining of a package):
+            requestBody.Insert(0, STX_BYTE);
+
+            // Inserts a null byte, accordingly to Gertec specs:
+            requestBody.Insert(1, PinpadCommunication.NULL_BYTE);
+
+            // Insert the length of the command, hardcoded, because it's fixed (25 characters):
+            requestBody.Insert(2, 0x19);
+
+            // Add ETX (indicating the end of a package):
+            requestBody.Add(ETX_BYTE);
+
+            // Add LRC(Longitudinal Redundancy Check – XOR of all bytes from STX to ETX) at the end of the command:
+            requestBody.AddRange(this.GetIntegrityCode(requestBody.ToArray()));
+
+            return requestBody;
+        }
+        public void FormatResponse (List<byte> response)
 		{
 			// Removes 3 first bytes (header; STX + command length).
 			// These bytes are removed, because Gertec implementation is way different from ABECS protocol.
@@ -115,5 +143,7 @@ namespace Pinpad.Sdk.Commands
 
 			return true;
 		}
-	}
+
+        
+    }
 }

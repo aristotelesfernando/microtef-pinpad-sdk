@@ -92,7 +92,8 @@ namespace Pinpad.Sdk.Commands
 		/// <returns>List of bytes ready to be sent to the pinpad.</returns>
         public List<byte> GetRequestBody (BaseCommand request)
 		{
-			List<byte> requestBody = new List<byte>(CrossPlatformController.TextEncodingController.GetBytes(TextEncodingType.Ascii, request.CommandString));
+			List<byte> requestBody = new List<byte>(CrossPlatformController.TextEncodingController
+                .GetBytes(TextEncodingType.Ascii, request.CommandString));
 
 			// Add ETB (indicating the end of a package):
 			requestBody.Add(ETB_BYTE);
@@ -105,13 +106,30 @@ namespace Pinpad.Sdk.Commands
 
 			return requestBody;
 		}
+        public List<byte> GetRequestBody(PinpadProperties.Refactor.BaseCommand request)
+        {
+            List<byte> requestBody = new List<byte>();
 
-		/// <summary>
-		/// Nothing to format.
-		/// Do nothing.
-		/// </summary>
-		/// <param name="response">Response received from SPE.</param>
-		public void FormatResponse (List<byte> response) { }
+            requestBody.AddRange(request.CommandTrack);
+
+            // Add ETB (indicating the end of a package):
+            requestBody.Add(ETB_BYTE);
+
+            // Generate checksum:
+            requestBody.AddRange(this.GetIntegrityCode(requestBody.ToArray()));
+
+            // Add SYN (indication the begining of a package):
+            requestBody.Insert(0, SYN_BYTE);
+
+            return requestBody;
+        }
+
+        /// <summary>
+        /// Nothing to format.
+        /// Do nothing.
+        /// </summary>
+        /// <param name="response">Response received from SPE.</param>
+        public void FormatResponse (List<byte> response) { }
 		public bool IsIntegrityCodeValid (byte [] firstCode, byte [] secondByte)
 		{
 			if (firstCode [0] != secondByte [0] || firstCode [1] != secondByte [1])

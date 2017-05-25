@@ -13,7 +13,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// PinPad command
 	/// </summary>
-	public abstract class BaseCommand : BaseProperty 
+	public abstract class BaseCommand : BaseProperty, PinpadProperties.Refactor.ICommand
 	{
 		// Members
 		/// <summary>
@@ -27,7 +27,7 @@ namespace Pinpad.Sdk.Commands
 		/// <summary>
 		/// Context of the command.
 		/// </summary>
-		internal IContext CommandContext { get; set; }
+		public IContext Context { get; set; }
 
 		// Constructor
 		/// <summary>
@@ -37,9 +37,10 @@ namespace Pinpad.Sdk.Commands
 		public BaseCommand (IContext context = null)
 		{
 			if (context == null) { context = new AbecsContext(); }
-			this.CommandContext = context;
+			this.Context = context;
 
-			this.CMD_ID = new PinpadFixedLengthProperty<string>("CMD_ID", this.CommandContext.CommandNameLength, false, this.CommandNameStringFormatter, this.CommandNameStringParser, null, this.CommandName);
+			this.CMD_ID = new PinpadFixedLengthProperty<string>("CMD_ID", this.Context.CommandNameLength, false, 
+                this.CommandNameStringFormatter, this.CommandNameStringParser, null, this.CommandName);
 
 			this.AddProperty(this.CMD_ID);
 		}

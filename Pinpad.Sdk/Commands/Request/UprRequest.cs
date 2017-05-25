@@ -1,9 +1,11 @@
-﻿using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor;
+
+using Deprecated = Pinpad.Sdk.Properties;
 
 namespace Pinpad.Sdk.Commands.Request
 {
     // TODO: Doc
-    public sealed class UprRequest : BaseCommand
+    public sealed class UprRequest : PinpadProperties.Refactor.BaseCommand
     {
         public const int PackageSectionSize = 900;
         private const int TableLengthSize = 3;
@@ -25,8 +27,8 @@ namespace Pinpad.Sdk.Commands.Request
         {
             this.UPR_REC = new VariableLengthProperty<string>("TLR_REC", 3, UprRequest.PackageSectionSize, 1, 
                 false, false,
-                DefaultStringFormatter.StringStringFormatter, 
-                DefaultStringParser.StringStringParser);
+                Deprecated.DefaultStringFormatter.StringStringFormatter, 
+                Deprecated.DefaultStringParser.StringStringParser);
 
             this.AddProperty(this.UPR_REC);
         }   

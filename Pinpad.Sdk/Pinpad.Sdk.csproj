@@ -115,6 +115,15 @@
     <Compile Include="PinpadProperties\DefaultStringParser.cs" />
     <Compile Include="PinpadProperties\PinpadFixedLengthProperty.cs" />
     <Compile Include="PinpadProperties\MultilineMessage.cs" />
+    <Compile Include="PinpadProperties\Refactor\BaseCommand.cs" />
+    <Compile Include="PinpadProperties\Refactor\FixedLengthProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\ICommand.cs" />
+    <Compile Include="PinpadProperties\Refactor\RegionProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\TextProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\IBinaryProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\IProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\ITextProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\VariableLengthProperty.cs" />
     <Compile Include="PinpadProperties\RegionProperty.cs" />
     <Compile Include="PinpadProperties\ServiceCode.cs" />
     <Compile Include="PinpadProperties\SimpleMessage.cs" />

@@ -34,9 +34,9 @@ namespace Pinpad.Sdk.Commands
 			: base(context)
 		{
 			if (context == null) { context = new AbecsContext(); }
-			this.CommandContext = context;
+			this.Context = context;
 
-			this.RSP_STAT = new PinpadFixedLengthProperty<AbecsResponseStatus>("RSP_STAT", this.CommandContext.StatusLength, false, DefaultStringFormatter.EnumStringFormatter<AbecsResponseStatus>, DefaultStringParser.EnumStringParser<AbecsResponseStatus>);
+			this.RSP_STAT = new PinpadFixedLengthProperty<AbecsResponseStatus>("RSP_STAT", this.Context.StatusLength, false, DefaultStringFormatter.EnumStringFormatter<AbecsResponseStatus>, DefaultStringParser.EnumStringParser<AbecsResponseStatus>);
 
 			this.AddProperty(this.RSP_STAT);
 		}
