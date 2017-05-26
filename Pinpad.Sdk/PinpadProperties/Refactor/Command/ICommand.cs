@@ -1,6 +1,6 @@
 ﻿using Pinpad.Sdk.Commands;
 
-namespace Pinpad.Sdk.PinpadProperties.Refactor
+namespace Pinpad.Sdk.PinpadProperties.Refactor.Command
 {
     // TODO: Doc
     public interface ICommand

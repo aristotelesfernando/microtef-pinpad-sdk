@@ -1,4 +1,5 @@
-﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands 
@@ -6,7 +7,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// DSP request
 	/// </summary>
-	internal sealed class DspRequest : PinpadProperties.Refactor.BaseCommand 
+	internal sealed class DspRequest : BaseCommand 
 	{
 		// Members
 		/// <summary>

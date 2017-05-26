@@ -1,4 +1,5 @@
 ﻿using Pinpad.Sdk.Commands.Context;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
@@ -9,7 +10,7 @@ namespace Pinpad.Sdk.Commands.Request
     /// LFI - Load File Initialization.
     /// Initialize loading a file into pinpad memory.
     /// </summary>
-    internal sealed class LfiRequest : PinpadProperties.Refactor.BaseCommand
+    internal sealed class LfiRequest : BaseCommand
     {
         /// <summary>
         /// Command name, LFI in this case.

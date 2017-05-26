@@ -1,4 +1,5 @@
 ﻿using Pinpad.Sdk.Commands.Context;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
@@ -9,7 +10,7 @@ namespace Pinpad.Sdk.Commands.Request
     /// Request to verify whether a file exists on pinpad memory or not.
     /// Currenty supported by Ingenico pinpads only.
     /// </summary>
-    internal sealed class LfcRequest : PinpadProperties.Refactor.BaseCommand
+    internal sealed class LfcRequest : BaseCommand
     {
         /// <summary>
         /// Command name, LFC in this case.

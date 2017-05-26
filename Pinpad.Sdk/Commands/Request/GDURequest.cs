@@ -1,4 +1,5 @@
 ﻿using Pinpad.Sdk.PinpadProperties.Refactor;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
@@ -11,7 +12,7 @@ namespace Pinpad.Sdk.Commands
 	/// The CDU command btains the KSN ("Key Serial Number") of a specific index on acquirer table.
 	/// This operation depends on encryption methods such as: DUKPT/DES/PIN or DUKPT/TDES/PIN.
 	/// </summary>
-	internal sealed class GduRequest : PinpadProperties.Refactor.BaseCommand
+	internal sealed class GduRequest : BaseCommand
 	{
 		/// <summary>
 		/// Command name. In this case, GDU that is an acronym to "Get DUKPT Serial Number".

@@ -1,5 +1,6 @@
 ﻿using Pinpad.Sdk.Model;
 using Pinpad.Sdk.PinpadProperties.Refactor;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using System;
@@ -10,7 +11,7 @@ namespace Pinpad.Sdk.Commands
     /// Controller for TLR command
     /// Table Load Record is used to load one or more table records
     /// </summary>
-    internal sealed class TlrRequest : PinpadProperties.Refactor.BaseCommand
+    internal sealed class TlrRequest : BaseCommand
     {
         // TODO: Doc
         private const int TAB_LEN_Length = 3;

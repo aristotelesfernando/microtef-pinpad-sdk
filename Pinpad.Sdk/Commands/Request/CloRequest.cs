@@ -1,13 +1,13 @@
-﻿using Pinpad.Sdk.PinpadProperties.Refactor;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands
 {
-	/// <summary>
-	/// CLO request
-	/// </summary>
-	internal sealed class CloRequest : BaseCommand
+    /// <summary>
+    /// CLO request
+    /// </summary>
+    internal sealed class CloRequest : BaseCommand
 	{
         /// <summary>
 		/// Name of the command

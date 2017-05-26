@@ -1,9 +1,11 @@
-﻿namespace Pinpad.Sdk.Commands 
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
+
+namespace Pinpad.Sdk.Commands 
 {
 	/// <summary>
 	/// OPN request
 	/// </summary>
-	internal sealed class OpnRequest : PinpadProperties.Refactor.BaseCommand
+	internal sealed class OpnRequest : BaseCommand
     {
 		/// <summary>
 		/// Name of the command

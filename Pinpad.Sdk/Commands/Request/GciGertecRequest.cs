@@ -3,10 +3,11 @@ using Pinpad.Sdk.Model;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 
 namespace Pinpad.Sdk.Commands
 {
-	internal sealed class GciGertecRequest : PinpadProperties.Refactor.BaseCommand
+	internal sealed class GciGertecRequest : BaseCommand
 	{
 		public override string CommandName { get { return "EX07"; } }
 		public FixedLengthProperty<KeyboardNumberFormat> NumericInputType { get; set; }

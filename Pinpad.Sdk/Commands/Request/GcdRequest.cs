@@ -1,4 +1,5 @@
 ﻿using Pinpad.Sdk.Model;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
@@ -6,7 +7,7 @@ using System;
 
 namespace Pinpad.Sdk.Commands
 {
-	internal sealed class GcdRequest : PinpadProperties.Refactor.BaseCommand
+	internal sealed class GcdRequest : BaseCommand
 	{
 		public override string CommandName
 		{

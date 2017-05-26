@@ -1,14 +1,14 @@
-﻿using Pinpad.Sdk.PinpadProperties.Refactor;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
-namespace Pinpad.Sdk.Commands 
+namespace Pinpad.Sdk.Commands
 {
-	/// <summary>
-	/// PinPad response command
-	/// </summary>
-	internal abstract class BaseResponse : BaseCommand 
+    /// <summary>
+    /// PinPad response command
+    /// </summary>
+    internal abstract class BaseResponse : BaseCommand 
 	{
 		// Members
 		/// <summary>

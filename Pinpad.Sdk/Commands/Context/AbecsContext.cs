@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 
 namespace Pinpad.Sdk.Commands
 {
@@ -87,7 +88,7 @@ namespace Pinpad.Sdk.Commands
 		/// </summary>
 		/// <param name="request">Request to be sent.</param>
 		/// <returns>List of bytes ready to be sent to the pinpad.</returns>
-        public List<byte> GetRequestBody(PinpadProperties.Refactor.BaseCommand request)
+        public List<byte> GetRequestBody(BaseCommand request)
         {
             List<byte> requestBody = new List<byte>();
 

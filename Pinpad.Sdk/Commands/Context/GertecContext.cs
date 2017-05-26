@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using MicroPos.CrossPlatform;
-using MicroPos.CrossPlatform.TypeCode;
-using Pinpad.Sdk.PinpadProperties.Refactor;
+﻿using System.Collections.Generic;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 
 namespace Pinpad.Sdk.Commands
 {
-	/// <summary>
-	/// A command context accordingly to Gertec specification.
-	/// </summary>
-	internal sealed class GertecContext : IContext
+    /// <summary>
+    /// A command context accordingly to Gertec specification.
+    /// </summary>
+    internal sealed class GertecContext : IContext
 	{
 		/// <summary>
 		/// STX byte indicates the begining of a package, in a Gertec command.

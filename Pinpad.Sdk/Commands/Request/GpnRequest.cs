@@ -1,4 +1,5 @@
 ﻿using Pinpad.Sdk.PinpadProperties.Refactor;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
@@ -9,7 +10,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// GPN request
 	/// </summary>
-	internal sealed class GpnRequest : PinpadProperties.Refactor.BaseCommand
+	internal sealed class GpnRequest : BaseCommand
     {
         /// <summary>
 		/// Name of the command

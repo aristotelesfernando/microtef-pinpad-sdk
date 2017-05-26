@@ -1,7 +1,9 @@
-﻿namespace Pinpad.Sdk.Commands.Request
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
+
+namespace Pinpad.Sdk.Commands.Request
 {
     // TODO: Doc
-    public sealed class UpeRequest : PinpadProperties.Refactor.BaseCommand
+    public sealed class UpeRequest : BaseCommand
     {
         public override string CommandName { get { return "UPE"; } }
 

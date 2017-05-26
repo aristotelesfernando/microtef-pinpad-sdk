@@ -1,12 +1,12 @@
-﻿using Pinpad.Sdk.PinpadProperties.Refactor;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 using System.Collections.Generic;
 
 namespace Pinpad.Sdk.Commands
 {
-	/// <summary>
-	/// Context of a command.
-	/// </summary>
-	public interface IContext
+    /// <summary>
+    /// Context of a command.
+    /// </summary>
+    public interface IContext
 	{
 		/// <summary>
 		/// Byte indicating the beggining of a package.

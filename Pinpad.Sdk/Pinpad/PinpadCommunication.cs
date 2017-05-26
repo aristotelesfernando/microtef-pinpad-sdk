@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using Pinpad.Sdk.Model.Pinpad;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
-using Pinpad.Sdk.PinpadProperties.Refactor;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 
 namespace Pinpad.Sdk
 {

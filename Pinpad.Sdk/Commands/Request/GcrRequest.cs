@@ -1,14 +1,15 @@
-﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using System;
 
-namespace Pinpad.Sdk.Commands 
+namespace Pinpad.Sdk.Commands
 {
-	/// <summary>
-	/// GCR request
-	/// </summary>
-	internal sealed class GcrRequest : PinpadProperties.Refactor.BaseCommand 
+    /// <summary>
+    /// GCR request
+    /// </summary>
+    internal sealed class GcrRequest : BaseCommand 
 	{
         /// <summary>
 		/// Name of the command

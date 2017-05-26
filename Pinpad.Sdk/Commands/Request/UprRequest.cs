@@ -1,11 +1,12 @@
-﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands.Request
 {
     // TODO: Doc
-    public sealed class UprRequest : PinpadProperties.Refactor.BaseCommand
+    public sealed class UprRequest : BaseCommand
     {
         public const int PackageSectionSize = 900;
         private const int TableLengthSize = 3;

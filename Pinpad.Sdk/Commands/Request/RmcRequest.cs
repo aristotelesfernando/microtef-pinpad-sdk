@@ -1,4 +1,5 @@
-﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands 
@@ -6,7 +7,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// Remove Card Request
 	/// </summary>
-	internal sealed class RmcRequest : PinpadProperties.Refactor.BaseCommand 
+	internal sealed class RmcRequest : BaseCommand 
 	{
         /// <summary>
 		/// Name of the command

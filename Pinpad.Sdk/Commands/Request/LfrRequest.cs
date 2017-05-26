@@ -1,4 +1,5 @@
 ﻿using Pinpad.Sdk.Commands.Context;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
@@ -10,7 +11,7 @@ namespace Pinpad.Sdk.Commands.Request
     /// If the file exceeds the maximum size of the command, the file should be split and sent
     /// by multiple requests.
     /// </summary>
-    internal sealed class LfrRequest : PinpadProperties.Refactor.BaseCommand
+    internal sealed class LfrRequest : BaseCommand
     {
         /// <summary>
         /// Command name, LFR in this case.

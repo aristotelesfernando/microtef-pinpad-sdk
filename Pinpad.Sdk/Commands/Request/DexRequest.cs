@@ -1,4 +1,5 @@
-﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
@@ -7,7 +8,7 @@ namespace Pinpad.Sdk.Commands
     /// <summary>
     /// DEX request
     /// </summary>
-    internal sealed class DexRequest : PinpadProperties.Refactor.BaseCommand
+    internal sealed class DexRequest : BaseCommand
 	{
 		// Members
 		/// <summary>

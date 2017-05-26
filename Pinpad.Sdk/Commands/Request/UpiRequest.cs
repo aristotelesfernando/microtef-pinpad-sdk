@@ -1,4 +1,5 @@
-﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using System;
@@ -8,7 +9,7 @@ namespace Pinpad.Sdk.Commands.Request
     /// <summary>
 	/// UPI request. Initializes the application update flow for a WiFi pinpad.
 	/// </summary>
-    public sealed class UpiRequest : PinpadProperties.Refactor.BaseCommand
+    public sealed class UpiRequest : BaseCommand
     {
         /// <summary>
 		/// Name of the command

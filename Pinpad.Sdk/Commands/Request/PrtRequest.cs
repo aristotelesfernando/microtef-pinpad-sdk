@@ -1,6 +1,7 @@
 ﻿using Pinpad.Sdk.Commands.Context;
 using Pinpad.Sdk.Commands.TypeCode;
 using Pinpad.Sdk.Model;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
@@ -11,7 +12,7 @@ namespace Pinpad.Sdk.Commands.Request
     /// <summary>
     /// Print something through pinpad thermal printer.
     /// </summary>
-    internal sealed class PrtRequest : PinpadProperties.Refactor.BaseCommand
+    internal sealed class PrtRequest : BaseCommand
     {
         /// <summary>
         /// Command name, PRT in this case.

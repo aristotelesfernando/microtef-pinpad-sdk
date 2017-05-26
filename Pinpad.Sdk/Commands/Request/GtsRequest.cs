@@ -1,4 +1,5 @@
-﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using System;
@@ -8,7 +9,7 @@ namespace Pinpad.Sdk.Commands
 	/// <summary>
 	/// GTS request
 	/// </summary>
-	internal sealed class GtsRequest : PinpadProperties.Refactor.BaseCommand 
+	internal sealed class GtsRequest : BaseCommand 
 	{
 		// Members
 		/// <summary>

@@ -1,4 +1,5 @@
 ﻿using Pinpad.Sdk.Commands.Context;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands.Request
@@ -8,7 +9,7 @@ namespace Pinpad.Sdk.Commands.Request
     /// Ends loading a file, that was already initialized with <see cref="LfiRequest"/>
     /// and loaded with <see cref="LfrRequest"/>.
     /// </summary>
-    internal sealed class LfeRequest : PinpadProperties.Refactor.BaseCommand
+    internal sealed class LfeRequest : BaseCommand
     {
         /// <summary>
         /// Command name, LFE in this case.

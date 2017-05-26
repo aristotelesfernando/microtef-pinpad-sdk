@@ -1,9 +1,11 @@
-﻿namespace Pinpad.Sdk.Commands
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
+
+namespace Pinpad.Sdk.Commands
 {
     /// <summary>
     /// TLE request
     /// </summary>
-    internal sealed class TleRequest : PinpadProperties.Refactor.BaseCommand
+    internal sealed class TleRequest : BaseCommand
     {
         /// <summary>
         /// Name of the command

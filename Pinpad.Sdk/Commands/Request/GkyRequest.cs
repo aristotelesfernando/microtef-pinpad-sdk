@@ -1,9 +1,11 @@
-﻿namespace Pinpad.Sdk.Commands
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
+
+namespace Pinpad.Sdk.Commands
 {
     /// <summary>
     /// GKY request
     /// </summary>
-    internal sealed class GkyRequest : PinpadProperties.Refactor.BaseCommand
+    internal sealed class GkyRequest : BaseCommand
     {
         /// <summary>
         /// Name of the command
