@@ -1,8 +1,9 @@
 ﻿using Pinpad.Sdk.Model.Exceptions;
-using Pinpad.Sdk.Properties;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using System;
 
-namespace Pinpad.Sdk.PinpadProperties.Refactor
+namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
 {
     /// <summary>
 	/// Controller for PinPad command properties with the length variable
@@ -76,7 +77,7 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor
                 {
                     if (this.IsOptional == true)
                     {
-                        return DefaultStringFormatter.IntegerStringFormatter(0, this.HeaderLength);
+                        return StringFormatter.IntegerStringFormatter(0, this.HeaderLength);
                     }
                     else
                     {
@@ -99,7 +100,7 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor
             {
                 length = Convert.ToInt32(objString.Length * this.LengthRatio);
             }
-            header = DefaultStringFormatter.IntegerStringFormatter(length, this.HeaderLength);
+            header = StringFormatter.IntegerStringFormatter(length, this.HeaderLength);
 
             if (header.Length != this.HeaderLength)
             {
@@ -119,7 +120,7 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor
         /// <param name="reader">string reader</param>
         public override void ParseString(StringReader reader)
         {
-            int realLength = DefaultStringParser.IntegerStringParser(reader, this.HeaderLength).Value;
+            int realLength = StringParser.IntegerStringParser(reader, this.HeaderLength).Value;
             int length = Convert.ToInt32(realLength / this.LengthRatio);
 
             if (length == 0 || (reader.Remaining < length && this.IsOptional == true))

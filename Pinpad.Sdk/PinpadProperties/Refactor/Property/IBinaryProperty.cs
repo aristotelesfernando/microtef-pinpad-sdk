@@ -1,4 +1,4 @@
-﻿namespace Pinpad.Sdk.PinpadProperties.Refactor
+﻿namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
 {
     // TODO: Doc
     public interface IBinaryProperty : IProperty

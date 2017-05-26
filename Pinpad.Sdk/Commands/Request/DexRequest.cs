@@ -1,18 +1,13 @@
-﻿using Pinpad.Sdk.Properties;
-
-/* WARNING!
- * 
- * DEPRECATED.
- * MUST BE REFACTORED.
- * 
- */
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands
 {
-	/// <summary>
-	/// DEX request
-	/// </summary>
-	internal sealed class DexRequest : BaseCommand
+    /// <summary>
+    /// DEX request
+    /// </summary>
+    internal sealed class DexRequest : PinpadProperties.Refactor.BaseCommand
 	{
 		// Members
 		/// <summary>
@@ -27,7 +22,7 @@ namespace Pinpad.Sdk.Commands
 		/// Message to be displayed at the PinPad screen
 		/// There is no control of screen height or width
 		/// </summary>
-		public VariableLengthProperty<MultilineMessage> DEX_MSG { get; private set; }
+		public VariableLengthProperty<MultilineMessageProperty> DEX_MSG { get; private set; }
 
 		// Constructor
 		/// <summary>
@@ -36,7 +31,9 @@ namespace Pinpad.Sdk.Commands
 		public DexRequest ()
 		{
 			this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
-			this.DEX_MSG = new VariableLengthProperty<MultilineMessage>("DEX_MSG", 3, 160, 1.0f, false, false, DefaultStringFormatter.PropertyControllerStringFormatter, DefaultStringParser.PropertyControllerStringParser<MultilineMessage>, null, new MultilineMessage());
+			this.DEX_MSG = new VariableLengthProperty<MultilineMessageProperty>("DEX_MSG", 3, 160, 1.0f, false, false, 
+                StringFormatter.PropertyControllerStringFormatter, StringParser.PropertyControllerStringParser<MultilineMessageProperty>, 
+                null, new MultilineMessageProperty());
 
 			this.StartRegion(this.CMD_LEN1);
 			{

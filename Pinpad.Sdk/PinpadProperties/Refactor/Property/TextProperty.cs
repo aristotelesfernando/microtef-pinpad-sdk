@@ -1,8 +1,7 @@
 ﻿using System;
-using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Model.Exceptions;
 
-namespace Pinpad.Sdk.PinpadProperties.Refactor
+namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
 {
     public class TextProperty<T> : ITextProperty
     {

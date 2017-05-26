@@ -1,6 +1,6 @@
-﻿using Pinpad.Sdk.PinpadProperties.Refactor;
-
-using Deprecated = Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands.Request
 {
@@ -26,9 +26,7 @@ namespace Pinpad.Sdk.Commands.Request
         public UprRequest()
         {
             this.UPR_REC = new VariableLengthProperty<string>("TLR_REC", 3, UprRequest.PackageSectionSize, 1, 
-                false, false,
-                Deprecated.DefaultStringFormatter.StringStringFormatter, 
-                Deprecated.DefaultStringParser.StringStringParser);
+                false, false, StringFormatter.StringStringFormatter, StringParser.StringStringParser);
 
             this.AddProperty(this.UPR_REC);
         }   

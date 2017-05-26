@@ -1,6 +1,7 @@
 ﻿using Pinpad.Sdk.Commands;
-using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Model;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
+using Pinpad.Sdk.Properties;
 using System;
 
 namespace Pinpad.Sdk 
@@ -56,7 +57,7 @@ namespace Pinpad.Sdk
 		/// </summary>
 		/// <param name="message">Message to display</param>
 		/// <returns>true if message is displayed in the PinPad</returns>
-		public bool DisplayMessage(MultilineMessage message) 
+		public bool DisplayMessage(MultilineMessageProperty message) 
 		{
 			DexRequest request = new DexRequest( );
 			request.DEX_MSG.Value = message;

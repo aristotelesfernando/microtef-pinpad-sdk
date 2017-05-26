@@ -116,14 +116,20 @@
     <Compile Include="PinpadProperties\PinpadFixedLengthProperty.cs" />
     <Compile Include="PinpadProperties\MultilineMessage.cs" />
     <Compile Include="PinpadProperties\Refactor\BaseCommand.cs" />
-    <Compile Include="PinpadProperties\Refactor\FixedLengthProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\Formatter\StringFormatter.cs" />
+    <Compile Include="PinpadProperties\Refactor\Parser\StringParser.cs" />
+    <Compile Include="PinpadProperties\Refactor\Property\BaseProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\Property\FixedLengthProperty.cs" />
     <Compile Include="PinpadProperties\Refactor\ICommand.cs" />
-    <Compile Include="PinpadProperties\Refactor\RegionProperty.cs" />
-    <Compile Include="PinpadProperties\Refactor\TextProperty.cs" />
-    <Compile Include="PinpadProperties\Refactor\IBinaryProperty.cs" />
-    <Compile Include="PinpadProperties\Refactor\IProperty.cs" />
-    <Compile Include="PinpadProperties\Refactor\ITextProperty.cs" />
-    <Compile Include="PinpadProperties\Refactor\VariableLengthProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\Property\MultilineMessageProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\Property\RegionProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\Property\SimpleMessageProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\StringReader.cs" />
+    <Compile Include="PinpadProperties\Refactor\Property\TextProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\Property\IBinaryProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\Property\IProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\Property\ITextProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\Property\VariableLengthProperty.cs" />
     <Compile Include="PinpadProperties\RegionProperty.cs" />
     <Compile Include="PinpadProperties\ServiceCode.cs" />
     <Compile Include="PinpadProperties\SimpleMessage.cs" />
@@ -194,6 +200,7 @@
       <Name>Pinpad.Sdk.Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

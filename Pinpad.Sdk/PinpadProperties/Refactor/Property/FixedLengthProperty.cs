@@ -1,8 +1,7 @@
 ﻿using Pinpad.Sdk.Model.Exceptions;
-using Pinpad.Sdk.Properties;
 using System;
 
-namespace Pinpad.Sdk.PinpadProperties.Refactor
+namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
 {
     /// <summary>
 	/// Controller for pinpad command properties with a fixed length.

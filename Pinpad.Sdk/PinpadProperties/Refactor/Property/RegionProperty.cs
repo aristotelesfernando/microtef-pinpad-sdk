@@ -1,9 +1,10 @@
 ﻿using Pinpad.Sdk.Model.Exceptions;
-using Pinpad.Sdk.Properties;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using System;
 using System.Collections.Generic;
 
-namespace Pinpad.Sdk.PinpadProperties.Refactor
+namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
 {
     /// <summary>
     /// Property that represents a region in the command
@@ -114,7 +115,7 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor
             if (obj.HasValue == false) { return String.Empty; }
 
             // Get integer value as string:
-            string value = DefaultStringFormatter.IntegerStringFormatter(obj, this.Length);
+            string value = StringFormatter.IntegerStringFormatter(obj, this.Length);
 
             // Validating length:
             if (value.Length != Length)
@@ -135,7 +136,7 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor
             }
             else
             {
-                this.Value = DefaultStringParser.IntegerStringParser(reader, Length);
+                this.Value = StringParser.IntegerStringParser(reader, Length);
             }
         }
     }

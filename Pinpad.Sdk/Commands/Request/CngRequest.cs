@@ -1,4 +1,6 @@
-﻿using Pinpad.Sdk.PinpadProperties.Refactor;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands
 {
@@ -17,7 +19,8 @@ namespace Pinpad.Sdk.Commands
 		{
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
 
-			this.CNG_EMVDAT = new VariableLengthProperty<HexadecimalData>("CNG_EMVDAT", 2, 198, 1.0f / 2, false, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
+			this.CNG_EMVDAT = new VariableLengthProperty<HexadecimalData>("CNG_EMVDAT", 2, 198, 1.0f / 2, 
+                false, false, StringFormatter.HexadecimalStringFormatter, StringParser.HexadecimalStringParser);
 
             this.StartRegion(this.CMD_LEN1);
             {
