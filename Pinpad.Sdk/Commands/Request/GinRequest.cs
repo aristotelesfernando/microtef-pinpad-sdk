@@ -1,4 +1,6 @@
-﻿using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using System;
 
 namespace Pinpad.Sdk.Commands
@@ -6,7 +8,7 @@ namespace Pinpad.Sdk.Commands
     /// <summary>
     /// GIN request
     /// </summary>
-    internal sealed class GinRequest : BaseCommand 
+    internal sealed class GinRequest : PinpadProperties.Refactor.BaseCommand 
 	{
 		// Members
 		/// <summary>
@@ -20,7 +22,7 @@ namespace Pinpad.Sdk.Commands
 		/// <summary>
 		/// Acquirer index to get information from or 0 to get PinPad information
 		/// </summary>
-		public PinpadFixedLengthProperty<Nullable<int>> GIN_ACQIDX { get; private set; }
+		public FixedLengthProperty<Nullable<int>> GIN_ACQIDX { get; private set; }
 		
 		// Constructor
 		/// <summary>
@@ -29,7 +31,8 @@ namespace Pinpad.Sdk.Commands
 		public GinRequest() 
 		{
 			this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
-			this.GIN_ACQIDX = new PinpadFixedLengthProperty<Nullable<int>>("GIN_ACQIDX", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
+			this.GIN_ACQIDX = new FixedLengthProperty<Nullable<int>>("GIN_ACQIDX", 2, false, 
+                StringFormatter.IntegerStringFormatter, StringParser.IntegerStringParser);
 
 			this.StartRegion(this.CMD_LEN1);
 			{
