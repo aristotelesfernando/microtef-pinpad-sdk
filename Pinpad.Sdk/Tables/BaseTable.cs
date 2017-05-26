@@ -1,24 +1,42 @@
 ﻿using Pinpad.Sdk.Model;
-using Pinpad.Sdk.Properties;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using System;
 
-namespace Pinpad.Sdk 
+namespace Pinpad.Sdk
 {
-	/// <summary>
-	/// Base PinPad table
-	/// </summary>
-	public class BaseTable : BaseProperty 
+    /// <summary>
+    /// Base PinPad table
+    /// </summary>
+    public class BaseTable : PinpadProperties.Refactor.Property.BaseProperty 
 	{
-		/// <summary>
-		/// Constructor
-		/// Starts the region TAB_LEN and does not close it
-		/// </summary>
-		public BaseTable() 
+        private FixedLengthProperty<EmvTableType> _TAB_ID { get; set; }
+
+        /// <summary>
+        /// EMV Table acquirer index
+        /// </summary>
+        public FixedLengthProperty<Nullable<int>> TAB_ACQ { get; private set; }
+        /// <summary>
+        /// EMV Table record index
+        /// Each acquirer has it's own list, so you can have TAB_ACQ = 1 and TAB_RECIDX = 1 while using TAB_ACQ = 2 and TAB_RECIDX = 1 without conflict
+        /// </summary>
+        public FixedLengthProperty<Nullable<int>> TAB_RECIDX { get; private set; }
+        
+        /// <summary>
+        /// Constructor
+        /// Starts the region TAB_LEN and does not close it
+        /// </summary>
+        public BaseTable() 
 		{
 			this.TAB_LEN = new RegionProperty("TAB_LEN", 3, true);
-			this._TAB_ID = new PinpadFixedLengthProperty<EmvTableType>("TAB_ID", 1, false, DefaultStringFormatter.EnumStringFormatter<EmvTableType>, DefaultStringParser.EnumStringParser<EmvTableType>, null, this.TAB_ID);
-			this.TAB_ACQ = new PinpadFixedLengthProperty<int?>("TAB_ACQ", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
-			this.TAB_RECIDX = new PinpadFixedLengthProperty<int?>("TAB_RECIDX", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
+			this._TAB_ID = new FixedLengthProperty<EmvTableType>("TAB_ID", 1, false, 
+                StringFormatter.EnumStringFormatter<EmvTableType>, StringParser.EnumStringParser<EmvTableType>, 
+                null, this.TAB_ID);
+			this.TAB_ACQ = new FixedLengthProperty<int?>("TAB_ACQ", 2, false, 
+                StringFormatter.IntegerStringFormatter, StringParser.IntegerStringParser);
+			this.TAB_RECIDX = new FixedLengthProperty<int?>("TAB_RECIDX", 2, false, 
+                StringFormatter.IntegerStringFormatter, StringParser.IntegerStringParser);
 
 			this.StartRegion(this.TAB_LEN);
 			{
@@ -46,18 +64,5 @@ namespace Pinpad.Sdk
 				}
 			}
 		}
-
-		private PinpadFixedLengthProperty<EmvTableType> _TAB_ID { get; set; }
-
-		/// <summary>
-		/// EMV Table acquirer index
-		/// </summary>
-		public PinpadFixedLengthProperty<Nullable<int>> TAB_ACQ { get; private set; }
-
-		/// <summary>
-		/// EMV Table record index
-		/// Each acquirer has it's own list, so you can have TAB_ACQ = 1 and TAB_RECIDX = 1 while using TAB_ACQ = 2 and TAB_RECIDX = 1 without conflict
-		/// </summary>
-		public PinpadFixedLengthProperty<Nullable<int>> TAB_RECIDX { get; private set; }
 	}
 }

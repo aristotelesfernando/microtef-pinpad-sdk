@@ -126,6 +126,7 @@
     <Compile Include="PinpadProperties\Refactor\Property\MultilineMessageProperty.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\RegionProperty.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\SimpleMessageProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\Property\VariableLengthCollectionProperty.cs" />
     <Compile Include="PinpadProperties\Refactor\StringReader.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\TextProperty.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\IBinaryProperty.cs" />
