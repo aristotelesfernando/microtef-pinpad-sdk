@@ -1,4 +1,6 @@
-﻿using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using System;
 
 namespace Pinpad.Sdk.Commands.Request
@@ -6,7 +8,7 @@ namespace Pinpad.Sdk.Commands.Request
     /// <summary>
 	/// UPI request. Initializes the application update flow for a WiFi pinpad.
 	/// </summary>
-    public sealed class UpiRequest : BaseCommand
+    public sealed class UpiRequest : PinpadProperties.Refactor.BaseCommand
     {
         /// <summary>
 		/// Name of the command
@@ -19,7 +21,7 @@ namespace Pinpad.Sdk.Commands.Request
         /// <summary>
         /// Size of the application package.
         /// </summary>
-        public PinpadFixedLengthProperty<Nullable<int>> UPI_APPSIZE { get; private set; }
+        public FixedLengthProperty<Nullable<int>> UPI_APPSIZE { get; private set; }
 
         /// <summary>
         /// Creates the command with it's regions.
@@ -27,8 +29,8 @@ namespace Pinpad.Sdk.Commands.Request
         public UpiRequest()
         {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
-            this.UPI_APPSIZE = new PinpadFixedLengthProperty<Nullable<int>>("UPI_APPSIZE", 24, false, 
-                DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
+            this.UPI_APPSIZE = new FixedLengthProperty<Nullable<int>>("UPI_APPSIZE", 24, false, 
+                StringFormatter.IntegerStringFormatter, StringParser.IntegerStringParser);
 
             this.StartRegion(this.CMD_LEN1);
             {
