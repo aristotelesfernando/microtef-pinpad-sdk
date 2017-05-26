@@ -3,7 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.Commands;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Model;
 using System;
 using Pinpad.Sdk.Test.Mockings;

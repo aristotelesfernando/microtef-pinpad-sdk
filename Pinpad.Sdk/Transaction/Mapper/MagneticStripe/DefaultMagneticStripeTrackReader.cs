@@ -1,7 +1,7 @@
 ﻿using System;
 using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Model;
-using Pinpad.Sdk.Properties;
+using Pinpad.Sdk.PinpadProperties.Refactor;
 
 namespace Pinpad.Sdk.Transaction.Mapper.MagneticStripe
 {

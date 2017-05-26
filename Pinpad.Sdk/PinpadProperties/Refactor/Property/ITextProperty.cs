@@ -1,6 +1,4 @@
-﻿using Pinpad.Sdk.Properties;
-
-namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
+﻿namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
 {
     // TODO: Doc
     public interface ITextProperty : IProperty
