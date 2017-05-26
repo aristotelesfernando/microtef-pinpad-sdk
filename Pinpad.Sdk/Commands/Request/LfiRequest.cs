@@ -1,5 +1,7 @@
 ﻿using Pinpad.Sdk.Commands.Context;
-using Pinpad.Sdk.Properties;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands.Request
 {
@@ -7,7 +9,7 @@ namespace Pinpad.Sdk.Commands.Request
     /// LFI - Load File Initialization.
     /// Initialize loading a file into pinpad memory.
     /// </summary>
-    internal sealed class LfiRequest : BaseCommand
+    internal sealed class LfiRequest : PinpadProperties.Refactor.BaseCommand
     {
         /// <summary>
         /// Command name, LFI in this case.
@@ -30,9 +32,7 @@ namespace Pinpad.Sdk.Commands.Request
         {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
             this.LFI_FILENAME = new VariableLengthProperty<string>("LFI_FILENAME", 3,
-                64, 1f, false, false,
-                DefaultStringFormatter.StringStringFormatter,
-                DefaultStringParser.StringStringParser);
+                64, 1f, false, false, StringFormatter.StringStringFormatter, StringParser.StringStringParser);
 
             this.StartRegion(this.CMD_LEN1);
             {
