@@ -11,6 +11,7 @@ using Pinpad.Sdk.Pinpad;
 using Pinpad.Sdk.Commands.DataSet;
 using Pinpad.Sdk.Model.TypeCode;
 using Pinpad.Sdk.Commands.Request;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Test
 {
@@ -118,7 +119,7 @@ namespace Pinpad.Sdk.Test
 			OpnResponse opnResp = comm.SendRequestAndReceiveResponse<OpnResponse>(opn);
 
 			DspRequest dsp = new DspRequest();
-			dsp.DSP_MSG.Value = new SimpleMessage("ola");
+			dsp.DSP_MSG.Value = new SimpleMessageProperty("ola");
 
 			GenericResponse r = comm.SendRequestAndReceiveResponse<GenericResponse>(dsp);
 		}

@@ -2,13 +2,6 @@
 using Pinpad.Sdk.Model.TypeCode;
 using System;
 
-/* WARNING!
- * 
- * DEPRECATED.
- * MUST BE REFACTORED.
- * 
- */
-
 namespace Pinpad.Sdk.Properties
 {
 	/// <summary>

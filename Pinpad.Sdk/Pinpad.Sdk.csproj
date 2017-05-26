@@ -116,6 +116,7 @@
     <Compile Include="PinpadProperties\PinpadFixedLengthProperty.cs" />
     <Compile Include="PinpadProperties\MultilineMessage.cs" />
     <Compile Include="PinpadProperties\Refactor\BaseCommand.cs" />
+    <Compile Include="PinpadProperties\Refactor\CryptographyMethod.cs" />
     <Compile Include="PinpadProperties\Refactor\Formatter\StringFormatter.cs" />
     <Compile Include="PinpadProperties\Refactor\Parser\StringParser.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\BaseProperty.cs" />

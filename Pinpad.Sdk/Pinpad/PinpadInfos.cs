@@ -1,15 +1,14 @@
-﻿using System;
-using Pinpad.Sdk.Commands;
+﻿using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.TypeCode;
-using Pinpad.Sdk.Properties;
+using Pinpad.Sdk.PinpadProperties.Refactor;
 
-namespace Pinpad.Sdk 
+namespace Pinpad.Sdk
 {
-	/// <summary>
-	/// Pinpad informations.
-	/// </summary>
-	public sealed class PinpadInfos : IPinpadInfos
+    /// <summary>
+    /// Pinpad informations.
+    /// </summary>
+    public sealed class PinpadInfos : IPinpadInfos
 	{
 		// Members
 		/// <summary>
