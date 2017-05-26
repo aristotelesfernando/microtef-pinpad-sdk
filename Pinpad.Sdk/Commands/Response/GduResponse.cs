@@ -1,5 +1,6 @@
-﻿using Pinpad.Sdk.Properties;
-using System;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands
 {
@@ -26,7 +27,7 @@ namespace Pinpad.Sdk.Commands
 		/// <summary>
 		/// KSN obtained.
 		/// </summary>
-		public PinpadFixedLengthProperty<string> GDU_KSN { get; private set; }
+		public FixedLengthProperty<string> GDU_KSN { get; private set; }
 		/// <summary>
 		/// If stone is supported on this pinpad.
 		/// </summary>
@@ -51,7 +52,8 @@ namespace Pinpad.Sdk.Commands
 		public GduResponse ()
 		{
 			this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
-			this.GDU_KSN = new PinpadFixedLengthProperty<string>("GDU_KSN", 20, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
+			this.GDU_KSN = new FixedLengthProperty<string>("GDU_KSN", 20, false, 
+                StringFormatter.StringStringFormatter, StringParser.StringStringParser);
 
 			this.StartRegion(CMD_LEN1);
 			{

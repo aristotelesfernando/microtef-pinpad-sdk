@@ -1,6 +1,8 @@
 ﻿using Pinpad.Sdk.Commands.Context;
 using Pinpad.Sdk.Commands.Request;
-using Pinpad.Sdk.Properties;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using System;
 
 namespace Pinpad.Sdk.Commands.Response
@@ -27,12 +29,7 @@ namespace Pinpad.Sdk.Commands.Response
         /// <summary>
         /// Whether the file exists in pinpad memory or not.
         /// </summary>
-        public SimpleProperty<Nullable<bool>> LFC_EXISTS { get; private set; }
-        /// <summary>
-        /// If <see cref="LFC_EXISTS"/> is True, this property contains the size of the
-        /// file. Otherwise, if <see cref="LFC_EXISTS"/> is False, it should be 0.
-        /// </summary>
-        public PinpadFixedLengthProperty<Nullable<decimal>> LFC_FILESIZE { get; set; }
+        public TextProperty<Nullable<bool>> LFC_EXISTS { get; private set; }
 
         /// <summary>
         /// Creates the command and all it's fields.
@@ -41,10 +38,10 @@ namespace Pinpad.Sdk.Commands.Response
             : base (new IngenicoContext())
         {
             this.RSP_LEN1 = new RegionProperty("RSP_LEN1", 3);
-            this.LFC_EXISTS = new SimpleProperty<Nullable<bool>>("LFC_EXISTS",
+            this.LFC_EXISTS = new TextProperty<Nullable<bool>>("LFC_EXISTS",
                 false, 
-                DefaultStringFormatter.BooleanStringFormatter,
-                DefaultStringParser.BooleanStringParser);
+                StringFormatter.BooleanStringFormatter,
+                StringParser.BooleanStringParser);
 
             this.StartRegion(this.RSP_LEN1);
             {

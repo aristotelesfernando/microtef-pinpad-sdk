@@ -8,7 +8,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using Pinpad.Sdk.Model.Pinpad;
-using Refactor = Pinpad.Sdk.PinpadProperties.Refactor;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
+using Pinpad.Sdk.PinpadProperties.Refactor;
 
 namespace Pinpad.Sdk
 {
@@ -159,7 +160,7 @@ namespace Pinpad.Sdk
 			{
 				// Create CLO request:
 				CloRequest request = new CloRequest();
-				request.CLO_MSG.Value = new Properties.SimpleMessage(message, Model.DisplayPaddingType.Left);
+				request.CLO_MSG.Value = new SimpleMessageProperty(message, Model.DisplayPaddingType.Left);
 
 				// Gets it's reponse
 				CloResponse response = this.SendRequestAndReceiveResponse<CloResponse>(request);
@@ -251,7 +252,7 @@ namespace Pinpad.Sdk
         /// not ERR and response code equals to <see cref="AbecsResponseStatus.ST_OK"/></returns>
         public bool SendRequestAndVerifyResponseCode(object request)
         {
-            Refactor.ICommand castRequest = request as Refactor.ICommand;
+            ICommand castRequest = request as ICommand;
 
             lock (this.Connection)
             {
@@ -275,20 +276,20 @@ namespace Pinpad.Sdk
         public T SendRequestAndReceiveResponse<T>(object request)
             where T : new()
         {
-            if (request is Refactor.ICommand == false)
+            if (request is ICommand == false)
             {
                 throw new InvalidOperationException("Request does not implement expected type.");
             }
 
             lock (this.Connection)
             {
-                if (this.SendRequest(request as Refactor.ICommand) == false)
+                if (this.SendRequest(request as ICommand) == false)
                 {
                     return default(T);
                 }
                 else
                 {
-                    return (T)this.ReceiveResponse<T>((request as Refactor.ICommand).Context);
+                    return (T)this.ReceiveResponse<T>((request as ICommand).Context);
                 }
             }
         }
@@ -299,7 +300,7 @@ namespace Pinpad.Sdk
         /// </summary>
         /// <param name="request">request controller</param>
         /// <returns>Was the request successfully sent?</returns>
-        internal bool SendRequest (Refactor.ICommand request)
+        internal bool SendRequest (ICommand request)
 		{
             try
             {
@@ -439,7 +440,8 @@ namespace Pinpad.Sdk
 						notificationResponse.CommandString = openedResponseString;
 						if (this.NotificationReceived != null)
 						{
-							this.NotificationReceived(this, new PinpadNotificationEventArgs(notificationResponse.NTM_MSG.Value));
+							this.NotificationReceived(this, 
+                                new PinpadNotificationEventArgs(notificationResponse.NTM_MSG.Value));
 						}
 
 						return this.ReceiveResponseString(timeout, response.Context);
@@ -536,30 +538,9 @@ namespace Pinpad.Sdk
         /// </summary>
         /// <param name="request">Request to send.</param>
         /// <returns>Return whether the command was send successfuly or not.</returns>
-		private bool InternalSendRequest (Refactor.ICommand request)
+		private bool InternalSendRequest (ICommand request)
 		{
-            if (request is Refactor.BaseCommand)
-            {
-                Refactor.BaseCommand baseRequest = request as Refactor.BaseCommand;
-
-                Debug.WriteLine("Request: " + baseRequest.CommandString);
-
-                List<byte> requestByteCollection = baseRequest.Context.GetRequestBody(baseRequest);
-
-                lock (this.Connection)
-                {
-                    // Cancel the previous request:
-                    this.CancelRequest();
-
-                    // Saves the current request as last:
-                    this.LastSentRequest = CrossPlatformController.TextEncodingController
-                        .GetString(TextEncodingType.Ascii, baseRequest.CommandTrack);
-
-                    // Send the request:
-                    return InternalSendRequest(requestByteCollection.ToArray());
-                }
-            }
-            else
+            if (request is BaseCommand)
             {
                 BaseCommand baseRequest = request as BaseCommand;
 
@@ -579,6 +560,8 @@ namespace Pinpad.Sdk
                     return InternalSendRequest(requestByteCollection.ToArray());
                 }
             }
+
+            return false;
 		}
 
         /// <summary>

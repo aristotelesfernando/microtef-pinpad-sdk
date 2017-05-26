@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-
-using Refactor = Pinpad.Sdk.PinpadProperties.Refactor;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor;
+using System.Collections.Generic;
 
 namespace Pinpad.Sdk.Commands
 {
@@ -41,7 +40,6 @@ namespace Pinpad.Sdk.Commands
 		/// <param name="request">The request to be turned into a list of bytes.</param>
 		/// <returns>List of bytes ready to be sent to the pinpad.</returns>
 		List<byte> GetRequestBody (BaseCommand request);
-        List<byte> GetRequestBody(Refactor.BaseCommand request);
         void FormatResponse (List<byte> response);
 		bool IsIntegrityCodeValid (byte [] firstCode, byte [] secondCode);
 	}

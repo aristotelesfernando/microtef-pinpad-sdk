@@ -1,4 +1,6 @@
-﻿using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands.Response
 {
@@ -33,8 +35,8 @@ namespace Pinpad.Sdk.Commands.Response
         {
             this.GAV_APPVER = new VariableLengthProperty<string>("GAV_APPVER", 3, 
                 16, 1, false, false, 
-                DefaultStringFormatter.StringStringFormatter, 
-                DefaultStringParser.StringStringParser);
+                StringFormatter.StringStringFormatter, 
+                StringParser.StringStringParser);
             
             this.AddProperty(this.GAV_APPVER);
         }

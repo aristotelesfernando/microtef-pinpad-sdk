@@ -43,7 +43,6 @@
     <AssemblyOriginatorKeyFile>PinpadSdk_key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\Context\IngenicoContext.cs" />
     <Compile Include="Commands\DataSet\AcquirerCommunicationStatus.cs" />
     <Compile Include="Commands\DataSet\FncEntry.cs" />
@@ -127,6 +126,7 @@
     <Compile Include="PinpadProperties\Refactor\Property\RegionProperty.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\SimpleMessageProperty.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\VariableLengthCollectionProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\ServiceCode.cs" />
     <Compile Include="PinpadProperties\Refactor\StringReader.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\TextProperty.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\IBinaryProperty.cs" />

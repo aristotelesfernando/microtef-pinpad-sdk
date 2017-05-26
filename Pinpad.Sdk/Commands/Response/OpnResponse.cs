@@ -1,12 +1,7 @@
-﻿using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using System;
-
-/* WARNING!
- * 
- * DEPRECATED.
- * MUST BE REFACTORED.
- * 
- */
 
 namespace Pinpad.Sdk.Commands
 {
@@ -31,7 +26,7 @@ namespace Pinpad.Sdk.Commands
 		/// <summary>
 		/// Version of the Stone App in the PinPad
 		/// </summary>
-		public PinpadFixedLengthProperty<Nullable<int>> OPN_STONEVER { get; private set; }
+		public FixedLengthProperty<Nullable<int>> OPN_STONEVER { get; private set; }
 		
 		// Constructor
 		/// <summary>
@@ -40,8 +35,8 @@ namespace Pinpad.Sdk.Commands
 		public OpnResponse() 
 		{
 			this.RSP_LEN1 = new RegionProperty("RSP_LEN1", 3, false, true);
-			this.OPN_STONEVER = new PinpadFixedLengthProperty<Nullable<int>>("OPN_STONEVER", 3, true, 
-                DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
+			this.OPN_STONEVER = new FixedLengthProperty<Nullable<int>>("OPN_STONEVER", 3, true, 
+                StringFormatter.IntegerStringFormatter, StringParser.IntegerStringParser);
 
 			this.StartRegion(this.RSP_LEN1);
 			{

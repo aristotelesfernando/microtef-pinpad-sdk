@@ -1,12 +1,7 @@
-﻿using Pinpad.Sdk.Properties;
-using Pinpad.Sdk.TypeCode;
-
-/* WARNING!
- * 
- * DEPRECATED.
- * MUST BE REFACTORED.
- * 
- */
+﻿using Pinpad.Sdk.PinpadProperties.Refactor;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands 
 {
@@ -24,7 +19,7 @@ namespace Pinpad.Sdk.Commands
 		/// <summary>
 		/// Command response code
 		/// </summary>
-		public PinpadFixedLengthProperty<AbecsResponseStatus> RSP_STAT { get; private set; }
+		public FixedLengthProperty<AbecsResponseStatus> RSP_STAT { get; private set; }
 		
 		// Constructor
 		/// <summary>
@@ -36,7 +31,9 @@ namespace Pinpad.Sdk.Commands
 			if (context == null) { context = new AbecsContext(); }
 			this.Context = context;
 
-			this.RSP_STAT = new PinpadFixedLengthProperty<AbecsResponseStatus>("RSP_STAT", this.Context.StatusLength, false, DefaultStringFormatter.EnumStringFormatter<AbecsResponseStatus>, DefaultStringParser.EnumStringParser<AbecsResponseStatus>);
+			this.RSP_STAT = new FixedLengthProperty<AbecsResponseStatus>("RSP_STAT", this.Context.StatusLength,
+                false, StringFormatter.EnumStringFormatter<AbecsResponseStatus>, 
+                StringParser.EnumStringParser<AbecsResponseStatus>);
 
 			this.AddProperty(this.RSP_STAT);
 		}

@@ -75,7 +75,5 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor
             }
             return value;
         }
-
-        
     }
 }

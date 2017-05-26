@@ -1,11 +1,6 @@
-﻿using Pinpad.Sdk.Properties;
-
-/* WARNING!
- * 
- * DEPRECATED.
- * MUST BE REFACTORED.
- * 
- */
+﻿using Pinpad.Sdk.PinpadProperties.Refactor;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 
 namespace Pinpad.Sdk.Commands 
 {
@@ -54,7 +49,7 @@ namespace Pinpad.Sdk.Commands
 		/// <returns>Value of the property as string</returns>
 		protected override string CommandNameStringFormatter(string obj, int length)
 		{
-			string value = DefaultStringFormatter.StringStringFormatter(obj, length);
+			string value = StringFormatter.StringStringFormatter(obj, length);
 			return value;
 		}
 		/// <summary>
@@ -65,7 +60,7 @@ namespace Pinpad.Sdk.Commands
 		/// <returns>string</returns>
 		protected override string CommandNameStringParser(StringReader reader, int length) 
 		{
-			string value = DefaultStringParser.StringStringParser(reader, length);
+			string value = StringParser.StringStringParser(reader, length);
 			return value;
 		}
 		/// <summary>

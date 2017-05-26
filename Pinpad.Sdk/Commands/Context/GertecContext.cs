@@ -66,29 +66,7 @@ namespace Pinpad.Sdk.Commands
 		/// </summary>
 		/// <param name="request">Request to be sent.</param>
 		/// <returns>List of bytes ready to be sent to the pinpad.</returns>
-		public List<byte> GetRequestBody (BaseCommand request)
-		{
-			List<byte> requestBody = new List<byte>(CrossPlatformController.TextEncodingController.GetBytes(TextEncodingType.Ascii, request.CommandString));
-
-			// Add STX (indication the begining of a package):
-			requestBody.Insert(0, STX_BYTE);
-
-			// Inserts a null byte, accordingly to Gertec specs:
-			requestBody.Insert(1, PinpadCommunication.NULL_BYTE);
-
-			// Insert the length of the command, hardcoded, because it's fixed (25 characters):
-			requestBody.Insert(2, 0x19);
-
-			// Add ETX (indicating the end of a package):
-			requestBody.Add(ETX_BYTE);
-
-			// Add LRC(Longitudinal Redundancy Check – XOR of all bytes from STX to ETX) at the end of the command:
-			requestBody.AddRange(this.GetIntegrityCode(requestBody.ToArray()));
-
-			return requestBody;
-		}
-        // TODO: Doc.
-        public List<byte> GetRequestBody(PinpadProperties.Refactor.BaseCommand request)
+        public List<byte> GetRequestBody(BaseCommand request)
         {
             // TODO: Melhorar!
             List<byte> requestBody = new List<byte>();

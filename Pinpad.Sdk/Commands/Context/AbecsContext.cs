@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using MicroPos.CrossPlatform;
-using MicroPos.CrossPlatform.TypeCode;
-using Pinpad.Sdk.TypeCode;
 
 namespace Pinpad.Sdk.Commands
 {
-	/// <summary>
-	/// Command context accordingly to abecs.
-	/// </summary>
-	internal class AbecsContext : IContext
+    /// <summary>
+    /// Command context accordingly to abecs.
+    /// </summary>
+    internal class AbecsContext : IContext
 	{
 		// Constants
 		/// <summary>
@@ -90,22 +87,6 @@ namespace Pinpad.Sdk.Commands
 		/// </summary>
 		/// <param name="request">Request to be sent.</param>
 		/// <returns>List of bytes ready to be sent to the pinpad.</returns>
-        public List<byte> GetRequestBody (BaseCommand request)
-		{
-			List<byte> requestBody = new List<byte>(CrossPlatformController.TextEncodingController
-                .GetBytes(TextEncodingType.Ascii, request.CommandString));
-
-			// Add ETB (indicating the end of a package):
-			requestBody.Add(ETB_BYTE);
-
-			// Generate checksum:
-			requestBody.AddRange(this.GetIntegrityCode(requestBody.ToArray()));
-
-			// Add SYN (indication the begining of a package):
-			requestBody.Insert(0, SYN_BYTE);
-
-			return requestBody;
-		}
         public List<byte> GetRequestBody(PinpadProperties.Refactor.BaseCommand request)
         {
             List<byte> requestBody = new List<byte>();

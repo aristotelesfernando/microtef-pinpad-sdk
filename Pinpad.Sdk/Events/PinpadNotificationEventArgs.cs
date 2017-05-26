@@ -1,4 +1,4 @@
-﻿using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using System;
 
 namespace Pinpad.Sdk.Events 
@@ -11,13 +11,13 @@ namespace Pinpad.Sdk.Events
 		/// <summary>
 		/// PinPad message
 		/// </summary>
-		public SimpleMessage Message { get; private set; }
+		public SimpleMessageProperty Message { get; private set; }
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="message">PinPad message</param>
-		public PinpadNotificationEventArgs(SimpleMessage message)
+		public PinpadNotificationEventArgs(SimpleMessageProperty message)
 		{
 			this.Message = message;
 		}
