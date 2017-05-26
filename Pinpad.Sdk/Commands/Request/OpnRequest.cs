@@ -3,8 +3,8 @@
 	/// <summary>
 	/// OPN request
 	/// </summary>
-	internal sealed class OpnRequest : BaseCommand 
-	{
+	internal sealed class OpnRequest : PinpadProperties.Refactor.BaseCommand
+    {
 		/// <summary>
 		/// Name of the command
 		/// </summary>

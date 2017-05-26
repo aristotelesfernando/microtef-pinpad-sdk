@@ -275,22 +275,20 @@ namespace Pinpad.Sdk
         public T SendRequestAndReceiveResponse<T>(object request)
             where T : new()
         {
-            BaseCommand castRequest = request as BaseCommand;
-
-            if (castRequest == null)
+            if (request is Refactor.ICommand == false)
             {
                 throw new InvalidOperationException("Request does not implement expected type.");
             }
 
             lock (this.Connection)
             {
-                if (this.SendRequest(castRequest) == false)
+                if (this.SendRequest(request as Refactor.ICommand) == false)
                 {
                     return default(T);
                 }
                 else
                 {
-                    return (T)this.ReceiveResponse<T>(castRequest.Context);
+                    return (T)this.ReceiveResponse<T>((request as Refactor.ICommand).Context);
                 }
             }
         }
