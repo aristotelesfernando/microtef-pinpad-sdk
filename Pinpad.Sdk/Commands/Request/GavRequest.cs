@@ -5,7 +5,7 @@
     /// device.
     /// This is a command made by Stone Payments, and it's only available for Stone Wi-Fi Pinpads.
     /// </summary>
-    public sealed class GavRequest : BaseCommand
+    public sealed class GavRequest : PinpadProperties.Refactor.BaseCommand
     {
         /// <summary>
         /// GAV command name as string.
