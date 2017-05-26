@@ -1,5 +1,4 @@
-﻿using Pinpad.Sdk.Properties;
-using System;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor;
 
 namespace Pinpad.Sdk.Commands
 {
@@ -9,7 +8,7 @@ namespace Pinpad.Sdk.Commands
     /// The parameters may coincide with the ones present in the AID table, which will alter the values only in the current transaction.
     /// May also be used to supply proprietary parameters not listed in the EMV documentation.
     /// </summary>
-    internal sealed class CngRequest : BaseCommand
+    internal sealed class CngRequest : PinpadProperties.Refactor.BaseCommand
 	{
         /// <summary>
         /// Constructor
