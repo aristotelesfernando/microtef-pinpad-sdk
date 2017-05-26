@@ -2,11 +2,11 @@
 using System;
 using Pinpad.Sdk.Model;
 using System.Globalization;
-using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Transaction;
 using Pinpad.Sdk.Exceptions;
 using Pinpad.Sdk.Model.TypeCode;
 using Pinpad.Sdk.Model.Pinpad;
+using Pinpad.Sdk.PinpadProperties.Refactor;
 
 namespace Pinpad.Sdk
 {
