@@ -3,6 +3,11 @@ using Pinpad.Sdk.Model.Exceptions;
 
 namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
 {
+    /// <summary>
+    /// Property which it's value is parseable to string.
+    /// The data it stores can be represented as string.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class TextProperty<T> : ITextProperty
     {
         // Members

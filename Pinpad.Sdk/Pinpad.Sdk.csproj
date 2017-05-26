@@ -119,6 +119,7 @@
     <Compile Include="PinpadProperties\Refactor\Formatter\StringFormatter.cs" />
     <Compile Include="PinpadProperties\Refactor\Parser\StringParser.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\BaseProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\Property\DataCollectionProperty.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\FixedLengthProperty.cs" />
     <Compile Include="PinpadProperties\Refactor\ICommand.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\MultilineMessageProperty.cs" />

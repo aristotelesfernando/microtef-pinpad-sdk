@@ -105,6 +105,7 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
             }
         }
 
+        // TODO: Doc
         public BaseProperty()
         {
             this.PropertyCollection = new List<IProperty>();
