@@ -1,7 +1,6 @@
 ﻿using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
-using Pinpad.Sdk.Properties;
 using System;
 
 namespace Pinpad.Sdk 
@@ -44,7 +43,7 @@ namespace Pinpad.Sdk
 		/// </summary>
 		/// <param name="message">Message to display</param>
 		/// <returns>true if message is displayed in the PinPad</returns>
-		public bool DisplayMessage(SimpleMessage message)
+		public bool DisplayMessage(SimpleMessageProperty message)
 		{
 			DspRequest request = new DspRequest();
 			request.DSP_MSG.Value = message;
@@ -76,12 +75,12 @@ namespace Pinpad.Sdk
 		/// <exception cref="System.ArgumentOutOfRangeException">This exception is thrown only if one (or both) of the messages exceed the limit of 16 characters.</exception>
 		public bool ShowMessage(string firstLine, string secondLine = null, Sdk.Model.DisplayPaddingType paddingType = DisplayPaddingType.Left)
 		{
-			if (firstLine != null && firstLine.Length > 16) { firstLine = firstLine.Substring(0, 16); }
+			if (firstLine != null && firstLine.Length > 16)   { firstLine = firstLine.Substring(0, 16); }
 			if (secondLine != null && secondLine.Length > 16) { secondLine = secondLine.Substring(0, 16); }
 
 			try
 			{
-				SimpleMessage message = new SimpleMessage(firstLine, secondLine, paddingType);
+				SimpleMessageProperty message = new SimpleMessageProperty(firstLine, secondLine, paddingType);
 
 				return this.DisplayMessage (message);
 			}
