@@ -5,7 +5,9 @@ using System.Text;
 
 namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
 {
-    // TODO: Doc
+    /// <summary>
+    /// Contains basic information that every property representing data to be sent to the pinpad shall have.
+    /// </summary>
     public abstract class BaseProperty
     {
         /// <summary>
@@ -53,7 +55,9 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
                 this.CommandTrack = Encoding.UTF8.GetBytes(value);
             }
         }
-        // TODO: Doc
+        /// <summary>
+        /// The command as a byte array. Contains all properties included in the command.
+        /// </summary>
         public virtual byte[] CommandTrack
         {
             get
@@ -105,7 +109,9 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
             }
         }
 
-        // TODO: Doc
+        /// <summary>
+        /// Creates it's properties.
+        /// </summary>
         public BaseProperty()
         {
             this.PropertyCollection = new List<IProperty>();

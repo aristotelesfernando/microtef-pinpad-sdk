@@ -3,7 +3,7 @@ using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using System;
 
-namespace Pinpad.Sdk.Commands 
+namespace Pinpad.Sdk.Commands
 {
     /// <summary>
     /// Controller for GIN response for GIN request with ACQIDX 00
@@ -55,12 +55,14 @@ namespace Pinpad.Sdk.Commands
         /// Serial number
         /// </summary>
         public FixedLengthProperty<string> GIN_SERNUM { get; private set; }
-        // TODO: Doc
+        /// <summary>
+        /// Defines if the application running in the pinpad is made by Stone.
+        /// </summary>
         public FixedLengthProperty<Nullable<int>> GIN_ISSTONE { get; private set; }
 
         // Constructor
         /// <summary>
-        /// Constructor
+        /// Constructor defining all properties.
         /// </summary>
         public GinResponse() 
 		{

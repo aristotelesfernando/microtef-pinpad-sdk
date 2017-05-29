@@ -65,7 +65,6 @@ namespace Pinpad.Sdk.Commands
 		/// <returns>List of bytes ready to be sent to the pinpad.</returns>
         public List<byte> GetRequestBody(BaseCommand request)
         {
-            // TODO: Melhorar!
             List<byte> requestBody = new List<byte>();
             
             // Gets the command data track:

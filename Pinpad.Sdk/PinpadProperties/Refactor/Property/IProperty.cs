@@ -1,6 +1,8 @@
 ﻿namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
 {
-    // TODO: Doc.
+    /// <summary>
+    /// Defines basic information every property (that represents data to be sent to the pinpad) must have.
+    /// </summary>
     public interface IProperty
     {
         /// <summary>

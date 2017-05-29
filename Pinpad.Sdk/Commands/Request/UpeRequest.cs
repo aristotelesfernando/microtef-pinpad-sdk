@@ -2,11 +2,15 @@
 
 namespace Pinpad.Sdk.Commands.Request
 {
-    // TODO: Doc
+    /// <summary>
+    /// Update End request.
+    /// Signals when all <see cref="UprRequest"/> have been sent and the update flow can be finished.
+    /// </summary>
     public sealed class UpeRequest : BaseCommand
     {
+        /// <summary>
+        /// Name of this command.
+        /// </summary>
         public override string CommandName { get { return "UPE"; } }
-
-        public UpeRequest() { }
     }
 }

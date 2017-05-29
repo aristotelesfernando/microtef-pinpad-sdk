@@ -5,12 +5,20 @@ using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands.Request
 {
-    // TODO: Doc
+    /// <summary>
+    /// Update Record request.
+    /// Sends a piece of the new application to be installed in the device.
+    /// </summary>
     public sealed class UprRequest : BaseCommand
     {
+        /// <summary>
+        /// Serction size, determines the size of a package to be send in each <see cref="UprRequest"/>.
+        /// </summary>
         public const int PackageSectionSize = 900;
-        private const int TableLengthSize = 3;
 
+        /// <summary>
+        /// Name of the command.
+        /// </summary>
         public override string CommandName { get { return "UPR"; } }
         ///// <summary>
         ///// Length of the first region of the command

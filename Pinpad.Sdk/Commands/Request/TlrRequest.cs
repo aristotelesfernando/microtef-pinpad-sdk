@@ -13,7 +13,9 @@ namespace Pinpad.Sdk.Commands
     /// </summary>
     internal sealed class TlrRequest : BaseCommand
     {
-        // TODO: Doc
+        /// <summary>
+        /// Number of digits a table length must have.
+        /// </summary>
         private const int TAB_LEN_Length = 3;
 
         /// <summary>

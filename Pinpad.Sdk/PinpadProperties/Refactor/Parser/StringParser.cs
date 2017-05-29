@@ -177,8 +177,7 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor.Parser
             string data = StringParser.StringStringParser(reader, length);
 
             T value = new T();
-            // TODO: ****** Resolver essa parada aqui!
-            //value.CommandString = data;
+            value.CommandString = data;
             return value;
         }
     }

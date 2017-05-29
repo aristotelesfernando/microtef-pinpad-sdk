@@ -1,6 +1,8 @@
 ﻿namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
 {
-    // TODO: Doc
+    /// <summary>
+    /// A property whose data can only be represented in text.
+    /// </summary>
     public interface ITextProperty : IProperty
     {
         // Methods

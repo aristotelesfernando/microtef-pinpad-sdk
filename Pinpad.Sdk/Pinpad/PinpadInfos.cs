@@ -141,7 +141,9 @@ namespace Pinpad.Sdk
 				else { return this.gduResponse.IsStoneSupported; }
 			}
 		}
-        // TODO: Doc
+        /// <summary>
+        /// Defines if the application running in the pinpad is made by Stone.
+        /// </summary>
         public bool IsStoneProprietaryDevice
         {
             get
