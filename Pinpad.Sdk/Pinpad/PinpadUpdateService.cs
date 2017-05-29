@@ -10,30 +10,55 @@ using System.Diagnostics;
 
 namespace Pinpad.Sdk.Pinpad
 {
-    // TODO: Doc
+    /// <summary>
+    /// Responsible for providing methods and informations to update the pinpad embedded application.
+    /// </summary>
     public sealed class PinpadUpdateService : IPinpadUpdateService
     {
-        public const string PinpadPackageNamePattern = @"([a-zA-Z]){1,15}[\(](\d+\.\d+\.\d+)[\)]\.\z\i\p";
-
-        private int FileCount;
-
-        private byte [] ApplicationFile { get; set; }
-        private IStorageController FileSystemManager { get { return CrossPlatformController.StorageController; } }
-        private IPinpadInfos PinpadInfos { get; set; }
-        private IPinpadCommunication PinpadCommunication { get; set; }
-
-        public string ApplicationNameAndVersion { get; set; }
-
+        // public properties:
+        /// <summary>
+        /// Size of the package to be sent to the pinpad.
+        /// Each package is a piece of the zipped application.
+        /// </summary>
         public int SectionSize { get { return 900; } }
-        public byte[] NextPackageSection
+        /// <summary>
+        /// Current application version running in the pinpad.
+        /// </summary>
+        public Version CurrentApplicationVersion
+        {
+            get
+            {
+                if (this.currentApplicationVersion == null)
+                {
+                    this.currentApplicationVersion = this.GetVersion();
+                }
+
+                return this.currentApplicationVersion;
+            }
+        }
+
+        // internal and private properties:
+        /// <summary>
+        /// Stores the number of bytes already read in the <see cref="ApplicationFile"/> property, by the
+        /// <see cref="NextPackageSection"/>.
+        /// </summary>
+        private int FileCount { get; set; }
+        /// <summary>
+        /// All bytes of the zipped new application file.
+        /// </summary>
+        private byte [] ApplicationFile { get; set; }
+        /// <summary>
+        /// Gets the next package section to be sent in the <see cref="UprRequest"/>.
+        /// </summary>
+        private byte[] NextPackageSection
         {
             get
             {
                 int bytesToCopy = this.SectionSize;
-                
+
                 // If the file were already read, then there is no section left to read:
                 if (this.FileCount == this.ApplicationFile.Length) { return null; }
-                
+
                 // If there isn't another full section, that is, the current section is smaller than the
                 // default size of a section, then the application must read only the remaining bytes:
                 if (ApplicationFile.Length - this.FileCount < this.SectionSize)
@@ -50,6 +75,57 @@ namespace Pinpad.Sdk.Pinpad
             }
         }
 
+        /// <summary>
+        /// Responsible for managing files in the current platform.
+        /// </summary>
+        private IStorageController FileSystemManager
+        {
+            get { return CrossPlatformController.StorageController; }
+        }
+        /// <summary>
+        /// Informations about the device.
+        /// </summary>
+        private IPinpadInfos PinpadInfos { get; set; }
+        /// <summary>
+        /// Responsible for sending and receiving commands to and from the pinpad.
+        /// </summary>
+        private IPinpadCommunication PinpadCommunication { get; set; }
+
+        /// <summary>
+        /// Stores the application version running in the pinpad.
+        /// </summary>
+        private GavResponse rawPinpadAppVersion;
+        /// <summary>
+        /// Returns the value <see cref="rawPinpadAppVersion"/>. Sends a new <see cref="GavRequest"/> if the
+        /// property is null.
+        /// </summary>
+        private GavResponse RawPinpadAppVersion
+        {
+            get
+            {
+                if (this.rawPinpadAppVersion == null)
+                {
+                    this.rawPinpadAppVersion = this.GetGav();
+                }
+
+                return this.rawPinpadAppVersion;
+            }
+        }
+
+        /// <summary>
+        /// Current application version running in the pinpad.
+        /// </summary>
+        private Version currentApplicationVersion;
+
+        // ctor:
+        /// <summary>
+        /// Creates the instance mandatorily with a <see cref="IPinpadInfos"/> and <see cref="IPinpadCommunication"/>.
+        /// Otherwise, throws exception.
+        /// </summary>
+        /// <param name="pinpadInformation">Informations about the device.</param>
+        /// <param name="pinpadCommunication">Responsible for sending and receiving commands to and from the 
+        /// pinpad.</param>
+        /// <exception cref="ArgumentException">If any parameters are null.</exception>
         public PinpadUpdateService (IPinpadInfos pinpadInformation, IPinpadCommunication pinpadCommunication)
         {
             if (pinpadInformation == null)
@@ -65,6 +141,11 @@ namespace Pinpad.Sdk.Pinpad
             this.PinpadCommunication = pinpadCommunication;
         }
 
+        // methods:
+        /// <summary>
+        /// Loads the zipped file in the memory.
+        /// </summary>
+        /// <param name="filePath">Absolute file path of the new application.<
         public bool Load (string filePath)
         {
             // Verify if the file exist:
@@ -85,7 +166,6 @@ namespace Pinpad.Sdk.Pinpad
 
                 // Reset the file count:
                 this.FileCount = 0;
-                this.ApplicationNameAndVersion = filePath;
 
                 return true;
             }
@@ -94,6 +174,13 @@ namespace Pinpad.Sdk.Pinpad
                 return false;
             }
         }
+        /// <summary>
+        /// Updates the pinpad with the application previously loaded. 
+        /// Must be called after the <see cref="Load(string)"/>.
+        /// </summary>
+        /// <returns>Whether the update was successful.</returns>
+        /// <exception cref="InvalidOperationException">If the <see cref="Load(string)"/> was not called yet.
+        /// </exception>
         public bool Update ()
         {
             // Verify if it is a WiFi Pinpad (eligible for this operation):
@@ -105,51 +192,70 @@ namespace Pinpad.Sdk.Pinpad
                 throw new InvalidOperationException("Load was not performed.");
             }
 
-            // Send the GAV:
-            GavRequest gavRequest = new GavRequest();
-            GavResponse gavResponse = this.PinpadCommunication
-                .SendRequestAndReceiveResponse<GavResponse>(gavRequest);
-            
-            // TODO: Tirar essa validação, porque não faz sentido.
-            // TODO: Extrair versão e validar se a baixada é maior do que a atual.
-            if (this.ApplicationNameAndVersion.Contains(gavResponse?.GAV_APPVER.Value) == true)
-            {
-                // Send the Update Init (UPI):
-                UpiRequest upiRequest = new UpiRequest();
-                upiRequest.UPI_APPSIZE.Value = this.ApplicationFile.Length;
+            // Send the Update Init (UPI):
+            UpiRequest upiRequest = new UpiRequest();
+            upiRequest.UPI_APPSIZE.Value = this.ApplicationFile.Length;
                 
-                if (this.PinpadCommunication.SendRequestAndVerifyResponseCode(upiRequest) == true)
+            if (this.PinpadCommunication.SendRequestAndVerifyResponseCode(upiRequest) == true)
+            {
+                byte[] nextPackage;
+
+                // Send the Update Recods (UPRs), loading all parts of the file:
+                do
                 {
-                    byte[] nextPackage;
+                    // Get next package:
+                    nextPackage = this.NextPackageSection;
 
-                    // Send the Update Recods (UPRs), loading all parts of the file:
-                    do
-                    {
-                        // Get next package:
-                        nextPackage = this.NextPackageSection;
+                    if (nextPackage == null) { continue; }
 
-                        if (nextPackage == null) { continue; }
+                    // Create the UPR request...
+                    UprRequest uprRequest = new UprRequest();
+                    uprRequest.UPR_REC.Value = CrossPlatformController.TextEncodingController
+                        .GetString(TextEncodingType.Ascii, nextPackage);
 
-                        // Create the UPR request...
-                        UprRequest uprRequest = new UprRequest();
-                        uprRequest.UPR_REC.Value = CrossPlatformController.TextEncodingController
-                            .GetString(TextEncodingType.Ascii, nextPackage);
+                    // ... And send the next section:
+                    this.PinpadCommunication.SendRequestAndVerifyResponseCode(uprRequest);
 
-                        // ... And send the next section:
-                        this.PinpadCommunication.SendRequestAndVerifyResponseCode(uprRequest);
-
-                        Debug.WriteLine("Count {0} out of {1} | Pack length {2}", this.FileCount, 
-                            this.ApplicationFile.Length, nextPackage.Length);
-                    }
-                    while (nextPackage != null);
-
-                    // Send the Update End (UPE):
-                    return this.PinpadCommunication.SendRequestAndVerifyResponseCode(new UpeRequest());
+                    Debug.WriteLine("Count {0} out of {1} | Pack length {2}", this.FileCount, 
+                        this.ApplicationFile.Length, nextPackage.Length);
                 }
+                while (nextPackage != null);
+
+                // Send the Update End (UPE):
+                return this.PinpadCommunication.SendRequestAndVerifyResponseCode(new UpeRequest());
             }
 
             return false;
         }
-        
+
+        // private folks:
+        /// <summary>
+        /// Sends a <see cref="GavRequest"/> and gets it response.
+        /// </summary>
+        /// <returns></returns>
+        private GavResponse GetGav()
+        {
+            // Creates GAV request,
+            // Sends the GAV request to the pinpad
+            // And returns it's response:
+            return this.PinpadCommunication.SendRequestAndReceiveResponse<GavResponse>(new GavRequest());
+        }
+        /// <summary>
+        /// Tryies to parse the pinpad version (as string) returned in a <see cref="GavResponse"/> into a 
+        /// <see cref="Version"/>. If the parse was not successful, then retuns the default version "0.0.0".
+        /// </summary>
+        /// <returns>Application version running in the pinpad.</returns>
+        private Version GetVersion()
+        {
+            Version appVer;
+
+            if (this.RawPinpadAppVersion == null ||
+                Version.TryParse(this.RawPinpadAppVersion.GAV_APPVER?.Value, out appVer) == false)
+            {
+                appVer = Version.Parse("0.0.0");
+            }
+
+            return appVer;
+        }
     }
 }

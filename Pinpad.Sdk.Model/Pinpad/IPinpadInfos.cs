@@ -39,7 +39,9 @@ namespace Pinpad.Sdk.Model
 		/// If stone is supported on this pinpad. If this value is false, none financial operation can be performed.
 		/// </summary>
 		bool IsStoneSupported { get; }
-        // TODO: Doc
+        /// <summary>
+        /// Defines if the application running in the pinpad is made by Stone.
+        /// </summary>
         bool IsStoneProprietaryDevice { get; }
 
         /// <summary>

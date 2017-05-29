@@ -219,7 +219,6 @@ namespace Pinpad.Sdk
 			// flag de acquirer
 			request.GIN_ACQIDX.Value = (int) StoneIndexCode.Generic;
 
-
 			// Sends the request and gets the response:
 			GinResponse response = this.communication.SendRequestAndReceiveResponse<GinResponse>(request);
 

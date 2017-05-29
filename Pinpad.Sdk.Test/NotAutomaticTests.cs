@@ -6,10 +6,7 @@ using System.Diagnostics;
 using Pinpad.Sdk.Model;
 using System;
 using Pinpad.Sdk.Test.Mockings;
-using Pinpad.Sdk.Pinpad;
-using Pinpad.Sdk.Commands.DataSet;
 using Pinpad.Sdk.Model.TypeCode;
-using Pinpad.Sdk.Commands.Request;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Test
