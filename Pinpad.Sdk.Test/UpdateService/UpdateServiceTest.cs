@@ -1,4 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Pinpad.Sdk.Model;
+using Pinpad.Sdk.Model.Pinpad;
+using Pinpad.Sdk.Pinpad;
 using Pinpad.Sdk.Test.Mockings;
 
 namespace Pinpad.Sdk.Test.UpdateService
@@ -17,11 +20,18 @@ namespace Pinpad.Sdk.Test.UpdateService
             ApplicationFileMocker.Unmock();
         }
 
-        // TODO: Creation should throw exception if pinpad information is null
+        /// <summary>
+        /// // Scenario: Creation should throw exception if pinpad information is null
+        /// </summary>
         [TestMethod]
-        public void MyTestMethod()
+        public void UpdateService_Creation_ShouldThrowException_IfPinpadInformationIsNull()
         {
-            ;
+            // Arrange
+            IPinpadInfos infos = null;
+            IPinpadCommunication comm = new PinpadCommunicationMock();
+
+            // Act and assert
+            PinpadUpdateService pinpadUpdateService = new PinpadUpdateService(infos, comm);
         }
         // TODO: Creation should throw exception if pinpad communication is null
         // TODO: Load should return true if the zipped application file exists

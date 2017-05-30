@@ -18,7 +18,7 @@ namespace Pinpad.Sdk.Test.Mockings
             r.NextBytes(data);
 
             // Creates file:
-            string tempPath = SaveData(path, data);
+            string tempPath = ApplicationFileMocker.SaveData(path, data);
 
             // Zip the file:
             try
@@ -72,6 +72,5 @@ namespace Pinpad.Sdk.Test.Mockings
 
             return Path.Combine(path, "temp");
         }
-
     }
 }
