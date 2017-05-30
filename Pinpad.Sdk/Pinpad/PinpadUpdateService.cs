@@ -145,7 +145,7 @@ namespace Pinpad.Sdk.Pinpad
         /// <summary>
         /// Loads the zipped file in the memory.
         /// </summary>
-        /// <param name="filePath">Absolute file path of the new application.<
+        /// <param name="filePath">Absolute file path of the new application.</param>
         public bool Load (string filePath)
         {
             // Verify if the file exist:

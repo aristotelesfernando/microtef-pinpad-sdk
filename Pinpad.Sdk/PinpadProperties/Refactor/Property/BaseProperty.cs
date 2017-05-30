@@ -66,12 +66,15 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
 
                 foreach (IProperty property in this.PropertyCollection)
                 {
-                    byte[] propertyBytes;
+                    byte[] propertyBytes = null;
 
                     if (property is ITextProperty)
                     {
                         // Read as text:
-                        propertyBytes = Encoding.UTF8.GetBytes((property as ITextProperty).GetString());
+                        if ((property as ITextProperty).GetString() != null)
+                        {
+                            propertyBytes = Encoding.UTF8.GetBytes((property as ITextProperty).GetString());
+                        }
                     }
                     else
                     {
@@ -79,7 +82,10 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
                         propertyBytes = (property as IBinaryProperty).GetBytes();
                     }
 
-                    commandTrack.AddRange(propertyBytes);
+                    if (propertyBytes != null)
+                    {
+                        commandTrack.AddRange(propertyBytes);
+                    }
 
                     if (this.IsPropertyFinal(property) == true) { break; }
                 }

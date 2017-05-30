@@ -59,6 +59,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <Choose>
@@ -83,6 +85,7 @@
     <Compile Include="Mapper\CardMapperTest.cs" />
     <Compile Include="Mapper\MagneticStripe\DefaultMagneticStripeTrackReaderTest.cs" />
     <Compile Include="Mapper\EmvTrackMapperTest.cs" />
+    <Compile Include="Mockings\ApplicationFileMocker.cs" />
     <Compile Include="Mockings\BaseTableEntryMock.cs" />
     <Compile Include="Mockings\CardBrandMocker.cs" />
     <Compile Include="Mockings\PinpadCommunicationMock.cs" />
@@ -97,6 +100,7 @@
     <Compile Include="Transaction\PinReaderTest.cs" />
     <Compile Include="Transaction\CardEntryTest.cs" />
     <Compile Include="Transaction\EmvPinReaderTest.cs" />
+    <Compile Include="UpdateService\UpdateServiceTest.cs" />
     <Compile Include="Utilities\DataPickerKeysFactoryTest.cs" />
     <Compile Include="Utilities\DataPickerKeysTest.cs" />
     <Compile Include="Utilities\DataPickerTest.cs" />
