@@ -11,10 +11,10 @@ using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Test
 {
-    [TestClass]
+    //[TestClass]
 	public class NotAutomaticTests
 	{
-        [TestInitialize]
+        //[TestInitialize]
         public void Setup()
         {
             MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
@@ -311,7 +311,7 @@ namespace Pinpad.Sdk.Test
 
             key.DataPicker.GetValueInOptions("Carnaval", true, "Simpatiaequaseamor", "OrquestraVoadora", "SargentoPimenta", "Carmelitas");
         }
-        [TestMethod]
+        //[TestMethod]
         public void UpdateService_test()
         {
             IPinpadConnection conn = PinpadConnectionProvider.GetAt("192.168.1.106");
