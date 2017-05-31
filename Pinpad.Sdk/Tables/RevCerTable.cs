@@ -1,20 +1,49 @@
-﻿using Pinpad.Sdk.Properties;
-using Pinpad.Sdk.Model;
+﻿using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Commands;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 
 namespace Pinpad.Sdk
 {
 	/// <summary>
 	/// Controller for CAPK revoked certificates
 	/// </summary>
-	public sealed class RevCerTable : BaseTable {
-		/// <summary>
-		/// Constructor
+	public sealed class RevCerTable : BaseTable
+    {
+        /// <summary>
+		/// Table Identifier
 		/// </summary>
-		public RevCerTable() {
-			this.T3_RID = new PinpadFixedLengthProperty<HexadecimalData>("T3_RID", 10, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
-			this.T3_CAPKIDX = new PinpadFixedLengthProperty<HexadecimalData>("T3_CAPKIDX", 2, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
-			this.T3_CERTSN = new PinpadFixedLengthProperty<HexadecimalData>("T3_CERTSN", 6, false, DefaultStringFormatter.HexadecimalStringFormatter, DefaultStringParser.HexadecimalStringParser);
+		public override EmvTableType TAB_ID
+        {
+            get
+            {
+                return EmvTableType.RevokedCertificate;
+            }
+        }
+        /// <summary>
+        /// Registered Application provider Identifier
+        /// </summary>
+        public FixedLengthProperty<HexadecimalData> T3_RID { get; private set; }
+        /// <summary>
+        /// Certification Authority Public Key Index
+        /// </summary>
+        public FixedLengthProperty<HexadecimalData> T3_CAPKIDX { get; private set; }
+        /// <summary>
+        /// Certificate Serial Number
+        /// </summary>
+        public FixedLengthProperty<HexadecimalData> T3_CERTSN { get; private set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public RevCerTable() {
+			this.T3_RID = new FixedLengthProperty<HexadecimalData>("T3_RID", 10, false, 
+                StringFormatter.HexadecimalStringFormatter, StringParser.HexadecimalStringParser);
+			this.T3_CAPKIDX = new FixedLengthProperty<HexadecimalData>("T3_CAPKIDX", 2, false, 
+                StringFormatter.HexadecimalStringFormatter, StringParser.HexadecimalStringParser);
+			this.T3_CERTSN = new FixedLengthProperty<HexadecimalData>("T3_CERTSN", 6, false, 
+                StringFormatter.HexadecimalStringFormatter, StringParser.HexadecimalStringParser);
 
 			{//PinPadBaseTableController starts the region and doesn't close
 				this.AddProperty(this.T3_RID);
@@ -23,29 +52,5 @@ namespace Pinpad.Sdk
 			}//PinPadBaseTableController starts the region and doesn't close
 			this.EndLastRegion();
 		}
-
-		/// <summary>
-		/// Table Identifier
-		/// </summary>
-		public override EmvTableType TAB_ID {
-			get {
-				return EmvTableType.RevokedCertificate;
-			}
-		}
-
-		/// <summary>
-		/// Registered Application provider Identifier
-		/// </summary>
-		public PinpadFixedLengthProperty<HexadecimalData> T3_RID { get; private set; }
-
-		/// <summary>
-		/// Certification Authority Public Key Index
-		/// </summary>
-		public PinpadFixedLengthProperty<HexadecimalData> T3_CAPKIDX { get; private set; }
-
-		/// <summary>
-		/// Certificate Serial Number
-		/// </summary>
-		public PinpadFixedLengthProperty<HexadecimalData> T3_CERTSN { get; private set; }
 	}
 }

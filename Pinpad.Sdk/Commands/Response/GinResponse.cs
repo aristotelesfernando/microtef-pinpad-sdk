@@ -1,6 +1,9 @@
-﻿using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
+using System;
 
-namespace Pinpad.Sdk.Commands 
+namespace Pinpad.Sdk.Commands
 {
     /// <summary>
     /// Controller for GIN response for GIN request with ACQIDX 00
@@ -26,47 +29,60 @@ namespace Pinpad.Sdk.Commands
         /// <summary>
         /// Manufacturer Name
         /// </summary>
-        public PinpadFixedLengthProperty<string> GIN_MNAME { get; private set; }
+        public FixedLengthProperty<string> GIN_MNAME { get; private set; }
         /// <summary>
         /// Model and hardware version
         /// </summary>
-        public PinpadFixedLengthProperty<string> GIN_MODEL { get; private set; }
+        public FixedLengthProperty<string> GIN_MODEL { get; private set; }
         /// <summary>
         /// Contactless indicator
         /// If 'C' is present contactless is supported
         /// </summary>
-        public PinpadFixedLengthProperty<string> GIN_CTLSUP { get; private set; }
+        public FixedLengthProperty<string> GIN_CTLSUP { get; private set; }
         /// <summary>
         /// Basic software or Operational system versions, without a defined format
         /// </summary>
-        public PinpadFixedLengthProperty<string> GIN_SOVER { get; private set; }
+        public FixedLengthProperty<string> GIN_SOVER { get; private set; }
         /// <summary>
         /// Specification version at format "V.VV" or "VVVA" where A is the alphanumeric identifier, example: "108a"
         /// </summary>
-        public PinpadFixedLengthProperty<string> GIN_SPECVER { get; private set; }
+        public FixedLengthProperty<string> GIN_SPECVER { get; private set; }
         /// <summary>
         /// Manufactured Version at format "VVV.VV YYMMDD"
         /// </summary>
-        public PinpadFixedLengthProperty<string> GIN_MANVER { get; private set; }
+        public FixedLengthProperty<string> GIN_MANVER { get; private set; }
         /// <summary>
         /// Serial number
         /// </summary>
-        public PinpadFixedLengthProperty<string> GIN_SERNUM { get; private set; }
+        public FixedLengthProperty<string> GIN_SERNUM { get; private set; }
+        /// <summary>
+        /// Defines if the application running in the pinpad is made by Stone.
+        /// </summary>
+        public FixedLengthProperty<Nullable<int>> GIN_ISSTONE { get; private set; }
 
         // Constructor
         /// <summary>
-        /// Constructor
+        /// Constructor defining all properties.
         /// </summary>
         public GinResponse() 
 		{
             this.RSP_LEN1 = new RegionProperty("RSP_LEN1", 3);
-            this.GIN_MNAME = new PinpadFixedLengthProperty<string>("GIN_MNAME", 20, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
-            this.GIN_MODEL = new PinpadFixedLengthProperty<string>("GIN_MODEL", 19, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
-            this.GIN_CTLSUP = new PinpadFixedLengthProperty<string>("GIN_CTLSUP", 1, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
-            this.GIN_SOVER = new PinpadFixedLengthProperty<string>("GIN_SOVER", 20, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
-            this.GIN_SPECVER = new PinpadFixedLengthProperty<string>("GIN_SPECVER", 4, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
-            this.GIN_MANVER = new PinpadFixedLengthProperty<string>("GIN_MANVER", 16, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
-            this.GIN_SERNUM = new PinpadFixedLengthProperty<string>("GIN_SERNUM", 20, false, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
+            this.GIN_MNAME = new FixedLengthProperty<string>("GIN_MNAME", 20, false, 
+                StringFormatter.StringStringFormatter, StringParser.StringStringParser);
+            this.GIN_MODEL = new FixedLengthProperty<string>("GIN_MODEL", 19, false, 
+                StringFormatter.StringStringFormatter, StringParser.StringStringParser);
+            this.GIN_CTLSUP = new FixedLengthProperty<string>("GIN_CTLSUP", 1, false, 
+                StringFormatter.StringStringFormatter, StringParser.StringStringParser);
+            this.GIN_SOVER = new FixedLengthProperty<string>("GIN_SOVER", 20, false, 
+                StringFormatter.StringStringFormatter, StringParser.StringStringParser);
+            this.GIN_SPECVER = new FixedLengthProperty<string>("GIN_SPECVER", 4, false, 
+                StringFormatter.StringStringFormatter, StringParser.StringStringParser);
+            this.GIN_MANVER = new FixedLengthProperty<string>("GIN_MANVER", 16, false, 
+                StringFormatter.StringStringFormatter, StringParser.StringStringParser);
+            this.GIN_SERNUM = new FixedLengthProperty<string>("GIN_SERNUM", 20, false, 
+                StringFormatter.StringStringFormatter, StringParser.StringStringParser);
+            this.GIN_ISSTONE = new FixedLengthProperty<Nullable<int>>("GIN_ISSTONE", 1, true,
+                StringFormatter.IntegerStringFormatter, StringParser.IntegerStringParser);
 
             this.StartRegion(this.RSP_LEN1);
             {
@@ -77,6 +93,7 @@ namespace Pinpad.Sdk.Commands
                 this.AddProperty(this.GIN_SPECVER);
                 this.AddProperty(this.GIN_MANVER);
                 this.AddProperty(this.GIN_SERNUM);
+                this.AddProperty(this.GIN_ISSTONE);
             }
             this.EndLastRegion();
         }

@@ -1,4 +1,6 @@
-﻿using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands
 {
@@ -19,7 +21,8 @@ namespace Pinpad.Sdk.Commands
 		public GertecEx07Response ()
 			: base(new GertecContext())
 		{
-			this.RSP_RESULT = new VariableLengthProperty<string>("RSP_RESULT", 2, 32, 1f, false, true, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
+			this.RSP_RESULT = new VariableLengthProperty<string>("RSP_RESULT", 2, 32, 1f, false, true, 
+                StringFormatter.StringStringFormatter, StringParser.StringStringParser);
 
 			// Start region
 			{

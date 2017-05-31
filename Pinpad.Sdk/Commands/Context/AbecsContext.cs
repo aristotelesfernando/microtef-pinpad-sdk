@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using MicroPos.CrossPlatform;
-using MicroPos.CrossPlatform.TypeCode;
-using Pinpad.Sdk.TypeCode;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 
 namespace Pinpad.Sdk.Commands
 {
-	/// <summary>
-	/// Command context accordingly to abecs.
-	/// </summary>
-	internal class AbecsContext : IContext
+    /// <summary>
+    /// Command context accordingly to abecs.
+    /// </summary>
+    internal class AbecsContext : IContext
 	{
 		// Constants
 		/// <summary>
@@ -90,28 +88,30 @@ namespace Pinpad.Sdk.Commands
 		/// </summary>
 		/// <param name="request">Request to be sent.</param>
 		/// <returns>List of bytes ready to be sent to the pinpad.</returns>
-        public List<byte> GetRequestBody (BaseCommand request)
-		{
-			List<byte> requestBody = new List<byte>(CrossPlatformController.TextEncodingController.GetBytes(TextEncodingType.Ascii, request.CommandString));
+        public List<byte> GetRequestBody(BaseCommand request)
+        {
+            List<byte> requestBody = new List<byte>();
 
-			// Add ETB (indicating the end of a package):
-			requestBody.Add(ETB_BYTE);
+            requestBody.AddRange(request.CommandTrack);
 
-			// Generate checksum:
-			requestBody.AddRange(this.GetIntegrityCode(requestBody.ToArray()));
+            // Add ETB (indicating the end of a package):
+            requestBody.Add(ETB_BYTE);
 
-			// Add SYN (indication the begining of a package):
-			requestBody.Insert(0, SYN_BYTE);
+            // Generate checksum:
+            requestBody.AddRange(this.GetIntegrityCode(requestBody.ToArray()));
 
-			return requestBody;
-		}
+            // Add SYN (indication the begining of a package):
+            requestBody.Insert(0, SYN_BYTE);
 
-		/// <summary>
-		/// Nothing to format.
-		/// Do nothing.
-		/// </summary>
-		/// <param name="response">Response received from SPE.</param>
-		public void FormatResponse (List<byte> response) { }
+            return requestBody;
+        }
+
+        /// <summary>
+        /// Nothing to format.
+        /// Do nothing.
+        /// </summary>
+        /// <param name="response">Response received from SPE.</param>
+        public void FormatResponse (List<byte> response) { }
 		public bool IsIntegrityCodeValid (byte [] firstCode, byte [] secondByte)
 		{
 			if (firstCode [0] != secondByte [0] || firstCode [1] != secondByte [1])

@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.Commands;
-using Pinpad.Sdk.Properties;
+using Pinpad.Sdk.PinpadProperties.Refactor;
 using Pinpad.Sdk.Transaction.Mapper.MagneticStripe;
 using System;
 

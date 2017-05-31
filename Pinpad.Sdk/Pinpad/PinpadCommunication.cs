@@ -8,7 +8,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using Pinpad.Sdk.Model.Pinpad;
-using Pinpad.Sdk.Commands.TypeCode;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 
 namespace Pinpad.Sdk
 {
@@ -159,7 +160,7 @@ namespace Pinpad.Sdk
 			{
 				// Create CLO request:
 				CloRequest request = new CloRequest();
-				request.CLO_MSG.Value = new Properties.SimpleMessage(message, Model.DisplayPaddingType.Left);
+				request.CLO_MSG.Value = new SimpleMessageProperty(message, Model.DisplayPaddingType.Left);
 
 				// Gets it's reponse
 				CloResponse response = this.SendRequestAndReceiveResponse<CloResponse>(request);
@@ -251,13 +252,13 @@ namespace Pinpad.Sdk
         /// not ERR and response code equals to <see cref="AbecsResponseStatus.ST_OK"/></returns>
         public bool SendRequestAndVerifyResponseCode(object request)
         {
-            BaseCommand castRequest = request as BaseCommand;
+            ICommand castRequest = request as ICommand;
 
             lock (this.Connection)
             {
                 if (this.SendRequest(castRequest) == true)
                 {
-                    return this.ReceiveResponseAndVerifyResponseCode(castRequest.CommandContext);
+                    return this.ReceiveResponseAndVerifyResponseCode(castRequest.Context);
                 }
                 else
                 {
@@ -275,22 +276,20 @@ namespace Pinpad.Sdk
         public T SendRequestAndReceiveResponse<T>(object request)
             where T : new()
         {
-            BaseCommand castRequest = request as BaseCommand;
-
-            if (castRequest == null)
+            if (request is ICommand == false)
             {
                 throw new InvalidOperationException("Request does not implement expected type.");
             }
 
             lock (this.Connection)
             {
-                if (this.SendRequest(castRequest) == false)
+                if (this.SendRequest(request as ICommand) == false)
                 {
                     return default(T);
                 }
                 else
                 {
-                    return (T)this.ReceiveResponse<T>(castRequest.CommandContext);
+                    return (T)this.ReceiveResponse<T>((request as ICommand).Context);
                 }
             }
         }
@@ -301,11 +300,11 @@ namespace Pinpad.Sdk
         /// </summary>
         /// <param name="request">request controller</param>
         /// <returns>Was the request successfully sent?</returns>
-        internal bool SendRequest (BaseCommand request)
+        internal bool SendRequest (ICommand request)
 		{
             try
             {
-					return this.InternalSendRequest(request);
+				return this.InternalSendRequest(request);
 			}
 			catch (Exception ex)
 			{
@@ -366,20 +365,20 @@ namespace Pinpad.Sdk
             if (castResponse is GenericResponse)
 			{
 				if (context == null) { throw new ArgumentNullException("Context cannot be null."); }
-                castResponse.CommandContext = context;
+                castResponse.Context = context;
 			}
 
 			string responseString;
 			if (castResponse.IsBlockingCommand == true)
 			{
 				responseString = this.ReceiveResponseString(PinpadCommunication.BLOCKING_TIMEOUT, 
-                    castResponse.CommandContext);
+                    castResponse.Context);
 				Debug.WriteLine("Response (blocking): " + responseString);
 			}
 			else
 			{
 				responseString = this.ReceiveResponseString(PinpadCommunication.NON_BLOCKING_TIMEOUT,
-                    castResponse.CommandContext);
+                    castResponse.Context);
 				Debug.WriteLine("Response: " + responseString);
 			}
 
@@ -441,10 +440,11 @@ namespace Pinpad.Sdk
 						notificationResponse.CommandString = openedResponseString;
 						if (this.NotificationReceived != null)
 						{
-							this.NotificationReceived(this, new PinpadNotificationEventArgs(notificationResponse.NTM_MSG.Value));
+							this.NotificationReceived(this, 
+                                new PinpadNotificationEventArgs(notificationResponse.NTM_MSG.Value));
 						}
 
-						return this.ReceiveResponseString(timeout, response.CommandContext);
+						return this.ReceiveResponseString(timeout, response.Context);
 					}
 				}
 
@@ -538,24 +538,32 @@ namespace Pinpad.Sdk
         /// </summary>
         /// <param name="request">Request to send.</param>
         /// <returns>Return whether the command was send successfuly or not.</returns>
-		private bool InternalSendRequest (BaseCommand request)
+		private bool InternalSendRequest (ICommand request)
 		{
-			Debug.WriteLine("Request: " + request.CommandString);
-
-			List<byte> requestByteCollection = request.CommandContext.GetRequestBody(request);
-
-            lock (this.Connection)
+            if (request is BaseCommand)
             {
-                // Cancel the previous request:
-                this.CancelRequest();
+                BaseCommand baseRequest = request as BaseCommand;
 
-                // Saves the current request as last:
-                this.LastSentRequest = request.CommandString;
+                Debug.WriteLine("Request: " + baseRequest.CommandString);
 
-                // Send the request:
-                return InternalSendRequest(requestByteCollection.ToArray());
+                List<byte> requestByteCollection = baseRequest.Context.GetRequestBody(baseRequest);
+
+                lock (this.Connection)
+                {
+                    // Cancel the previous request:
+                    this.CancelRequest();
+
+                    // Saves the current request as last:
+                    this.LastSentRequest = baseRequest.CommandString;
+
+                    // Send the request:
+                    return InternalSendRequest(requestByteCollection.ToArray());
+                }
             }
+
+            return false;
 		}
+
         /// <summary>
         /// Receive command response as string.
         /// </summary>

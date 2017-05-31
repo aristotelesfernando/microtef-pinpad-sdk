@@ -40,6 +40,11 @@ namespace Pinpad.Sdk.Model
 		/// </summary>
 		bool IsStoneSupported { get; }
         /// <summary>
+        /// Defines if the application running in the pinpad is made by Stone.
+        /// </summary>
+        bool IsStoneProprietaryDevice { get; }
+
+        /// <summary>
         /// Obtains the current KSN (Key Serial Number) of an index in the table.
         /// </summary>
         /// <param name="indexToSearch">KSN index.</param>

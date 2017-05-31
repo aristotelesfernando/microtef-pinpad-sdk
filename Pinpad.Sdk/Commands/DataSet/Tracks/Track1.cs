@@ -1,4 +1,7 @@
-﻿using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using System;
 
 namespace Pinpad.Sdk.Commands 
@@ -12,18 +15,49 @@ namespace Pinpad.Sdk.Commands
 		/// Separator used in the track data
 		/// </summary>
 		protected override string FieldSeparator { get { return "^"; } }
-
-		/// <summary>
-		/// Constructor
+        /// <summary>
+		/// Format Code
 		/// </summary>
-		public Track1() 
+		public TextProperty<Nullable<char>> FormatCode { get; private set; }
+        /// <summary>
+        /// Primary Account Number
+        /// </summary>
+        public TextProperty<string> PAN { get; private set; }
+        /// <summary>
+        /// Cardholder name
+        /// </summary>
+        public TextProperty<string> Name { get; private set; }
+        /// <summary>
+        /// Card Expiration Date
+        /// </summary>
+        public TextProperty<Nullable<DateTime>> ExpirationDate { get; private set; }
+        /// <summary>
+        /// Card Service Code
+        /// </summary>
+        public TextProperty<ServiceCode> ServiceCode { get; private set; }
+        /// <summary>
+        /// Discretionary Data
+        /// </summary>
+        public TextProperty<string> DiscretionaryData { get; private set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public Track1() 
 		{
-			this.FormatCode = new SimpleProperty<Nullable<char>>("FormatCode", false, DefaultStringFormatter.CharStringFormatter, DefaultStringParser.CharStringParser);
-			this.PAN = new SimpleProperty<string>("PAN", false, this.StringWithSeparatorStringFormatter, this.StringWithSeparatorStringParser);
-			this.Name = new SimpleProperty<string>("Name", false, this.StringWithSeparatorStringFormatter, this.StringWithSeparatorStringParser);
-			this.ExpirationDate = new SimpleProperty<Nullable<DateTime>>("ExpirationDate", true, this.YearAndMonthStringFormatter, this.YearAndMonthStringParser, FieldSeparator);
-			this.ServiceCode = new SimpleProperty<ServiceCode>("ServiceCode", false, Properties.ServiceCode.StringFormatter, Properties.ServiceCode.StringParser, FieldSeparator);
-			this.DiscretionaryData = new SimpleProperty<string>("DiscretionaryData", true, DefaultStringFormatter.StringStringFormatter, DefaultStringParser.StringStringParser);
+			this.FormatCode = new TextProperty<Nullable<char>>("FormatCode", false, 
+                StringFormatter.CharStringFormatter, StringParser.CharStringParser);
+			this.PAN = new TextProperty<string>("PAN", false, this.StringWithSeparatorStringFormatter, 
+                this.StringWithSeparatorStringParser);
+			this.Name = new TextProperty<string>("Name", false, this.StringWithSeparatorStringFormatter, 
+                this.StringWithSeparatorStringParser);
+			this.ExpirationDate = new TextProperty<Nullable<DateTime>>("ExpirationDate", true, 
+                this.YearAndMonthStringFormatter, this.YearAndMonthStringParser, FieldSeparator);
+			this.ServiceCode = new TextProperty<ServiceCode>("ServiceCode", false, 
+                PinpadProperties.Refactor.ServiceCode.StringFormatter, 
+                PinpadProperties.Refactor.ServiceCode.StringParser, FieldSeparator);
+			this.DiscretionaryData = new TextProperty<string>("DiscretionaryData", true, 
+                StringFormatter.StringStringFormatter, StringParser.StringStringParser);
 
 			this.AddProperty(this.FormatCode);
 			this.AddProperty(this.PAN);
@@ -32,35 +66,5 @@ namespace Pinpad.Sdk.Commands
 			this.AddProperty(this.ServiceCode);
 			this.AddProperty(this.DiscretionaryData);
 		}
-
-		/// <summary>
-		/// Format Code
-		/// </summary>
-		public SimpleProperty<Nullable<char>> FormatCode { get; private set; }
-
-		/// <summary>
-		/// Primary Account Number
-		/// </summary>
-		public SimpleProperty<string> PAN { get; private set; }
-
-		/// <summary>
-		/// Cardholder name
-		/// </summary>
-		public SimpleProperty<string> Name { get; private set; }
-
-		/// <summary>
-		/// Card Expiration Date
-		/// </summary>
-		public SimpleProperty<Nullable<DateTime>> ExpirationDate { get; private set; }
-
-		/// <summary>
-		/// Card Service Code
-		/// </summary>
-		public SimpleProperty<ServiceCode> ServiceCode { get; private set; }
-
-		/// <summary>
-		/// Discretionary Data
-		/// </summary>
-		public SimpleProperty<string> DiscretionaryData { get; private set; }
 	}
 }

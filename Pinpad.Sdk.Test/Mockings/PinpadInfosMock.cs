@@ -1,5 +1,4 @@
-﻿using System;
-using Pinpad.Sdk.Model;
+﻿using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.TypeCode;
 
 namespace Pinpad.Sdk.Test.Mockings
@@ -13,6 +12,7 @@ namespace Pinpad.Sdk.Test.Mockings
                 return false;
             }
         }
+        public bool IsStoneProprietaryDevice { get; private set; }
         public bool IsStoneSupported
         {
             get
@@ -65,6 +65,11 @@ namespace Pinpad.Sdk.Test.Mockings
         public string GetDukptSerialNumber(int indexToSearch, CryptographyMode cryptographyMode)
         {
             return "mocked KSN";
+        }
+
+        public PinpadInfosMock(bool isFromStone = true)
+        {
+            this.IsStoneProprietaryDevice = isFromStone;
         }
     }
 }

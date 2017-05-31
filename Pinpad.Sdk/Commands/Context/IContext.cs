@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 using System.Collections.Generic;
 
 namespace Pinpad.Sdk.Commands
 {
-	/// <summary>
-	/// Context of a command.
-	/// </summary>
-	public interface IContext
+    /// <summary>
+    /// Context of a command.
+    /// </summary>
+    public interface IContext
 	{
 		/// <summary>
 		/// Byte indicating the beggining of a package.
@@ -40,7 +40,7 @@ namespace Pinpad.Sdk.Commands
 		/// <param name="request">The request to be turned into a list of bytes.</param>
 		/// <returns>List of bytes ready to be sent to the pinpad.</returns>
 		List<byte> GetRequestBody (BaseCommand request);
-		void FormatResponse (List<byte> response);
+        void FormatResponse (List<byte> response);
 		bool IsIntegrityCodeValid (byte [] firstCode, byte [] secondCode);
 	}
 }

@@ -33,6 +33,7 @@ namespace Pinpad.Sdk
                 this.TransactionService = new PinpadTransaction(this.Communication as PinpadCommunication);
                 this.Printer = new IngenicoPinpadPrinter(this.Communication as PinpadCommunication, 
                     this.Infos);
+                this.UpdateService = new PinpadUpdateService(this.Infos, this.Communication);
 			}
 		}
 		/// <summary>
@@ -59,6 +60,8 @@ namespace Pinpad.Sdk
         /// Adapter for pinpad thermal printer.
         /// </summary>
         public IPinpadPrinter Printer { get; internal set; }
+
+        public IPinpadUpdateService UpdateService { get; set; }
 
         /// <summary>
         /// Creates all pinpad adapters.

@@ -32,5 +32,9 @@ namespace Pinpad.Sdk
         /// Gets the default pinpad printer adapter.
         /// </summary>
         IPinpadPrinter Printer { get; }
-	}
+        /// <summary>
+        /// Provides methods and informations to update the pinpad embedded application.
+        /// </summary>
+        IPinpadUpdateService UpdateService { get; }
+    }
 }

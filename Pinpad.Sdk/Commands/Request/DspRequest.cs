@@ -1,11 +1,6 @@
-﻿using Pinpad.Sdk.Properties;
-
-/* WARNING!
- * 
- * DEPRECATED.
- * MUST BE REFACTORED.
- * 
- */
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands 
 {
@@ -26,7 +21,7 @@ namespace Pinpad.Sdk.Commands
 		/// <summary>
 		/// Message to display
 		/// </summary>
-		public SimpleProperty<SimpleMessage> DSP_MSG { get; private set; }
+		public TextProperty<SimpleMessageProperty> DSP_MSG { get; private set; }
 		
 		// Constructor
 		/// <summary>
@@ -35,7 +30,9 @@ namespace Pinpad.Sdk.Commands
 		public DspRequest() 
 		{
 			this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
-			this.DSP_MSG = new SimpleProperty<SimpleMessage>("DSP_MSG", false, DefaultStringFormatter.PropertyControllerStringFormatter, SimpleMessage.StringParser, null, new SimpleMessage());
+			this.DSP_MSG = new TextProperty<SimpleMessageProperty>("DSP_MSG", false, 
+                StringFormatter.PropertyControllerStringFormatter, SimpleMessageProperty.CustomStringParser, 
+                null, new SimpleMessageProperty());
 
 			this.StartRegion(this.CMD_LEN1);
 			{

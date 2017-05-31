@@ -1,12 +1,8 @@
-﻿using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using System;
-
-/* WARNING!
- * 
- * DEPRECATED.
- * MUST BE REFACTORED.
- * 
- */
 
 namespace Pinpad.Sdk.Commands 
 {
@@ -27,7 +23,7 @@ namespace Pinpad.Sdk.Commands
 		/// <summary>
 		/// EMV Table Acquirer Index to request version or 0 when using a single table for all acquirers
 		/// </summary>
-		public PinpadFixedLengthProperty<Nullable<int>> GTS_ACQIDX { get; private set; }
+		public FixedLengthProperty<Nullable<int>> GTS_ACQIDX { get; private set; }
 		
 		// Constructor
 		/// <summary>
@@ -36,7 +32,8 @@ namespace Pinpad.Sdk.Commands
 		public GtsRequest() 
 		{
 			this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
-			this.GTS_ACQIDX = new PinpadFixedLengthProperty<Nullable<int>>("GTS_ACQIDX", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
+			this.GTS_ACQIDX = new FixedLengthProperty<Nullable<int>>("GTS_ACQIDX", 2, false, 
+                StringFormatter.IntegerStringFormatter, StringParser.IntegerStringParser);
 
 			this.StartRegion(this.CMD_LEN1);
 			{

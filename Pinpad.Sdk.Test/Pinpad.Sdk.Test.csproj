@@ -59,6 +59,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <Choose>
@@ -83,12 +85,14 @@
     <Compile Include="Mapper\CardMapperTest.cs" />
     <Compile Include="Mapper\MagneticStripe\DefaultMagneticStripeTrackReaderTest.cs" />
     <Compile Include="Mapper\EmvTrackMapperTest.cs" />
+    <Compile Include="Mockings\ApplicationFileMocker.cs" />
     <Compile Include="Mockings\BaseTableEntryMock.cs" />
     <Compile Include="Mockings\CardBrandMocker.cs" />
     <Compile Include="Mockings\PinpadCommunicationMock.cs" />
     <Compile Include="Mockings\PinpadConnectionMock.cs" />
     <Compile Include="Mockings\PinpadFacadeMock.cs" />
     <Compile Include="Mockings\PinpadInfosMock.cs" />
+    <Compile Include="Mockings\PinpadUpdateServiceMock.cs" />
     <Compile Include="NotAutomaticTests.cs" />
     <Compile Include="Printer\IngenicoPinpadPrinterTest.cs" />
     <Compile Include="Printer\PrinterItemTest.cs" />
@@ -97,6 +101,7 @@
     <Compile Include="Transaction\PinReaderTest.cs" />
     <Compile Include="Transaction\CardEntryTest.cs" />
     <Compile Include="Transaction\EmvPinReaderTest.cs" />
+    <Compile Include="UpdateService\UpdateServiceTest.cs" />
     <Compile Include="Utilities\DataPickerKeysFactoryTest.cs" />
     <Compile Include="Utilities\DataPickerKeysTest.cs" />
     <Compile Include="Utilities\DataPickerTest.cs" />
@@ -113,6 +118,10 @@
     <ProjectReference Include="..\..\CrossPlatform\MicroPos.CrossPlatform\MicroPos.CrossPlatform.csproj">
       <Project>{0f8b65ca-9ece-4cb2-88ec-f04c4d41a7d6}</Project>
       <Name>MicroPos.CrossPlatform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Platform Desktop\MicroPos.Platform.Desktop\MicroPos.Platform.Desktop.csproj">
+      <Project>{604e344d-b3ac-4192-998e-e12e0cd12cb5}</Project>
+      <Name>MicroPos.Platform.Desktop</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pinpad.Sdk.Model\Pinpad.Sdk.Model.csproj">
       <Project>{8deb5a99-825b-4631-b84c-c2c06bf28c2e}</Project>

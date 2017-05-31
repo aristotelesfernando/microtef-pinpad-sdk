@@ -1,5 +1,4 @@
 ﻿using Pinpad.Sdk.Commands;
-using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Transaction;
 using Pinpad.Sdk.Transaction.Mapper;
 using Pinpad.Sdk.Exceptions;
@@ -10,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Collections.Generic;
 using Pinpad.Sdk.Model.Pinpad;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk
 {
@@ -59,7 +59,7 @@ namespace Pinpad.Sdk
 			RmcRequest request = new RmcRequest();
 
 			// Assemblies RMC command.
-			request.RMC_MSG.Value = new SimpleMessage(message, padding);
+			request.RMC_MSG.Value = new SimpleMessageProperty(message, padding);
 
 			// Sends command and receive response
 			GenericResponse response = null;

@@ -1,15 +1,14 @@
-﻿using System;
-using Pinpad.Sdk.Commands;
+﻿using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.TypeCode;
-using Pinpad.Sdk.Properties;
+using Pinpad.Sdk.PinpadProperties.Refactor;
 
-namespace Pinpad.Sdk 
+namespace Pinpad.Sdk
 {
-	/// <summary>
-	/// Pinpad informations.
-	/// </summary>
-	public sealed class PinpadInfos : IPinpadInfos
+    /// <summary>
+    /// Pinpad informations.
+    /// </summary>
+    public sealed class PinpadInfos : IPinpadInfos
 	{
 		// Members
 		/// <summary>
@@ -142,13 +141,30 @@ namespace Pinpad.Sdk
 				else { return this.gduResponse.IsStoneSupported; }
 			}
 		}
+        /// <summary>
+        /// Defines if the application running in the pinpad is made by Stone.
+        /// </summary>
+        public bool IsStoneProprietaryDevice
+        {
+            get
+            {
+                if (this.ginResponse == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return ginResponse.GIN_ISSTONE.Value == 1;
+                }
+            }
+        }
 
-		// Constructor
-		/// <summary>
-		/// Pinpad information.
-		/// </summary>
-		/// <param name="communication">Pinpad communication.</param>
-		public PinpadInfos(PinpadCommunication communication)
+        // Constructor
+        /// <summary>
+        /// Pinpad information.
+        /// </summary>
+        /// <param name="communication">Pinpad communication.</param>
+        public PinpadInfos(PinpadCommunication communication)
 		{
 			this.communication = communication;
 		}
@@ -204,7 +220,6 @@ namespace Pinpad.Sdk
 			// Sets it to refer to all acquirers:
 			// flag de acquirer
 			request.GIN_ACQIDX.Value = (int) StoneIndexCode.Generic;
-
 
 			// Sends the request and gets the response:
 			GinResponse response = this.communication.SendRequestAndReceiveResponse<GinResponse>(request);

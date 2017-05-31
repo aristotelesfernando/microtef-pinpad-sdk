@@ -1,11 +1,12 @@
 ﻿using Pinpad.Sdk.Commands;
-using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Model;
 using System;
 using System.Globalization;
 using Pinpad.Sdk.Utilities;
 using Pinpad.Sdk.Model.Utilities;
 using Pinpad.Sdk.Model.TypeCode;
+using Pinpad.Sdk.PinpadProperties.Refactor;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk
 {
@@ -70,11 +71,14 @@ namespace Pinpad.Sdk
 		/// <param name="pinBlock">Retrieved pin block or null on failure</param>
 		/// <param name="ksn">Retrieved key serial number of null on failure</param>
 		/// <returns>true on success, false on failure</returns>
-		public bool GetDukptPin(CryptographyMode cryptographyMode, int keyIndex, string pan, int pinMinLength, int pinMaxLength, SimpleMessage message, out HexadecimalData pinBlock, out HexadecimalData ksn)
+		public bool GetDukptPin(CryptographyMode cryptographyMode, int keyIndex, string pan, int pinMinLength, 
+            int pinMaxLength, SimpleMessageProperty message, out HexadecimalData pinBlock, 
+            out HexadecimalData ksn)
 		{
 			// Creater GPN request:
 			GpnRequest request = new GpnRequest();
-			request.GPN_METHOD.Value = new CryptographyMethod(KeyManagementMode.DerivedUniqueKeyPerTransaction, cryptographyMode);
+			request.GPN_METHOD.Value = new CryptographyMethod(KeyManagementMode.DerivedUniqueKeyPerTransaction, 
+                cryptographyMode);
 			request.GPN_KEYIDX.Value = keyIndex;
 			request.GPN_WKENC.Value = new HexadecimalData(new byte[0]);
 			request.GPN_PAN.Value = pan;

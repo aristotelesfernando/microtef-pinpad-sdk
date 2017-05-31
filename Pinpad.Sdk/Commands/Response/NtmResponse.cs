@@ -1,11 +1,5 @@
-﻿using Pinpad.Sdk.Properties;
-
-/* WARNING!
- * 
- * DEPRECATED.
- * MUST BE REFACTORED.
- * 
- */
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands 
 {
@@ -26,16 +20,22 @@ namespace Pinpad.Sdk.Commands
 		/// <summary>
 		/// Message that was displayed in the PinPad screen
 		/// </summary>
-		public SimpleProperty<SimpleMessage> NTM_MSG { get; private set; }
-		
-		// Constructor
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public NtmResponse() 
+		public TextProperty<SimpleMessageProperty> NTM_MSG { get; private set; }
+        /// <summary>
+        /// Is this a blocking command?
+        /// </summary>
+        public override bool IsBlockingCommand { get { return true; } }
+
+        // Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public NtmResponse() 
 		{
 			this.RSP_LEN1 = new RegionProperty("RSP_LEN1", 3);
-			this.NTM_MSG = new SimpleProperty<SimpleMessage>("NTM_MSG", false, DefaultStringFormatter.PropertyControllerStringFormatter, SimpleMessage.StringParser, null, new SimpleMessage());
+			this.NTM_MSG = new TextProperty<SimpleMessageProperty>("NTM_MSG", false, 
+                StringFormatter.PropertyControllerStringFormatter, SimpleMessageProperty.CustomStringParser, null, 
+                new SimpleMessageProperty());
 
 			this.StartRegion(this.RSP_LEN1);
 			{
@@ -43,11 +43,5 @@ namespace Pinpad.Sdk.Commands
 			}
 			this.EndLastRegion();
 		}
-
-		// Method
-		/// <summary>
-		/// Is this a blocking command?
-		/// </summary>
-		public override bool IsBlockingCommand { get { return true; } }
 	}
 }

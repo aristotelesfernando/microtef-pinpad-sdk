@@ -3,24 +3,22 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.Commands;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Pinpad.Sdk.Properties;
 using Pinpad.Sdk.Model;
 using System;
 using Pinpad.Sdk.Test.Mockings;
-using Pinpad.Sdk.Pinpad;
-using Pinpad.Sdk.Commands.DataSet;
 using Pinpad.Sdk.Model.TypeCode;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Test
 {
-    [TestClass]
+    //[TestClass]
 	public class NotAutomaticTests
 	{
         //[TestInitialize]
-        //public void Setup()
-        //{
-        //    MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
-        //}
+        public void Setup()
+        {
+            MicroPos.Platform.Desktop.DesktopInitializer.Initialize();
+        }
 
         //[TestMethod]
         public void GCD_test ()
@@ -117,7 +115,7 @@ namespace Pinpad.Sdk.Test
 			OpnResponse opnResp = comm.SendRequestAndReceiveResponse<OpnResponse>(opn);
 
 			DspRequest dsp = new DspRequest();
-			dsp.DSP_MSG.Value = new SimpleMessage("ola");
+			dsp.DSP_MSG.Value = new SimpleMessageProperty("ola");
 
 			GenericResponse r = comm.SendRequestAndReceiveResponse<GenericResponse>(dsp);
 		}
@@ -313,5 +311,20 @@ namespace Pinpad.Sdk.Test
 
             key.DataPicker.GetValueInOptions("Carnaval", true, "Simpatiaequaseamor", "OrquestraVoadora", "SargentoPimenta", "Carmelitas");
         }
+        //[TestMethod]
+        public void UpdateService_test()
+        {
+            IPinpadConnection conn = PinpadConnectionProvider.GetAt("192.168.1.106");
+
+            if (conn != null)
+            {
+                IPinpadFacade pinpad = new PinpadFacade(conn);
+
+                bool isLoaded = pinpad.UpdateService.Load(System.IO.Path
+                    .Combine(@"C:\Users\ccarvalho\Desktop\update-cmd", "StonePinpadWifi(v1.1.1).zip"));
+
+                pinpad.UpdateService.Update();
+            }
+        }   
     }
 }

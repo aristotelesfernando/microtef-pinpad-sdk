@@ -52,6 +52,7 @@
     <Compile Include="Pinpad\IPinpadCommunication.cs" />
     <Compile Include="Pinpad\IPinpadKeyboard.cs" />
     <Compile Include="Pinpad\IPinpadPrinter.cs" />
+    <Compile Include="Pinpad\IPinpadUpdateService.cs" />
     <Compile Include="Transaction\CardEntry.cs" />
     <Compile Include="Exceptions\CommandNameMismatchException.cs" />
     <Compile Include="Exceptions\InvalidChecksumException.cs" />

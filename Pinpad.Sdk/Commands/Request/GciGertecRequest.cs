@@ -1,33 +1,47 @@
-﻿using Pinpad.Sdk.Properties;
-using System;
+﻿using System;
 using Pinpad.Sdk.Model;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 
 namespace Pinpad.Sdk.Commands
 {
 	internal sealed class GciGertecRequest : BaseCommand
 	{
 		public override string CommandName { get { return "EX07"; } }
-		public PinpadFixedLengthProperty<KeyboardNumberFormat> NumericInputType { get; set; }
-		public PinpadFixedLengthProperty<KeyboardTextFormat> TextInputType { get; set; }
-		public PinpadFixedLengthProperty<FirstLineLabelCode> LabelFirstLine { get; set; }
-		public PinpadFixedLengthProperty<SecondLineLabelCode> LabelSecondLine { get; set; }
-		public PinpadFixedLengthProperty<Nullable<int>> MaximumCharacterLength { get; set; }
-		public PinpadFixedLengthProperty<Nullable<int>> MinimumCharacterLength { get; set; }
-		public PinpadFixedLengthProperty<Nullable<int>> TimeOut { get; set; }
-		public PinpadFixedLengthProperty<Nullable<int>> TimeIdle { get; set; }
+		public FixedLengthProperty<KeyboardNumberFormat> NumericInputType { get; set; }
+		public FixedLengthProperty<KeyboardTextFormat> TextInputType { get; set; }
+		public FixedLengthProperty<FirstLineLabelCode> LabelFirstLine { get; set; }
+		public FixedLengthProperty<SecondLineLabelCode> LabelSecondLine { get; set; }
+		public FixedLengthProperty<Nullable<int>> MaximumCharacterLength { get; set; }
+		public FixedLengthProperty<Nullable<int>> MinimumCharacterLength { get; set; }
+		public FixedLengthProperty<Nullable<int>> TimeOut { get; set; }
+		public FixedLengthProperty<Nullable<int>> TimeIdle { get; set; }
 
 		public GciGertecRequest ()
 			: base(new GertecContext())
 		{
-			this.NumericInputType = new PinpadFixedLengthProperty<KeyboardNumberFormat>("NumericInputType", 1, false, DefaultStringFormatter.EnumStringFormatter<KeyboardNumberFormat>, DefaultStringParser.EnumStringParser<KeyboardNumberFormat>);
-			this.TextInputType = new PinpadFixedLengthProperty<KeyboardTextFormat>("TextInputType", 1, false, DefaultStringFormatter.EnumStringFormatter<KeyboardTextFormat>, DefaultStringParser.EnumStringParser<KeyboardTextFormat>);
-			this.LabelFirstLine = new PinpadFixedLengthProperty<FirstLineLabelCode>("LabelFirstLine", 2, false, DefaultStringFormatter.EnumStringFormatter<FirstLineLabelCode>, DefaultStringParser.EnumStringParser<FirstLineLabelCode>);
-			this.LabelSecondLine = new PinpadFixedLengthProperty<SecondLineLabelCode>("LabelSecondLine", 2, false, DefaultStringFormatter.EnumStringFormatter<SecondLineLabelCode>, DefaultStringParser.EnumStringParser<SecondLineLabelCode>);
-
-			this.MaximumCharacterLength = new PinpadFixedLengthProperty<Nullable<int>>("MaximumCharacterLength", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
-			this.MinimumCharacterLength = new PinpadFixedLengthProperty<Nullable<int>>("MinimumCharacterLength", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
-			this.TimeOut = new PinpadFixedLengthProperty<Nullable<int>>("TimeOut", 3, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
-			this.TimeIdle = new PinpadFixedLengthProperty<Nullable<int>>("TimeIdle", 3, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
+			this.NumericInputType = new FixedLengthProperty<KeyboardNumberFormat>("NumericInputType", 1, false, 
+                StringFormatter.EnumStringFormatter<KeyboardNumberFormat>, 
+                StringParser.EnumStringParser<KeyboardNumberFormat>);
+			this.TextInputType = new FixedLengthProperty<KeyboardTextFormat>("TextInputType", 1, false, 
+                StringFormatter.EnumStringFormatter<KeyboardTextFormat>, 
+                StringParser.EnumStringParser<KeyboardTextFormat>);
+			this.LabelFirstLine = new FixedLengthProperty<FirstLineLabelCode>("LabelFirstLine", 2, false, 
+                StringFormatter.EnumStringFormatter<FirstLineLabelCode>, 
+                StringParser.EnumStringParser<FirstLineLabelCode>);
+			this.LabelSecondLine = new FixedLengthProperty<SecondLineLabelCode>("LabelSecondLine", 2, false, 
+                StringFormatter.EnumStringFormatter<SecondLineLabelCode>, 
+                StringParser.EnumStringParser<SecondLineLabelCode>);
+			this.MaximumCharacterLength = new FixedLengthProperty<Nullable<int>>("MaximumCharacterLength", 2, 
+                false, StringFormatter.IntegerStringFormatter, StringParser.IntegerStringParser);
+			this.MinimumCharacterLength = new FixedLengthProperty<Nullable<int>>("MinimumCharacterLength", 2, 
+                false, StringFormatter.IntegerStringFormatter, StringParser.IntegerStringParser);
+			this.TimeOut = new FixedLengthProperty<Nullable<int>>("TimeOut", 3, false, 
+                StringFormatter.IntegerStringFormatter, StringParser.IntegerStringParser);
+			this.TimeIdle = new FixedLengthProperty<Nullable<int>>("TimeIdle", 3, false, 
+                StringFormatter.IntegerStringFormatter, StringParser.IntegerStringParser);
 			
 			{
 				this.AddProperty(this.NumericInputType);

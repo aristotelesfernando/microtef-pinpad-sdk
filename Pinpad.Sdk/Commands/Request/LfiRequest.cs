@@ -1,5 +1,8 @@
 ﻿using Pinpad.Sdk.Commands.Context;
-using Pinpad.Sdk.Properties;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands.Request
 {
@@ -30,9 +33,7 @@ namespace Pinpad.Sdk.Commands.Request
         {
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
             this.LFI_FILENAME = new VariableLengthProperty<string>("LFI_FILENAME", 3,
-                64, 1f, false, false,
-                DefaultStringFormatter.StringStringFormatter,
-                DefaultStringParser.StringStringParser);
+                64, 1f, false, false, StringFormatter.StringStringFormatter, StringParser.StringStringParser);
 
             this.StartRegion(this.CMD_LEN1);
             {

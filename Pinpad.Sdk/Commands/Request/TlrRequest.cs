@@ -1,5 +1,8 @@
 ﻿using Pinpad.Sdk.Model;
-using Pinpad.Sdk.Properties;
+using Pinpad.Sdk.PinpadProperties.Refactor;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using System;
 
 namespace Pinpad.Sdk.Commands
@@ -11,6 +14,24 @@ namespace Pinpad.Sdk.Commands
     internal sealed class TlrRequest : BaseCommand
     {
         /// <summary>
+        /// Number of digits a table length must have.
+        /// </summary>
+        private const int TAB_LEN_Length = 3;
+
+        /// <summary>
+        /// Name of the command
+        /// </summary>
+        public override string CommandName { get { return "TLR"; } }
+        /// <summary>
+        /// Length of the first region of the command
+        /// </summary>
+        public RegionProperty CMD_LEN1 { get; private set; }
+        /// <summary>
+        /// Table records
+        /// </summary>
+        public VariableLengthCollectionProperty<BaseTable> TLR_REC { get; private set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         public TlrRequest()
@@ -18,7 +39,7 @@ namespace Pinpad.Sdk.Commands
             this.CMD_LEN1 = new RegionProperty("CMD_LEN1", 3);
             this.TLR_REC = new VariableLengthCollectionProperty<BaseTable>("TLR_REC", 
                 2, 1, 999, 
-                DefaultStringFormatter.PropertyControllerStringFormatter, 
+                StringFormatter.PropertyControllerStringFormatter, 
                 TlrRequest.TableStringParser);
 
             this.StartRegion(this.CMD_LEN1);
@@ -27,23 +48,6 @@ namespace Pinpad.Sdk.Commands
             }
             this.EndLastRegion();
         }
-
-        /// <summary>
-        /// Name of the command
-        /// </summary>
-        public override string CommandName { get { return "TLR"; } }
-
-        /// <summary>
-        /// Length of the first region of the command
-        /// </summary>
-        public RegionProperty CMD_LEN1 { get; private set; }
-
-        /// <summary>
-        /// Table records
-        /// </summary>
-        public VariableLengthCollectionProperty<BaseTable> TLR_REC { get; private set; }
-
-        private const int TAB_LEN_Length = 3;
 
         /// <summary>
         /// Parses a PinPad Table

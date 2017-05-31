@@ -1,4 +1,8 @@
-﻿using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
+using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
+using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using System;
 
 namespace Pinpad.Sdk.Commands
@@ -21,11 +25,11 @@ namespace Pinpad.Sdk.Commands
 		/// <summary>
 		/// Encryption method. Corresponds to the Key Management Mode + Cryptography Mode.
 		/// </summary>
-		public SimpleProperty<CryptographyMethod> GDU_METHOD { get; private set; }
+		public TextProperty<CryptographyMethod> GDU_METHOD { get; private set; }
 		/// <summary>
 		/// GDU_METHOD index.
 		/// </summary>Mante
-		public PinpadFixedLengthProperty<Nullable<int>> GDU_IDX { get; private set; }
+		public FixedLengthProperty<Nullable<int>> GDU_IDX { get; private set; }
 
 		/// <summary>
 		/// Creates GDU request command with all properties and regions.
@@ -33,8 +37,10 @@ namespace Pinpad.Sdk.Commands
 		public GduRequest ()
 		{
 			this.CMD_LEN1 = new RegionProperty("CMD_LEN", 3);
-			this.GDU_METHOD = new SimpleProperty<CryptographyMethod>("GDU_METHOD", false, CryptographyMethod.StringFormatter, CryptographyMethod.StringParser);
-			this.GDU_IDX = new PinpadFixedLengthProperty<Nullable<int>>("GDU_IDX", 2, false, DefaultStringFormatter.IntegerStringFormatter, DefaultStringParser.IntegerStringParser);
+			this.GDU_METHOD = new TextProperty<CryptographyMethod>("GDU_METHOD", false, 
+                CryptographyMethod.StringFormatter, CryptographyMethod.CustomStringParser);
+			this.GDU_IDX = new FixedLengthProperty<Nullable<int>>("GDU_IDX", 2, false, 
+                StringFormatter.IntegerStringFormatter, StringParser.IntegerStringParser);
 
 			this.StartRegion(this.CMD_LEN1);
 			{

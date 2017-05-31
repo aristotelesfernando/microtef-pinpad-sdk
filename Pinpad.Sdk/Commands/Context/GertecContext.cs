@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using MicroPos.CrossPlatform;
-using MicroPos.CrossPlatform.TypeCode;
+using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 
 namespace Pinpad.Sdk.Commands
 {
-	/// <summary>
-	/// A command context accordingly to Gertec specification.
-	/// </summary>
-	internal sealed class GertecContext : IContext
+    /// <summary>
+    /// A command context accordingly to Gertec specification.
+    /// </summary>
+    internal sealed class GertecContext : IContext
 	{
 		/// <summary>
 		/// STX byte indicates the begining of a package, in a Gertec command.
@@ -64,28 +63,31 @@ namespace Pinpad.Sdk.Commands
 		/// </summary>
 		/// <param name="request">Request to be sent.</param>
 		/// <returns>List of bytes ready to be sent to the pinpad.</returns>
-		public List<byte> GetRequestBody (BaseCommand request)
-		{
-			List<byte> requestBody = new List<byte>(CrossPlatformController.TextEncodingController.GetBytes(TextEncodingType.Ascii, request.CommandString));
+        public List<byte> GetRequestBody(BaseCommand request)
+        {
+            List<byte> requestBody = new List<byte>();
+            
+            // Gets the command data track:
+            requestBody.AddRange(request.CommandTrack);
 
-			// Add STX (indication the begining of a package):
-			requestBody.Insert(0, STX_BYTE);
+            // Add STX (indication the begining of a package):
+            requestBody.Insert(0, STX_BYTE);
 
-			// Inserts a null byte, accordingly to Gertec specs:
-			requestBody.Insert(1, PinpadCommunication.NULL_BYTE);
+            // Inserts a null byte, accordingly to Gertec specs:
+            requestBody.Insert(1, PinpadCommunication.NULL_BYTE);
 
-			// Insert the length of the command, hardcoded, because it's fixed (25 characters):
-			requestBody.Insert(2, 0x19);
+            // Insert the length of the command, hardcoded, because it's fixed (25 characters):
+            requestBody.Insert(2, 0x19);
 
-			// Add ETX (indicating the end of a package):
-			requestBody.Add(ETX_BYTE);
+            // Add ETX (indicating the end of a package):
+            requestBody.Add(ETX_BYTE);
 
-			// Add LRC(Longitudinal Redundancy Check – XOR of all bytes from STX to ETX) at the end of the command:
-			requestBody.AddRange(this.GetIntegrityCode(requestBody.ToArray()));
+            // Add LRC(Longitudinal Redundancy Check – XOR of all bytes from STX to ETX) at the end of the command:
+            requestBody.AddRange(this.GetIntegrityCode(requestBody.ToArray()));
 
-			return requestBody;
-		}
-		public void FormatResponse (List<byte> response)
+            return requestBody;
+        }
+        public void FormatResponse (List<byte> response)
 		{
 			// Removes 3 first bytes (header; STX + command length).
 			// These bytes are removed, because Gertec implementation is way different from ABECS protocol.
@@ -115,5 +117,7 @@ namespace Pinpad.Sdk.Commands
 
 			return true;
 		}
-	}
+
+        
+    }
 }

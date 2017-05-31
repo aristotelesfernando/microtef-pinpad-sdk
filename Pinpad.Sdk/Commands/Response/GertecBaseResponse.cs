@@ -1,4 +1,4 @@
-﻿using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands
 {
@@ -18,7 +18,6 @@ namespace Pinpad.Sdk.Commands
 				}
 			}
 		}
-
 		public override bool IsBlockingCommand
 		{
 			get
@@ -26,7 +25,6 @@ namespace Pinpad.Sdk.Commands
 				return false;
 			}
 		}
-
-		public new PinpadFixedLengthProperty<GertecResponseCode> RSP_STAT { get; private set; }
+		public new FixedLengthProperty<GertecResponseCode> RSP_STAT { get; private set; }
 	}
 }

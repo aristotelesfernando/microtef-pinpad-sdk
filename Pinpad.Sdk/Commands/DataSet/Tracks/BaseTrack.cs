@@ -1,14 +1,8 @@
-﻿using Pinpad.Sdk.Properties;
+﻿using Pinpad.Sdk.PinpadProperties.Refactor;
+using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using System;
 using System.Globalization;
 using System.Text;
-
-/* WARNING!
- * 
- * DEPRECATED.
- * MUST BE REFACTORED.
- * 
- */
 
 namespace Pinpad.Sdk.Commands 
 {

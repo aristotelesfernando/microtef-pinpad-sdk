@@ -1,5 +1,4 @@
-﻿using System;
-using MicroPos.CrossPlatform;
+﻿using MicroPos.CrossPlatform;
 
 namespace Pinpad.Sdk.Test
 {
@@ -12,7 +11,7 @@ namespace Pinpad.Sdk.Test
         {
             get
             {
-                return CommunicationType.SerialPort;
+                return CommunicationType.Serial;
             }
         }
 
