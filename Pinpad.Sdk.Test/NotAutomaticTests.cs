@@ -309,7 +309,7 @@ namespace Pinpad.Sdk.Test
             IPinpadDisplay display = new PinpadDisplay(comm);
             PinpadKeyboard key = new PinpadKeyboard(comm, infos, display);
 
-            key.DataPicker.GetValueInOptions("Carnaval", true, "Simpatiaequaseamor", "OrquestraVoadora", "SargentoPimenta", "Carmelitas");
+            string result = key.DataPicker.GetValueInOptions("Carnaval", true, "Simpatiaequaseamor", "OrquestraVoadora", "SargentoPimenta", "Carmelitas");
         }
         //[TestMethod]
         public void UpdateService_test()

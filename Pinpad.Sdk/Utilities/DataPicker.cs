@@ -130,33 +130,36 @@ namespace Pinpad.Sdk.Utilities
         private T PickObjectInArray<T, V>(string label, bool circularBehavior,params V[] options)
         {
             PinpadKeyCode code = PinpadKeyCode.Undefined;
-            int index = 0;
+            int index;
 
             if (circularBehavior == true)
             {
-                code = this.AddCircularBehavior<V>(label, options);               
+                code = this.AddCircularBehavior<V>(label, out index, options);               
             }
             else
             {
-                code = this.AddLinearBehavior<V>(label, options);              
+                code = this.AddLinearBehavior<V>(label, out index, options);              
             }
+
             if (code == PinpadKeyCode.Return)
             {
                 return (T)(object)options[index];
             }
-            return default(T);
 
+            return default(T);
         }
         /// <summary>
         /// Modify the behavior of the list to linear.
         /// </summary>
         /// <typeparam name="V"></typeparam>
         /// <param name="label">Text to display on the first line of pinpad display.</param>
+        /// <param name="index">Index of the option selected.</param>
         /// <param name="options">Array with options.</param>
-        private PinpadKeyCode AddLinearBehavior<V>(string label, params V[] options)
+        private PinpadKeyCode AddLinearBehavior<V>(string label, out int index, params V[] options)
         {
             PinpadKeyCode code = PinpadKeyCode.Undefined;
-            int index = 0;
+            index = 0;
+
             do
             {
                 this._display.ShowMessage(label + ":", options[index].ToString(), DisplayPaddingType.Left);
@@ -177,7 +180,8 @@ namespace Pinpad.Sdk.Utilities
                     // Up key
                     index--;
                 }
-            } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel && code != PinpadKeyCode.Undefined);
+            }
+            while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel && code != PinpadKeyCode.Undefined);
 
             return code;
         }
@@ -186,11 +190,12 @@ namespace Pinpad.Sdk.Utilities
         /// </summary>
         /// <typeparam name="V"></typeparam>
         /// <param name="label">Text to display on the first line of pinpad display.</param>
+        /// <param name="index">Index of the option selected.</param>
         /// <param name="options">Array with options.</param>
-        private PinpadKeyCode AddCircularBehavior<V>(string label, params V[] options)
+        private PinpadKeyCode AddCircularBehavior<V>(string label, out int index, params V[] options)
         {
             PinpadKeyCode code = PinpadKeyCode.Undefined;
-            int index = 0;
+            index = 0;
 
             do
             {
@@ -226,7 +231,8 @@ namespace Pinpad.Sdk.Utilities
                         index--;
                     }
                 }
-            } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel && code != PinpadKeyCode.Undefined);
+            }
+            while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel && code != PinpadKeyCode.Undefined);
 
             return code;
         }
