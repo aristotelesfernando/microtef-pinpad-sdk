@@ -30,23 +30,23 @@ namespace Pinpad.Sdk
 			return conn;
 		}
         /// <summary>
-        /// Search for a pinpad attached to <param name="portName"/>.
+        /// Search for a pinpad attached to <param name="connectionName"/>.
         /// </summary>
         /// <param name="stoneCode">Stone Code.</param>
         /// <returns>Returns the pinpad found.</returns>
         /// <exception cref="PinpadNotFoundException">If none pinpad were found at the port specified.</exception>
-        public static IPinpadConnection GetAt (string portName, string stoneCode = "StoneCode")
+        public static IPinpadConnection GetAt (string connectionName, string stoneCode = "StoneCode")
 		{
             IPinpadConnection connection = null;
 
             try
 			{
-                // Open connection with serial port:
-                connection = CrossPlatformController.PinpadFinder.Find(portName, stoneCode);
+                // Open connection with serial port or Pinpad Wi-Fi:
+                connection = CrossPlatformController.PinpadFinder.Find(connectionName, stoneCode);
 			}
 			catch (IOException)
 			{
-				throw new PinpadNotFoundException(string.Format("None pinpad found at {0}.", portName), portName);
+				throw new PinpadNotFoundException(string.Format("None pinpad found at {0}.", connectionName), connectionName);
 			}
 
 			return connection;
