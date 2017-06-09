@@ -11,15 +11,16 @@ namespace Pinpad.Sdk
 	/// </summary>
 	public abstract class PinpadConnectionProvider
 	{
-		// Static method
-		/// <summary>
-		/// Finds one pinpad and connects to it (connection is not closed).
-		/// </summary>
+        // Static method
+        /// <summary>
+        /// Finds one pinpad and connects to it (connection is not closed).
+        /// </summary>
         /// <param name="enableWifi">Whether Wi-Fi pinpads shall be searched.</param>
-		/// <returns>Returns the first pinpad found.</returns>
-		public static IPinpadConnection GetFirst (bool enableWifi = false)
+        /// <param name="stoneCode">Stone Code.</param>
+        /// <returns>Returns the first pinpad found.</returns>
+        public static IPinpadConnection GetFirst (bool enableWifi = false, string stoneCode = "StoneCode")
 		{
-			IPinpadConnection conn = CrossPlatformController.PinpadFinder.Find(enableWifi);
+			IPinpadConnection conn = CrossPlatformController.PinpadFinder.Find(enableWifi, stoneCode);
 
 			if (conn == null)
 			{
@@ -28,19 +29,20 @@ namespace Pinpad.Sdk
 
 			return conn;
 		}
-		/// <summary>
-		/// Search for a pinpad attached to <param name="portName"/>.
-		/// </summary>
-		/// <returns>Returns the pinpad found.</returns>
-		/// <exception cref="PinpadNotFoundException">If none pinpad were found at the port specified.</exception>
-		public static IPinpadConnection GetAt (string portName)
+        /// <summary>
+        /// Search for a pinpad attached to <param name="portName"/>.
+        /// </summary>
+        /// <param name="stoneCode">Stone Code.</param>
+        /// <returns>Returns the pinpad found.</returns>
+        /// <exception cref="PinpadNotFoundException">If none pinpad were found at the port specified.</exception>
+        public static IPinpadConnection GetAt (string portName, string stoneCode = "StoneCode")
 		{
             IPinpadConnection connection = null;
 
             try
 			{
                 // Open connection with serial port:
-                connection = CrossPlatformController.PinpadFinder.Find(portName);
+                connection = CrossPlatformController.PinpadFinder.Find(portName, stoneCode);
 			}
 			catch (IOException)
 			{
