@@ -11,7 +11,7 @@ namespace Pinpad.Sdk.Test
         {
             get
             {
-                return CommunicationType.Serial;
+                return CommunicationType.SerialPort;
             }
         }
 
