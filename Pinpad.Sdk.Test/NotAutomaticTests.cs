@@ -241,8 +241,8 @@ namespace Pinpad.Sdk.Test
         {
             IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
             PinpadFacade facade = new PinpadFacade(conn);
-
-            facade.Printer.AddLogo()
+            
+                facade.Printer.AddLogo()
                           .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Small, "Credenciadora Banco Pan")
                           .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Small, "Via Estabelecimento")
                           .AppendLine(PrinterAlignmentCode.Center, PrinterFontSize.Medium, "MASTERCARD - DEBITO A VISTA")

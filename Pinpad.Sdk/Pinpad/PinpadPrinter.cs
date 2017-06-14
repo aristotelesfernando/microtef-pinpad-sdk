@@ -22,7 +22,8 @@ namespace Pinpad.Sdk.Pinpad
             get
             {
                 if (this.PinpadInformation.ManufacturerName.Contains("INGENICO") == true
-                    && this.PinpadInformation.Model.Contains("iWL250") == true)
+                    && this.PinpadInformation.Model.Contains("iWL250") == true
+                    || this.PinpadInformation.IsStoneProprietaryDevice == true)
                 {
                     return true;
                 }
@@ -277,7 +278,7 @@ namespace Pinpad.Sdk.Pinpad
             printQrCodeRequest.PRT_Horizontal.Value = 1;
             printQrCodeRequest.PRT_DATA.Value = item.Text;
             printQrCodeRequest.PRT_DATA.Value = printQrCodeRequest
-                .PRT_DATA.Value.PadRight(512, ' ');
+                .PRT_DATA.Value;
 
             return printQrCodeRequest;
         }
@@ -379,7 +380,18 @@ namespace Pinpad.Sdk.Pinpad
             status = this.Communication.SendRequestAndVerifyResponseCode(request);
 
             // Reload image into pinpad memory:
-            string[] imageLines = PrinterLogo.BmpFile.Split('-');
+            string[] imageLines;
+
+            // Pax device
+            if (this.PinpadInformation.IsStoneProprietaryDevice == true)
+            {
+                imageLines = PrinterLogo.PaxBmpFile.Split('-');
+            }
+            // Ingenico device
+            else
+            {
+                imageLines = PrinterLogo.BmpFile.Split('-');
+            }
 
             foreach (string imageLine in imageLines)
             {
