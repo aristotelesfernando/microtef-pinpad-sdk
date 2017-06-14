@@ -1,5 +1,6 @@
 ﻿using MicroPos.CrossPlatform;
 using Pinpad.Sdk.Model;
+using Pinpad.Sdk.Model.Exceptions;
 using Pinpad.Sdk.Model.Pinpad;
 using Pinpad.Sdk.Pinpad;
 
@@ -23,16 +24,20 @@ namespace Pinpad.Sdk
 			get { return this.pinpadConnection; }
 			set
 			{
+                if (value == null)
+                {
+                    throw new PinpadNotFoundException();
+                }
+
 				this.pinpadConnection = value;
 
 				this.Communication = new PinpadCommunication(this.Connection);
 				this.Infos = new PinpadInfos(this.Communication as PinpadCommunication);
 				this.Display = new PinpadDisplay(this.Communication as PinpadCommunication);
-                this.Keyboard = new PinpadKeyboard(this.Communication as PinpadCommunication, 
-                    this.Infos, this.Display);
+                this.Keyboard = new PinpadKeyboard(this.Communication as PinpadCommunication, this.Infos, 
+                    this.Display);
                 this.TransactionService = new PinpadTransaction(this.Communication as PinpadCommunication);
-                this.Printer = new IngenicoPinpadPrinter(this.Communication as PinpadCommunication, 
-                    this.Infos);
+                this.Printer = new IngenicoPinpadPrinter(this.Communication as PinpadCommunication, this.Infos);
                 this.UpdateService = new PinpadUpdateService(this.Infos, this.Communication);
 			}
 		}
@@ -60,7 +65,9 @@ namespace Pinpad.Sdk
         /// Adapter for pinpad thermal printer.
         /// </summary>
         public IPinpadPrinter Printer { get; internal set; }
-
+        /// <summary>
+        /// Responsible for to update the pinpad embedded application.
+        /// </summary>
         public IPinpadUpdateService UpdateService { get; set; }
 
         /// <summary>
