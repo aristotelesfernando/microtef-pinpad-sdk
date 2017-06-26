@@ -111,7 +111,24 @@ namespace Pinpad.Sdk
 			this.Connection.WriteTimeout = NON_BLOCKING_TIMEOUT;
 		}
 
-		/* Public methods */
+        /* Public methods */
+
+        /// <summary>
+        /// Sets time interval for sending and receiving messages.
+        /// </summary>
+        /// <param name="writeTimeout">Time interval to wait for a message to be sent.Time in milliseconds and must be more than 2 seconds to be changed</param>
+        /// <param name="readTimeout">Time interval to wait for a message to be received.Time in milliseconds  and must be more than 2 seconds to be changed</param>
+        public void SetTimeoutWriteAndRead(int writeTimeout = NON_BLOCKING_TIMEOUT, int readTimeout = NON_BLOCKING_TIMEOUT)
+        {
+            if(readTimeout > NON_BLOCKING_TIMEOUT)
+            {
+                this.Connection.ReadTimeout = readTimeout;
+            }
+            if(writeTimeout > NON_BLOCKING_TIMEOUT)
+            {
+                this.Connection.WriteTimeout = writeTimeout;
+            }
+        }
 		/// <summary>
 		/// Sends an OPN to the pinpad and do not close it.
 		/// </summary>
