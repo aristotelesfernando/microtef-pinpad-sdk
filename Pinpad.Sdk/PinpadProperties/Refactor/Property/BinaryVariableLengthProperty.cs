@@ -70,15 +70,9 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
                 throw new LenghtMismatchException(this.Name + " : \"" + objBytes + "\" is " + objBytes.Length + " long while it should be under " + this.MaxLength + " long.");
             }
 
-            //TODO: TAREFAUPR - Verificar essa parte. Em string era calculado com legth ratio para caclular o numero de bytes baseados no no numeros de chars. Na razao 1 byte/2 chars.
             byte[] header;
-            
-            header = this.ConvertIntToByte(this.HeaderLength);
 
-            if (header.Length != this.HeaderLength)
-            {
-                throw new LenghtMismatchException(this.Name + "LEN : \"" + header + "\" is " + header.Length + " long while it should be " + this.HeaderLength + " long.");
-            }
+            header = this.ConvertIntToByte(this.HeaderLength);
 
             //TODO: TAREFAUPR - Verificar se é válido preencher o restante com valor 0.
             if (this.IsPadded)
