@@ -74,6 +74,21 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
                 }
             }
         }
+
+        // Constructor
+        /// <summary>
+        /// Constructor that sets default values.
+        /// </summary>
+        /// <param name="name">Name of the property</param>
+        /// <param name="isOptional">Indicates if this property must exist in the command or not</param>
+        /// <param name="value">Initial Value for the property</param>
+        public BinaryProperty(string name, bool isOptional = false,T value = default(T))
+        {
+            this.Name = name;
+            this.IsOptional = isOptional;
+            this.value = value;
+        }
+
         /// <summary>
         /// Gets the value of the property, throws UnsetPropertyException if the value is null
         /// </summary>
