@@ -4,7 +4,7 @@ using System;
 namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
 {
     /// <summary>
-    /// Property which it's value is parseable to byte[].
+    /// Property which its value is parseable to byte[].
     /// The data it stores can be represented as byte[].
     /// </summary>
     /// <typeparam name="T"></typeparam>
@@ -21,7 +21,7 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
             }
         }
         /// <summary>
-        /// Indicates if this property must exist in the command string or not
+        /// Indicates if this property must exist in the command binary or not
         /// </summary>
         public bool IsOptional { get; private set; }
         /// <summary>
@@ -32,7 +32,7 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
         /// Gets the value of the property as a byte[], throws UnsetPropertyException if the value is null
         /// </summary>
         /// <returns>Value of the property as byte[]</returns>
-        public byte[] GetBytes()
+        public virtual byte[] GetBytes()
         {
             T obj = this.GetValue();
 

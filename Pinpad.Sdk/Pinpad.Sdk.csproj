@@ -111,6 +111,8 @@
     <Compile Include="PinpadProperties\Refactor\Formatter\StringFormatter.cs" />
     <Compile Include="PinpadProperties\Refactor\Parser\StringParser.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\BaseProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\Property\BinaryProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\Property\BinaryVariableLengthProperty.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\DataCollectionProperty.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\FixedLengthProperty.cs" />
     <Compile Include="PinpadProperties\Refactor\Command\ICommand.cs" />
