@@ -210,8 +210,7 @@ namespace Pinpad.Sdk.Pinpad
 
                     // Create the UPR request...
                     UprRequest uprRequest = new UprRequest();
-                    uprRequest.UPR_REC.Value = CrossPlatformController.TextEncodingController
-                        .GetString(TextEncodingType.Ascii, nextPackage);
+                    uprRequest.UPR_REC.Value = nextPackage;
 
                     // ... And send the next section:
                     this.PinpadCommunication.SendRequestAndVerifyResponseCode(uprRequest);

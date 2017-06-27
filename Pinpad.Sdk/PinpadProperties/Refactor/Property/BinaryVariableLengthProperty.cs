@@ -28,7 +28,6 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
         /// <param name="name">Name of the property</param>
         /// <param name="headerLength">Length of the property header</param>
         /// <param name="maxLength">Maximum Length of the property</param>
-        /// <param name="lengthRatio">Ratio of the length value</param>
         /// <param name="isPadded">Indicates if this property should pad to fill the max length</param>
         /// <param name="isOptional">Indicates if this property must exist in the command string or not</param>
         /// <param name="value">Initial Value for the property</param>
