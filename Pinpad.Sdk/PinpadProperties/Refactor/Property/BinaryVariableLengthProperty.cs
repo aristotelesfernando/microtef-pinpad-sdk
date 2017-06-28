@@ -1,5 +1,6 @@
 ﻿using Pinpad.Sdk.Model.Exceptions;
 using System;
+using System.Text;
 
 namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
 {
@@ -56,7 +57,7 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
                 {
                     if (this.IsOptional == true)
                     {
-                        return this.ConvertIntToByte(this.HeaderLength);
+                        return BitConverter.GetBytes(this.HeaderLength);
                     }
                     else
                     {
@@ -71,40 +72,22 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
 
             byte[] header;
 
-            header = this.ConvertIntToByte(this.HeaderLength);
+            header = Encoding.UTF8.GetBytes(objBytes.Length.ToString());
 
-            //TODO: TAREFAUPR - Verificar se é válido preencher o restante com valor 0.
             if (this.IsPadded)
             {
-                for (int i = this.MaxLength; i < objBytes.Length; i++)
+                for (int i = this.MaxLength ; i < objBytes.Length; i++)
                 {
                     objBytes[i] = 0;
                 }
             }
 
+            //Concatenate the two arrays.
             byte[] totalBytes = new byte[header.Length + objBytes.Length];
             header.CopyTo(totalBytes, 0);
             objBytes.CopyTo(totalBytes, header.Length);
 
             return totalBytes;
-        }
-        /// <summary>
-        /// Converts int to bytes and checks if byte order is endianness.
-        /// </summary>
-        /// <param name="value">Value to be converted.</param>
-        /// <returns></returns>
-        internal byte[] ConvertIntToByte(int value)
-        {
-            byte[] intBytes = BitConverter.GetBytes(value);
-
-            if (BitConverter.IsLittleEndian)
-            {
-                Array.Reverse(intBytes);
-            }
-
-            byte[] result = intBytes;
-
-            return result;
         }
     }
 }
