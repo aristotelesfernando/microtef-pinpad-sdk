@@ -10,14 +10,14 @@ namespace Pinpad.Sdk.Test.EmvTable
     public class PinpadTableTest
     {
 		MockedPinpadFacade MockedFacade;
-		MockedPinpadConnection MockedConnection;
+		PinpadConnectionMock MockedConnection;
 
         #region setting stuff up
         [TestInitialize]
         public void Setup()
         {
 			this.MockedFacade = new MockedPinpadFacade();
-			this.MockedConnection = new MockedPinpadConnection();
+			this.MockedConnection = new PinpadConnectionMock();
         }
 
         public CapkTable GetCapk(int i)

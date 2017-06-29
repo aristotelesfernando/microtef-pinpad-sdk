@@ -94,6 +94,7 @@
     <Compile Include="Mockings\PinpadInfosMock.cs" />
     <Compile Include="Mockings\PinpadUpdateServiceMock.cs" />
     <Compile Include="NotAutomaticTests.cs" />
+    <Compile Include="CommunicationPinpad\PinpadCommunicationTest.cs" />
     <Compile Include="Printer\IngenicoPinpadPrinterTest.cs" />
     <Compile Include="Printer\PrinterItemTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

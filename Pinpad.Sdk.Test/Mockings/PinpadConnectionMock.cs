@@ -2,7 +2,7 @@
 
 namespace Pinpad.Sdk.Test
 {
-    public class MockedPinpadConnection : IPinpadConnection
+    public class PinpadConnectionMock : IPinpadConnection
     {
         // Members
         public int BytesToRead { get { return 1; } }
@@ -17,15 +17,17 @@ namespace Pinpad.Sdk.Test
 
         public string ConnectionName { get { return "COM7"; } }
         public bool IsOpen { get { return true; } }
+        public int _readTimeout = 1000;
         public int ReadTimeout
         {
-            get { return 1000; }
-            set { }
+            get { return _readTimeout; }
+            set { _readTimeout = value; }
         }
+        public int _writeTimeout = 1000;
         public int WriteTimeout
         {
-            get { return 1000; }
-            set { }
+            get { return _writeTimeout; }
+            set { _writeTimeout = value; }
         }
 
         // Methods
