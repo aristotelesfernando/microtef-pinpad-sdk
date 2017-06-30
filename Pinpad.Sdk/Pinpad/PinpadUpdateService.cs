@@ -40,6 +40,7 @@ namespace Pinpad.Sdk.Pinpad
         // internal and private properties:
         /// <summary>
         /// Stores the number of bytes already read in the <see cref="ApplicationFile"/> property, by the
+        /// <see cref="GetNextPackageSection"/>.
         /// </summary>
         private int FileCount { get; set; }
         /// <summary>
@@ -175,7 +176,7 @@ namespace Pinpad.Sdk.Pinpad
                 do
                 {
                     // Get next package:
-                    nextPackage = this.GetNextSection();
+                    nextPackage = this.GetNextPackageSection();
 
                     if (nextPackage == null) { continue; }
 
@@ -201,7 +202,7 @@ namespace Pinpad.Sdk.Pinpad
         /// Gets the next section of the package.
         /// </summary>
         /// <returns>The next package</returns>
-        private byte[] GetNextSection()
+        private byte[] GetNextPackageSection()
         {
             int bytesToCopy = this.SectionSize;
 

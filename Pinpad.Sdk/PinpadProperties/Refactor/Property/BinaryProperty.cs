@@ -7,7 +7,7 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
     /// Property which its value is parseable to byte[].
     /// The data it stores can be represented as byte[].
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Generic value: Expected byte[]</typeparam>
     public class BinaryProperty<T> : IBinaryProperty
     {
         /// <summary>
@@ -29,7 +29,7 @@ namespace Pinpad.Sdk.PinpadProperties.Refactor.Property
         /// </summary>
         public string Name { get; private set; }
         /// <summary>
-        /// Gets the value of the property as a byte[], throws UnsetPropertyException if the value is null
+        /// Gets the value of the property as a byte[], throws <exception>UnsetPropertyException</exception> if the value is null
         /// </summary>
         /// <returns>Value of the property as byte[]</returns>
         public virtual byte[] GetBytes()
