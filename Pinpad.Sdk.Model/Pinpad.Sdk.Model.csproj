@@ -45,6 +45,7 @@
     <AssemblyOriginatorKeyFile>PinpadSdkModel_key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Constants\Timeout.cs" />
     <Compile Include="Exceptions\CardHasChipException.cs" />
     <Compile Include="Exceptions\ExpiredCardException.cs" />
     <Compile Include="Exceptions\PinpadException.cs" />

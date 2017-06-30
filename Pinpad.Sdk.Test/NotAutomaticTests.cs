@@ -11,7 +11,7 @@ using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Test
 {
-    [TestClass]
+    //[TestClass]
     public class NotAutomaticTests
 	{
         [TestInitialize]
@@ -326,6 +326,16 @@ namespace Pinpad.Sdk.Test
 
                 pinpad.UpdateService.Update();
             }
-        }   
+        } 
+        //[TestMethod]
+        public void Pinpad_SetTimeoutWriteAndRead()
+        {
+            IPinpadConnection conn = PinpadConnectionProvider.GetAt("COM4");
+            PinpadCommunication comm = new PinpadCommunication(conn);
+            comm.SetTimeout(5000, 5000);
+
+            Assert.AreEqual(conn.ReadTimeout, 5000);
+            Assert.AreEqual(conn.WriteTimeout, 5000);
+        }
     }
 }

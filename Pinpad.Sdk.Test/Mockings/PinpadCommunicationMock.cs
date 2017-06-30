@@ -8,11 +8,13 @@ namespace Pinpad.Sdk.Test
 {
 	public class PinpadCommunicationMock : IPinpadCommunication
 	{
+        
+        private IPinpadConnection _connection;
         public IPinpadConnection Connection
         {
             get
             {
-                throw new NotImplementedException();
+                return _connection;
             }
         }
         public string ConnectionName
@@ -21,6 +23,10 @@ namespace Pinpad.Sdk.Test
             {
                 return "COM99";
             }
+        }
+        public PinpadCommunicationMock()
+        {
+            _connection = new PinpadConnectionMock();
         }
 
         public bool CancelRequest()
@@ -54,6 +60,12 @@ namespace Pinpad.Sdk.Test
             Debug.WriteLine("Sending request...");
             Debug.WriteLine("... and verifying response.");
             return true;
+        }
+
+        public void SetTimeoutWriteAndRead(int writeTimeout = 2000, int readTimeout = 2000)
+        {
+            this.Connection.WriteTimeout = writeTimeout;
+            this.Connection.ReadTimeout = readTimeout;
         }
     }
 }

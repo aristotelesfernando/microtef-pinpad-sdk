@@ -10,6 +10,7 @@ using System.IO;
 using Pinpad.Sdk.Model.Pinpad;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using Pinpad.Sdk.PinpadProperties.Refactor.Command;
+using Pinpad.Sdk.Model.Constants;
 
 namespace Pinpad.Sdk
 {
@@ -36,7 +37,7 @@ namespace Pinpad.Sdk
 		/// <summary>
 		/// Timeout for NonBlocking messages
 		/// </summary>
-		public const int NON_BLOCKING_TIMEOUT = 2000;
+		public const int NON_BLOCKING_TIMEOUT = Timeout.NON_BLOCKING_TIMEOUT;
         /// <summary>
         /// Byte used to cancel the previous operation.
         /// </summary>
@@ -111,7 +112,24 @@ namespace Pinpad.Sdk
 			this.Connection.WriteTimeout = NON_BLOCKING_TIMEOUT;
 		}
 
-		/* Public methods */
+        /* Public methods */
+
+        /// <summary>
+        /// Sets time interval for sending and receiving messages.
+        /// </summary>
+        /// <param name="writeTimeout">Time interval to wait for a message to be sent.Time in milliseconds and must be greater than 2 seconds to be changed</param>
+        /// <param name="readTimeout">Time interval to wait for a message to be received.Time in milliseconds  and must be greater than 2 seconds to be changed</param>
+        public void SetTimeout(int writeTimeout = NON_BLOCKING_TIMEOUT, int readTimeout = NON_BLOCKING_TIMEOUT)
+        {
+            if(readTimeout > NON_BLOCKING_TIMEOUT)
+            {
+                this.Connection.ReadTimeout = readTimeout;
+            }
+            if(writeTimeout > NON_BLOCKING_TIMEOUT)
+            {
+                this.Connection.WriteTimeout = writeTimeout;
+            }
+        }
 		/// <summary>
 		/// Sends an OPN to the pinpad and do not close it.
 		/// </summary>
