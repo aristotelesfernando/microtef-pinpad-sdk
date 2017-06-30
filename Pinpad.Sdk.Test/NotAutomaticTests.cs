@@ -11,7 +11,7 @@ using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Test
 {
-    //[TestClass]
+    [TestClass]
     public class NotAutomaticTests
 	{
         [TestInitialize]

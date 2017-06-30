@@ -40,41 +40,12 @@ namespace Pinpad.Sdk.Pinpad
         // internal and private properties:
         /// <summary>
         /// Stores the number of bytes already read in the <see cref="ApplicationFile"/> property, by the
-        /// <see cref="NextPackageSection"/>.
         /// </summary>
         private int FileCount { get; set; }
         /// <summary>
         /// All bytes of the zipped new application file.
         /// </summary>
         private byte [] ApplicationFile { get; set; }
-        /// <summary>
-        /// Gets the next package section to be sent in the <see cref="UprRequest"/>.
-        /// </summary>
-        private byte[] NextPackageSection
-        {
-            get
-            {
-                int bytesToCopy = this.SectionSize;
-
-                // If the file were already read, then there is no section left to read:
-                if (this.FileCount == this.ApplicationFile.Length) { return null; }
-
-                // If there isn't another full section, that is, the current section is smaller than the
-                // default size of a section, then the application must read only the remaining bytes:
-                if (ApplicationFile.Length - this.FileCount < this.SectionSize)
-                {
-                    // Then read a full section:
-                    bytesToCopy = ApplicationFile.Length - this.FileCount;
-                }
-
-                byte[] partial = new byte[bytesToCopy];
-                Array.Copy(this.ApplicationFile, partial, bytesToCopy);
-                this.FileCount += bytesToCopy;
-
-                return partial;
-            }
-        }
-
         /// <summary>
         /// Responsible for managing files in the current platform.
         /// </summary>
@@ -204,7 +175,7 @@ namespace Pinpad.Sdk.Pinpad
                 do
                 {
                     // Get next package:
-                    nextPackage = this.NextPackageSection;
+                    nextPackage = this.GetNextSection();
 
                     if (nextPackage == null) { continue; }
 
@@ -226,7 +197,31 @@ namespace Pinpad.Sdk.Pinpad
 
             return false;
         }
+        /// <summary>
+        /// Gets the next section of the package.
+        /// </summary>
+        /// <returns>The next package</returns>
+        private byte[] GetNextSection()
+        {
+            int bytesToCopy = this.SectionSize;
 
+            // If the file were already read, then there is no section left to read:
+            if (this.FileCount == this.ApplicationFile.Length) { return null; }
+
+            // If there isn't another full section, that is, the current section is smaller than the
+            // default size of a section, then the application must read only the remaining bytes:
+            if (ApplicationFile.Length - this.FileCount < this.SectionSize)
+            {
+                // Then read a full section:
+                bytesToCopy = ApplicationFile.Length - this.FileCount;
+            }
+
+            byte[] partial = new byte[bytesToCopy];
+            Array.Copy(this.ApplicationFile, FileCount, partial, 0, bytesToCopy);
+            this.FileCount += bytesToCopy;
+
+            return partial;
+        }
         // private folks:
         /// <summary>
         /// Sends a <see cref="GavRequest"/> and gets it response.

@@ -61,8 +61,7 @@ namespace Pinpad.Sdk.Test
             Debug.WriteLine("... and verifying response.");
             return true;
         }
-
-        public void SetTimeoutWriteAndRead(int writeTimeout = 2000, int readTimeout = 2000)
+        public void SetTimeout(int writeTimeout = 2000, int readTimeout = 2000)
         {
             this.Connection.WriteTimeout = writeTimeout;
             this.Connection.ReadTimeout = readTimeout;
