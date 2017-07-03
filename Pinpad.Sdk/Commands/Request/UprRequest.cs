@@ -1,6 +1,4 @@
 ﻿using Pinpad.Sdk.PinpadProperties.Refactor.Command;
-using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
-using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 
 namespace Pinpad.Sdk.Commands.Request
@@ -27,15 +25,15 @@ namespace Pinpad.Sdk.Commands.Request
         /// <summary>
         /// Table records
         /// </summary>
-        public VariableLengthProperty<string> UPR_REC { get; private set; }
+        public BinaryVariableLengthProperty<byte[]> UPR_REC { get; private set; }
 
         /// <summary>
         /// Creates the request with all it's properties.
         /// </summary>
         public UprRequest()
         {
-            this.UPR_REC = new VariableLengthProperty<string>("TLR_REC", 3, UprRequest.PackageSectionSize, 1, 
-                false, false, StringFormatter.StringStringFormatter, StringParser.StringStringParser);
+            this.UPR_REC = new BinaryVariableLengthProperty<byte[]>("TLR_REC", 3, UprRequest.PackageSectionSize, 
+                false, false);
 
             this.AddProperty(this.UPR_REC);
         }   
