@@ -1,22 +1,21 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Transaction;
+using NUnit.Framework;
 
 namespace Pinpad.Sdk.Test.Mapper
 {
-    [TestClass]
+    [TestFixture]
     public class EmvTrackMapperTest
     {
         internal GcrResponse GcrResponse;
 
-        [TestInitialize]
+        [SetUp]
         public void Setup()
         {
             this.GcrResponse = GcrResponseInitializer();
         }
-
         internal GcrResponse GcrResponseInitializer()
         {
             GcrResponse response = new GcrResponse();
@@ -29,17 +28,23 @@ namespace Pinpad.Sdk.Test.Mapper
             return response;
         }
 
-        [TestMethod]
-        public void EmvTrackMapper_MapCardFromEmvTrack_should_not_return_null()
+        [Test]
+        public void EmvTrackMapper_MapCardFromEmvTrack_ShouldNotReturnNull()
         {
+            // Act
             CardEntry mappedCard = EmvTrackMapper.MapCardFromEmvTrack(this.GcrResponse);
+
+            // Assert
             Assert.IsNotNull(mappedCard);
         }
 
-        [TestMethod]
-        public void EmvTrackMapper_MapCardFromEmvTrack_CardType_should_be_Emv()
+        [Test]
+        public void EmvTrackMapper_MapCardFromEmvTrack_ShouldReturnEmvCardType_Always ()
         {
+            // Act
             CardEntry mappedCard = EmvTrackMapper.MapCardFromEmvTrack(this.GcrResponse);
+
+            // Assert
             Assert.IsTrue(mappedCard.Type == CardType.Emv);
         }
     }

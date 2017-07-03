@@ -1,7 +1,7 @@
-﻿using MicroPos.CrossPlatform;
+using Microtef.CrossPlatform;
 using Pinpad.Sdk.Model.Constants;
 
-namespace Pinpad.Sdk.Model.Pinpad
+namespace Pinpad.Sdk.Model
 {
     /// <summary>
     /// Contract for a class to establish logic connection to a pinpad,

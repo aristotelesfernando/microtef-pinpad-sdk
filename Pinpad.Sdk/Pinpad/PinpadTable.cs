@@ -1,5 +1,5 @@
 ﻿using Pinpad.Sdk.Commands;
-using Pinpad.Sdk.Model.Pinpad;
+using Pinpad.Sdk.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

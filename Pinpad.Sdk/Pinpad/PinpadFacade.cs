@@ -1,4 +1,4 @@
-﻿using MicroPos.CrossPlatform;
+﻿using Microtef.CrossPlatform;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.Exceptions;
 using Pinpad.Sdk.Model.Pinpad;

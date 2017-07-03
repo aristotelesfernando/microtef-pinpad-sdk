@@ -1,30 +1,30 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Pinpad.Sdk.Commands.TypeCode;
+﻿using Pinpad.Sdk.Commands.TypeCode;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Pinpad;
-using Pinpad.Sdk.Test.Mockings;
+using NUnit.Framework;
 
 namespace Pinpad.Sdk.Test.Printer
 {
-    [TestClass]
+    [TestFixture]
     public class IngenicoPinpadPrinterTest
     {
         public IngenicoPinpadPrinter Printer { get; set; }
 
-        [TestInitialize]
+        [SetUp]
         public void Setup ()
         {
-            this.Printer = new IngenicoPinpadPrinter(new PinpadCommunicationMock(),
-                new PinpadInfosMock());
+            this.Printer = new IngenicoPinpadPrinter(
+                new Stubs.PinpadCommunicationStub(),
+                new Stubs.PinpadInfosStub());
         }
 
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_Itself_ShouldInheritIPinpadPrinter()
         {
             // Assert
-            Assert.IsInstanceOfType(this.Printer, typeof(IPinpadPrinter));
+            Assert.IsInstanceOf(typeof(IPinpadPrinter), this.Printer);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AddQrCode_ShouldNotReturnNull_IfMethodIsCorrect()
         {
             // Arrange
@@ -38,7 +38,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.IsNotNull(returnedPrinter);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AddQrCode_ShouldReturnItself_IfMethodIsCorrect ()
         {
             // Arrange
@@ -52,7 +52,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.AreEqual(returnedPrinter, this.Printer);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AddQrCode_ShouldAddOneQrCodeItemToPrinterBuffer_IfMethodIsCorrect()
         {
             // Arrange
@@ -66,7 +66,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.AreEqual(expectedItemsToPrint, this.Printer.ItemsToPrint.Count);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AddQrCode_ShouldMatchQrCodeMessage_IfMethodIsMappingItCorrectly()
         {
             // Arrange
@@ -79,7 +79,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.AreEqual(expectedQrCodeMessage, this.Printer.ItemsToPrint[0].Text);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AddQrCode_ShouldMatchQrCodeAlignment_IfMethodIsMappingItCorrectly()
         {
             // Arrange
@@ -92,7 +92,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.AreEqual(expectedAlignment, this.Printer.ItemsToPrint[0].Alignment);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AddQrCode_ShouldMatchPrintingType_IfMethodIsMappingItCorrectly()
         {
             // Arrange
@@ -106,7 +106,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.AreEqual(expectedType, this.Printer.ItemsToPrint[0].Type);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AddQrCode_ShouldMatchQrCodeSize_IfMethodIsMappingItCorrectly()
         {
             // Arrange
@@ -121,7 +121,7 @@ namespace Pinpad.Sdk.Test.Printer
             Assert.AreEqual(expectedQrCodeSize, this.Printer.ItemsToPrint[0].FontSize);
         }
 
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AppendLine_ShouNotReturnNull_IfParametersArePassed()
         {
             // Arrange
@@ -136,7 +136,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.IsNotNull(returnedPrinter);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AppendLine_ShouNotReturnNull_IfNoParametersArePassed()
         {
             // Act
@@ -145,7 +145,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.IsNotNull(returnedPrinter);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AppendLine_ShouldReturnItself_IfMethodIsCorrectAndParametersArePassed()
         {
             // Arrange
@@ -160,7 +160,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.AreEqual(returnedPrinter, this.Printer);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AppendLine_ShouldReturnItself_IfMethodIsCorrectAndNoParametersArePassed()
         {
             // Act
@@ -169,7 +169,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.AreEqual(returnedPrinter, this.Printer);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AppendLine_ShouldOneTextItemToPrinterBuffer_IfParametersArePassed()
         {
             // Arrange
@@ -184,7 +184,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.AreEqual(expectedItemsToPrint, this.Printer.ItemsToPrint.Count);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AppendLine_ShouldMatchPrintingType_IfParametersArePassedAndMethodIsMappingItCorrectly()
         {
             // Arrange
@@ -199,7 +199,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.AreEqual(expectedType, this.Printer.ItemsToPrint[0].Type);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AppendLine_ShouldMatchTextToPrint_IfParametersArePassedAndMethodIsMappingItCorrectly()
         {
             // Arrange
@@ -213,7 +213,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.AreEqual(expectedText, this.Printer.ItemsToPrint[0].Text);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AppendLine_ShouldMatchAlignment_IfParametersArePassedAndMethodIsMappingItCorrectly()
         {
             // Arrange
@@ -227,7 +227,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.AreEqual(expectedAlignment, this.Printer.ItemsToPrint[0].Alignment);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AppendLine_ShouldMatchFontSize_IfParametersArePassedAndMethodIsMappingItCorrectly()
         {
             // Arrange
@@ -241,7 +241,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.AreEqual(expectedSize, this.Printer.ItemsToPrint[0].FontSize);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AppendLine_ShouldMatchPrintingType_IfNoParametersArePassedAndMethodIsMappingItCorrectly()
         {
             // Arrange
@@ -253,7 +253,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.AreEqual(expectedType, this.Printer.ItemsToPrint[0].Type);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AppendLine_ShouldMatchStepsToSkip_IfNoParametersArePassedAndMethodIsMappingItCorrectly()
         {
             // Arrange
@@ -266,7 +266,7 @@ namespace Pinpad.Sdk.Test.Printer
             Assert.AreEqual(expectedStepsToSkip, this.Printer.ItemsToPrint[0].StepsToSkip);
         }
 
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AddSeparator_ShouNotReturnNull_IfMethodIsCorrect()
         {
             // Act
@@ -275,7 +275,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.IsNotNull(returnedPrinter);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AddSeparator_ShouldReturnItself_IfMethodIsCorrect()
         {
             // Act
@@ -284,7 +284,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.AreEqual(returnedPrinter, this.Printer);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AddSeparator_ShouldMatchPrintingType_IfMethodIsMappingItCorrectly()
         {
             // Arrange
@@ -296,7 +296,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.AreEqual(expectedPrintingType, this.Printer.ItemsToPrint[0].Type);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AddSeparator_ShouldMatchAlignment_IfMethodIsMappingItCorrectly()
         {
             // Arrange
@@ -308,7 +308,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.AreEqual(expectedAlignment, this.Printer.ItemsToPrint[0].Alignment);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AddSeparator_ShouldMatchFontSize_IfMethodIsMappingItCorrectly()
         {
             // Arrange
@@ -320,7 +320,7 @@ namespace Pinpad.Sdk.Test.Printer
             // Assert
             Assert.AreEqual(expectedFontSize, this.Printer.ItemsToPrint[0].FontSize);
         }
-        [TestMethod]
+        [Test]
         public void IngenicoPinpadPrinter_AddSeparator_ShouldMatchText_IfMethodIsMappingItCorrectly()
         {
             // Arrange

@@ -1,25 +1,26 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using MicroPos.CrossPlatform;
+using Microtef.CrossPlatform;
+using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Commands;
+using NUnit.Framework;
+using Microtef.CrossPlatform.TypeCode;
+using Moq;
 
 namespace Pinpad.Sdk.Test.EmvTable
 {
-    [TestClass]
+    [TestFixture]
     public class PinpadTableTest
     {
-		MockedPinpadFacade MockedFacade;
-		PinpadConnectionMock MockedConnection;
+        IPinpadFacade PinpadFacadeMock;
+        IPinpadConnection ConnectionStub;
 
         #region setting stuff up
-        [TestInitialize]
+        [SetUp]
         public void Setup()
         {
-			this.MockedFacade = new MockedPinpadFacade();
-			this.MockedConnection = new PinpadConnectionMock();
+            this.PinpadFacadeMock = Mock.Of<IPinpadFacade>();
+            this.ConnectionStub = new Stubs.PinpadConnectionStub();
         }
-
         public CapkTable GetCapk(int i)
         {
 			CapkTable capk = new CapkTable();
@@ -65,40 +66,64 @@ namespace Pinpad.Sdk.Test.EmvTable
 
 			return null;
         }
-
-
         #endregion
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void PinpadTablpeoe_should_throw_exception_if_null_PinpadCommunication()
+        [Test]
+        public void PinpadTable_Construction_ShouldThrowException_IfPinpadCommunicationIsNull ()
         {
-			PinpadTable table = new PinpadTable(this.MockedFacade.Communication as PinpadCommunication);
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Arrange
+                IPinpadCommunication nullPinpadCommunication = null;
+
+                // Act
+                PinpadTable table = new PinpadTable(nullPinpadCommunication);
+            });
         }
-        [TestMethod]
-        public void PinpadTable_should_not_return_null()
+        [Test]
+        public void PinpadTable_Construction_ShouldNotReturnNull_IfParametersAreCorrect ()
         {
+            // Arrange
             IPinpadConnection conn = Mock.Of<IPinpadConnection>();
-            this.MockedFacade.Communication = new PinpadCommunication(conn);
-            PinpadTable table = new PinpadTable(this.MockedFacade.Communication);
+            Stubs.PinpadCommunicationStub pinpadCommunicationStub = 
+                new Stubs.PinpadCommunicationStub();
+
+            // Act
+            PinpadTable table = new PinpadTable(pinpadCommunicationStub);
+
+            // Assert
             Assert.IsNotNull(table);
         }
-        [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void PinpadTable_AddEntry_should_throw_exception_if_unknown_entry()
+        [Test]
+        public void PinpadTable_AddEntry_ShouldThrowException_IfUnknownTableEntry ()
         {
-            PinpadTable table = new PinpadTable(new PinpadCommunicationMock());
-            table.AddEntry(new MockedBaseTableEntry());
+            // Assert
+            Assert.Throws<NotImplementedException>(() =>
+            {
+                // Arrange
+                Stubs.PinpadCommunicationStub pinpadCommunicationStub =
+                    new Stubs.PinpadCommunicationStub();
+                Dummies.DummyTable dummyTable = new Dummies.DummyTable();
+                PinpadTable table = new PinpadTable(pinpadCommunicationStub);
+				
+                // Act
+                table.AddEntry(dummyTable);
+            });
         }
-        [TestMethod]
-        public void PinpadTable_loading_tables_should_succeed()
+        [Test]
+        public void PinpadTable_CapkTable_ShouldMatchTheNumberOrTablesAdded ()
         {
-            PinpadTable table = new PinpadTable(new PinpadCommunicationMock());
+            // Arrange
+            PinpadTable table = new PinpadTable(new Stubs.PinpadCommunicationStub());
 
+            // Assert
             Assert.AreEqual(table.CapkTable.Count, 0);
 
+            // Arrange
             for (int i = 0; i < 10; i++) { table.AddEntry(this.GetCapk(4)); }
 
+            // Assert
             Assert.AreEqual(table.CapkTable.Count, 1);
         }
     }

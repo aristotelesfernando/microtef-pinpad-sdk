@@ -1,16 +1,18 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Pinpad.Sdk.Model;
+﻿using Pinpad.Sdk.Model;
+using NUnit.Framework;
 
 namespace Pinpad.Sdk.Test.Transaction
 {
-    [TestClass]
+    [TestFixture]
     public class CardEntryTest
     {
-        [TestMethod]
-        public void CardEntry_should_not_return_null()
+        [Test]
+        public void CardEntry_Construction_ShouldNotReturnNull ()
         {
+            // Arrange and act
             CardEntry card = new CardEntry();
+
+            // Assert
             Assert.IsNotNull(card);
         }
     }

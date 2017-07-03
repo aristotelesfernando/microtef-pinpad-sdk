@@ -3,7 +3,6 @@ using System;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Transaction;
 using Pinpad.Sdk.Model.TypeCode;
-using Pinpad.Sdk.Model.Pinpad;
 using Pinpad.Sdk.PinpadProperties.Refactor;
 
 namespace Pinpad.Sdk

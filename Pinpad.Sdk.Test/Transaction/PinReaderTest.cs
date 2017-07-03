@@ -1,74 +1,128 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Pinpad.Sdk.Transaction;
 using Pinpad.Sdk.Model;
+using NUnit.Framework;
 
 namespace Pinpad.Sdk.Test.Transaction
 {
-    [TestClass]
+    [TestFixture]
     public class PinReaderTest
     {
         PinReader pinReader;
 
-        [TestInitialize]
+        [SetUp]
         public void Setup()
         {
-            this.pinReader = new PinReader(new PinpadCommunicationMock());
+            this.pinReader = new PinReader(new Stubs.PinpadCommunicationStub());
         }
 
-        [TestMethod]
-        public void PinReader_should_not_return_null()
+        [Test]
+        public void PinReader_Construction_ShouldNotThrowException ()
         {
+            // Assert
             Assert.IsNotNull(pinReader);
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void PinReader_reading_should_throw_exception_if_undefined_CardType()
+        [Test]
+        public void PinReader_Read_ShouldThrowException_IfCardTypeIsUndefined ()
         {
-            pinReader.Read(CardType.Undefined, 1000, "12345678901234567");
+            // Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                // Arrange
+                CardType undefinedCardType = CardType.Undefined;
+
+                // Assert
+                pinReader.Read(undefinedCardType, 
+                               amount: 1000, 
+                               pan: "12345678901234567");
+            });
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void PinReader_reading_should_throw_exception_if_invalid_CardType()
+        [Test]
+        public void PinReader_Read_ShouldThrowException_IfCardTypeIsInvalid ()
         {
-            pinReader.Read((CardType)666, 1000, "12345678901234567");
+            // Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                // Arrange
+                CardType invalidCardType = (CardType)666;
+
+                // Assert
+                pinReader.Read(invalidCardType,
+                               amount: 1000,
+                               pan: "12345678901234567");
+            });
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void PinReader_reading_should_throw_exception_if_negative_amount()
+        [Test]
+        public void PinReader_Read_ShouldThrowException_IfAmountIsNegative ()
         {
-            pinReader.Read((CardType)666, -1000, "12345678901234567");
+            // Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                // Arrange
+                decimal negativeAmount = -666;
+
+                // Act
+                pinReader.Read(CardType.Emv,
+                               negativeAmount,
+                               pan: "12345678901234567");
+            });
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void PinReader_reading_should_throw_exception_if_amount_is_zero()
+        [Test]
+        public void PinReader_Read_ShouldThrowException_IfAmountIsZero ()
         {
-            pinReader.Read((CardType)666, 0, "12345678901234567");
+            // Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                // Arrange
+                decimal zeroAmount = 0;
+
+                // Act
+                pinReader.Read(CardType.Emv, 
+                               zeroAmount, 
+                               pan: "12345678901234567");
+            });
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void PinReader_reading_should_throw_exception_if_null_pan()
+        [Test]
+        public void PinReader_Read_ShouldThrowException_IfPanIsNull ()
         {
-            pinReader.Read(CardType.MagneticStripe, 1000, null);
+            // Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                // Arrange
+                string nullPan = null;
+
+                // Act
+                pinReader.Read(CardType.MagneticStripe, 
+                               amount: 1000, 
+                               pan: nullPan);
+            });
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void PinReader_reading_should_throw_exception_if_pan_is_empty()
+        [Test]
+        public void PinReader_Read_ShouldThrowException_IfPanIsEmpty ()
         {
-            pinReader.Read(CardType.MagneticStripe, 1000, string.Empty);
+            // Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                // Arrange
+                string emptyPan = string.Empty;
+
+                // Act
+                pinReader.Read(CardType.MagneticStripe, 
+                               amount: 1000, 
+                               pan: emptyPan);
+            });
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void PinReader_should_throw_exception_if_null_PinpadFacade()
+        [Test]
+        public void PinReader_Read_ShouldThrowException_IfPinpadCommunicationIsNull ()
         {
-			PinReader pinReader = new PinReader(null);
+            // Assert
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                // Arrange 
+                IPinpadCommunication nullPinpadCommunication = null;
+
+                // Act
+                PinReader pinReader = new PinReader(nullPinpadCommunication);
+            });
         }
     }
 }

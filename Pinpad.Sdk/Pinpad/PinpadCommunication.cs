@@ -1,5 +1,5 @@
-﻿using MicroPos.CrossPlatform;
-using MicroPos.CrossPlatform.TypeCode;
+﻿using Microtef.CrossPlatform;
+using Microtef.CrossPlatform.TypeCode;
 using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Events;
 using Pinpad.Sdk.Model.Exceptions;
@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using Pinpad.Sdk.Model.Pinpad;
+using Pinpad.Sdk.Model;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
 using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 using Pinpad.Sdk.Model.Constants;

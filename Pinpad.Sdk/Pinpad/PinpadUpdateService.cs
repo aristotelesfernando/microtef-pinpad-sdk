@@ -1,11 +1,11 @@
 ﻿using System;
 using Pinpad.Sdk.Model.Pinpad;
-using MicroPos.CrossPlatform;
+using Microtef.CrossPlatform;
 using System.IO;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Commands.Request;
 using Pinpad.Sdk.Commands.Response;
-using MicroPos.CrossPlatform.TypeCode;
+using Microtef.CrossPlatform.TypeCode;
 using System.Diagnostics;
 
 namespace Pinpad.Sdk.Pinpad
@@ -102,11 +102,11 @@ namespace Pinpad.Sdk.Pinpad
         {
             if (pinpadInformation == null)
             {
-                throw new ArgumentNullException("pinpadInformation");
+                throw new ArgumentNullException(nameof(pinpadInformation));
             }
             if (pinpadCommunication == null)
             {
-                throw new ArgumentNullException("pinpadCommunication");
+                throw new ArgumentNullException(nameof(pinpadInformation));
             }
 
             this.PinpadInfos = pinpadInformation;
