@@ -118,7 +118,7 @@
       <Project>{8DEB5A99-825B-4631-B84C-C2C06BF28C2E}</Project>
       <Name>Pinpad.Sdk.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Platform Desktop\MicroPos.Platform.Desktop\Microtef.Platform.Desktop.csproj">
+    <ProjectReference Include="..\..\Platform Desktop\Microtef.Platform.Desktop\Microtef.Platform.Desktop.csproj">
       <Project>{604E344D-B3AC-4192-998E-E12E0CD12CB5}</Project>
       <Name>Microtef.Platform.Desktop</Name>
     </ProjectReference>
