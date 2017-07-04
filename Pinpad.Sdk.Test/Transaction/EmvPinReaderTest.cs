@@ -1,64 +1,73 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.Model;
-using Pinpad.Sdk.Transaction;
+using NUnit.Framework;
+using Moq;
 
 namespace Pinpad.Sdk.Test.Transaction
 {
-	[TestClass]
+    [TestFixture]
 	public class EmvPinReaderTest
 	{
-        EmvPinReader reader;
-        MockedPinpadFacade mockedFacade;
-		PinpadCommunicationMock mockedComm;
-		Pin pin;
+        EmvPinReader emvPinReader;
+        IPinpadFacade dummyPinpadFacade;
+        IPinpadCommunication mockedComm;
+        Pin dummyPin;
 
-		[TestInitialize]
+        [SetUp]
 		public void Setup()
 		{
-			this.mockedComm = new PinpadCommunicationMock();
-            this.mockedFacade = new MockedPinpadFacade();
-            this.reader = new EmvPinReader();
+            this.mockedComm = new Stubs.PinpadCommunicationStub();
+            this.dummyPinpadFacade = Mock.Of<IPinpadFacade>();
+            this.emvPinReader = new EmvPinReader();
 		}
 
-        [TestMethod]
-        public void EmvPinReader_should_not_throw_exception_on_creation()
+        [Test]
+        public void EmvPinReader_Construction_ShouldNotThrowException ()
         {
+            // Act
             EmvPinReader emvReader = new EmvPinReader();
-        }
-
-        [TestMethod]
-        public void EmvPinReader_should_not_return_null_on_creation()
-        {
-            // Arrange
-            EmvPinReader emvReader = new EmvPinReader();
-
+			
             // Assert
-            Assert.IsNotNull(emvReader);
+			Assert.IsNotNull(emvReader);
         }
-
-        [TestMethod]
-		[ExpectedException(typeof(ArgumentException))]
-		public void EmvPinReaderTest_Read_should_throw_exception_if_negative_amount()
+        [Test]
+        public void EmvPinReaderTest_Read_ShouldThrowException_IfNegativeAmount ()
 		{
-            // Act & Assert
-			reader.Read(this.mockedComm, -1, out this.pin);
+            // Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                // Arrange
+                decimal negativeAmount = -1;
+
+                // Act
+                emvPinReader.Read(this.mockedComm, negativeAmount, 
+                                  out this.dummyPin);
+            });
 		}
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void EmvPinReaderTest_Read_should_throw_exception_if_amount_is_zero()
+        [Test]
+        public void EmvPinReaderTest_Read_ShouldThrowException_IfAmountIsZero ()
         {
-            // Act & Assert
-            reader.Read(this.mockedComm, 0, out this.pin);
+            // Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                // Act
+                emvPinReader.Read(this.mockedComm, 0, out this.dummyPin);
+            });
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Test]
         public void EmvPinReaderTest_Read_should_throw_exception_if_null_PinpadFacade()
         {
-            // Act & Assert
-            reader.Read(null, 10001, out this.pin);
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Arrange
+                IPinpadCommunication nullPinpadCommunication = null;
+                decimal amount = 1001;
+
+                // Act
+                this.emvPinReader.Read(nullPinpadCommunication, amount, 
+                                       out this.dummyPin);
+            });
         }
     }
 }

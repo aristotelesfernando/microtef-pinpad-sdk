@@ -1,6 +1,7 @@
-﻿using MicroPos.CrossPlatform;
+using Microtef.CrossPlatform;
+using Pinpad.Sdk.Model.Constants;
 
-namespace Pinpad.Sdk.Model.Pinpad
+namespace Pinpad.Sdk.Model
 {
     /// <summary>
     /// Contract for a class to establish logic connection to a pinpad,
@@ -16,6 +17,12 @@ namespace Pinpad.Sdk.Model.Pinpad
         /// Port name in which the pinpad is connected.
         /// </summary>
         string ConnectionName { get; }
+        /// <summary>
+        /// Sets time interval for sending and receiving messages.
+        /// </summary>
+        /// <param name="writeTimeout">Time interval to wait for a message to be sent.Time in milliseconds and must be greater than 2 seconds to be changed</param>
+        /// <param name="readTimeout">Time interval to wait for a message to be received.Time in milliseconds  and must be greater than 2 seconds to be changed</param>
+        void SetTimeout(int writeTimeout = Timeout.NON_BLOCKING_TIMEOUT, int readTimeout = Timeout.NON_BLOCKING_TIMEOUT);
         /// <summary>
         /// Open logic connection to the pinpad.
         /// </summary>

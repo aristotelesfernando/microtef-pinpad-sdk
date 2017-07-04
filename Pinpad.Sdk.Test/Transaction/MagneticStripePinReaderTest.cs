@@ -1,70 +1,112 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.Model;
-using Pinpad.Sdk.Transaction;
+using NUnit.Framework;
+using Moq;
 
 namespace Pinpad.Sdk.Test.Transaction
 {
-    [TestClass]
+    [TestFixture]
     public class MagneticStripePinReaderTest
     {
-        MagneticStripePinReader reader;
-        MockedPinpadFacade pinpadFacade;
-        Pin pin;
+        MagneticStripePinReader emvPinReader;
+        IPinpadFacade dummyPinpadFacade;
+        Pin dummyPin;
 
-        [TestInitialize]
+        [SetUp]
         public void Setup()
         {
-            this.pinpadFacade = new MockedPinpadFacade();
-            this.reader = new MagneticStripePinReader();
+            this.dummyPinpadFacade = Mock.Of<IPinpadFacade>();
+            this.emvPinReader = new MagneticStripePinReader();
         }
 
-        [TestMethod]
-        public void MagneticStripePinReader_should_not_throw_exception_on_creation()
+        [Test]
+        public void MagneticStripePinReader_Construction_ShouldNotThrowException ()
         {
+            // Act
             MagneticStripePinReader msReader = new MagneticStripePinReader();
-        }
 
-        [TestMethod]
-        public void MagneticStripePinReader_should_not_return_null_on_creation()
-        {
-            MagneticStripePinReader msReader = new MagneticStripePinReader();
-            Assert.IsNotNull(msReader);
+            // Assert
+			Assert.IsNotNull(msReader);
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void MagneticStripePinReader_should_throw_exception_if_null_PinpadFacade()
+        [Test]
+        public void MagneticStripePinReader_Read_ShouldThrowException_IfPinpadCommunicationIsNull ()
         {
-            this.reader.Read(null, "1234567890123456", 1000, out this.pin);
+            // Assert
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                // Arrange
+                IPinpadCommunication nullPinpadCommunication = null;
+
+                // Act
+                this.emvPinReader.Read(nullPinpadCommunication, 
+                                       pan: "1234567890123456", 
+                                       amount: 1000, 
+                                       pin: out this.dummyPin);
+            });
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void MagneticStripePinReader_should_throw_exception_if_negative_amount()
+        [Test]
+        public void MagneticStripePinReader_Read_ShouldThrowException_IfAmountIsNegative ()
         {
-            this.reader.Read(this.pinpadFacade.Communication, "1234567890123456", -1000, out this.pin);
+            // Assert
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                // Arrange
+                decimal negativeAmount = -1000;
+
+                // Act
+                this.emvPinReader.Read(this.dummyPinpadFacade.Communication, 
+                                       pan: "1234567890123456", 
+                                       amount: negativeAmount,
+                                       pin: out this.dummyPin);
+            });
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void MagneticStripePinReader_should_throw_exception_if_zero_amount()
+        [Test]
+        public void MagneticStripePinReader_Read_ShouldThrowException_IfAmountIsZero ()
         {
-            this.reader.Read(this.pinpadFacade.Communication, "1234567890123456", 0, out this.pin);
+            // Assert
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                // Arrange
+                decimal zeroAmount = 0;
+
+                // Act
+                this.emvPinReader.Read(this.dummyPinpadFacade.Communication, 
+                                       pan: "1234567890123456", 
+                                       amount: zeroAmount, 
+                                       pin: out this.dummyPin);
+            });
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void MagneticStripePinReader_should_throw_exception_if_null_pan()
+        [Test]
+        public void MagneticStripePinReader_Read_ShouldThrowException_IfPanIsNull ()
         {
-            this.reader.Read(this.pinpadFacade.Communication, null, 1000, out this.pin);
+            // Assert
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                // Arrange
+                string nullPan = null;
+
+                // Act
+                this.emvPinReader.Read(this.dummyPinpadFacade.Communication, 
+                                       pan: nullPan, 
+                                       amount: 1000, 
+                                       pin: out this.dummyPin);
+            });
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void MagneticStripePinReader_should_throw_exception_if_empty_pan()
+        [Test]
+        public void MagneticStripePinReader_Read_ShouldThrowException_IfEmptyPan ()
         {
-            this.reader.Read(this.pinpadFacade.Communication, string.Empty, 1000, out this.pin);
+            // Assert
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                // Arrange
+                string emptyPan = string.Empty;
+
+                // Act
+                this.emvPinReader.Read(this.dummyPinpadFacade.Communication, 
+                                       pan: emptyPan, 
+                                       amount: 1000, 
+                                       pin: out this.dummyPin);
+            });
         }
     }
 }

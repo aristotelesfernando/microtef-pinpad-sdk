@@ -111,6 +111,8 @@
     <Compile Include="PinpadProperties\Refactor\Formatter\StringFormatter.cs" />
     <Compile Include="PinpadProperties\Refactor\Parser\StringParser.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\BaseProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\Property\BinaryProperty.cs" />
+    <Compile Include="PinpadProperties\Refactor\Property\BinaryVariableLengthProperty.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\DataCollectionProperty.cs" />
     <Compile Include="PinpadProperties\Refactor\Property\FixedLengthProperty.cs" />
     <Compile Include="PinpadProperties\Refactor\Command\ICommand.cs" />
@@ -179,13 +181,13 @@
     <None Include="PinpadSdk_key.snk" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CrossPlatform\MicroPos.CrossPlatform\MicroPos.CrossPlatform.csproj">
-      <Project>{0f8b65ca-9ece-4cb2-88ec-f04c4d41a7d6}</Project>
-      <Name>MicroPos.CrossPlatform</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pinpad.Sdk.Model\Pinpad.Sdk.Model.csproj">
       <Project>{8deb5a99-825b-4631-b84c-c2c06bf28c2e}</Project>
       <Name>Pinpad.Sdk.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CrossPlatform\Microtef.CrossPlatform\Microtef.CrossPlatform.csproj">
+      <Project>{0F8B65CA-9ECE-4CB2-88EC-F04C4D41A7D6}</Project>
+      <Name>Microtef.CrossPlatform</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

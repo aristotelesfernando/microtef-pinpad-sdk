@@ -1,29 +1,39 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Moq;
-using MicroPos.CrossPlatform;
+using Microtef.CrossPlatform;
 
 namespace Pinpad.Sdk.Test.Display
 {
-	[TestClass]
+    [TestFixture]
 	public class PinpadDisplayTest
 	{
-		[TestMethod]
-		public void PinpadDisplay_should_not_return_null()
+		[Test]
+		public void PinpadDisplay_Construction_ShouldNotReturnNull()
 		{
-			IPinpadConnection conn = Mock.Of<IPinpadConnection>();
-
-			PinpadCommunication comm = new PinpadCommunication(conn);
-			PinpadDisplay display = new PinpadDisplay(comm);
-			Assert.IsNotNull(display);
+            // Arrange
+			IPinpadConnection connectionStub = Mock.Of<IPinpadConnection>();
+            PinpadCommunication comm = new PinpadCommunication(connectionStub);
+			
+            // Act
+            PinpadDisplay display = new PinpadDisplay(comm);
+			
+            // Assert
+            Assert.IsNotNull(display);
 		}
 
-		[TestMethod]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void PinpadDisplay_should_throw_exception_if_invalid_PinpadConnection()
+        [Test]
+        public void PinpadDisplay_Construction_ShouldThrowException_IfPinpadCommunicationIsNull ()
 		{
-			PinpadDisplay display = new PinpadDisplay(null);
-			Assert.IsNotNull(display);
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Arrange
+                PinpadCommunication nullPinpadConnection = null;
+
+                // Act
+                PinpadDisplay display = new PinpadDisplay(nullPinpadConnection);
+            });
 		}
 	}
 }

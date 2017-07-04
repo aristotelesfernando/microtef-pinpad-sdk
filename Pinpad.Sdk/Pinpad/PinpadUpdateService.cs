@@ -1,11 +1,11 @@
 ﻿using System;
 using Pinpad.Sdk.Model.Pinpad;
-using MicroPos.CrossPlatform;
+using Microtef.CrossPlatform;
 using System.IO;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Commands.Request;
 using Pinpad.Sdk.Commands.Response;
-using MicroPos.CrossPlatform.TypeCode;
+using Microtef.CrossPlatform.TypeCode;
 using System.Diagnostics;
 
 namespace Pinpad.Sdk.Pinpad
@@ -40,41 +40,13 @@ namespace Pinpad.Sdk.Pinpad
         // internal and private properties:
         /// <summary>
         /// Stores the number of bytes already read in the <see cref="ApplicationFile"/> property, by the
-        /// <see cref="NextPackageSection"/>.
+        /// <see cref="GetNextPackageSection"/>.
         /// </summary>
         private int FileCount { get; set; }
         /// <summary>
         /// All bytes of the zipped new application file.
         /// </summary>
         private byte [] ApplicationFile { get; set; }
-        /// <summary>
-        /// Gets the next package section to be sent in the <see cref="UprRequest"/>.
-        /// </summary>
-        private byte[] NextPackageSection
-        {
-            get
-            {
-                int bytesToCopy = this.SectionSize;
-
-                // If the file were already read, then there is no section left to read:
-                if (this.FileCount == this.ApplicationFile.Length) { return null; }
-
-                // If there isn't another full section, that is, the current section is smaller than the
-                // default size of a section, then the application must read only the remaining bytes:
-                if (ApplicationFile.Length - this.FileCount < this.SectionSize)
-                {
-                    // Then read a full section:
-                    bytesToCopy = ApplicationFile.Length - this.FileCount;
-                }
-
-                byte[] partial = new byte[bytesToCopy];
-                Array.Copy(this.ApplicationFile, partial, bytesToCopy);
-                this.FileCount += bytesToCopy;
-
-                return partial;
-            }
-        }
-
         /// <summary>
         /// Responsible for managing files in the current platform.
         /// </summary>
@@ -130,11 +102,11 @@ namespace Pinpad.Sdk.Pinpad
         {
             if (pinpadInformation == null)
             {
-                throw new ArgumentNullException("pinpadInformation");
+                throw new ArgumentNullException(nameof(pinpadInformation));
             }
             if (pinpadCommunication == null)
             {
-                throw new ArgumentNullException("pinpadCommunication");
+                throw new ArgumentNullException(nameof(pinpadInformation));
             }
 
             this.PinpadInfos = pinpadInformation;
@@ -204,14 +176,13 @@ namespace Pinpad.Sdk.Pinpad
                 do
                 {
                     // Get next package:
-                    nextPackage = this.NextPackageSection;
+                    nextPackage = this.GetNextPackageSection();
 
                     if (nextPackage == null) { continue; }
 
                     // Create the UPR request...
                     UprRequest uprRequest = new UprRequest();
-                    uprRequest.UPR_REC.Value = CrossPlatformController.TextEncodingController
-                        .GetString(TextEncodingType.Ascii, nextPackage);
+                    uprRequest.UPR_REC.Value = nextPackage;
 
                     // ... And send the next section:
                     this.PinpadCommunication.SendRequestAndVerifyResponseCode(uprRequest);
@@ -227,7 +198,31 @@ namespace Pinpad.Sdk.Pinpad
 
             return false;
         }
+        /// <summary>
+        /// Gets the next section of the package.
+        /// </summary>
+        /// <returns>The next package</returns>
+        private byte[] GetNextPackageSection()
+        {
+            int bytesToCopy = this.SectionSize;
 
+            // If the file were already read, then there is no section left to read:
+            if (this.FileCount == this.ApplicationFile.Length) { return null; }
+
+            // If there isn't another full section, that is, the current section is smaller than the
+            // default size of a section, then the application must read only the remaining bytes:
+            if (ApplicationFile.Length - this.FileCount < this.SectionSize)
+            {
+                // Then read a full section:
+                bytesToCopy = ApplicationFile.Length - this.FileCount;
+            }
+
+            byte[] partial = new byte[bytesToCopy];
+            Array.Copy(this.ApplicationFile, FileCount, partial, 0, bytesToCopy);
+            this.FileCount += bytesToCopy;
+
+            return partial;
+        }
         // private folks:
         /// <summary>
         /// Sends a <see cref="GavRequest"/> and gets it response.

@@ -1,9 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
 namespace Pinpad.Sdk.Test.Connection
 {
-	[TestClass]
+    [TestFixture]
 	public class PinpadConnectionTest
 	{
+		// TODO: Testar!
 	}
 }

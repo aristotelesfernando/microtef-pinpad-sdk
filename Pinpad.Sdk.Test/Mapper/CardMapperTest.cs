@@ -1,13 +1,13 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Commands;
 using Pinpad.Sdk.Transaction;
-using Pinpad.Sdk.Test.Mockings;
+using NUnit.Framework;
+using Pinpad.Sdk.Test.Mockers;
 
 namespace Pinpad.Sdk.Test.Mapper
 {
-    [TestClass]
+    [TestFixture]
     public class CardMapperTest
     {
         string Track1;
@@ -16,7 +16,7 @@ namespace Pinpad.Sdk.Test.Mapper
 
         internal GcrResponse GcrResponse;
 
-        [TestInitialize]
+        [SetUp]
         public void Setup()
         {
             this.Track1 = "4761739001010036^TESTING CARD MAPPER^123456789987456321";
@@ -24,7 +24,6 @@ namespace Pinpad.Sdk.Test.Mapper
             this.Track3 = string.Empty;
             this.GcrResponse = GcrResponseInitializer();
         }
-
         internal GcrResponse GcrResponseInitializer()
         {
             GcrResponse response = new GcrResponse();
@@ -37,68 +36,115 @@ namespace Pinpad.Sdk.Test.Mapper
             return response;
         }
 
-        [TestMethod]
-        public void CardMapper_should_not_return_null()
+        [Test]
+        public void CardMapper_MapCardFromTracks_ShouldNotReturnNull ()
         {
+            // Arrange
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.ContactlessEmv;
-            CardEntry mappedCard = CardMapper.MapCardFromTracks(this.GcrResponse, CardBrandMocker.GetMock());
+
+            // Act
+            CardEntry mappedCard = CardMapper.MapCardFromTracks(
+                this.GcrResponse, 
+                CardBrandMocker.Mock());
+
+            // Assert
             Assert.IsNotNull(mappedCard);
         }
-
-        [TestMethod]
-        public void CardMapper_CardType_should_be_MagneticStripe_if_AplicationType_is_MagneticStripe()
+        [Test]
+        public void CardMapper_GetCardType_ShouldReturnMagneticStripe_IfApplicationTypeIsMagneticStripe ()
         {
+            // Arrange
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.MagneticStripe;
-            CardType cardType = CardMapper.GetCardType(this.GcrResponse.GCR_CARDTYPE.Value);
-            Assert.IsTrue(cardType == CardType.MagneticStripe);
-        }
 
-        [TestMethod]
-        public void CardMapper_CardType_should_be_MagneticStripe_if_AplicationType_is_ContactlessMagneticStripe()
+            // Act
+            CardType cardType = CardMapper.GetCardType(
+                this.GcrResponse.GCR_CARDTYPE.Value);
+
+            // Assert
+            Assert.AreEqual(CardType.MagneticStripe, cardType);
+        }
+        [Test]
+        public void CardMapper_GetCardType_ShouldReturnMagneticStripe_IfApplicationTypeIsContactlessMagneticStripe ()
         {
+            // Arrange
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.ContactlessMagneticStripe;
-            CardType cardType = CardMapper.GetCardType(this.GcrResponse.GCR_CARDTYPE.Value);
-            Assert.IsTrue(cardType == CardType.MagneticStripe);
-        }
 
-        [TestMethod]
-        public void CardMapper_CardType_should_be_Emv_if_AplicationType_is_IccEmv()
+            // Act
+            CardType cardType = CardMapper.GetCardType(
+                this.GcrResponse.GCR_CARDTYPE.Value);
+
+            // Assert
+            Assert.AreEqual(CardType.MagneticStripe, cardType);
+        }
+        [Test]
+        public void CardMapper_GetCardType_ShouldReturnEmv_IfApplicationTypeIsIccEmv ()
         {
+            // Arrange
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.IccEmv;
-            CardType cardType = CardMapper.GetCardType(this.GcrResponse.GCR_CARDTYPE.Value);
-            Assert.IsTrue(cardType == CardType.Emv);
-        }
 
-        [TestMethod]
-        public void CardMapper_CardType_should_be_Emv_if_AplicationType_is_ContactlessEmv()
+            // Act
+            CardType cardType = CardMapper.GetCardType(
+                this.GcrResponse.GCR_CARDTYPE.Value);
+
+            // Assert
+            Assert.AreEqual(CardType.Emv, cardType);
+        }
+        [Test]
+        public void CardMapper_GetCardType_ShouldReturnEmv_IfApplicationTypeIsContactlessEmv ()
         {
+            // Arrange
             this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.ContactlessEmv;
+
+            // Act
             CardType cardType = CardMapper.GetCardType(this.GcrResponse.GCR_CARDTYPE.Value);
-            Assert.IsTrue(cardType == CardType.Emv);
-        }
 
-        [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void CardMapper_should_throw_exception_if_ApplicationType_is_VisaCashOverTIBCv1()
-        {
-            this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.VisaCashOverTIBCv1;
-            CardEntry mappedCard = CardMapper.MapCardFromTracks(this.GcrResponse, CardBrandMocker.GetMock());
+            // Assert
+            Assert.AreEqual(CardType.Emv, cardType);
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void CardMapper_should_throw_exception_if_ApplicationType_is_VisaCashOverTIBCv3()
+        [Test]
+        public void CardMapper_MapCardFromTracks_ShouldThrowException_IfApplicationTypeIsVisaCashOverTIBv1 ()
         {
-            this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.VisaCashOverTIBCv3;
-            CardEntry mappedCard = CardMapper.MapCardFromTracks(this.GcrResponse, CardBrandMocker.GetMock());
+            // Assert
+            Assert.Throws<NotImplementedException>(() =>
+            {
+                // Arrange
+                this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.VisaCashOverTIBCv1;
+
+                // Act
+                CardEntry mappedCard = CardMapper.MapCardFromTracks(
+                    this.GcrResponse, 
+                    CardBrandMocker.Mock());
+            });
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void CardMapper_should_throw_exception_if_ApplicationType_is_EasyEntryOverTIBCv1()
+        [Test]
+        public void CardMapper_MapCardFromTracks_ShouldThrowException_IfApplicationTypeIsVisaCashOverTIBCv3 ()
         {
-            this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.EasyEntryOverTIBCv1;
-            CardEntry mappedCard = CardMapper.MapCardFromTracks(this.GcrResponse, CardBrandMocker.GetMock());
+            // Assert
+            Assert.Throws<NotImplementedException>(() =>
+            {
+                // Arrange
+                this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.VisaCashOverTIBCv3;
+
+                // Act
+                CardEntry mappedCard = CardMapper.MapCardFromTracks(
+                    this.GcrResponse,
+                    CardBrandMocker.Mock());
+            });
+        }
+        [Test]
+        public void CardMapper_MapCardFromTracks_ShouldThrowException_IfApplicationTypeIsEasyEntryOverTIBCv1 ()
+        {
+            // Assert
+            Assert.Throws<NotImplementedException>(() =>
+            {
+                // Arrange
+                this.GcrResponse.GCR_CARDTYPE.Value = ApplicationType.EasyEntryOverTIBCv1;
+
+                // Act
+                CardEntry mappedCard = CardMapper.MapCardFromTracks(
+                    this.GcrResponse, 
+                    CardBrandMocker.Mock());
+            });
         }
     }
 }
