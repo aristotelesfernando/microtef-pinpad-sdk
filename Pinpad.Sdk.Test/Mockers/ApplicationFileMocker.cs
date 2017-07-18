@@ -9,7 +9,7 @@ namespace Pinpad.Sdk.Test.Mockers
     {
 		public static string MockNewApplicationFile(string fileName)
 		{
-			string path = Directory.GetCurrentDirectory();
+            string path = AppDomain.CurrentDomain.BaseDirectory;
 
 			// Creates mocked
 			Random r = new Random();
@@ -36,12 +36,12 @@ namespace Pinpad.Sdk.Test.Mockers
 		}
 		public static void Unmock()
 		{
-			foreach (string fileName in Directory.GetFiles(Directory.GetCurrentDirectory(), "*.zip"))
+			foreach (string fileName in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.zip"))
 			{
 				File.Delete(fileName);
 			}
 
-			Directory.Delete(Path.Combine(Directory.GetCurrentDirectory(), "temp"), true);
+			Directory.Delete(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temp"), true);
 		}
 
 		private static string SaveData(string path, byte[] Data)
