@@ -58,23 +58,18 @@ namespace Pinpad.Sdk.Utilities
                 throw new ArgumentException("label");
             }
 
-            PinpadKeyCode code = PinpadKeyCode.Undefined;
-            short index = minimunLimit;
+            Nullable<short> result = minimunLimit;
 
            if(circularBehavior == true)
             {
-                code = this.AddCircularBehaviorNumericValue(label,minimunLimit,maximumLimit);
+                result = this.AddCircularBehaviorNumericValue(label,minimunLimit,maximumLimit);
             }
            else
             {
-                code = this.AddLinearBehaviorNumericValue(label, minimunLimit, maximumLimit);
+                result = this.AddLinearBehaviorNumericValue(label, minimunLimit, maximumLimit);
             }
 
-            if (code == PinpadKeyCode.Return)
-            {
-                return index;
-            }
-            return null;
+            return result;
         }
         /// <summary>
         /// Get numeric value in array options.
@@ -242,7 +237,7 @@ namespace Pinpad.Sdk.Utilities
         /// <param name="label">Text to display on the first line of pinpad display.</param>        
         /// <param name="minimunLimit">Minimum numeric value for pick. Limit: -32.768.</param>
         /// <param name="maximumLimit">Maximum numeric value for pick. Limit: 32.767.</param>
-        private PinpadKeyCode AddLinearBehaviorNumericValue(string label, short minimunLimit, short maximumLimit)
+        private Nullable<short> AddLinearBehaviorNumericValue(string label, short minimunLimit, short maximumLimit)
         {
             PinpadKeyCode code = PinpadKeyCode.Undefined;
             short index = minimunLimit;
@@ -269,7 +264,11 @@ namespace Pinpad.Sdk.Utilities
                 }
             } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel && code != PinpadKeyCode.Undefined);
 
-            return code;
+            if (code == PinpadKeyCode.Cancel)
+            {
+                return null;
+            }
+            return index;
         }
         ///<summary>
         /// Modify the behavior of the list to circular.
@@ -277,7 +276,7 @@ namespace Pinpad.Sdk.Utilities
         /// <param name="label">Text to display on the first line of pinpad display.</param>       
         /// <param name="minimunLimit">Minimum numeric value for pick. Limit: -32.768.</param>
         /// <param name="maximumLimit">Maximum numeric value for pick. Limit: 32.767.</param>
-        private PinpadKeyCode AddCircularBehaviorNumericValue(string label, short minimunLimit, short maximumLimit)
+        private Nullable<short> AddCircularBehaviorNumericValue(string label, short minimunLimit, short maximumLimit)
         {
             PinpadKeyCode code = PinpadKeyCode.Undefined;
             short index = minimunLimit;
@@ -294,7 +293,7 @@ namespace Pinpad.Sdk.Utilities
                 }
                 else if (code == this.DataPickerKeys.DownKey)
                 {
-                    if(index == maximumLimit)
+                    if (index == maximumLimit)
                     {
                         index = minimunLimit;
                     }
@@ -302,11 +301,11 @@ namespace Pinpad.Sdk.Utilities
                     {
                         // Down key
                         index++;
-                    }                   
+                    }
                 }
-                else if (code == this.DataPickerKeys.UpKey && index > minimunLimit)
+                else if (code == this.DataPickerKeys.UpKey)
                 {
-                    if(index == minimunLimit)
+                    if (index == minimunLimit)
                     {
                         index = maximumLimit;
                     }
@@ -314,11 +313,16 @@ namespace Pinpad.Sdk.Utilities
                     {
                         // Up key
                         index--;
-                    }                    
+                    }
                 }
             } while (code != PinpadKeyCode.Return && code != PinpadKeyCode.Cancel && code != PinpadKeyCode.Undefined);
 
-            return code;
+            if (code == PinpadKeyCode.Cancel)
+            {
+                return null;
+            }
+
+            return index;
         }
     }
 }
