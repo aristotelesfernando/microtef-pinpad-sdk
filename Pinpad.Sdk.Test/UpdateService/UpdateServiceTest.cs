@@ -73,7 +73,7 @@ namespace Pinpad.Sdk.Test.UpdateService
                 infos, 
                 comm);
             string applicationPath = Path.Combine(
-                Directory.GetCurrentDirectory(),
+                AppDomain.CurrentDomain.BaseDirectory,
                 UpdateServiceTest.MockedApplicationName);
 
             // Act
