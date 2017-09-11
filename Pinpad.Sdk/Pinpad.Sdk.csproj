@@ -45,10 +45,13 @@
   <ItemGroup>
     <Compile Include="Commands\Context\IngenicoContext.cs" />
     <Compile Include="Commands\DataSet\AcquirerCommunicationStatus.cs" />
+    <Compile Include="Commands\DataSet\CexEventRead.cs" />
+    <Compile Include="Commands\DataSet\CexOptions.cs" />
     <Compile Include="Commands\DataSet\FncEntry.cs" />
     <Compile Include="Commands\DataSet\OnlineTransactionStatus.cs" />
     <Compile Include="Commands\DataSet\PrinterItem.cs" />
     <Compile Include="Commands\DataSet\PrinterLogo.cs" />
+    <Compile Include="Commands\Request\CexRequest.cs" />
     <Compile Include="Commands\Request\CloRequest.cs" />
     <Compile Include="Commands\Request\CngRequest.cs" />
     <Compile Include="Commands\Request\DexRequest.cs" />
@@ -69,6 +72,7 @@
     <Compile Include="Commands\Context\IContext.cs" />
     <Compile Include="Commands\Request\DspRequest.cs" />
     <Compile Include="Commands\Request\GcdRequest.cs" />
+    <Compile Include="Commands\Response\CexResponse.cs" />
     <Compile Include="Commands\Response\CloResponse.cs" />
     <Compile Include="Commands\Response\FncResponse.cs" />
     <Compile Include="Commands\Response\GavResponse.cs" />
