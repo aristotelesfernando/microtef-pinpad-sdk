@@ -260,22 +260,25 @@ namespace Pinpad.Sdk
 
         /// <summary>
         /// Get function keys. Doesn't read numeric keys.
+        /// Only works for devices with ABECS 2.0.
         /// </summary>
-        /// <returns>
-        /// The pressed key.
-        /// Enter - 00
-        /// Up - 02
-        /// Down - 03
-        /// Cancel - 13
-        /// Clean - 08
-        /// </returns>
-        public string VerifyKeyPressing()
+        /// <returns>The pressed key code.</returns>
+        public PinpadKeyCode VerifyKeyPressing()
         {
             CexRequest request = new CexRequest();
             request.SPE_CEXOPT.Value = CexOptions.VerifyKeyPressing;
 
             CexResponse response = this.Communication.SendRequestAndReceiveResponse<CexResponse>(request);
-            return response.PP_EVENT.Value;
+
+            // Enter key has value '00' in this command
+            if (string.Equals(response.PP_EVENT.Value, "00") == true)
+            {
+                return PinpadKeyCode.Return;
+            }
+            else
+            {
+                return (PinpadKeyCode)Enum.Parse(typeof(PinpadKeyCode), response.PP_EVENT.Value, true);
+            }
         }
     }
 }

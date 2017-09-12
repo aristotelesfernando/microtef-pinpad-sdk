@@ -43,16 +43,10 @@ namespace Pinpad.Sdk.Model
 		Nullable<decimal> GetAmount (AmountCurrencyCode currency);
         /// <summary>
         /// Get function keys. Doesn't read numeric keys.
+        /// Only works for devices with ABECS 2.0.
         /// </summary>
-        /// <returns>
-        /// The pressed key.
-        /// Enter - 00
-        /// Up - 02
-        /// Down - 03
-        /// Cancel - 13
-        /// Clean - 08
-        /// </returns>
-        string VerifyKeyPressing();
+        /// <returns>The pressed key code.</returns>
+        PinpadKeyCode VerifyKeyPressing();
 
     }
 }
