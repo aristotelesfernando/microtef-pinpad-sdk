@@ -18,6 +18,10 @@ namespace Pinpad.Sdk.Utilities
         /// Reference to keyboard operations.
         /// </summary>
         private IPinpadKeyboard _keyboard = null;
+        /// <summary>
+        /// Used to identify an ABECS 2.0 device.
+        /// </summary>
+        private IPinpadInfos _infos = null;
 
         // Properties
         /// <summary>
@@ -36,6 +40,7 @@ namespace Pinpad.Sdk.Utilities
         {
             this._keyboard = keyboard;
             this._display = display;
+            this._infos = infos;
             this.DataPickerKeys = infos.GetUpAndDownKeys();
         }
 
@@ -158,7 +163,16 @@ namespace Pinpad.Sdk.Utilities
             do
             {
                 this._display.ShowMessage(label + ":", options[index].ToString(), DisplayPaddingType.Left);
-                code = this._keyboard.GetKey();
+
+                // ABECS 2.0 device
+                if (this._infos.Specifications.Contains("2.0") == true)
+                {
+                    code = this._keyboard.VerifyKeyPressing();
+                }
+                else
+                {
+                    code = this._keyboard.GetKey();
+                }
 
                 if (code == PinpadKeyCode.Backspace)
                 {
@@ -195,7 +209,16 @@ namespace Pinpad.Sdk.Utilities
             do
             {
                 this._display.ShowMessage(label + ":", options[index].ToString(), DisplayPaddingType.Left);
-                code = this._keyboard.GetKey();
+
+                // ABECS 2.0 device
+                if (this._infos.Specifications.Contains("2.0") == true)
+                {
+                    code = this._keyboard.VerifyKeyPressing();
+                }
+                else
+                {
+                    code = this._keyboard.GetKey();
+                }
 
                 if (code == PinpadKeyCode.Backspace)
                 {
