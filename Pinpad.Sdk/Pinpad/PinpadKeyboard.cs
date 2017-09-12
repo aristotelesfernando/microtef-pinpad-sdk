@@ -7,6 +7,10 @@ using Pinpad.Sdk.Model.Utilities;
 using Pinpad.Sdk.Model.TypeCode;
 using Pinpad.Sdk.PinpadProperties.Refactor;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
+using Pinpad.Sdk.Commands.Response;
+using Pinpad.Sdk.Commands.Request;
+using Pinpad.Sdk.Commands.DataSet;
+using System.Text;
 
 namespace Pinpad.Sdk
 {
@@ -253,5 +257,25 @@ namespace Pinpad.Sdk
 
 			return null;
 		}
+
+        /// <summary>
+        /// Get function keys. Doesn't read numeric keys.
+        /// </summary>
+        /// <returns>
+        /// The pressed key.
+        /// Enter - 00
+        /// Up - 02
+        /// Down - 03
+        /// Cancel - 13
+        /// Clean - 08
+        /// </returns>
+        public string VerifyKeyPressing()
+        {
+            CexRequest request = new CexRequest();
+            request.SPE_CEXOPT.Value = CexOptions.VerifyKeyPressing;
+
+            CexResponse response = this.Communication.SendRequestAndReceiveResponse<CexResponse>(request);
+            return response.PP_EVENT.Value;
+        }
     }
 }

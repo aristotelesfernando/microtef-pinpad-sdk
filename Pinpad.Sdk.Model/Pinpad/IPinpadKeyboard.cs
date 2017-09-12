@@ -41,5 +41,18 @@ namespace Pinpad.Sdk.Model
 		/// <param name="currency">Amount currency, i. e. R$, US$.</param>
 		/// <returns>The amount if a valid amount was typed. Null if: timeout, user cancelled, amount was typed on an invalid format (example: 1.7,2).</returns>
 		Nullable<decimal> GetAmount (AmountCurrencyCode currency);
-	}
+        /// <summary>
+        /// Get function keys. Doesn't read numeric keys.
+        /// </summary>
+        /// <returns>
+        /// The pressed key.
+        /// Enter - 00
+        /// Up - 02
+        /// Down - 03
+        /// Cancel - 13
+        /// Clean - 08
+        /// </returns>
+        string VerifyKeyPressing();
+
+    }
 }
