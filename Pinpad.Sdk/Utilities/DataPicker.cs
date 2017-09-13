@@ -18,10 +18,6 @@ namespace Pinpad.Sdk.Utilities
         /// Reference to keyboard operations.
         /// </summary>
         private IPinpadKeyboard _keyboard = null;
-        /// <summary>
-        /// Used to identify an ABECS 2.0 device.
-        /// </summary>
-        private IPinpadInfos _infos = null;
 
         // Properties
         /// <summary>
@@ -40,7 +36,6 @@ namespace Pinpad.Sdk.Utilities
         {
             this._keyboard = keyboard;
             this._display = display;
-            this._infos = infos;
             this.DataPickerKeys = infos.GetUpAndDownKeys();
         }
 
