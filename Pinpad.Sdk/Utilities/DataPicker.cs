@@ -163,16 +163,7 @@ namespace Pinpad.Sdk.Utilities
             do
             {
                 this._display.ShowMessage(label + ":", options[index].ToString(), DisplayPaddingType.Left);
-
-                // ABECS 2.0 device
-                if (this._infos.Specifications.Contains("2.0") == true)
-                {
-                    code = this._keyboard.GetKeyWithNewAbecsVersion();
-                }
-                else
-                {
-                    code = this._keyboard.GetKey();
-                }
+                code = this._keyboard.GetFunctionKey();
 
                 if (code == PinpadKeyCode.Backspace)
                 {
@@ -209,16 +200,7 @@ namespace Pinpad.Sdk.Utilities
             do
             {
                 this._display.ShowMessage(label + ":", options[index].ToString(), DisplayPaddingType.Left);
-
-                // ABECS 2.0 device
-                if (this._infos.Specifications.Contains("2.0") == true)
-                {
-                    code = this._keyboard.GetKeyWithNewAbecsVersion();
-                }
-                else
-                {
-                    code = this._keyboard.GetKey();
-                }
+                code = this._keyboard.GetFunctionKey();
 
                 if (code == PinpadKeyCode.Backspace)
                 {
@@ -268,7 +250,7 @@ namespace Pinpad.Sdk.Utilities
             do
             {
                 this._display.ShowMessage(label + ":", index.ToString(), DisplayPaddingType.Left);
-                code = this._keyboard.GetKey();
+                code = this._keyboard.GetFunctionKey();
 
                 if (code == PinpadKeyCode.Backspace)
                 {
@@ -307,7 +289,7 @@ namespace Pinpad.Sdk.Utilities
             do
             {
                 this._display.ShowMessage(label + ":", index.ToString(), DisplayPaddingType.Left);
-                code = this._keyboard.GetKey();
+                code = this._keyboard.GetFunctionKey();
 
                 if (code == PinpadKeyCode.Backspace)
                 {
