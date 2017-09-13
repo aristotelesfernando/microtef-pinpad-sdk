@@ -117,7 +117,7 @@ namespace Pinpad.Sdk.Test.Utilities
                        .Returns(true);
             
             var keyboardStub = new Mock<IPinpadKeyboard>();
-            keyboardStub.Setup(x => x.GetKey())
+            keyboardStub.Setup(x => x.GetFunctionKey())
                         .Returns(PinpadKeyCode.Return);
             
             var dummyInfos = Mock.Of<IPinpadInfos>();
@@ -156,7 +156,7 @@ namespace Pinpad.Sdk.Test.Utilities
 					   .Returns(true);
 
 			var keyboardStub = new Mock<IPinpadKeyboard>();
-			keyboardStub.Setup(x => x.GetKey())
+			keyboardStub.Setup(x => x.GetFunctionKey())
                         .Returns(PinpadKeyCode.Cancel);
 
 			var dummyInfos = Mock.Of<IPinpadInfos>();
@@ -295,7 +295,7 @@ namespace Pinpad.Sdk.Test.Utilities
                            .Returns(true);
                 
                 var keyboardStub = new Mock<IPinpadKeyboard>();
-                keyboardStub.Setup(x => x.GetKey())
+                keyboardStub.Setup(x => x.GetFunctionKey())
                             .Returns(PinpadKeyCode.Cancel);
                 
                 var dummyInfos = Mock.Of<IPinpadInfos>();
@@ -324,7 +324,7 @@ namespace Pinpad.Sdk.Test.Utilities
 						   .Returns(true);
 
 				var keyboardStub = new Mock<IPinpadKeyboard>();
-				keyboardStub.Setup(x => x.GetKey())
+				keyboardStub.Setup(x => x.GetFunctionKey())
 							.Returns(PinpadKeyCode.Cancel);
 
 				var dummyInfos = Mock.Of<IPinpadInfos>();
@@ -350,7 +350,7 @@ namespace Pinpad.Sdk.Test.Utilities
 					   .Returns(true);
 
 			var keyboardStub = new Mock<IPinpadKeyboard>();
-			keyboardStub.Setup(x => x.GetKey())
+			keyboardStub.Setup(x => x.GetFunctionKey())
 						.Returns(PinpadKeyCode.Cancel);
 
 			var dummyInfos = Mock.Of<IPinpadInfos>();
@@ -383,7 +383,7 @@ namespace Pinpad.Sdk.Test.Utilities
 					   .Returns(true);
 
 			var keyboardStub = new Mock<IPinpadKeyboard>();
-			keyboardStub.Setup(x => x.GetKey())
+			keyboardStub.Setup(x => x.GetFunctionKey())
 						.Returns(PinpadKeyCode.Cancel);
 
 			var dummyInfos = Mock.Of<IPinpadInfos>();
@@ -415,7 +415,7 @@ namespace Pinpad.Sdk.Test.Utilities
 					   .Returns(true);
 
 			var keyboardStub = new Mock<IPinpadKeyboard>();
-			keyboardStub.Setup(x => x.GetKey())
+			keyboardStub.Setup(x => x.GetFunctionKey())
 						.Returns(PinpadKeyCode.Return);
 
 			var dummyInfos = Mock.Of<IPinpadInfos>();
@@ -449,7 +449,7 @@ namespace Pinpad.Sdk.Test.Utilities
 					   .Returns(true);
 
 			var keyboardStub = new Mock<IPinpadKeyboard>();
-			keyboardStub.Setup(x => x.GetKey())
+			keyboardStub.Setup(x => x.GetFunctionKey())
 						.Returns(PinpadKeyCode.Return);
 
 			var dummyInfos = Mock.Of<IPinpadInfos>();
