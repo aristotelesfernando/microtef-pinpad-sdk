@@ -263,7 +263,7 @@ namespace Pinpad.Sdk
         /// Only works for devices with ABECS 2.0.
         /// </summary>
         /// <returns>The pressed key code.</returns>
-        public PinpadKeyCode VerifyKeyPressing()
+        public PinpadKeyCode GetKeyWithNewAbecsVersion()
         {
             CexRequest request = new CexRequest();
             request.SPE_CEXOPT.Value = CexOptions.VerifyKeyPressing;

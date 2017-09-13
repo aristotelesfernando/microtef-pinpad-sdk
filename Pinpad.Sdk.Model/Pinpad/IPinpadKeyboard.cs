@@ -46,7 +46,6 @@ namespace Pinpad.Sdk.Model
         /// Only works for devices with ABECS 2.0.
         /// </summary>
         /// <returns>The pressed key code.</returns>
-        PinpadKeyCode VerifyKeyPressing();
-
+        PinpadKeyCode GetKeyWithNewAbecsVersion();
     }
 }

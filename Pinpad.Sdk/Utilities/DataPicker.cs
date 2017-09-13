@@ -167,7 +167,7 @@ namespace Pinpad.Sdk.Utilities
                 // ABECS 2.0 device
                 if (this._infos.Specifications.Contains("2.0") == true)
                 {
-                    code = this._keyboard.VerifyKeyPressing();
+                    code = this._keyboard.GetKeyWithNewAbecsVersion();
                 }
                 else
                 {
@@ -213,7 +213,7 @@ namespace Pinpad.Sdk.Utilities
                 // ABECS 2.0 device
                 if (this._infos.Specifications.Contains("2.0") == true)
                 {
-                    code = this._keyboard.VerifyKeyPressing();
+                    code = this._keyboard.GetKeyWithNewAbecsVersion();
                 }
                 else
                 {

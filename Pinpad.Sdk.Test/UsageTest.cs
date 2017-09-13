@@ -11,7 +11,7 @@ using Pinpad.Sdk.Model.TypeCode;
 
 namespace Pinpad.Sdk.Test
 {
-#if !Release && !Debug
+//#if !Release && !Debug
     [TestFixture]
     public class UsageTest
     {
@@ -390,8 +390,8 @@ namespace Pinpad.Sdk.Test
             IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
             PinpadFacade facade = new PinpadFacade(conn);
 
-            string key = facade.Keyboard.VerifyKeyPressing();
+            PinpadKeyCode key = facade.Keyboard.GetKeyWithNewAbecsVersion();
         }
     }
-#endif // !Release && !Debug
+//#endif // !Release && !Debug
 }
