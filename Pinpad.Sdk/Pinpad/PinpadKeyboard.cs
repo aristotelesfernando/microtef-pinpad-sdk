@@ -63,19 +63,37 @@ namespace Pinpad.Sdk
 			// If a key was pressed, returns it's value:
 			else { return response.PressedKey; }
 		}
-		/// <summary>
-		/// Gets the PinBlock and KeySerialNumber of a card using DUKPT mode
-		/// </summary>
-		/// <param name="cryptographyMode">Cryptography Mode</param>
-		/// <param name="keyIndex">Pinpad Key Index</param>
-		/// <param name="pan">Card Pan</param>
-		/// <param name="pinMinLength">Card Pin Minimum length</param>
-		/// <param name="pinMaxLength">Card Pin Maximum length</param>
-		/// <param name="message">Pin Entry Message</param>
-		/// <param name="pinBlock">Retrieved pin block or null on failure</param>
-		/// <param name="ksn">Retrieved key serial number of null on failure</param>
-		/// <returns>true on success, false on failure</returns>
-		public bool GetDukptPin(CryptographyMode cryptographyMode, int keyIndex, string pan, int pinMinLength, 
+        /// <summary>
+        /// Get function key according to device's ABECS version. 
+        /// Does not retrieve numeric keys.
+        /// </summary>
+        /// <returns>PinpadKeyCode or Undefined in case of failure.</returns>
+        public PinpadKeyCode GetFunctionKey()
+        {
+            // ABECS 2.0 device
+            if (this.Informations.Specifications.Contains("2.0") == true)
+            {
+                return GetKeyWithNewAbecsVersion();
+            }
+            // Old ABECS device
+            else
+            {
+                return GetKey();
+            }
+        }
+        /// <summary>
+        /// Gets the PinBlock and KeySerialNumber of a card using DUKPT mode
+        /// </summary>
+        /// <param name="cryptographyMode">Cryptography Mode</param>
+        /// <param name="keyIndex">Pinpad Key Index</param>
+        /// <param name="pan">Card Pan</param>
+        /// <param name="pinMinLength">Card Pin Minimum length</param>
+        /// <param name="pinMaxLength">Card Pin Maximum length</param>
+        /// <param name="message">Pin Entry Message</param>
+        /// <param name="pinBlock">Retrieved pin block or null on failure</param>
+        /// <param name="ksn">Retrieved key serial number of null on failure</param>
+        /// <returns>true on success, false on failure</returns>
+        public bool GetDukptPin(CryptographyMode cryptographyMode, int keyIndex, string pan, int pinMinLength, 
             int pinMaxLength, SimpleMessageProperty message, out HexadecimalData pinBlock, 
             out HexadecimalData ksn)
 		{
