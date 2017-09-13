@@ -55,6 +55,11 @@ namespace Pinpad.Sdk.Utilities
                 {
                     return new DataPickerKeys { UpKey = PinpadKeyCode.MobiPinUp, DownKey = PinpadKeyCode.MobiPinDown };
                 }
+                // Gertec MOBI PIN 10
+                else if (infos.ManufacturerName.ToUpper().Contains(Gertec) && infos.Model.ToUpper().Contains(MobiPin10))
+                {
+                    return new DataPickerKeys { UpKey = PinpadKeyCode.Function1, DownKey = PinpadKeyCode.Function2 };
+                }
             }
 
             return new DataPickerKeys(); // Gertec use by default.
