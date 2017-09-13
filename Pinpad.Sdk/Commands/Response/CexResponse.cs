@@ -2,14 +2,15 @@
 using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
-using System;
 
 namespace Pinpad.Sdk.Commands.Response
 {
     /// <summary>
     /// CEX response.
+    /// Used to get the pressed keys from devices using ABECS 2.0.
+    /// Does not retrive numeric keys.
     /// </summary>
-    internal class CexResponse : BaseResponse
+    internal sealed class CexResponse : BaseResponse
     {
         /// <summary>
         /// Is this a blocking command?

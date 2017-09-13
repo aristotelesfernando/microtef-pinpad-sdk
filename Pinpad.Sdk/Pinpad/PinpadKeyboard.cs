@@ -54,33 +54,37 @@ namespace Pinpad.Sdk
         /// <returns>PinpadKey or Undefined on failure</returns>
         public PinpadKeyCode GetKey()
 		{
-			// Tries to read a key from the keyboard:
-			GkyResponse response = this.Communication.SendRequestAndReceiveResponse<GkyResponse>(new GkyRequest());
-
-			// If did not receive any response, returns an undefined key code:
-			if (response == null) { return PinpadKeyCode.Undefined; }
-
-			// If a key was pressed, returns it's value:
-			else { return response.PressedKey; }
-		}
-        /// <summary>
-        /// Get function key according to device's ABECS version. 
-        /// Does not retrieve numeric keys.
-        /// </summary>
-        /// <returns>PinpadKeyCode or Undefined in case of failure.</returns>
-        public PinpadKeyCode GetFunctionKey()
-        {
             // ABECS 2.0 device
             if (this.Informations.Specifications.Contains("2.0") == true)
             {
-                return GetKeyWithNewAbecsVersion();
+                CexRequest request = new CexRequest();
+                request.SPE_CEXOPT.Value = CexOptions.VerifyKeyPressing;
+
+                CexResponse response = this.Communication.SendRequestAndReceiveResponse<CexResponse>(request);
+
+                // Enter key has value '00' in this command
+                if (string.Equals(response.PP_EVENT.Value, "00") == true)
+                {
+                    return PinpadKeyCode.Return;
+                }
+                else
+                {
+                    return (PinpadKeyCode)Enum.Parse(typeof(PinpadKeyCode), response.PP_EVENT.Value, true);
+                }
             }
-            // Old ABECS device
-            else
+            else 
             {
-                return GetKey();
+                // Tries to read a key from the keyboard:
+                GkyResponse response = this.Communication.SendRequestAndReceiveResponse<GkyResponse>(new GkyRequest());
+
+                // If did not receive any response, returns an undefined key code:
+                if (response == null) { return PinpadKeyCode.Undefined; }
+
+                // If a key was pressed, returns it's value:
+                else { return response.PressedKey; }
             }
-        }
+		}
+
         /// <summary>
         /// Gets the PinBlock and KeySerialNumber of a card using DUKPT mode
         /// </summary>
@@ -275,28 +279,5 @@ namespace Pinpad.Sdk
 
 			return null;
 		}
-
-        /// <summary>
-        /// Get function keys. Doesn't read numeric keys.
-        /// Only works for devices with ABECS 2.0.
-        /// </summary>
-        /// <returns>The pressed key code.</returns>
-        public PinpadKeyCode GetKeyWithNewAbecsVersion()
-        {
-            CexRequest request = new CexRequest();
-            request.SPE_CEXOPT.Value = CexOptions.VerifyKeyPressing;
-
-            CexResponse response = this.Communication.SendRequestAndReceiveResponse<CexResponse>(request);
-
-            // Enter key has value '00' in this command
-            if (string.Equals(response.PP_EVENT.Value, "00") == true)
-            {
-                return PinpadKeyCode.Return;
-            }
-            else
-            {
-                return (PinpadKeyCode)Enum.Parse(typeof(PinpadKeyCode), response.PP_EVENT.Value, true);
-            }
-        }
     }
 }

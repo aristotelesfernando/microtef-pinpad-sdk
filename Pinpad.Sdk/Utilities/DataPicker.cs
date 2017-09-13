@@ -163,7 +163,7 @@ namespace Pinpad.Sdk.Utilities
             do
             {
                 this._display.ShowMessage(label + ":", options[index].ToString(), DisplayPaddingType.Left);
-                code = this._keyboard.GetFunctionKey();
+                code = this._keyboard.GetKey();
 
                 if (code == PinpadKeyCode.Backspace)
                 {
@@ -200,7 +200,7 @@ namespace Pinpad.Sdk.Utilities
             do
             {
                 this._display.ShowMessage(label + ":", options[index].ToString(), DisplayPaddingType.Left);
-                code = this._keyboard.GetFunctionKey();
+                code = this._keyboard.GetKey();
 
                 if (code == PinpadKeyCode.Backspace)
                 {
@@ -250,7 +250,7 @@ namespace Pinpad.Sdk.Utilities
             do
             {
                 this._display.ShowMessage(label + ":", index.ToString(), DisplayPaddingType.Left);
-                code = this._keyboard.GetFunctionKey();
+                code = this._keyboard.GetKey();
 
                 if (code == PinpadKeyCode.Backspace)
                 {
@@ -289,7 +289,7 @@ namespace Pinpad.Sdk.Utilities
             do
             {
                 this._display.ShowMessage(label + ":", index.ToString(), DisplayPaddingType.Left);
-                code = this._keyboard.GetFunctionKey();
+                code = this._keyboard.GetKey();
 
                 if (code == PinpadKeyCode.Backspace)
                 {

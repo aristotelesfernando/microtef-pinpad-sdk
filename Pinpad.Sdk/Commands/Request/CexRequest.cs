@@ -3,12 +3,13 @@ using Pinpad.Sdk.PinpadProperties.Refactor.Command;
 using Pinpad.Sdk.PinpadProperties.Refactor.Formatter;
 using Pinpad.Sdk.PinpadProperties.Refactor.Parser;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
-using System;
 
 namespace Pinpad.Sdk.Commands.Request
 {
     /// <summary>
-    /// CEX Request
+    /// CEX Request.
+    /// Used to get the pressed keys from devices using ABECS 2.0.
+    /// Does not retrive numeric keys.
     /// </summary>
     internal sealed class CexRequest : BaseCommand
     {

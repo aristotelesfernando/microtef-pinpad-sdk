@@ -11,7 +11,7 @@ using Pinpad.Sdk.Model.TypeCode;
 
 namespace Pinpad.Sdk.Test
 {
-#if !Release && !Debug
+//#if !Release && !Debug
     [TestFixture]
     public class UsageTest
     {
@@ -383,15 +383,6 @@ namespace Pinpad.Sdk.Test
             Assert.AreEqual(conn.ReadTimeout, 5000);
             Assert.AreEqual(conn.WriteTimeout, 5000);
         }
-
-        [Test]
-        public void Pinpad_GetKeyWithNewAbecsVersion()
-        {
-            IPinpadConnection conn = PinpadConnectionProvider.GetFirst();
-            PinpadFacade facade = new PinpadFacade(conn);
-
-            PinpadKeyCode key = facade.Keyboard.GetKeyWithNewAbecsVersion();
-        }
     }
-#endif // !Release && !Debug
+//#endif // !Release && !Debug
 }

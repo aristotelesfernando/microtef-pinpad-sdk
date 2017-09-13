@@ -3,7 +3,7 @@
     /// <summary>
     /// Event to be verified by the pinpad when CEX is called.
     /// </summary>
-    public class CexOptions
+    static internal class CexOptions
     {
         /// <summary>
         /// Ignore any pressed key.
@@ -44,10 +44,5 @@
         /// Verify if a contactless card is present.
         /// </summary>
         public const string VerifyCtls = "000100";
-
-        /// <summary>
-        /// RUF.
-        /// </summary>
-        public const string Ruf = "111100";
     }
 }

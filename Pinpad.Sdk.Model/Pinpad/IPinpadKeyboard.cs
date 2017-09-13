@@ -22,12 +22,6 @@ namespace Pinpad.Sdk.Model
         /// <returns>PinpadKey or Undefined on failure.</returns>
         PinpadKeyCode GetKey();
         /// <summary>
-        /// Get function key according to device's ABECS version. 
-        /// Does not retrieve numeric keys.
-        /// </summary>
-        /// <returns>PinpadKeyCode or Undefined in case of failure.</returns>
-        PinpadKeyCode GetFunctionKey();
-        /// <summary>
         /// Gets a numeric input from pinpad keyboard.
         /// </summary>
         /// <param name="firstLine">First line label.</param>
@@ -47,11 +41,5 @@ namespace Pinpad.Sdk.Model
 		/// <param name="currency">Amount currency, i. e. R$, US$.</param>
 		/// <returns>The amount if a valid amount was typed. Null if: timeout, user cancelled, amount was typed on an invalid format (example: 1.7,2).</returns>
 		Nullable<decimal> GetAmount (AmountCurrencyCode currency);
-        /// <summary>
-        /// Get function keys. Doesn't read numeric keys.
-        /// Only works for devices with ABECS 2.0.
-        /// </summary>
-        /// <returns>The pressed key code.</returns>
-        PinpadKeyCode GetKeyWithNewAbecsVersion();
     }
 }
