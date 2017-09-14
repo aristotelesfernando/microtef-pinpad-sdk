@@ -7,6 +7,10 @@ using Pinpad.Sdk.Model.Utilities;
 using Pinpad.Sdk.Model.TypeCode;
 using Pinpad.Sdk.PinpadProperties.Refactor;
 using Pinpad.Sdk.PinpadProperties.Refactor.Property;
+using Pinpad.Sdk.Commands.Response;
+using Pinpad.Sdk.Commands.Request;
+using Pinpad.Sdk.Commands.DataSet;
+using System.Text;
 
 namespace Pinpad.Sdk
 {
@@ -50,28 +54,50 @@ namespace Pinpad.Sdk
         /// <returns>PinpadKey or Undefined on failure</returns>
         public PinpadKeyCode GetKey()
 		{
-			// Tries to read a key from the keyboard:
-			GkyResponse response = this.Communication.SendRequestAndReceiveResponse<GkyResponse>(new GkyRequest());
+            // ABECS 2.0 device
+            if (this.Informations.Specifications.Contains("2.0") == true)
+            {
+                CexRequest request = new CexRequest();
+                request.SPE_CEXOPT.Value = CexOptions.VerifyKeyPressing;
 
-			// If did not receive any response, returns an undefined key code:
-			if (response == null) { return PinpadKeyCode.Undefined; }
+                CexResponse response = this.Communication.SendRequestAndReceiveResponse<CexResponse>(request);
 
-			// If a key was pressed, returns it's value:
-			else { return response.PressedKey; }
+                // Enter key has value '00' in this command
+                if (string.Equals(response.PP_EVENT.Value, "00") == true)
+                {
+                    return PinpadKeyCode.Return;
+                }
+                else
+                {
+                    return (PinpadKeyCode)Enum.Parse(typeof(PinpadKeyCode), response.PP_EVENT.Value, true);
+                }
+            }
+            else 
+            {
+                // Tries to read a key from the keyboard:
+                GkyResponse response = this.Communication.SendRequestAndReceiveResponse<GkyResponse>(new GkyRequest());
+
+                // If did not receive any response, returns an undefined key code:
+                if (response == null) { return PinpadKeyCode.Undefined; }
+
+                // If a key was pressed, returns it's value:
+                else { return response.PressedKey; }
+            }
 		}
-		/// <summary>
-		/// Gets the PinBlock and KeySerialNumber of a card using DUKPT mode
-		/// </summary>
-		/// <param name="cryptographyMode">Cryptography Mode</param>
-		/// <param name="keyIndex">Pinpad Key Index</param>
-		/// <param name="pan">Card Pan</param>
-		/// <param name="pinMinLength">Card Pin Minimum length</param>
-		/// <param name="pinMaxLength">Card Pin Maximum length</param>
-		/// <param name="message">Pin Entry Message</param>
-		/// <param name="pinBlock">Retrieved pin block or null on failure</param>
-		/// <param name="ksn">Retrieved key serial number of null on failure</param>
-		/// <returns>true on success, false on failure</returns>
-		public bool GetDukptPin(CryptographyMode cryptographyMode, int keyIndex, string pan, int pinMinLength, 
+
+        /// <summary>
+        /// Gets the PinBlock and KeySerialNumber of a card using DUKPT mode
+        /// </summary>
+        /// <param name="cryptographyMode">Cryptography Mode</param>
+        /// <param name="keyIndex">Pinpad Key Index</param>
+        /// <param name="pan">Card Pan</param>
+        /// <param name="pinMinLength">Card Pin Minimum length</param>
+        /// <param name="pinMaxLength">Card Pin Maximum length</param>
+        /// <param name="message">Pin Entry Message</param>
+        /// <param name="pinBlock">Retrieved pin block or null on failure</param>
+        /// <param name="ksn">Retrieved key serial number of null on failure</param>
+        /// <returns>true on success, false on failure</returns>
+        public bool GetDukptPin(CryptographyMode cryptographyMode, int keyIndex, string pan, int pinMinLength, 
             int pinMaxLength, SimpleMessageProperty message, out HexadecimalData pinBlock, 
             out HexadecimalData ksn)
 		{

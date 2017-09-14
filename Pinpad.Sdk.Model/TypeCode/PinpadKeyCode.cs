@@ -15,6 +15,16 @@
 		/// </summary>
 		Return = 1,
 
+        /// <summary>
+        /// Mobi Pin 10 Up key.
+        /// </summary>
+        MobiPinUp = 2,
+
+        /// <summary>
+        /// Mobi Pin 10 Down key.
+        /// </summary>
+        MobiPinDown = 3,
+
 		/// <summary>
 		/// Function 1 key
 		/// </summary>

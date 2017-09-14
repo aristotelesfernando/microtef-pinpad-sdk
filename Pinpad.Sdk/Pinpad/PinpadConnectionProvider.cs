@@ -1,5 +1,6 @@
 ﻿using Microtef.CrossPlatform;
 using Pinpad.Sdk.Model.Exceptions;
+using System;
 using System.IO;
 
 namespace Pinpad.Sdk
@@ -22,7 +23,7 @@ namespace Pinpad.Sdk
 
 			if (conn == null)
 			{
-				throw new PinpadNotFoundException();
+				throw new PinpadNotFoundException(new InvalidOperationException("GetFirst.conn == null"));
 			}
 
 			return conn;
@@ -42,9 +43,9 @@ namespace Pinpad.Sdk
                 // Open connection with serial port or Pinpad Wi-Fi:
                 connection = CrossPlatformController.PinpadFinder.Find(connectionName, stoneCode);
 			}
-			catch (IOException)
+			catch (IOException ioe)
 			{
-				throw new PinpadNotFoundException(string.Format("None pinpad found at {0}.", connectionName), connectionName);
+				throw new PinpadNotFoundException($"None pinpad found at {connectionName}.", connectionName, ioe);
 			}
 
 			return connection;

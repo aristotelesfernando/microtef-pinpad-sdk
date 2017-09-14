@@ -74,5 +74,41 @@ namespace Pinpad.Sdk.Test.Utilities
             Assert.AreEqual(PinpadKeyCode.Function1, keys.UpKey);
             Assert.AreEqual(PinpadKeyCode.Function3, keys.DownKey);
         }
+        [Test]
+        public void DataPickerKeysFactory_GetUpAndDownKeys_ShouldReturnNewMobiPinKeys_WhenNewMobiPinInfosArePassed()
+        {
+            // Arrange
+            var mock = new Mock<IPinpadInfos>();
+            mock.SetupGet(x => x.ManufacturerName).Returns("GERTEC");
+            mock.SetupGet(x => x.Model).Returns("MOBI PIN 10");
+            mock.SetupGet(x => x.Specifications).Returns("2.01");
+            IPinpadInfos infos = mock.Object;
+            
+            // Act
+            DataPickerKeys keys = infos.GetUpAndDownKeys();
+
+            // Assert
+            Assert.IsNotNull(keys);
+            Assert.AreEqual(PinpadKeyCode.MobiPinUp, keys.UpKey);
+            Assert.AreEqual(PinpadKeyCode.MobiPinDown, keys.DownKey);
+        }
+        [Test]
+        public void DataPickerKeysFactory_GetUpAndDownKeys_ShouldReturnOldMobiPinKeys_WhenOldMobiPinInfosArePassed()
+        {
+            // Arrange
+            var mock = new Mock<IPinpadInfos>();
+            mock.SetupGet(x => x.ManufacturerName).Returns("GERTEC");
+            mock.SetupGet(x => x.Model).Returns("MOBI PIN 10");
+            mock.SetupGet(x => x.Specifications).Returns("1.0");
+            IPinpadInfos infos = mock.Object;
+
+            // Act
+            DataPickerKeys keys = infos.GetUpAndDownKeys();
+
+            // Assert
+            Assert.IsNotNull(keys);
+            Assert.AreEqual(PinpadKeyCode.Function1, keys.UpKey);
+            Assert.AreEqual(PinpadKeyCode.Function2, keys.DownKey);
+        }
     }
 }

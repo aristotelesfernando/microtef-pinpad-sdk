@@ -15,16 +15,16 @@ namespace Pinpad.Sdk.Model.Exceptions
 		/// <summary>
 		/// Set's <see cref="PinpadNotFoundException"/> message to "None pinpad found.".
 		/// </summary>
-		public PinpadNotFoundException ()
-			: base("None pinpad found.")
+		public PinpadNotFoundException (Exception innerException)
+			: base("None pinpad found.", innerException)
 		{ }
 		/// <summary>
 		/// Set's <see cref="PinpadNotFoundException"/> to <paramref name="message"/>.
 		/// </summary>
 		/// <param name="message">Exception message.</param>
 		/// <param name="pinpadPortName">Port that the pinpad should be connected (if any).</param>
-		public PinpadNotFoundException (string message, string pinpadPortName)
-			: base(message)
+		public PinpadNotFoundException (string message, string pinpadPortName, Exception innerException)
+			: base(message, innerException)
 		{
 			this.PinpadPortName = pinpadPortName;
 		}

@@ -3,6 +3,7 @@ using Pinpad.Sdk.Model;
 using Pinpad.Sdk.Model.Exceptions;
 using Pinpad.Sdk.Model.Pinpad;
 using Pinpad.Sdk.Pinpad;
+using System;
 
 namespace Pinpad.Sdk
 {
@@ -26,7 +27,7 @@ namespace Pinpad.Sdk
 			{
                 if (value == null)
                 {
-                    throw new PinpadNotFoundException();
+                    throw new PinpadNotFoundException(new InvalidOperationException("Connection.value == null"));
                 }
 
 				this.pinpadConnection = value;
